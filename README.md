@@ -16,6 +16,20 @@ Independent continuous-mathematics milestone audit: **PASS FOR DISCRETISATION**.
 
 Continuous mathematics is cleared to proceed to **detailed discrete mathematical derivation**. The remaining completeness theorem/provenance item is explicitly non-blocking and the modal series remains labelled formal/conditional.
 
+### Deterministic discrete-mathematics track
+
+Independent deterministic discrete-mathematics audit: **PASS FOR ACCURACY / CONVERGENCE STUDY**. The immutable report is `reviews/independent_discrete_mathematics_audit.md`; reconciliation is `reviews/independent_discrete_mathematics_audit_resolution.md`.
+
+Current finding status:
+
+- `R2-D01` MAJOR: **OPEN** — the FTCS Robin benchmark's complete boundary truncation is generically first-order in space; analytical overclaim corrected, grid-refinement closure evidence still pending.
+- `R2-D02` MODERATE: **CLOSED** — FV unknown is frozen as exact spherical cell average with spherical volume-centroid representative coordinate.
+- `R2-D04` MINOR: **CLOSED** — overlapping FV stable IDs repaired.
+- `R2-D05` MINOR: **CLOSED** — stale review-status wording corrected.
+- `R2-D03` NOTE: interface-flux accuracy remains intentionally unproved and belongs to the accuracy/convergence study.
+
+The canonical conservative five-layer FV route is cleared to proceed to formal accuracy/convergence analysis. The open FTCS boundary finding does not block that FV study, but it prevents treating the retained FTCS Robin benchmark as a proven second-order boundary reference.
+
 ### Numerical / WOS implementation-verification track
 
 Review 2: **FAIL — remediation required**. R2-B01 concerns executed evidence for the concrete five-layer release-time estimator. This finding is separate from the continuous-mathematics gate and is **not marked closed** here.
@@ -32,6 +46,8 @@ Do not infer Review-2 closure from the continuous-mathematics PASS.
 - Frozen continuous benchmark: `docs/triso/16_frozen_continuous_benchmark.md`
 - Independent continuous-mathematics audit: `reviews/independent_continuous_mathematics_audit.md`
 - Continuous-audit resolution: `reviews/independent_continuous_mathematics_audit_resolution.md`
+- Independent discrete-mathematics audit: `reviews/independent_discrete_mathematics_audit.md`
+- Discrete-audit resolution: `reviews/independent_discrete_mathematics_audit_resolution.md`
 - Frozen production WOS contract: `docs/triso/21_frozen_production_wos_contract.md`
 - Production WOS numerical formulation and equation-to-code mapping: `docs/triso/22_review2_numerical_formulation.md`
 - Active R2-B01 verification test: `verification/r2_b01_supervisor_integration.rs`
@@ -52,7 +68,7 @@ Obsolete workflows are preserved under `.github/workflows/archive/` and are not 
 
 ## Research navigation
 
-Original derivation → verified continuous derivation → canonical equation register → independent continuous audit → detailed discrete derivation → later implementation mapping / verification.
+Original derivation → verified continuous derivation → independent continuous audit → canonical deterministic discretisation → independent discrete audit → accuracy/convergence study → later implementation mapping / verification.
 
 ## Method distinction
 
