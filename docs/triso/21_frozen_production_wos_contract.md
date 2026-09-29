@@ -304,3 +304,17 @@ Review 2 should assess:
 - whether the initial-kernel ensemble estimator is correctly defined;
 - whether each implementation approximation is visible and testable;
 - whether conservation/inventory checks are sufficient for the proposed verification hierarchy.
+
+## 19. Evidence basis for the frozen choices
+
+Outer boundary: [INFERRED FROM CODE] the current release path terminates histories at the OPyC outer surface. The corresponding benchmark condition is c(R,t)=0.
+
+Source semantics: [INFERRED FROM CODE] the current release-fraction path samples the initial kernel population and follows those histories; it does not continuously inject S0 after t=0.
+
+Reaction model: [ASSUMPTION] the first verification benchmark sets R_i=0. The repository's separate depletion path demonstrates that decay/transmutation exists, but it is not part of this base release benchmark.
+
+Interface law: [INFERRED FROM CODE] the interface API explicitly accepts partition_k and the code comments identify K=1 as the default plain-continuity assumption. [ASSUMPTION] the base benchmark fixes K=1.
+
+Diffusivity treatment: [INFERRED FROM CODE] the property lookup depends on material, nuclide, region temperature and gamma-neutron fluence. [ASSUMPTION] the base benchmark freezes temperature, fluence and nuclide identity, producing constant D_i values for the benchmark interval.
+
+These labels prevent a convenient implementation choice from being mistaken for an experimentally established physical fact.
