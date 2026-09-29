@@ -70,6 +70,21 @@ T_{n+1}=T_n+τ_n.
 
 There is no globally imposed Δt.
 
+## 4A. Diffusivity treatment
+
+The production property lookup is not intrinsically a fixed constant. The supervisor code evaluates the Jiang diffusivity correlation using the layer material, nuclide, region temperature, and gamma-neutron fluence.
+
+Thus the underlying material model may be written schematically as:
+
+D_i = D_i(T_i, Phi, nuclide).
+
+For the frozen Review-2 benchmark, T_i, Phi, and nuclide are held fixed, so each resulting D_i is a constant during the benchmark.
+
+This fixed-property snapshot is what makes the local first-passage scaling tau proportional to rho squared divided by D_i and keeps the benchmark mathematically time-homogeneous.
+
+[INFERRED FROM CODE] functional dependence on material, nuclide, temperature and fluence.
+
+[ASSUMPTION] benchmark holds those inputs fixed.
 ## 5. Why this represents the local diffusion operator
 
 The local ball contains no material interface, so D_i is constant in it.
