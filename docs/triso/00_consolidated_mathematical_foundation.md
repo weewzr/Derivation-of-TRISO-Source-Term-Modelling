@@ -9037,21 +9037,929 @@ The formula must not be confused with the production WOS absorbing-boundary trea
 
 No stability conclusion is drawn in this section.
 
-## 17. Corrected FTCS stability statement
+## 17. FTCS monotonicity and stability analysis
 
-The original notebook treats non-negative stencil coefficients as though that were a necessary and sufficient stability condition. It is only a sufficient monotonicity-style condition.
+The original Ray notebook inferred a stability restriction from non-negative update coefficients.
 
-Interior positivity gives Fo≤1/2.
+That argument is useful, but the mathematical statement must be made precisely.
 
-Centre positivity gives 1-6Fo≥0, so Fo≤1/6.
+Non-negative coefficients with an appropriate row sum establish a monotonicity/maximum-principle style property for the homogeneous update. They are not automatically a necessary-and-sufficient characterization of every possible matrix stability notion.
 
-Surface positivity gives Fo≤1/[2(1+κ(1+1/N))].
+This section first derives the coefficient restrictions and then states exactly what they prove.
 
-Therefore:
+### 17.1 Remove forcing for stability analysis
 
-Fo≤min{1/6, 1/[2(1+κ(1+1/N))]}.
+The complete explicit update contains source terms.
 
-A complete spectral stability analysis of the assembled amplification matrix remains future work.
+To study propagation of perturbations, compare two numerical solutions subject to the same prescribed source.
+
+Let their difference be
+
+$$
+E_i^j
+=
+C_i^j-\widetilde C_i^j.
+\tag{TRISO-DIS-500}
+$$
+
+Because both solutions have the same additive source, subtraction cancels that source.
+
+Thus the error/perturbation equation is homogeneous.
+
+Stability of the linear time-marching operator can therefore be analysed from the source-free amplification step
+
+$$
+\mathbf E^{j+1}
+=
+\mathbf A\mathbf E^j.
+\tag{TRISO-DIS-501}
+$$
+
+### 17.2 Interior-row coefficients
+
+For an interior homogeneous node, Section 13 gives
+
+$$
+E_i^{j+1}
+=
+\mathrm{Fo}
+\left(
+1-\frac1i
+\right)
+E_{i-1}^j
++
+(1-2\mathrm{Fo})E_i^j
++
+\mathrm{Fo}
+\left(
+1+\frac1i
+\right)
+E_{i+1}^j.
+\tag{TRISO-DIS-502}
+$$
+
+Define
+
+$$
+a_i
+=
+\mathrm{Fo}
+\left(
+1-\frac1i
+\right),
+\tag{TRISO-DIS-503}
+$$
+
+$$
+b_i
+=
+1-2\mathrm{Fo},
+\tag{TRISO-DIS-504}
+$$
+
+and
+
+$$
+d_i
+=
+\mathrm{Fo}
+\left(
+1+\frac1i
+\right).
+\tag{TRISO-DIS-505}
+$$
+
+For \(i\ge1\),
+
+$$
+1-\frac1i\ge0.
+\tag{TRISO-DIS-506}
+$$
+
+Since \(\mathrm{Fo}\ge0\),
+
+$$
+a_i\ge0.
+\tag{TRISO-DIS-507}
+$$
+
+Similarly,
+
+$$
+1+\frac1i>0,
+\tag{TRISO-DIS-508}
+$$
+
+so
+
+$$
+d_i\ge0.
+\tag{TRISO-DIS-509}
+$$
+
+The central coefficient is non-negative when
+
+$$
+1-2\mathrm{Fo}\ge0.
+\tag{TRISO-DIS-510}
+$$
+
+Rearrange:
+
+$$
+2\mathrm{Fo}\le1.
+\tag{TRISO-DIS-511}
+$$
+
+Therefore
+
+$$
+\boxed{
+\mathrm{Fo}\le\frac12.
+}
+\tag{TRISO-DIS-512}
+$$
+
+Now add the three interior coefficients:
+
+$$
+a_i+b_i+d_i
+=
+\mathrm{Fo}\left(1-\frac1i\right)
++
+1-2\mathrm{Fo}
++
+\mathrm{Fo}\left(1+\frac1i\right).
+\tag{TRISO-DIS-513}
+$$
+
+Expand:
+
+$$
+a_i+b_i+d_i
+=
+\mathrm{Fo}
+-\frac{\mathrm{Fo}}i
++
+1
+-
+2\mathrm{Fo}
++
+\mathrm{Fo}
++
+\frac{\mathrm{Fo}}i.
+\tag{TRISO-DIS-514}
+$$
+
+Cancel the radial terms:
+
+$$
+-\frac{\mathrm{Fo}}i
++
+\frac{\mathrm{Fo}}i
+=
+0.
+\tag{TRISO-DIS-515}
+$$
+
+Cancel the diffusion contributions:
+
+$$
+\mathrm{Fo}-2\mathrm{Fo}+\mathrm{Fo}=0.
+\tag{TRISO-DIS-516}
+$$
+
+Hence
+
+$$
+\boxed{
+a_i+b_i+d_i=1.
+}
+\tag{TRISO-DIS-517}
+$$
+
+When (TRISO-DIS-512) holds, an interior update is therefore a convex combination of the previous-time neighbouring values.
+
+### 17.3 Centre-row coefficients
+
+Section 14 gives the homogeneous centre error update
+
+$$
+E_0^{j+1}
+=
+(1-6\mathrm{Fo})E_0^j
++
+6\mathrm{Fo}E_1^j.
+\tag{TRISO-DIS-518}
+$$
+
+The neighbour coefficient satisfies
+
+$$
+6\mathrm{Fo}\ge0.
+\tag{TRISO-DIS-519}
+$$
+
+The centre coefficient is non-negative when
+
+$$
+1-6\mathrm{Fo}\ge0.
+\tag{TRISO-DIS-520}
+$$
+
+Therefore
+
+$$
+6\mathrm{Fo}\le1.
+\tag{TRISO-DIS-521}
+$$
+
+Hence
+
+$$
+\boxed{
+\mathrm{Fo}\le\frac16.
+}
+\tag{TRISO-DIS-522}
+$$
+
+The centre-row sum is
+
+$$
+(1-6\mathrm{Fo})+6\mathrm{Fo}.
+\tag{TRISO-DIS-523}
+$$
+
+Therefore
+
+$$
+\boxed{
+(1-6\mathrm{Fo})+6\mathrm{Fo}=1.
+}
+\tag{TRISO-DIS-524}
+$$
+
+Under (TRISO-DIS-522), the centre row is also a convex combination.
+
+### 17.4 Robin surface-row coefficients
+
+Section 16 gives the homogeneous surface error update
+
+$$
+E_N^{j+1}
+=
+2\mathrm{Fo}E_{N-1}^j
++
+\left[
+1
+-
+2\mathrm{Fo}
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right)
+\right]
+E_N^j.
+\tag{TRISO-DIS-525}
+$$
+
+The interior-neighbour coefficient is
+
+$$
+2\mathrm{Fo}\ge0.
+\tag{TRISO-DIS-526}
+$$
+
+The surface coefficient is non-negative when
+
+$$
+1
+-
+2\mathrm{Fo}
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right)
+\ge0.
+\tag{TRISO-DIS-527}
+$$
+
+Move the second term to the other side:
+
+$$
+1
+\ge
+2\mathrm{Fo}
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right).
+\tag{TRISO-DIS-528}
+$$
+
+For \(h\ge0\), \(D>0\), and \(\Delta r>0\),
+
+$$
+\kappa\ge0.
+\tag{TRISO-DIS-529}
+$$
+
+Therefore the denominator below is positive.
+
+Divide:
+
+$$
+\boxed{
+\mathrm{Fo}
+\le
+\frac{
+1
+}{
+2\left[
+1+\kappa\left(1+\frac1N\right)
+\right]
+}.
+}
+\tag{TRISO-DIS-530}
+$$
+
+Now calculate the surface-row sum:
+
+$$
+2\mathrm{Fo}
++
+1
+-
+2\mathrm{Fo}
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right).
+\tag{TRISO-DIS-531}
+$$
+
+Expand the last term:
+
+$$
+2\mathrm{Fo}
++
+1
+-
+2\mathrm{Fo}
+-
+2\mathrm{Fo}\kappa
+\left(
+1+\frac1N
+\right).
+\tag{TRISO-DIS-532}
+$$
+
+Cancel \(2\mathrm{Fo}-2\mathrm{Fo}\):
+
+$$
+\boxed{
+\text{surface row sum}
+=
+1
+-
+2\mathrm{Fo}\kappa
+\left(
+1+\frac1N
+\right).
+}
+\tag{TRISO-DIS-533}
+$$
+
+For \(\kappa\ge0\),
+
+$$
+\text{surface row sum}\le1.
+\tag{TRISO-DIS-534}
+$$
+
+Under the non-negativity restriction (TRISO-DIS-530),
+
+$$
+\text{surface row sum}\ge0.
+\tag{TRISO-DIS-535}
+$$
+
+Thus the Robin row is sub-convex: part of the previous concentration can leave through the external boundary.
+
+### 17.5 Combined coefficient-non-negativity condition
+
+The three restrictions are
+
+$$
+\mathrm{Fo}\le\frac12
+\tag{TRISO-DIS-536}
+$$
+
+for ordinary interior nodes,
+
+$$
+\mathrm{Fo}\le\frac16
+\tag{TRISO-DIS-537}
+$$
+
+for the centre,
+
+and
+
+$$
+\mathrm{Fo}
+\le
+\frac{
+1
+}{
+2\left[
+1+\kappa\left(1+\frac1N\right)
+\right]
+}
+\tag{TRISO-DIS-538}
+$$
+
+for the Robin surface.
+
+Because
+
+$$
+\frac16<\frac12,
+\tag{TRISO-DIS-539}
+$$
+
+the interior bound is never the controlling restriction once the centre node is included.
+
+Therefore a sufficient coefficient-non-negativity condition for this homogeneous benchmark is
+
+$$
+\boxed{
+\mathrm{Fo}
+\le
+\min
+\left\{
+\frac16,
+\,
+\frac{
+1
+}{
+2\left[
+1+\kappa\left(1+\frac1N\right)
+\right]
+}
+\right\}.
+}
+\tag{TRISO-DIS-540}
+$$
+
+This is the corrected form of the original notebook restriction.
+
+### 17.6 Amplification matrix
+
+Collect the nodal errors into
+
+$$
+\mathbf E^j
+=
+(E_0^j,E_1^j,\ldots,E_N^j)^T.
+\tag{TRISO-DIS-541}
+$$
+
+The homogeneous update is
+
+$$
+\boxed{
+\mathbf E^{j+1}
+=
+\mathbf A\mathbf E^j.
+}
+\tag{TRISO-DIS-542}
+$$
+
+The matrix has size
+
+$$
+\mathbf A\in\mathbb R^{(N+1)\times(N+1)}.
+\tag{TRISO-DIS-543}
+$$
+
+The centre row contains
+
+$$
+A_{0,0}=1-6\mathrm{Fo},
+\tag{TRISO-DIS-544}
+$$
+
+and
+
+$$
+A_{0,1}=6\mathrm{Fo}.
+\tag{TRISO-DIS-545}
+$$
+
+For an ordinary interior row \(i\),
+
+$$
+A_{i,i-1}
+=
+\mathrm{Fo}
+\left(
+1-\frac1i
+\right),
+\tag{TRISO-DIS-546}
+$$
+
+$$
+A_{i,i}
+=
+1-2\mathrm{Fo},
+\tag{TRISO-DIS-547}
+$$
+
+and
+
+$$
+A_{i,i+1}
+=
+\mathrm{Fo}
+\left(
+1+\frac1i
+\right).
+\tag{TRISO-DIS-548}
+$$
+
+The Robin surface row contains
+
+$$
+A_{N,N-1}=2\mathrm{Fo},
+\tag{TRISO-DIS-549}
+$$
+
+and
+
+$$
+A_{N,N}
+=
+1
+-
+2\mathrm{Fo}
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right).
+\tag{TRISO-DIS-550}
+$$
+
+All other entries are zero for this homogeneous tridiagonal benchmark.
+
+### 17.7 \(\ell_\infty\) stability under the monotonicity restriction
+
+The induced infinity norm of a matrix is
+
+$$
+\|\mathbf A\|_\infty
+=
+\max_i
+\sum_j
+|A_{ij}|.
+\tag{TRISO-DIS-551}
+$$
+
+Under (TRISO-DIS-540), every non-zero entry of \(\mathbf A\) is non-negative.
+
+Therefore
+
+$$
+|A_{ij}|=A_{ij}.
+\tag{TRISO-DIS-552}
+$$
+
+For the centre row, the row sum is exactly
+
+$$
+1.
+\tag{TRISO-DIS-553}
+$$
+
+For each ordinary interior row, the row sum is exactly
+
+$$
+1.
+\tag{TRISO-DIS-554}
+$$
+
+For the Robin row, the row sum is at most
+
+$$
+1.
+\tag{TRISO-DIS-555}
+$$
+
+Therefore
+
+$$
+\boxed{
+\|\mathbf A\|_\infty\le1.
+}
+\tag{TRISO-DIS-556}
+$$
+
+Apply the matrix norm inequality:
+
+$$
+\|\mathbf E^{j+1}\|_\infty
+=
+\|\mathbf A\mathbf E^j\|_\infty
+\le
+\|\mathbf A\|_\infty
+\|\mathbf E^j\|_\infty.
+\tag{TRISO-DIS-557}
+$$
+
+Use (TRISO-DIS-556):
+
+$$
+\|\mathbf E^{j+1}\|_\infty
+\le
+\|\mathbf E^j\|_\infty.
+\tag{TRISO-DIS-558}
+$$
+
+Repeat the inequality over \(j\) steps:
+
+$$
+\boxed{
+\|\mathbf E^j\|_\infty
+\le
+\|\mathbf E^0\|_\infty.
+}
+\tag{TRISO-DIS-559}
+$$
+
+Thus the coefficient restriction (TRISO-DIS-540) is not merely a heuristic: for this assembled homogeneous benchmark it is a sufficient condition for non-amplification in the discrete \(\ell_\infty\) norm.
+
+### 17.8 Positivity and discrete maximum-principle interpretation
+
+Suppose
+
+$$
+E_i^j\ge0
+\tag{TRISO-DIS-560}
+$$
+
+for every node.
+
+Under (TRISO-DIS-540), every amplification coefficient is non-negative.
+
+Therefore every component of
+
+$$
+\mathbf E^{j+1}
+=
+\mathbf A\mathbf E^j
+\tag{TRISO-DIS-561}
+$$
+
+is also non-negative.
+
+Hence the homogeneous update preserves non-negativity.
+
+For an interior or centre row whose coefficients sum to one, the new value lies between the minimum and maximum of the contributing old values.
+
+At the Robin boundary, the row sum is less than or equal to one because concentration can leave the domain.
+
+This is the precise monotonicity/maximum-principle content of the notebook's coefficient argument.
+
+### 17.9 Spectral-radius consequence
+
+For every square matrix,
+
+$$
+\rho(\mathbf A)
+\le
+\|\mathbf A\|
+\tag{TRISO-DIS-562}
+$$
+
+for any induced matrix norm.
+
+Using the infinity norm,
+
+$$
+\rho(\mathbf A)
+\le
+\|\mathbf A\|_\infty.
+\tag{TRISO-DIS-563}
+$$
+
+Under (TRISO-DIS-540),
+
+$$
+\|\mathbf A\|_\infty\le1.
+\tag{TRISO-DIS-564}
+$$
+
+Therefore
+
+$$
+\boxed{
+\rho(\mathbf A)\le1.
+}
+\tag{TRISO-DIS-565}
+$$
+
+So the monotonicity restriction also provides a sufficient spectral-radius bound for this homogeneous assembled amplification matrix.
+
+This does **not** prove that (TRISO-DIS-540) is necessary for spectral stability.
+
+There may be parameter values with some negative coefficients for which
+
+$$
+\rho(\mathbf A)\le1.
+\tag{TRISO-DIS-566}
+$$
+
+Determining the exact necessary-and-sufficient spectral stability region would require analysis of the eigenvalues of the specific amplification matrix.
+
+### 17.10 Relation to the standard explicit-Euler eigenvalue condition
+
+Write a semi-discrete diffusion system abstractly as
+
+$$
+\frac{d\mathbf C}{dt}
+=
+\mathbf L\mathbf C.
+\tag{TRISO-DIS-567}
+$$
+
+Forward Euler gives
+
+$$
+\mathbf C^{j+1}
+=
+\left(
+\mathbf I+\Delta t\,\mathbf L
+\right)
+\mathbf C^j.
+\tag{TRISO-DIS-568}
+$$
+
+Therefore
+
+$$
+\mathbf A
+=
+\mathbf I+\Delta t\,\mathbf L.
+\tag{TRISO-DIS-569}
+$$
+
+If \(\lambda_\ell\) is an eigenvalue of \(\mathbf L\), then the corresponding amplification eigenvalue is
+
+$$
+g_\ell
+=
+1+\Delta t\,\lambda_\ell.
+\tag{TRISO-DIS-570}
+$$
+
+For a real non-positive diffusion eigenvalue,
+
+$$
+\lambda_\ell\le0,
+\tag{TRISO-DIS-571}
+$$
+
+the scalar forward-Euler stability requirement is
+
+$$
+|1+\Delta t\,\lambda_\ell|\le1.
+\tag{TRISO-DIS-572}
+$$
+
+For real \(\lambda_\ell\le0\), this is equivalent to
+
+$$
+-1
+\le
+1+\Delta t\,\lambda_\ell
+\le
+1.
+\tag{TRISO-DIS-573}
+$$
+
+Subtract \(1\):
+
+$$
+-2
+\le
+\Delta t\,\lambda_\ell
+\le
+0.
+\tag{TRISO-DIS-574}
+$$
+
+Because \(\lambda_\ell<0\) for a decaying mode, the lower inequality gives
+
+$$
+\Delta t
+\le
+\frac{2}{|\lambda_\ell|}.
+\tag{TRISO-DIS-575}
+$$
+
+For all modes,
+
+$$
+\boxed{
+\Delta t
+\le
+\frac{2}{
+\max_\ell|\lambda_\ell|
+}
+}
+\tag{TRISO-DIS-576}
+$$
+
+would be the exact scalar forward-Euler restriction if the relevant semi-discrete operator has a real non-positive spectrum and is diagonalizable in the norm under consideration.
+
+The present section does not compute \(\max|\lambda_\ell|\) for the spherical matrix.
+
+Therefore (TRISO-DIS-576) is a framework for a sharper spectral analysis, not a completed numerical bound for this benchmark.
+
+### 17.11 Important limitation: material interfaces
+
+The amplification matrix in Sections 17.6–17.10 corresponds to the homogeneous benchmark using:
+
+- the centre row from Section 14;
+- homogeneous interior rows from Section 13;
+- the Robin surface row from Section 16.
+
+The full five-layer problem contains discontinuous diffusivities and the interface transmission treatment from Section 15.
+
+Its assembled operator is therefore different.
+
+The bound
+
+$$
+\mathrm{Fo}
+\le
+\min
+\left\{
+\frac16,
+\frac1{
+2[1+\kappa(1+1/N)]
+}
+\right\}
+\tag{TRISO-DIS-577}
+$$
+
+must **not** be presented as a proved stability bound for an arbitrary five-layer discretisation.
+
+A five-layer stability condition depends on the final chosen conservative spatial discretisation, the layer-specific diffusivities, mesh spacings, and interface treatment.
+
+### 17.12 Correct status of the original notebook claim
+
+The original notebook's coefficient argument is therefore classified as follows.
+
+[VERIFIED] Interior coefficient non-negativity requires
+
+$$
+\mathrm{Fo}\le\frac12.
+\tag{TRISO-DIS-578}
+$$
+
+[VERIFIED] Centre coefficient non-negativity requires
+
+$$
+\mathrm{Fo}\le\frac16.
+\tag{TRISO-DIS-579}
+$$
+
+[VERIFIED] Robin-surface coefficient non-negativity requires
+
+$$
+\mathrm{Fo}
+\le
+\frac1{
+2[1+\kappa(1+1/N)]
+}.
+\tag{TRISO-DIS-580}
+$$
+
+[VERIFIED] Their minimum is a sufficient monotonicity condition for the homogeneous benchmark.
+
+[VERIFIED] Under that same condition, the assembled homogeneous amplification matrix satisfies
+
+$$
+\|\mathbf A\|_\infty\le1
+\tag{TRISO-DIS-581}
+$$
+
+and consequently
+
+$$
+\rho(\mathbf A)\le1.
+\tag{TRISO-DIS-582}
+$$
+
+[NOT PROVED] The condition is necessary for spectral stability.
+
+[NOT APPLICABLE WITHOUT RE-DERIVATION] The same bound is the exact stability condition for the final discontinuous-\(D\), five-layer discretisation.
 
 ## 18. Implementation provenance
 
