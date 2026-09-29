@@ -99,9 +99,7 @@ Feature branch:
 
 ray/triso-foundation
 
-Current branch tip:
-
-63ef96be1b3e95e5a4757ef3a178981c1ae532d5
+Current branch tip is maintained by the repository's current Ray branch and should be obtained from the branch ref rather than this historical handoff note.
 
 Default branch:
 
@@ -153,4 +151,4 @@ Derive the selected production numerical formulation directly from the frozen co
 
 Before changing production code, establish the equation-to-algorithm map and identify the exact discrete quantities the code computes.
 
-Review 1 is closed; Review 2 preparation now begins from the frozen model rather than reopening the continuous derivation.
+Review 1 is closed. The production WOS benchmark is now frozen in docs/triso/21_frozen_production_wos_contract.md, and Review 2 preparation is documented in docs/triso/22_review2_numerical_formulation.md.
