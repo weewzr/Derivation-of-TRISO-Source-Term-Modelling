@@ -2,7 +2,7 @@
 
 ## Scope
 
-The supplied TRISO Fuel Derivation Ray V1.tex contains 29 substantive displayed equations. All 29 are explicitly inventoried below.
+The supplied TRISO Fuel Derivation Ray V1.tex contains 33 substantive displayed equations. All 33 are explicitly inventoried below.
 
 Status vocabulary:
 - VERIFIED
