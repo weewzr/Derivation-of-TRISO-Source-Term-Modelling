@@ -9961,7 +9961,1056 @@ $$
 
 [NOT APPLICABLE WITHOUT RE-DERIVATION] The same bound is the exact stability condition for the final discontinuous-\(D\), five-layer discretisation.
 
-## 18. Implementation provenance
+## 18. Conservative finite-volume discretisation of the five-layer PDE
+
+The original FTCS derivation is a useful benchmark, but the actual five-layer PDE contains discontinuous material diffusivities.
+
+A conservative finite-volume formulation is therefore derived directly from
+
+$$
+\frac{\partial c}{\partial t}
+=
+\frac1{r^2}
+\frac{\partial}{\partial r}
+\left(
+r^2D\frac{\partial c}{\partial r}
+\right)
++
+S.
+\tag{TRISO-FV-100}
+$$
+
+This choice is a mathematical discretisation of the verified continuum model. It does not replace or redefine the production WOS algorithm.
+
+### 18.1 Spherical control-volume geometry
+
+Let cell \(P\) occupy
+
+$$
+r_{P-\frac12}
+<
+r
+<
+r_{P+\frac12}.
+\tag{TRISO-FV-101}
+$$
+
+Its west face is
+
+$$
+r_w=r_{P-\frac12},
+\tag{TRISO-FV-102}
+$$
+
+and its east face is
+
+$$
+r_e=r_{P+\frac12}.
+\tag{TRISO-FV-103}
+$$
+
+The corresponding spherical face areas are
+
+$$
+\boxed{
+A_w=4\pi r_w^2
+}
+\tag{TRISO-FV-104}
+$$
+
+and
+
+$$
+\boxed{
+A_e=4\pi r_e^2.
+}
+\tag{TRISO-FV-105}
+$$
+
+The exact cell volume is
+
+$$
+V_P
+=
+\int_{r_w}^{r_e}4\pi r^2\,dr.
+\tag{TRISO-FV-106}
+$$
+
+Evaluate the integral:
+
+$$
+V_P
+=
+4\pi
+\left[
+\frac{r^3}{3}
+\right]_{r_w}^{r_e}.
+\tag{TRISO-FV-107}
+$$
+
+Therefore
+
+$$
+\boxed{
+V_P
+=
+\frac{4\pi}{3}
+\left(
+r_e^3-r_w^3
+\right).
+}
+\tag{TRISO-FV-108}
+$$
+
+### 18.2 Integrate conservation over one spherical cell
+
+Multiply (TRISO-FV-100) by the spherical volume element
+
+$$
+4\pi r^2\,dr.
+\tag{TRISO-FV-109}
+$$
+
+This gives
+
+$$
+4\pi r^2
+\frac{\partial c}{\partial t}\,dr
+=
+4\pi
+\frac{\partial}{\partial r}
+\left(
+r^2D\frac{\partial c}{\partial r}
+\right)dr
++
+4\pi r^2S\,dr.
+\tag{TRISO-FV-110}
+$$
+
+Integrate from \(r_w\) to \(r_e\):
+
+$$
+\int_{r_w}^{r_e}
+4\pi r^2
+\frac{\partial c}{\partial t}\,dr
+=
+\int_{r_w}^{r_e}
+4\pi
+\frac{\partial}{\partial r}
+\left(
+r^2D\frac{\partial c}{\partial r}
+\right)dr
++
+\int_{r_w}^{r_e}
+4\pi r^2S\,dr.
+\tag{TRISO-FV-111}
+$$
+
+Evaluate the derivative integral:
+
+$$
+\int_{r_w}^{r_e}
+4\pi
+\frac{\partial}{\partial r}
+\left(
+r^2D\frac{\partial c}{\partial r}
+\right)dr
+=
+4\pi
+\left[
+r^2D\frac{\partial c}{\partial r}
+\right]_{r_w}^{r_e}.
+\tag{TRISO-FV-112}
+$$
+
+Expand the boundary evaluation:
+
+$$
+4\pi
+\left[
+r^2D\frac{\partial c}{\partial r}
+\right]_{r_w}^{r_e}
+=
+A_eD_e
+\left.\frac{\partial c}{\partial r}\right|_e
+-
+A_wD_w
+\left.\frac{\partial c}{\partial r}\right|_w.
+\tag{TRISO-FV-113}
+$$
+
+Define the outward radial Fickian flux
+
+$$
+J_r=-D\frac{\partial c}{\partial r}.
+\tag{TRISO-FV-114}
+$$
+
+Then
+
+$$
+D\frac{\partial c}{\partial r}=-J_r.
+\tag{TRISO-FV-115}
+$$
+
+Substitute into (TRISO-FV-113):
+
+$$
+A_eD_e c_r|_e-A_wD_wc_r|_w
+=
+-A_eJ_e+A_wJ_w.
+\tag{TRISO-FV-116}
+$$
+
+Thus the integrated conservation equation is
+
+$$
+\int_{r_w}^{r_e}
+4\pi r^2
+\frac{\partial c}{\partial t}\,dr
+=
+A_wJ_w-A_eJ_e
++
+\int_{r_w}^{r_e}4\pi r^2S\,dr.
+\tag{TRISO-FV-117}
+$$
+
+This is the discrete starting point: accumulation equals inward face flow minus outward face flow plus generation.
+
+### 18.3 Cell-average unknown
+
+Define the volume-averaged concentration
+
+$$
+\boxed{
+C_P(t)
+=
+\frac1{V_P}
+\int_{r_w}^{r_e}
+c(r,t)\,4\pi r^2\,dr.
+}
+\tag{TRISO-FV-118}
+$$
+
+Multiply by \(V_P\):
+
+$$
+V_PC_P
+=
+\int_{r_w}^{r_e}
+c\,4\pi r^2\,dr.
+\tag{TRISO-FV-119}
+$$
+
+For a fixed mesh, \(V_P\) is constant in time.
+
+Differentiate:
+
+$$
+V_P\frac{dC_P}{dt}
+=
+\int_{r_w}^{r_e}
+4\pi r^2
+\frac{\partial c}{\partial t}\,dr.
+\tag{TRISO-FV-120}
+$$
+
+Define the volume-averaged source
+
+$$
+\boxed{
+S_P
+=
+\frac1{V_P}
+\int_{r_w}^{r_e}
+S(r,t)\,4\pi r^2\,dr.
+}
+\tag{TRISO-FV-121}
+$$
+
+Therefore
+
+$$
+S_PV_P
+=
+\int_{r_w}^{r_e}
+S(r,t)\,4\pi r^2\,dr.
+\tag{TRISO-FV-122}
+$$
+
+Substitute (TRISO-FV-120) and (TRISO-FV-122) into (TRISO-FV-117):
+
+$$
+\boxed{
+V_P\frac{dC_P}{dt}
+=
+A_wJ_w-A_eJ_e+S_PV_P.
+}
+\tag{TRISO-FV-123}
+$$
+
+Equation (TRISO-FV-123) is an exact control-volume balance before face-flux approximation.
+
+### 18.4 Interior face flux inside one material
+
+Let cells \(P\) and \(E\) share east face \(e\).
+
+Assume the face lies inside one material with constant diffusivity \(D_e\).
+
+Let the cell-centre distance be
+
+$$
+\delta r_{PE}=r_E-r_P.
+\tag{TRISO-FV-124}
+$$
+
+Approximate the face gradient by
+
+$$
+\left.
+\frac{\partial c}{\partial r}
+\right|_e
+\approx
+\frac{C_E-C_P}{\delta r_{PE}}.
+\tag{TRISO-FV-125}
+$$
+
+Fick's law gives
+
+$$
+J_e
+\approx
+-D_e
+\frac{C_E-C_P}{\delta r_{PE}}.
+\tag{TRISO-FV-126}
+$$
+
+Reverse the numerator:
+
+$$
+\boxed{
+J_e
+\approx
+D_e
+\frac{C_P-C_E}{\delta r_{PE}}.
+}
+\tag{TRISO-FV-127}
+$$
+
+Similarly, for west neighbour \(W\),
+
+$$
+\boxed{
+J_w
+\approx
+D_w
+\frac{C_W-C_P}{\delta r_{WP}}.
+}
+\tag{TRISO-FV-128}
+$$
+
+The sign convention is consistent with \(J_r>0\) meaning outward radial transport.
+
+### 18.5 Face crossing a material interface
+
+Now let face \(e\) coincide with an interface between two materials.
+
+Let the distance from centre \(P\) to the interface be
+
+$$
+\delta r_P.
+\tag{TRISO-FV-129}
+$$
+
+Let the distance from the interface to centre \(E\) be
+
+$$
+\delta r_E.
+\tag{TRISO-FV-130}
+$$
+
+Let the diffusivities be
+
+$$
+D_P
+\tag{TRISO-FV-131}
+$$
+
+and
+
+$$
+D_E.
+\tag{TRISO-FV-132}
+$$
+
+Let the ideal interface concentration be \(C_I\).
+
+The flux from \(P\) to the interface is
+
+$$
+J_e
+=
+D_P
+\frac{C_P-C_I}{\delta r_P}.
+\tag{TRISO-FV-133}
+$$
+
+The flux from the interface to \(E\) is
+
+$$
+J_e
+=
+D_E
+\frac{C_I-C_E}{\delta r_E}.
+\tag{TRISO-FV-134}
+$$
+
+Solve the first equation for the concentration drop:
+
+$$
+C_P-C_I
+=
+J_e\frac{\delta r_P}{D_P}.
+\tag{TRISO-FV-135}
+$$
+
+Solve the second equation for its drop:
+
+$$
+C_I-C_E
+=
+J_e\frac{\delta r_E}{D_E}.
+\tag{TRISO-FV-136}
+$$
+
+Add the two equations:
+
+$$
+C_P-C_E
+=
+J_e
+\left(
+\frac{\delta r_P}{D_P}
++
+\frac{\delta r_E}{D_E}
+\right).
+\tag{TRISO-FV-137}
+$$
+
+Solve for \(J_e\):
+
+$$
+\boxed{
+J_e
+=
+\frac{
+C_P-C_E
+}{
+\dfrac{\delta r_P}{D_P}
++
+\dfrac{\delta r_E}{D_E}
+}.
+}
+\tag{TRISO-FV-138}
+$$
+
+Define the face conductance per unit area
+
+$$
+\boxed{
+g_e
+=
+\left(
+\frac{\delta r_P}{D_P}
++
+\frac{\delta r_E}{D_E}
+\right)^{-1}.
+}
+\tag{TRISO-FV-139}
+$$
+
+Then
+
+$$
+\boxed{
+J_e=g_e(C_P-C_E).
+}
+\tag{TRISO-FV-140}
+$$
+
+The interface law is therefore generated by adding diffusion resistances, exactly as in the continuous steady resistance derivation.
+
+### 18.6 Effective face diffusivity
+
+Define the centre-to-centre distance
+
+$$
+\delta r_{PE}
+=
+\delta r_P+\delta r_E.
+\tag{TRISO-FV-141}
+$$
+
+Define \(D_e^{\mathrm{eff}}\) by
+
+$$
+J_e
+=
+D_e^{\mathrm{eff}}
+\frac{C_P-C_E}{\delta r_{PE}}.
+\tag{TRISO-FV-142}
+$$
+
+Compare with (TRISO-FV-138):
+
+$$
+\frac{D_e^{\mathrm{eff}}}{\delta r_{PE}}
+=
+\left(
+\frac{\delta r_P}{D_P}
++
+\frac{\delta r_E}{D_E}
+\right)^{-1}.
+\tag{TRISO-FV-143}
+$$
+
+Multiply by \(\delta r_{PE}\):
+
+$$
+\boxed{
+D_e^{\mathrm{eff}}
+=
+\frac{
+\delta r_P+\delta r_E
+}{
+\dfrac{\delta r_P}{D_P}
++
+\dfrac{\delta r_E}{D_E}
+}.
+}
+\tag{TRISO-FV-144}
+$$
+
+For equal half-cell distances,
+
+$$
+\delta r_P=\delta r_E,
+\tag{TRISO-FV-145}
+$$
+
+this reduces to
+
+$$
+\boxed{
+D_e^{\mathrm{eff}}
+=
+\frac{2D_PD_E}{D_P+D_E}.
+}
+\tag{TRISO-FV-146}
+$$
+
+Thus the harmonic mean arises naturally from the conservative face-flux derivation.
+
+### 18.7 Semi-discrete conservative equation
+
+Define the west conductance
+
+$$
+G_w
+=
+\frac{A_wD_w^{\mathrm{eff}}}{\delta r_{WP}},
+\tag{TRISO-FV-147}
+$$
+
+and the east conductance
+
+$$
+G_e
+=
+\frac{A_eD_e^{\mathrm{eff}}}{\delta r_{PE}}.
+\tag{TRISO-FV-148}
+$$
+
+Their units are
+
+$$
+[G_w]=[G_e]=\mathrm{m^3\,s^{-1}}.
+\tag{TRISO-FV-149}
+$$
+
+Using (TRISO-FV-127) and (TRISO-FV-128),
+
+$$
+A_wJ_w
+=
+G_w(C_W-C_P),
+\tag{TRISO-FV-150}
+$$
+
+and
+
+$$
+A_eJ_e
+=
+G_e(C_P-C_E).
+\tag{TRISO-FV-151}
+$$
+
+Substitute these into (TRISO-FV-123):
+
+$$
+V_P\frac{dC_P}{dt}
+=
+G_w(C_W-C_P)
+-
+G_e(C_P-C_E)
++
+S_PV_P.
+\tag{TRISO-FV-152}
+$$
+
+Expand:
+
+$$
+V_P\frac{dC_P}{dt}
+=
+G_wC_W
+-
+G_wC_P
+-
+G_eC_P
++
+G_eC_E
++
+S_PV_P.
+\tag{TRISO-FV-153}
+$$
+
+Collect the central concentration:
+
+$$
+\boxed{
+V_P\frac{dC_P}{dt}
+=
+G_wC_W
+-
+(G_w+G_e)C_P
++
+G_eC_E
++
+S_PV_P.
+}
+\tag{TRISO-FV-154}
+$$
+
+Divide by \(V_P\):
+
+$$
+\boxed{
+\frac{dC_P}{dt}
+=
+\frac{G_w}{V_P}C_W
+-
+\frac{G_w+G_e}{V_P}C_P
++
+\frac{G_e}{V_P}C_E
++
+S_P.
+}
+\tag{TRISO-FV-155}
+$$
+
+This is the conservative semi-discrete equation for an ordinary spherical control volume.
+
+### 18.8 Explicit Euler time discretisation
+
+Apply forward Euler:
+
+$$
+\frac{
+C_P^{j+1}-C_P^j
+}{
+\Delta t
+}
+=
+\frac{G_w}{V_P}C_W^j
+-
+\frac{G_w+G_e}{V_P}C_P^j
++
+\frac{G_e}{V_P}C_E^j
++
+S_P^j.
+\tag{TRISO-FV-156}
+$$
+
+Multiply by \(\Delta t\):
+
+$$
+C_P^{j+1}-C_P^j
+=
+\frac{\Delta t\,G_w}{V_P}C_W^j
+-
+\frac{\Delta t(G_w+G_e)}{V_P}C_P^j
++
+\frac{\Delta t\,G_e}{V_P}C_E^j
++
+S_P^j\Delta t.
+\tag{TRISO-FV-157}
+$$
+
+Add \(C_P^j\):
+
+$$
+\boxed{
+C_P^{j+1}
+=
+\frac{\Delta t\,G_w}{V_P}C_W^j
++
+\left[
+1-
+\frac{\Delta t(G_w+G_e)}{V_P}
+\right]C_P^j
++
+\frac{\Delta t\,G_e}{V_P}C_E^j
++
+S_P^j\Delta t.
+}
+\tag{TRISO-FV-158}
+$$
+
+This is an explicit conservative finite-volume update.
+
+### 18.9 Exact discrete conservation over multiple cells
+
+Sum (TRISO-FV-123) over all control volumes \(P=1,\ldots,M\):
+
+$$
+\sum_{P=1}^{M}
+V_P\frac{dC_P}{dt}
+=
+\sum_{P=1}^{M}
+(A_wJ_w-A_eJ_e)
++
+\sum_{P=1}^{M}S_PV_P.
+\tag{TRISO-FV-159}
+$$
+
+At a shared internal face, the east flux of one cell is the west flux of the next cell.
+
+For example,
+
+$$
+-A_{e,P}J_{e,P}
++
+A_{w,P+1}J_{w,P+1}
+=
+0
+\tag{TRISO-FV-160}
+$$
+
+because
+
+$$
+A_{e,P}=A_{w,P+1}
+\tag{TRISO-FV-161}
+$$
+
+and the same single face flux is used:
+
+$$
+J_{e,P}=J_{w,P+1}.
+\tag{TRISO-FV-162}
+$$
+
+Therefore every internal-face contribution cancels pairwise.
+
+Only the physical domain boundaries remain:
+
+$$
+\boxed{
+\frac{d}{dt}
+\left(
+\sum_PV_PC_P
+\right)
+=
+\text{boundary inflow}
+-
+\text{boundary outflow}
++
+\sum_PS_PV_P.
+}
+\tag{TRISO-FV-163}
+$$
+
+This is the principal conservation advantage of the finite-volume construction.
+
+### 18.10 Centre control volume
+
+For the central cell,
+
+$$
+r_w=0.
+\tag{TRISO-FV-164}
+$$
+
+Therefore its west-face area is
+
+$$
+A_w=4\pi(0)^2.
+\tag{TRISO-FV-165}
+$$
+
+Hence
+
+$$
+\boxed{
+A_w=0.
+}
+\tag{TRISO-FV-166}
+$$
+
+The centre requires no artificial inward flux condition in the control-volume balance because the spherical face at \(r=0\) has zero area.
+
+The central balance becomes
+
+$$
+\boxed{
+V_0\frac{dC_0}{dt}
+=
+-A_eJ_e
++
+S_0V_0.
+}
+\tag{TRISO-FV-167}
+$$
+
+Using the outward face-flux convention,
+
+$$
+J_e
+=
+G_e^{(A=1)}(C_0-C_1),
+\tag{TRISO-FV-168}
+$$
+
+where \(G_e^{(A=1)}\) denotes the conductance per unit area.
+
+Equivalently, using total conductance \(G_e\),
+
+$$
+\boxed{
+V_0\frac{dC_0}{dt}
+=
+G_e(C_1-C_0)
++
+S_0V_0.
+}
+\tag{TRISO-FV-169}
+$$
+
+Thus centre regularity is built geometrically into the zero-area inner face.
+
+### 18.11 Kernel-confined source
+
+For a cell entirely inside the kernel,
+
+$$
+S_P=S_0
+\tag{TRISO-FV-170}
+$$
+
+for the constant-source benchmark.
+
+For a cell entirely outside the kernel,
+
+$$
+S_P=0.
+\tag{TRISO-FV-171}
+$$
+
+If a control-volume face is aligned with the kernel boundary \(r_1\), no cell straddles the source discontinuity.
+
+Then the discrete total generation is
+
+$$
+\dot N_{\mathrm{gen}}^{\,h}
+=
+\sum_{P\in\mathrm{kernel}}
+S_0V_P.
+\tag{TRISO-FV-172}
+$$
+
+Because the kernel control volumes exactly partition \(0<r<r_1\),
+
+$$
+\sum_{P\in\mathrm{kernel}}V_P
+=
+\frac{4\pi r_1^3}{3}.
+\tag{TRISO-FV-173}
+$$
+
+Therefore
+
+$$
+\boxed{
+\dot N_{\mathrm{gen}}^{\,h}
+=
+\frac{4\pi S_0r_1^3}{3}.
+}
+\tag{TRISO-FV-174}
+$$
+
+The aligned finite-volume source inventory exactly reproduces the continuous total generation for constant \(S_0\).
+
+### 18.12 Outer Robin boundary as a face flux
+
+At the outer face,
+
+$$
+r_e=R.
+\tag{TRISO-FV-175}
+$$
+
+The outward boundary flux is prescribed by the Robin law:
+
+$$
+\boxed{
+J_R
+=
+h(C_R-c_\infty).
+}
+\tag{TRISO-FV-176}
+$$
+
+The outer-face amount rate is
+
+$$
+A_RJ_R
+=
+4\pi R^2h(C_R-c_\infty).
+\tag{TRISO-FV-177}
+$$
+
+For the outermost control volume \(P\), the balance is
+
+$$
+V_P\frac{dC_P}{dt}
+=
+A_wJ_w
+-
+A_RJ_R
++
+S_PV_P.
+\tag{TRISO-FV-178}
+$$
+
+Substitute the Robin flux:
+
+$$
+\boxed{
+V_P\frac{dC_P}{dt}
+=
+A_wJ_w
+-
+4\pi R^2h(C_R-c_\infty)
++
+S_PV_P.
+}
+\tag{TRISO-FV-179}
+$$
+
+[DERIVATION GAP] If \(C_P\) is a cell-centred volume average rather than a boundary value, a closure is still required to relate the cell-centre concentration to the surface concentration \(C_R\).
+
+Possible choices include a half-cell diffusion resistance in series with the external film resistance.
+
+That closure must be derived before a final cell-centred Robin coefficient is claimed.
+
+### 18.13 Explicit-Euler positivity condition for an ordinary cell
+
+From (TRISO-FV-158), the neighbour coefficients are
+
+$$
+\frac{\Delta t\,G_w}{V_P}\ge0
+\tag{TRISO-FV-180}
+$$
+
+and
+
+$$
+\frac{\Delta t\,G_e}{V_P}\ge0.
+\tag{TRISO-FV-181}
+$$
+
+The central coefficient is non-negative when
+
+$$
+1-
+\frac{\Delta t(G_w+G_e)}{V_P}
+\ge0.
+\tag{TRISO-FV-182}
+$$
+
+Rearrange:
+
+$$
+\Delta t(G_w+G_e)
+\le
+V_P.
+\tag{TRISO-FV-183}
+$$
+
+Therefore
+
+$$
+\boxed{
+\Delta t
+\le
+\frac{V_P}{G_w+G_e}.
+}
+\tag{TRISO-FV-184}
+$$
+
+For every ordinary cell, a sufficient global coefficient-positivity restriction is
+
+$$
+\boxed{
+\Delta t
+\le
+\min_P
+\frac{V_P}{G_w+G_e}.
+}
+\tag{TRISO-FV-185}
+$$
+
+This is the finite-volume analogue of the earlier homogeneous FTCS monotonicity restriction.
+
+It is not yet the final bound because the outer Robin cell requires the unresolved surface closure in Section 18.12.
+
+### 18.14 Status of the five-layer deterministic discretisation
+
+[VERIFIED] The spherical control-volume geometry and exact integrated conservation balance.
+
+[VERIFIED] Conservative internal face coupling.
+
+[VERIFIED] Harmonic/resistance-weighted treatment of discontinuous diffusivity.
+
+[VERIFIED] Pairwise cancellation of internal face fluxes.
+
+[VERIFIED] Geometric centre treatment through the zero-area inner face.
+
+[VERIFIED] Exact kernel generation inventory when material/source interfaces align with control-volume faces.
+
+[DERIVATION GAP] Final cell-centred Robin surface closure.
+
+[DERIVATION GAP] Final assembled five-layer coefficient matrix including the outer boundary.
+
+[UNVERIFIED] Accuracy order of the complete multilayer finite-volume scheme.
+
+[UNVERIFIED] Stability/convergence of the complete multilayer scheme.
+
+The finite-volume derivation is therefore the current canonical deterministic route for the discontinuous-\(D\) five-layer model, while the original FTCS scheme remains a transparent homogeneous benchmark.
+
+## 19. Implementation provenance
 
 Repository: theodoreOnzGit/outram-park-backend.
 
@@ -9987,7 +11036,7 @@ verification_and_validation/crp6_case1_kernel_release_vs_crank.md → existing s
 
 docs/buffer_clt_failure_analysis.md → legacy Gaussian interface-overshoot analysis.
 
-## 19. Foundation gate
+## 20. Foundation gate
 
 All 33 original displayed equations are now accounted for in the central register.
 
