@@ -256,3 +256,19 @@ Scope: these equations apply only to a uniform-grid interior stencil wholly insi
 | TRISO-DIS-233 | Centre local consistency order | CONDITIONALLY VERIFIED |
 
 Scope: the centre stencil assumes a smooth spherically symmetric field and a homogeneous kernel around r=0. Stability implications of the coefficient 1-6Fo_1 are deferred to the dedicated stability section.
+
+## Canonical stable equations: discontinuous-D material-interface discretisation
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-DIS-300–306 | Interface-aligned mesh and interface unknown | VERIFIED AS DEFINITIONS |
+| TRISO-DIS-307–309 | Ideal discrete concentration continuity | ASSUMPTION / VERIFIED REPRESENTATION |
+| TRISO-DIS-310–317 | Continuous and one-sided discrete interface fluxes | CONDITIONALLY VERIFIED |
+| TRISO-DIS-318–323 | Equal-spacing discrete flux-continuity constraint | VERIFIED GIVEN GRADIENT APPROXIMATION |
+| TRISO-DIS-324–331 | Unequal-spacing interface constraint | VERIFIED GIVEN GRADIENT APPROXIMATION |
+| TRISO-DIS-333–338 | Interface flux from series diffusion resistance | VERIFIED |
+| TRISO-DIS-339–345 | Effective/harmonic diffusivity derivation | VERIFIED |
+| TRISO-DIS-346–348 | Equal-diffusivity reduction | VERIFIED |
+| TRISO-DIS-349 | Strong diffusivity-contrast limiting case | VERIFIED QUALITATIVELY |
+
+Accuracy note: the single-neighbour one-sided gradients used at the exact interface are first-order approximations to the limiting derivatives. The derivation establishes conservative transmission logic and harmonic resistance weighting, but does not yet select the final globally preferred five-layer discretisation.
