@@ -57,3 +57,29 @@ Rule: this table is the only authoritative original-equation → stable-equation
 ## Provenance
 
 The raw notebook was preserved from the supplied project file without mathematical edits. SHA-256: `5ce5f77e5148a234a7e7339a485923df982b54edfc79ff96796d26e0673158ce`.
+## Canonical stable equations added during mathematical expansion
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| `TRISO-GOV-020` | Control-volume conserved inventory definition | VERIFIED |
+| `TRISO-GOV-027` | Control-volume accumulation = generation - outward flux | VERIFIED |
+| `TRISO-GOV-029` | Integral conservation statement with flux and source | VERIFIED |
+| `TRISO-GOV-034` | Local differential conservation law | VERIFIED |
+| `TRISO-GOV-035` | Fickian constitutive relation | CONSTITUTIVE |
+| `TRISO-GOV-038` | Fick substitution into conservation | VERIFIED |
+| `TRISO-GOV-040` | General conservative diffusion equation | VERIFIED |
+| `TRISO-SPH-020` | Spherical-coordinate gradient | VERIFIED |
+| `TRISO-SPH-021` | Spherical-coordinate divergence | VERIFIED |
+| `TRISO-SPH-022` | Spherical symmetry specialization c=c(r,t) | ASSUMPTION |
+| `TRISO-SPH-025` | Radial gradient after angular elimination | VERIFIED |
+| `TRISO-SPH-026` | Radial Fickian flux | CONSTITUTIVE |
+| `TRISO-SPH-029` | Radial spherical divergence | VERIFIED |
+| `TRISO-SPH-033` | General heterogeneous spherical conservative PDE | VERIFIED |
+| `TRISO-SPH-034` | Layer-specific constant-D assumption | ASSUMPTION |
+| `TRISO-SPH-036` | D_i moved outside radial derivative | CONDITIONALLY VERIFIED |
+| `TRISO-SPH-037` | Explicit product-rule expansion | VERIFIED |
+| `TRISO-SPH-039` | Product-rule result | VERIFIED |
+| `TRISO-SPH-040` | Divide by r^2 and collect terms | VERIFIED |
+| `TRISO-SPH-041` | Familiar within-layer radial diffusion equation | CONDITIONALLY VERIFIED |
+
+These identifiers are now part of the active canonical derivation. They supplement the one-to-one mapping of the original 33 notebook equations; they do not replace any original mapping.
