@@ -7646,7 +7646,636 @@ It does not determine the treatment of material interfaces or the outer surface.
 
 The coefficient \(1-6\mathrm{Fo}_1\) will later enter the FTCS monotonicity/stability discussion, but no stability conclusion is drawn here.
 
-## 15. Robin ghost and surface
+## 15. Material-interface discretisation for discontinuous diffusivity
+
+The homogeneous interior FTCS stencil from Section 13 must not be centred across a material interface because the diffusivity is discontinuous there.
+
+This section derives an interface-aligned discrete constraint directly from the two physical interface conditions already established in the continuous model:
+
+1. ideal concentration continuity;
+2. diffusive flux continuity.
+
+The derivation is for the frozen ideal benchmark with \(K=1\) and no explicit interfacial resistance.
+
+### 15.1 Place a mesh node at the material interface
+
+Let a material interface occur at
+
+$$
+r=r_I.
+\tag{TRISO-DIS-300}
+$$
+
+Choose the mesh so that one numerical node lies exactly at the interface:
+
+$$
+r_I=r_{i}.
+\tag{TRISO-DIS-301}
+$$
+
+Let the material immediately inside the interface have diffusivity
+
+$$
+D^-,
+\tag{TRISO-DIS-302}
+$$
+
+and the material immediately outside have diffusivity
+
+$$
+D^+.
+\tag{TRISO-DIS-303}
+$$
+
+For a uniform mesh,
+
+$$
+r_{i-1}=r_I-\Delta r,
+\tag{TRISO-DIS-304}
+$$
+
+and
+
+$$
+r_{i+1}=r_I+\Delta r.
+\tag{TRISO-DIS-305}
+$$
+
+The interface concentration is represented by one nodal unknown:
+
+$$
+C_I^j.
+\tag{TRISO-DIS-306}
+$$
+
+### 15.2 Discrete concentration continuity
+
+For the ideal \(K=1\) interface, the continuous condition is
+
+$$
+c^-(r_I,t)=c^+(r_I,t).
+\tag{TRISO-DIS-307}
+$$
+
+Represent both limiting concentrations by the same interface unknown:
+
+$$
+c^-(r_I,t_j)\approx C_I^j,
+\tag{TRISO-DIS-308}
+$$
+
+and
+
+$$
+c^+(r_I,t_j)\approx C_I^j.
+\tag{TRISO-DIS-309}
+$$
+
+Thus concentration continuity is built directly into the interface-node representation.
+
+No averaging of the two material concentrations is required because there is only one ideal-interface concentration degree of freedom.
+
+### 15.3 Continuous flux continuity
+
+The exact ideal-interface condition is
+
+$$
+-D^-
+\left.
+\frac{\partial c^-}{\partial r}
+\right|_{r_I^-}
+=
+-D^+
+\left.
+\frac{\partial c^+}{\partial r}
+\right|_{r_I^+}.
+\tag{TRISO-DIS-310}
+$$
+
+The minus signs occur because the outward radial diffusive flux is
+
+$$
+J_r=-D\frac{\partial c}{\partial r}.
+\tag{TRISO-DIS-311}
+$$
+
+### 15.4 Approximate the inner-side gradient
+
+On the inner material side, use the interface node and its inner neighbour.
+
+The radial distance is
+
+$$
+r_I-r_{i-1}=\Delta r.
+\tag{TRISO-DIS-312}
+$$
+
+A first-order one-sided approximation is
+
+$$
+\left.
+\frac{\partial c^-}{\partial r}
+\right|_{r_I^-}
+\approx
+\frac{
+C_I^j-C_{i-1}^j
+}{
+\Delta r
+}.
+\tag{TRISO-DIS-313}
+$$
+
+Therefore the inner-side outward flux is approximated by
+
+$$
+J_I^-
+\approx
+-D^-
+\frac{
+C_I^j-C_{i-1}^j
+}{
+\Delta r
+}.
+\tag{TRISO-DIS-314}
+$$
+
+### 15.5 Approximate the outer-side gradient
+
+On the outer material side,
+
+$$
+r_{i+1}-r_I=\Delta r.
+\tag{TRISO-DIS-315}
+$$
+
+The one-sided gradient is
+
+$$
+\left.
+\frac{\partial c^+}{\partial r}
+\right|_{r_I^+}
+\approx
+\frac{
+C_{i+1}^j-C_I^j
+}{
+\Delta r
+}.
+\tag{TRISO-DIS-316}
+$$
+
+Therefore
+
+$$
+J_I^+
+\approx
+-D^+
+\frac{
+C_{i+1}^j-C_I^j
+}{
+\Delta r
+}.
+\tag{TRISO-DIS-317}
+$$
+
+### 15.6 Enforce discrete flux continuity
+
+Set the two approximated fluxes equal:
+
+$$
+-D^-
+\frac{
+C_I^j-C_{i-1}^j
+}{
+\Delta r
+}
+=
+-D^+
+\frac{
+C_{i+1}^j-C_I^j
+}{
+\Delta r
+}.
+\tag{TRISO-DIS-318}
+$$
+
+Cancel the common factor \(-1/\Delta r\):
+
+$$
+D^-
+\left(
+C_I^j-C_{i-1}^j
+\right)
+=
+D^+
+\left(
+C_{i+1}^j-C_I^j
+\right).
+\tag{TRISO-DIS-319}
+$$
+
+Expand both sides:
+
+$$
+D^-C_I^j-D^-C_{i-1}^j
+=
+D^+C_{i+1}^j-D^+C_I^j.
+\tag{TRISO-DIS-320}
+$$
+
+Add \(D^+C_I^j\) to both sides:
+
+$$
+(D^-+D^+)C_I^j-D^-C_{i-1}^j
+=
+D^+C_{i+1}^j.
+\tag{TRISO-DIS-321}
+$$
+
+Add \(D^-C_{i-1}^j\) to both sides:
+
+$$
+(D^-+D^+)C_I^j
+=
+D^-C_{i-1}^j
++
+D^+C_{i+1}^j.
+\tag{TRISO-DIS-322}
+$$
+
+Divide by \(D^-+D^+>0\):
+
+$$
+\boxed{
+C_I^j
+=
+\frac{
+D^-C_{i-1}^j
++
+D^+C_{i+1}^j
+}{
+D^-+D^+
+}.
+}
+\tag{TRISO-DIS-323}
+$$
+
+This is an algebraic interface constraint, not a homogeneous-material FTCS update.
+
+### 15.7 Unequal grid spacing
+
+The same derivation can be retained if the interface is not equally spaced from its neighbouring nodes.
+
+Define
+
+$$
+\Delta r^-=r_I-r_{i-1},
+\tag{TRISO-DIS-324}
+$$
+
+and
+
+$$
+\Delta r^+=r_{i+1}-r_I.
+\tag{TRISO-DIS-325}
+$$
+
+Then the two flux approximations are
+
+$$
+J_I^-
+\approx
+-D^-
+\frac{
+C_I-C_{i-1}
+}{
+\Delta r^-
+},
+\tag{TRISO-DIS-326}
+$$
+
+and
+
+$$
+J_I^+
+\approx
+-D^+
+\frac{
+C_{i+1}-C_I
+}{
+\Delta r^+
+}.
+\tag{TRISO-DIS-327}
+$$
+
+Flux continuity gives
+
+$$
+\frac{D^-}{\Delta r^-}
+(C_I-C_{i-1})
+=
+\frac{D^+}{\Delta r^+}
+(C_{i+1}-C_I).
+\tag{TRISO-DIS-328}
+$$
+
+Expand:
+
+$$
+\frac{D^-}{\Delta r^-}C_I
+-
+\frac{D^-}{\Delta r^-}C_{i-1}
+=
+\frac{D^+}{\Delta r^+}C_{i+1}
+-
+\frac{D^+}{\Delta r^+}C_I.
+\tag{TRISO-DIS-329}
+$$
+
+Collect the interface unknown:
+
+$$
+\left(
+\frac{D^-}{\Delta r^-}
++
+\frac{D^+}{\Delta r^+}
+\right)
+C_I
+=
+\frac{D^-}{\Delta r^-}C_{i-1}
++
+\frac{D^+}{\Delta r^+}C_{i+1}.
+\tag{TRISO-DIS-330}
+$$
+
+Therefore
+
+$$
+\boxed{
+C_I
+=
+\frac{
+\dfrac{D^-}{\Delta r^-}C_{i-1}
++
+\dfrac{D^+}{\Delta r^+}C_{i+1}
+}{
+\dfrac{D^-}{\Delta r^-}
++
+\dfrac{D^+}{\Delta r^+}
+}.
+}
+\tag{TRISO-DIS-331}
+$$
+
+Equation (TRISO-DIS-323) is recovered when
+
+$$
+\Delta r^-=\Delta r^+=\Delta r.
+\tag{TRISO-DIS-332}
+$$
+
+### 15.8 Equivalent two-node conductance and harmonic diffusivity
+
+Sometimes the interface concentration is eliminated so that the flux is written directly between the two neighbouring material nodes.
+
+Start from the inner-side flux relation:
+
+$$
+J_I
+=
+-D^-
+\frac{
+C_I-C_{i-1}
+}{
+\Delta r^-
+}.
+\tag{TRISO-DIS-333}
+$$
+
+Rearrange for the inner concentration drop:
+
+$$
+C_{i-1}-C_I
+=
+J_I
+\frac{\Delta r^-}{D^-}.
+\tag{TRISO-DIS-334}
+$$
+
+From the outer-side relation,
+
+$$
+J_I
+=
+-D^+
+\frac{
+C_{i+1}-C_I
+}{
+\Delta r^+
+}.
+\tag{TRISO-DIS-335}
+$$
+
+Rearrange:
+
+$$
+C_I-C_{i+1}
+=
+J_I
+\frac{\Delta r^+}{D^+}.
+\tag{TRISO-DIS-336}
+$$
+
+Add the two concentration drops:
+
+$$
+C_{i-1}-C_{i+1}
+=
+J_I
+\left(
+\frac{\Delta r^-}{D^-}
++
+\frac{\Delta r^+}{D^+}
+\right).
+\tag{TRISO-DIS-337}
+$$
+
+Solve for the flux:
+
+$$
+\boxed{
+J_I
+=
+\frac{
+C_{i-1}-C_{i+1}
+}{
+\dfrac{\Delta r^-}{D^-}
++
+\dfrac{\Delta r^+}{D^+}
+}.
+}
+\tag{TRISO-DIS-338}
+$$
+
+The denominator is the sum of the two local diffusion resistances per unit area.
+
+Define the total node-to-node distance
+
+$$
+\Delta r_{\mathrm{tot}}
+=
+\Delta r^-+\Delta r^+.
+\tag{TRISO-DIS-339}
+$$
+
+Define an effective diffusivity \(D_{\mathrm{eff}}\) by
+
+$$
+J_I
+=
+D_{\mathrm{eff}}
+\frac{
+C_{i-1}-C_{i+1}
+}{
+\Delta r_{\mathrm{tot}}
+}.
+\tag{TRISO-DIS-340}
+$$
+
+Equate (TRISO-DIS-338) and (TRISO-DIS-340):
+
+$$
+\frac{D_{\mathrm{eff}}}{\Delta r_{\mathrm{tot}}}
+=
+\frac1{
+\dfrac{\Delta r^-}{D^-}
++
+\dfrac{\Delta r^+}{D^+}
+}.
+\tag{TRISO-DIS-341}
+$$
+
+Multiply by \(\Delta r_{\mathrm{tot}}\):
+
+$$
+\boxed{
+D_{\mathrm{eff}}
+=
+\frac{
+\Delta r^-+\Delta r^+
+}{
+\dfrac{\Delta r^-}{D^-}
++
+\dfrac{\Delta r^+}{D^+}
+}.
+}
+\tag{TRISO-DIS-342}
+$$
+
+For equal half-distances,
+
+$$
+\Delta r^-=\Delta r^+,
+\tag{TRISO-DIS-343}
+$$
+
+the effective diffusivity becomes
+
+$$
+D_{\mathrm{eff}}
+=
+\frac{2}{
+\dfrac1{D^-}
++
+\dfrac1{D^+}
+}.
+\tag{TRISO-DIS-344}
+$$
+
+Thus
+
+$$
+\boxed{
+D_{\mathrm{eff}}
+=
+\frac{
+2D^-D^+
+}{
+D^-+D^+
+}.
+}
+\tag{TRISO-DIS-345}
+$$
+
+This is the harmonic mean of the adjacent diffusivities.
+
+It appears because diffusion resistances add in series; it is not an arbitrary averaging rule.
+
+### 15.9 Limiting checks
+
+If
+
+$$
+D^-=D^+=D,
+\tag{TRISO-DIS-346}
+$$
+
+then (TRISO-DIS-323) becomes
+
+$$
+C_I
+=
+\frac{
+DC_{i-1}+DC_{i+1}
+}{
+2D
+}.
+\tag{TRISO-DIS-347}
+$$
+
+Cancel \(D\):
+
+$$
+\boxed{
+C_I
+=
+\frac{
+C_{i-1}+C_{i+1}
+}{2}.
+}
+\tag{TRISO-DIS-348}
+$$
+
+This is the expected linear interpolation for equal diffusivity and equal spacing.
+
+If
+
+$$
+D^+\ll D^-,
+\tag{TRISO-DIS-349}
+$$
+
+then the low-diffusivity outer material contributes the dominant diffusion resistance in (TRISO-DIS-338).
+
+The interface concentration correspondingly approaches the concentration on the high-diffusivity side only according to the resistance-weighted relation; it is not obtained from an arithmetic diffusivity average.
+
+### 15.10 Accuracy and scope
+
+The one-sided interface gradients in (TRISO-DIS-313) and (TRISO-DIS-316) are first-order approximations to the limiting interface derivatives when used with only one neighbouring node on each side.
+
+Therefore the algebraic interface relation derived here is conservative with respect to the approximated flux, but this particular gradient construction is not automatically second-order accurate at the interface.
+
+A higher-order interface treatment would require additional same-material nodes or a finite-volume formulation with carefully defined face fluxes.
+
+[IMPORTANT] The present result establishes the correct **discrete transmission logic**:
+
+- one ideal-interface concentration;
+- no differentiation of \(D\) through its jump;
+- equal discrete flux on both sides;
+- resistance-weighted, rather than arithmetic, diffusivity coupling.
+
+It does not yet establish the globally preferred five-layer spatial discretisation.
+
+## 16. Robin ghost and surface
 
 At R:
 
@@ -7660,7 +8289,7 @@ Substitution gives:
 
 C_N^{j+1}=[1-2Fo(1+κ(1+1/N))]C_N^j+2FoC_{N-1}^j+S0Δt.
 
-## 16. Corrected FTCS stability statement
+## 17. Corrected FTCS stability statement
 
 The original notebook treats non-negative stencil coefficients as though that were a necessary and sufficient stability condition. It is only a sufficient monotonicity-style condition.
 
@@ -7676,7 +8305,7 @@ Fo≤min{1/6, 1/[2(1+κ(1+1/N))]}.
 
 A complete spectral stability analysis of the assembled amplification matrix remains future work.
 
-## 17. Implementation provenance
+## 18. Implementation provenance
 
 Repository: theodoreOnzGit/outram-park-backend.
 
@@ -7702,7 +8331,7 @@ verification_and_validation/crp6_case1_kernel_release_vs_crank.md → existing s
 
 docs/buffer_clt_failure_analysis.md → legacy Gaussian interface-overshoot analysis.
 
-## 18. Foundation gate
+## 19. Foundation gate
 
 All 33 original displayed equations are now accounted for in the central register.
 
