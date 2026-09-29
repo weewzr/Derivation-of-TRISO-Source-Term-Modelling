@@ -308,3 +308,24 @@ Scope: the surface update is the homogeneous Part-I Robin benchmark formula. The
 | TRISO-DIS-578–582 | Final corrected status of original notebook stability claim | VERIFIED / NECESSITY NOT PROVED |
 
 The coefficient restriction is sufficient for monotonicity, infinity-norm non-amplification, and rho(A)<=1 for the assembled homogeneous benchmark. It is not claimed necessary for spectral stability and is not a proved stability bound for the eventual discontinuous-D five-layer discretisation.
+
+## Canonical stable equations: conservative five-layer finite-volume derivation
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-FV-100 | Conservative spherical PDE used for finite-volume derivation | VERIFIED |
+| TRISO-FV-101–108 | Spherical control-volume geometry, areas, and exact volume | VERIFIED |
+| TRISO-FV-109–117 | Integrated spherical conservation equation | VERIFIED |
+| TRISO-FV-118–123 | Cell-average concentration/source and exact cell balance | VERIFIED |
+| TRISO-FV-124–128 | Same-material face-gradient/flux approximation | CONDITIONALLY VERIFIED |
+| TRISO-FV-129–140 | Discontinuous-D interface face flux from series resistance | VERIFIED GIVEN LINEAR HALF-CELL APPROXIMATION |
+| TRISO-FV-141–146 | Effective/harmonic face diffusivity | VERIFIED |
+| TRISO-FV-147–155 | Conductances and conservative semi-discrete cell equation | VERIFIED |
+| TRISO-FV-156–158 | Explicit-Euler finite-volume update | VERIFIED |
+| TRISO-FV-159–163 | Exact pairwise internal-flux cancellation / global conservation | VERIFIED |
+| TRISO-FV-164–169 | Geometric centre control volume | VERIFIED |
+| TRISO-FV-170–174 | Kernel-confined source and exact discrete total generation | VERIFIED |
+| TRISO-FV-175–179 | Outer Robin face-flux balance before cell-centre closure | VERIFIED / INCOMPLETE CLOSURE |
+| TRISO-FV-180–185 | Ordinary-cell explicit positivity bound | CONDITIONALLY VERIFIED |
+
+Current finite-volume gaps: derive the cell-centred Robin surface closure, assemble the final five-layer coefficient matrix, then establish accuracy and stability/convergence for that completed scheme.
