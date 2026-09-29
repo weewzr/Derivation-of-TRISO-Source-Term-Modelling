@@ -8950,26 +8950,38 @@ The continuum Robin condition approaches the absorbing Dirichlet condition \(c(R
 
 Therefore an absorbing Dirichlet boundary should be imposed directly when that is the intended numerical model, rather than obtained by taking \(\kappa\to\infty\) in (TRISO-DIS-443).
 
-### 16.9 Accuracy of the boundary approximation
+### 16.9 Complete truncation error of the Robin ghost surface closure
 
-Taylor-expand around \(R\):
+The centred Robin derivative by itself is second-order accurate, but the complete surface PDE closure also inserts the ghost value into a second-derivative stencil.
+
+The complete boundary operator must therefore be expanded directly.
+
+Define
 
 $$
-c(R+\Delta r)
-=
-c(R)
-+
-\Delta r\,c_r(R)
-+
-\frac{\Delta r^2}{2}c_{rr}(R)
-+
-\frac{\Delta r^3}{6}c_{rrr}(R)
-+
-O(\Delta r^4).
+\beta=\frac{h}{D}.
 \tag{TRISO-DIS-452}
 $$
 
-Similarly,
+The exact Robin condition gives
+
+$$
+c_r(R)=-\beta c(R).
+\tag{TRISO-DIS-453}
+$$
+
+The ghost construction is
+
+$$
+c_g(R+\Delta r)
+=
+c(R-\Delta r)
+-
+2\beta\Delta r\,c(R).
+\tag{TRISO-DIS-454}
+$$
+
+Taylor-expand the exact interior value:
 
 $$
 c(R-\Delta r)
@@ -8983,49 +8995,211 @@ c(R)
 \frac{\Delta r^3}{6}c_{rrr}(R)
 +
 O(\Delta r^4).
-\tag{TRISO-DIS-453}
-$$
-
-Subtract the second expansion from the first:
-
-$$
-c(R+\Delta r)-c(R-\Delta r)
-=
-2\Delta r\,c_r(R)
-+
-\frac{\Delta r^3}{3}c_{rrr}(R)
-+
-O(\Delta r^5).
-\tag{TRISO-DIS-454}
-$$
-
-Divide by \(2\Delta r\):
-
-$$
-\frac{
-c(R+\Delta r)-c(R-\Delta r)
-}{
-2\Delta r
-}
-=
-c_r(R)
-+
-O(\Delta r^2).
 \tag{TRISO-DIS-455}
 $$
 
-Thus the centred Robin derivative used to eliminate the ghost point is second-order accurate for a sufficiently smooth continuation through the boundary.
-
-However, the ghost value itself is a mathematical continuation, not a physical exterior solution.
-
-The complete surface update combines this boundary approximation with the centred second derivative and forward Euler time step. Its local consistency is therefore formally
+Substitute the Robin derivative \(c_r(R)=-\beta c(R)\):
 
 $$
-O(\Delta t)+O(\Delta r^2)
+c(R-\Delta r)
+=
+c(R)
++
+\beta\Delta r\,c(R)
++
+\frac{\Delta r^2}{2}c_{rr}(R)
+-
+\frac{\Delta r^3}{6}c_{rrr}(R)
++
+O(\Delta r^4).
 \tag{TRISO-DIS-456}
 $$
 
-for the homogeneous smooth benchmark, subject to the Robin boundary compatibility used in the ghost construction.
+Substitute this expansion into the ghost construction:
+
+$$
+c_g(R+\Delta r)
+=
+c(R)
+-
+\beta\Delta r\,c(R)
++
+\frac{\Delta r^2}{2}c_{rr}(R)
+-
+\frac{\Delta r^3}{6}c_{rrr}(R)
++
+O(\Delta r^4).
+\tag{TRISO-DIS-457}
+$$
+
+The exact smooth continuation would be
+
+$$
+c(R+\Delta r)
+=
+c(R)
++
+\Delta r\,c_r(R)
++
+\frac{\Delta r^2}{2}c_{rr}(R)
++
+\frac{\Delta r^3}{6}c_{rrr}(R)
++
+O(\Delta r^4).
+\tag{TRISO-DIS-458}
+$$
+
+Apply \(c_r(R)=-\beta c(R)\):
+
+$$
+c(R+\Delta r)
+=
+c(R)
+-
+\beta\Delta r\,c(R)
++
+\frac{\Delta r^2}{2}c_{rr}(R)
++
+\frac{\Delta r^3}{6}c_{rrr}(R)
++
+O(\Delta r^4).
+\tag{TRISO-DIS-459}
+$$
+
+Subtract the exact continuation from the ghost continuation:
+
+$$
+c_g(R+\Delta r)-c(R+\Delta r)
+=
+-\frac{\Delta r^3}{3}c_{rrr}(R)
++
+O(\Delta r^4).
+\tag{TRISO-DIS-460}
+$$
+
+Thus the ghost value error is
+
+$$
+\boxed{
+c_g-c_{\mathrm{exact}}
+=
+O(\Delta r^3).
+}
+\tag{TRISO-DIS-461}
+$$
+
+The ghost value enters the centred second derivative divided by \(\Delta r^2\):
+
+$$
+c_{rr}^{\,g}(R)
+=
+\frac{
+c(R-\Delta r)-2c(R)+c_g(R+\Delta r)
+}{
+\Delta r^2
+}.
+\tag{TRISO-DIS-462}
+$$
+
+Write the ghost value as
+
+$$
+c_g(R+\Delta r)
+=
+c(R+\Delta r)
++
+\varepsilon_g,
+\tag{TRISO-DIS-463}
+$$
+
+where
+
+$$
+\varepsilon_g
+=
+-\frac{\Delta r^3}{3}c_{rrr}(R)
++
+O(\Delta r^4).
+\tag{TRISO-DIS-464}
+$$
+
+Substitute:
+
+$$
+c_{rr}^{\,g}(R)
+=
+\frac{
+c(R-\Delta r)-2c(R)+c(R+\Delta r)
+}{
+\Delta r^2
+}
++
+\frac{\varepsilon_g}{\Delta r^2}.
+\tag{TRISO-DIS-465}
+$$
+
+The ordinary centred second derivative contributes
+
+$$
+c_{rr}(R)+O(\Delta r^2).
+\tag{TRISO-DIS-466}
+$$
+
+The ghost-error contribution is
+
+$$
+\frac{\varepsilon_g}{\Delta r^2}
+=
+-\frac{\Delta r}{3}c_{rrr}(R)
++
+O(\Delta r^2).
+\tag{TRISO-DIS-467}
+$$
+
+Therefore
+
+$$
+\boxed{
+c_{rr}^{\,g}(R)
+=
+c_{rr}(R)
+-
+\frac{\Delta r}{3}c_{rrr}(R)
++
+O(\Delta r^2).
+}
+\tag{TRISO-DIS-468}
+$$
+
+The first-derivative Robin closure remains second-order, but the second-derivative part is generically first-order at the boundary.
+
+Hence the complete spherical surface operator has generic local spatial truncation
+
+$$
+\boxed{
+\mathcal L_h[c](R)
+=
+\mathcal L[c](R)
++
+O(\Delta r).
+}
+\tag{TRISO-DIS-469}
+$$
+
+With forward Euler time stepping, the boundary local consistency is therefore generically
+
+$$
+\boxed{
+O(\Delta t)+O(\Delta r),
+}
+\tag{TRISO-DIS-470}
+$$
+
+unless additional cancellation or superconvergence is demonstrated.
+
+[CORRECTION] The previous claim of \(O(\Delta t)+O(\Delta r^2)\) for the complete Robin surface update was overstated. Only the centred first-derivative approximation was second-order.
+
+[OPEN REVIEW FINDING R2-D01] The analytical overclaim is corrected, but the independent reviewer requires an actual grid-refinement study before this finding is closed. No global FTCS convergence order is claimed here.
 
 ### 16.10 Scope
 
@@ -10061,6 +10235,90 @@ r_e^3-r_w^3
 }
 \tag{TRISO-FV-108}
 $$
+
+### 18.1.1 Frozen finite-volume unknown and representative coordinate
+
+The canonical finite-volume unknown remains the **exact spherical cell average** defined later in (TRISO-FV-118). It is not redefined as a point value.
+
+For geometry and two-point flux reconstruction, assign each cell a representative radial coordinate equal to its spherical volume centroid:
+
+$$
+\boxed{
+r_P
+=
+\frac{
+\displaystyle
+\int_{r_w}^{r_e}
+r\,4\pi r^2\,dr
+}{
+\displaystyle
+\int_{r_w}^{r_e}
+4\pi r^2\,dr
+}.
+}
+\tag{TRISO-FV-109A}
+$$
+
+Evaluate the numerator:
+
+$$
+\int_{r_w}^{r_e}
+4\pi r^3\,dr
+=
+\pi
+\left(
+r_e^4-r_w^4
+\right).
+\tag{TRISO-FV-109B}
+$$
+
+Use the exact volume (TRISO-FV-108):
+
+$$
+V_P
+=
+\frac{4\pi}{3}
+\left(
+r_e^3-r_w^3
+\right).
+\tag{TRISO-FV-109C}
+$$
+
+Therefore
+
+$$
+\boxed{
+r_P
+=
+\frac34
+\frac{
+r_e^4-r_w^4
+}{
+r_e^3-r_w^3
+}.
+}
+\tag{TRISO-FV-109D}
+$$
+
+The canonical representation is therefore:
+
+- \(C_P\): exact spherical volume average over cell \(P\);
+- \(r_P\): spherical volume-centroid coordinate used as the representative location of that average in two-point reconstruction;
+- \(r_{P+1/2}\): physical face coordinate;
+- \(r_{P+1}-r_P\): distance between representative cell coordinates;
+- \(\delta r_P=r_{P+1/2}-r_P\): distance from cell \(P\)'s representative coordinate to its east face;
+- \(\delta r_{P+1}=r_{P+1}-r_{P+1/2}\): distance from the shared face to the neighbouring representative coordinate.
+
+At a material interface, the physical interface is aligned with a face \(r_{P+1/2}\).
+
+At the outer boundary,
+
+$$
+\delta r_R=R-r_{M-1}.
+\tag{TRISO-FV-109E}
+$$
+
+[IMPORTANT] The face-gradient formulas treat the exact cell averages as reconstructed values located at their volume centroids. That reconstruction is an approximation whose spatial order must be established in the subsequent accuracy study; it is not part of the exact control-volume balance.
 
 ### 18.2 Integrate conservation over one spherical cell
 
@@ -11538,14 +11796,14 @@ From (TRISO-FV-158), the neighbour coefficients are
 
 $$
 \frac{\Delta t\,G_w}{V_P}\ge0
-\tag{TRISO-FV-180}
+\tag{TRISO-FV-600}
 $$
 
 and
 
 $$
 \frac{\Delta t\,G_e}{V_P}\ge0.
-\tag{TRISO-FV-181}
+\tag{TRISO-FV-601}
 $$
 
 The central coefficient is non-negative when
@@ -11554,7 +11812,7 @@ $$
 1-
 \frac{\Delta t(G_w+G_e)}{V_P}
 \ge0.
-\tag{TRISO-FV-182}
+\tag{TRISO-FV-602}
 $$
 
 Rearrange:
@@ -11563,7 +11821,7 @@ $$
 \Delta t(G_w+G_e)
 \le
 V_P.
-\tag{TRISO-FV-183}
+\tag{TRISO-FV-603}
 $$
 
 Therefore
@@ -11574,7 +11832,7 @@ $$
 \le
 \frac{V_P}{G_w+G_e}.
 }
-\tag{TRISO-FV-184}
+\tag{TRISO-FV-604}
 $$
 
 For every ordinary cell, a sufficient global coefficient-positivity restriction is
@@ -11586,7 +11844,7 @@ $$
 \min_P
 \frac{V_P}{G_w+G_e}.
 }
-\tag{TRISO-FV-185}
+\tag{TRISO-FV-605}
 $$
 
 This is the finite-volume analogue of the earlier homogeneous FTCS monotonicity restriction.
@@ -12675,4 +12933,4 @@ Remaining foundation gaps are explicitly retained:
 - complete equation-to-code verification;
 - WOS-to-continuum transient verification.
 
-Review 1 is not yet the next step. The required gate is an independent mathematical audit of this consolidated foundation against the original 33 equations and the status register.
+The independent continuous-mathematics audit has passed the project for discretisation, and the independent deterministic discrete-mathematics audit has passed the canonical finite-volume model for accuracy/convergence study. Review finding R2-D01 remains open specifically for the retained FTCS Robin benchmark until grid-refinement evidence is produced; it does not block the canonical FV accuracy/convergence track.
