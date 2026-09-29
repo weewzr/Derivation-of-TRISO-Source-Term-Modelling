@@ -1,4 +1,4 @@
-# WOS Interface-Resolution Admissibility
+> HISTORICAL ARCHIVE: superseded working document.\n\n# WOS Interface-Resolution Admissibility
 
 ## Why this check matters
 

@@ -1,4 +1,4 @@
-# Two-Layer Transient Reference — Numerical Sanity Check
+> HISTORICAL ARCHIVE: superseded working document.\n\n# Two-Layer Transient Reference — Numerical Sanity Check
 
 ## Execution limitation
 
