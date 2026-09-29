@@ -6366,27 +6366,822 @@ The diffusivity discontinuity is carried by \(p(r)=r^2D(r)\), while the weight r
 
 [UNVERIFIED] Numerical convergence rate and truncation error of the modal series.
 
-## 13. Original FTCS discretisation
+## 13. Original FTCS deterministic benchmark discretisation
 
-Uniform mesh:
+This section derives the original Ray notebook's FTCS method as a transparent deterministic benchmark.
 
-r_i=iΔr, Δr=R/N.
+It is **not** the supervisor repository's production Walk-on-Spheres method.
 
-Interior second derivative:
+The present subsection is restricted to an interior node lying entirely inside one homogeneous material region, so that the local diffusivity is constant and no material interface lies inside the stencil.
 
-c_rr ≈ (C_{i-1}^j-2C_i^j+C_{i+1}^j)/Δr².
+### 13.1 Starting continuous equation
 
-Interior first derivative:
+Inside one homogeneous layer, begin from
 
-c_r ≈ (C_{i+1}^j-C_{i-1}^j)/(2Δr).
+$$
+\frac{\partial c}{\partial t}
+=
+D
+\left(
+\frac{\partial^2c}{\partial r^2}
++
+\frac2r\frac{\partial c}{\partial r}
+\right)
++
+S.
+\tag{TRISO-DIS-100}
+$$
 
-Define Fo=DΔt/Δr².
+[ASSUMPTION] \(D\) is constant over the local stencil.
 
-The FTCS update is:
+[ASSUMPTION] The mesh is uniform for this Part-I benchmark.
 
-C_i^{j+1}=(1-2Fo)C_i^j+Fo(1+1/i)C_{i+1}^j+Fo(1-1/i)C_{i-1}^j+S_iΔt.
+### 13.2 Define the spatial mesh
 
-This is a Part-I benchmark discretisation, not the supervisor repository's production numerical method.
+Divide the interval
+
+$$
+0\le r\le R
+\tag{TRISO-DIS-101}
+$$
+
+into \(N\) equal intervals.
+
+Define
+
+$$
+\Delta r=\frac{R}{N}.
+\tag{TRISO-DIS-102}
+$$
+
+The node locations are
+
+$$
+r_i=i\Delta r,
+\qquad
+i=0,1,\ldots,N.
+\tag{TRISO-DIS-103}
+$$
+
+Therefore
+
+$$
+r_0=0,
+\tag{TRISO-DIS-104}
+$$
+
+and
+
+$$
+r_N=R.
+\tag{TRISO-DIS-105}
+$$
+
+### 13.3 Define the temporal mesh
+
+Let the time step be
+
+$$
+\Delta t>0.
+\tag{TRISO-DIS-106}
+$$
+
+Define
+
+$$
+t_j=j\Delta t,
+\qquad
+j=0,1,2,\ldots.
+\tag{TRISO-DIS-107}
+$$
+
+Let
+
+$$
+C_i^j
+\tag{TRISO-DIS-108}
+$$
+
+denote the numerical approximation to
+
+$$
+c(r_i,t_j).
+\tag{TRISO-DIS-109}
+$$
+
+Thus
+
+$$
+C_i^j\approx c(r_i,t_j).
+\tag{TRISO-DIS-110}
+$$
+
+The units remain
+
+$$
+[C_i^j]=\mathrm{mol\,m^{-3}}.
+\tag{TRISO-DIS-111}
+$$
+
+### 13.4 Forward approximation of the time derivative
+
+At fixed radius \(r_i\), Taylor-expand the exact solution from \(t_j\) to \(t_j+\Delta t\):
+
+$$
+c(r_i,t_j+\Delta t)
+=
+c(r_i,t_j)
++
+\Delta t
+\frac{\partial c}{\partial t}(r_i,t_j)
++
+O(\Delta t^2).
+\tag{TRISO-DIS-112}
+$$
+
+Subtract \(c(r_i,t_j)\) from both sides:
+
+$$
+c(r_i,t_j+\Delta t)-c(r_i,t_j)
+=
+\Delta t
+\frac{\partial c}{\partial t}(r_i,t_j)
++
+O(\Delta t^2).
+\tag{TRISO-DIS-113}
+$$
+
+Divide by \(\Delta t\):
+
+$$
+\frac{
+c(r_i,t_j+\Delta t)-c(r_i,t_j)
+}{
+\Delta t
+}
+=
+\frac{\partial c}{\partial t}(r_i,t_j)
++
+O(\Delta t).
+\tag{TRISO-DIS-114}
+$$
+
+Rearrange:
+
+$$
+\frac{\partial c}{\partial t}(r_i,t_j)
+=
+\frac{
+c(r_i,t_j+\Delta t)-c(r_i,t_j)
+}{
+\Delta t
+}
++
+O(\Delta t).
+\tag{TRISO-DIS-115}
+$$
+
+Replace the exact nodal values by the numerical unknowns:
+
+$$
+\boxed{
+\frac{\partial c}{\partial t}(r_i,t_j)
+\approx
+\frac{C_i^{j+1}-C_i^j}{\Delta t}.
+}
+\tag{TRISO-DIS-116}
+$$
+
+The forward-time approximation is first-order accurate in time.
+
+### 13.5 Centred approximation of the first radial derivative
+
+At fixed \(t_j\), Taylor-expand about \(r_i\) toward \(r_i+\Delta r\):
+
+$$
+c(r_i+\Delta r,t_j)
+=
+c_i
++
+\Delta r\,c_{r,i}
++
+\frac{\Delta r^2}{2}c_{rr,i}
++
+\frac{\Delta r^3}{6}c_{rrr,i}
++
+O(\Delta r^4).
+\tag{TRISO-DIS-117}
+$$
+
+Taylor-expand toward \(r_i-\Delta r\):
+
+$$
+c(r_i-\Delta r,t_j)
+=
+c_i
+-
+\Delta r\,c_{r,i}
++
+\frac{\Delta r^2}{2}c_{rr,i}
+-
+\frac{\Delta r^3}{6}c_{rrr,i}
++
+O(\Delta r^4).
+\tag{TRISO-DIS-118}
+$$
+
+Subtract the backward expansion from the forward expansion:
+
+$$
+c(r_i+\Delta r,t_j)
+-
+c(r_i-\Delta r,t_j)
+=
+2\Delta r\,c_{r,i}
++
+\frac{\Delta r^3}{3}c_{rrr,i}
++
+O(\Delta r^5).
+\tag{TRISO-DIS-119}
+$$
+
+Divide by \(2\Delta r\):
+
+$$
+\frac{
+c(r_i+\Delta r,t_j)-c(r_i-\Delta r,t_j)
+}{
+2\Delta r
+}
+=
+c_{r,i}
++
+O(\Delta r^2).
+\tag{TRISO-DIS-120}
+$$
+
+Therefore
+
+$$
+\boxed{
+\frac{\partial c}{\partial r}(r_i,t_j)
+\approx
+\frac{
+C_{i+1}^j-C_{i-1}^j
+}{
+2\Delta r
+}.
+}
+\tag{TRISO-DIS-121}
+$$
+
+### 13.6 Centred approximation of the second radial derivative
+
+Add the two Taylor expansions (TRISO-DIS-117) and (TRISO-DIS-118):
+
+$$
+c(r_i+\Delta r,t_j)
++
+c(r_i-\Delta r,t_j)
+=
+2c_i
++
+\Delta r^2c_{rr,i}
++
+O(\Delta r^4).
+\tag{TRISO-DIS-122}
+$$
+
+Subtract \(2c_i\):
+
+$$
+c(r_i+\Delta r,t_j)
+-
+2c_i
++
+c(r_i-\Delta r,t_j)
+=
+\Delta r^2c_{rr,i}
++
+O(\Delta r^4).
+\tag{TRISO-DIS-123}
+$$
+
+Divide by \(\Delta r^2\):
+
+$$
+\frac{
+c(r_i+\Delta r,t_j)-2c_i+c(r_i-\Delta r,t_j)
+}{
+\Delta r^2
+}
+=
+c_{rr,i}
++
+O(\Delta r^2).
+\tag{TRISO-DIS-124}
+$$
+
+Therefore
+
+$$
+\boxed{
+\frac{\partial^2c}{\partial r^2}(r_i,t_j)
+\approx
+\frac{
+C_{i-1}^j-2C_i^j+C_{i+1}^j
+}{
+\Delta r^2
+}.
+}
+\tag{TRISO-DIS-125}
+$$
+
+### 13.7 Substitute the discrete derivatives into the PDE
+
+Evaluate the continuous equation at \((r_i,t_j)\):
+
+$$
+c_{t,i}^j
+=
+D
+\left(
+c_{rr,i}^j
++
+\frac2{r_i}c_{r,i}^j
+\right)
++
+S_i^j.
+\tag{TRISO-DIS-126}
+$$
+
+Substitute the forward-time approximation:
+
+$$
+\frac{
+C_i^{j+1}-C_i^j
+}{
+\Delta t
+}
+=
+D
+\left(
+c_{rr,i}^j
++
+\frac2{r_i}c_{r,i}^j
+\right)
++
+S_i^j.
+\tag{TRISO-DIS-127}
+$$
+
+Substitute the centred second derivative:
+
+$$
+\frac{
+C_i^{j+1}-C_i^j
+}{
+\Delta t
+}
+=
+D
+\left[
+\frac{
+C_{i-1}^j-2C_i^j+C_{i+1}^j
+}{
+\Delta r^2
+}
++
+\frac2{r_i}c_{r,i}^j
+\right]
++
+S_i^j.
+\tag{TRISO-DIS-128}
+$$
+
+Substitute the centred first derivative:
+
+$$
+\frac{
+C_i^{j+1}-C_i^j
+}{
+\Delta t
+}
+=
+D
+\left[
+\frac{
+C_{i-1}^j-2C_i^j+C_{i+1}^j
+}{
+\Delta r^2
+}
++
+\frac2{r_i}
+\frac{
+C_{i+1}^j-C_{i-1}^j
+}{
+2\Delta r
+}
+\right]
++
+S_i^j.
+\tag{TRISO-DIS-129}
+$$
+
+Cancel the factor \(2\) in the radial first-derivative term:
+
+$$
+\frac{
+C_i^{j+1}-C_i^j
+}{
+\Delta t
+}
+=
+D
+\left[
+\frac{
+C_{i-1}^j-2C_i^j+C_{i+1}^j
+}{
+\Delta r^2
+}
++
+\frac{
+C_{i+1}^j-C_{i-1}^j
+}{
+r_i\Delta r
+}
+\right]
++
+S_i^j.
+\tag{TRISO-DIS-130}
+$$
+
+Use the uniform-mesh identity
+
+$$
+r_i=i\Delta r.
+\tag{TRISO-DIS-131}
+$$
+
+Then
+
+$$
+r_i\Delta r
+=
+i\Delta r^2.
+\tag{TRISO-DIS-132}
+$$
+
+Therefore
+
+$$
+\frac{
+C_i^{j+1}-C_i^j
+}{
+\Delta t
+}
+=
+\frac{D}{\Delta r^2}
+\left[
+C_{i-1}^j
+-
+2C_i^j
++
+C_{i+1}^j
++
+\frac1i
+\left(
+C_{i+1}^j-C_{i-1}^j
+\right)
+\right]
++
+S_i^j.
+\tag{TRISO-DIS-133}
+$$
+
+### 13.8 Collect neighbour coefficients
+
+Expand the \(1/i\) term:
+
+$$
+\frac{
+C_i^{j+1}-C_i^j
+}{
+\Delta t
+}
+=
+\frac{D}{\Delta r^2}
+\left[
+C_{i-1}^j
+-
+2C_i^j
++
+C_{i+1}^j
++
+\frac1iC_{i+1}^j
+-
+\frac1iC_{i-1}^j
+\right]
++
+S_i^j.
+\tag{TRISO-DIS-134}
+$$
+
+Collect the \(C_{i-1}^j\) terms:
+
+$$
+C_{i-1}^j
+-
+\frac1iC_{i-1}^j
+=
+\left(
+1-\frac1i
+\right)
+C_{i-1}^j.
+\tag{TRISO-DIS-135}
+$$
+
+Collect the \(C_{i+1}^j\) terms:
+
+$$
+C_{i+1}^j
++
+\frac1iC_{i+1}^j
+=
+\left(
+1+\frac1i
+\right)
+C_{i+1}^j.
+\tag{TRISO-DIS-136}
+$$
+
+Thus
+
+$$
+\frac{
+C_i^{j+1}-C_i^j
+}{
+\Delta t
+}
+=
+\frac{D}{\Delta r^2}
+\left[
+\left(
+1-\frac1i
+\right)C_{i-1}^j
+-
+2C_i^j
++
+\left(
+1+\frac1i
+\right)C_{i+1}^j
+\right]
++
+S_i^j.
+\tag{TRISO-DIS-137}
+$$
+
+Multiply by \(\Delta t\):
+
+$$
+C_i^{j+1}-C_i^j
+=
+\frac{D\Delta t}{\Delta r^2}
+\left[
+\left(
+1-\frac1i
+\right)C_{i-1}^j
+-
+2C_i^j
++
+\left(
+1+\frac1i
+\right)C_{i+1}^j
+\right]
++
+S_i^j\Delta t.
+\tag{TRISO-DIS-138}
+$$
+
+Add \(C_i^j\) to both sides:
+
+$$
+C_i^{j+1}
+=
+C_i^j
++
+\frac{D\Delta t}{\Delta r^2}
+\left[
+\left(
+1-\frac1i
+\right)C_{i-1}^j
+-
+2C_i^j
++
+\left(
+1+\frac1i
+\right)C_{i+1}^j
+\right]
++
+S_i^j\Delta t.
+\tag{TRISO-DIS-139}
+$$
+
+### 13.9 Define the Fourier number
+
+Define
+
+$$
+\boxed{
+\mathrm{Fo}
+=
+\frac{D\Delta t}{\Delta r^2}.
+}
+\tag{TRISO-DIS-140}
+$$
+
+Its units are
+
+$$
+[\mathrm{Fo}]
+=
+\frac{
+\mathrm{m^2\,s^{-1}}\mathrm{s}
+}{
+\mathrm{m^2}
+}
+=
+1.
+\tag{TRISO-DIS-141}
+$$
+
+Therefore \(\mathrm{Fo}\) is dimensionless.
+
+Substitute the definition into (TRISO-DIS-139):
+
+$$
+C_i^{j+1}
+=
+C_i^j
++
+\mathrm{Fo}
+\left[
+\left(
+1-\frac1i
+\right)C_{i-1}^j
+-
+2C_i^j
++
+\left(
+1+\frac1i
+\right)C_{i+1}^j
+\right]
++
+S_i^j\Delta t.
+\tag{TRISO-DIS-142}
+$$
+
+Distribute \(\mathrm{Fo}\):
+
+$$
+C_i^{j+1}
+=
+C_i^j
++
+\mathrm{Fo}
+\left(
+1-\frac1i
+\right)C_{i-1}^j
+-
+2\mathrm{Fo}C_i^j
++
+\mathrm{Fo}
+\left(
+1+\frac1i
+\right)C_{i+1}^j
++
+S_i^j\Delta t.
+\tag{TRISO-DIS-143}
+$$
+
+Collect the central coefficient:
+
+$$
+C_i^j-2\mathrm{Fo}C_i^j
+=
+(1-2\mathrm{Fo})C_i^j.
+\tag{TRISO-DIS-144}
+$$
+
+Hence the original Ray interior FTCS update is
+
+$$
+\boxed{
+C_i^{j+1}
+=
+\mathrm{Fo}
+\left(
+1-\frac1i
+\right)C_{i-1}^j
++
+(1-2\mathrm{Fo})C_i^j
++
+\mathrm{Fo}
+\left(
+1+\frac1i
+\right)C_{i+1}^j
++
+S_i^j\Delta t.
+}
+\tag{TRISO-DIS-145}
+$$
+
+This is algebraically equivalent to the ordering used in the original notebook.
+
+### 13.10 Dimensional check of the source increment
+
+The source contribution is
+
+$$
+S_i^j\Delta t.
+\tag{TRISO-DIS-146}
+$$
+
+Its units are
+
+$$
+[S_i^j\Delta t]
+=
+\mathrm{mol\,m^{-3}\,s^{-1}}
+\times
+\mathrm{s}.
+\tag{TRISO-DIS-147}
+$$
+
+Therefore
+
+$$
+[S_i^j\Delta t]
+=
+\mathrm{mol\,m^{-3}},
+\tag{TRISO-DIS-148}
+$$
+
+which matches the concentration units of every other term in (TRISO-DIS-145).
+
+### 13.11 Local consistency order
+
+The forward-time derivative has truncation error
+
+$$
+O(\Delta t).
+\tag{TRISO-DIS-149}
+$$
+
+The centred first derivative has truncation error
+
+$$
+O(\Delta r^2).
+\tag{TRISO-DIS-150}
+$$
+
+The centred second derivative has truncation error
+
+$$
+O(\Delta r^2).
+\tag{TRISO-DIS-151}
+$$
+
+Therefore, away from \(r=0\), material interfaces, and the outer boundary, the local differential approximation is formally
+
+$$
+\boxed{
+O(\Delta t)+O(\Delta r^2).
+}
+\tag{TRISO-DIS-152}
+$$
+
+This is a consistency statement only. It is not by itself a proof of stability or convergence.
+
+### 13.12 Scope and limitations of the interior stencil
+
+Equation (TRISO-DIS-145) assumes:
+
+1. \(i\ge1\), so the \(1/i\) factor is defined;
+2. the stencil lies inside one homogeneous constant-\(D\) region;
+3. the spatial mesh is uniform;
+4. the time step is uniform;
+5. the source value \(S_i^j\) is known explicitly at time level \(j\).
+
+It must **not** be applied unchanged:
+
+- at \(r=0\);
+- across a discontinuous material interface;
+- at the outer boundary.
+
+Those cases require separate derivations.
+
+The original notebook's FTCS method is retained as a transparent deterministic benchmark. It does not redefine the production WOS method and it does not yet establish the preferred discretisation for the full five-layer discontinuous-\(D\) problem.
 
 ## 14. Centre discretisation
 
