@@ -1,4 +1,4 @@
-# 18 — Review-2 Numerical Formulation Foundation: Actual WOS Path
+> HISTORICAL ARCHIVE: superseded working document.\n\n# 18 — Review-2 Numerical Formulation Foundation: Actual WOS Path
 
 ## Scope
 

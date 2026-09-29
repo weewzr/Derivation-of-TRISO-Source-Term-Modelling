@@ -1,4 +1,4 @@
-# 20 — Production WOS Stochastic Formulation (Foundation Note)
+> HISTORICAL ARCHIVE: superseded working document.\n\n# 20 — Production WOS Stochastic Formulation (Foundation Note)
 
 This document is retained as the original Review-2 stochastic formulation. The exact production verification contract is now frozen in `docs/triso/21_frozen_production_wos_contract.md` and the derived numerical formulation is in `docs/triso/22_review2_numerical_formulation.md`.
 

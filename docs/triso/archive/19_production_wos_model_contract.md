@@ -1,4 +1,4 @@
-# 19 — Production-WOS Model Contract (Historical Foundation Note)
+> HISTORICAL ARCHIVE: superseded working document.\n\n# 19 — Production-WOS Model Contract (Historical Foundation Note)
 
 This document records the evidence that led to the frozen production verification contract.
 
