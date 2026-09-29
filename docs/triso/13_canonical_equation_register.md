@@ -289,3 +289,22 @@ Accuracy note: the single-neighbour one-sided gradients used at the exact interf
 | TRISO-DIS-452–456 | Boundary Taylor consistency analysis | CONDITIONALLY VERIFIED |
 
 Scope: the surface update is the homogeneous Part-I Robin benchmark formula. The continuum limit h→infinity approaches Dirichlet, but the explicit ghost scheme becomes stiff at fixed mesh spacing; an absorbing Dirichlet boundary should therefore be imposed directly when that is the intended discrete model.
+
+## Canonical stable equations: FTCS monotonicity and stability analysis
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-DIS-500–501 | Perturbation/error system and homogeneous amplification step | VERIFIED |
+| TRISO-DIS-502–517 | Interior coefficient positivity and unit row sum | VERIFIED |
+| TRISO-DIS-518–524 | Centre coefficient positivity and unit row sum | VERIFIED |
+| TRISO-DIS-525–535 | Robin coefficient positivity and sub-unit row sum | VERIFIED |
+| TRISO-DIS-536–540 | Combined sufficient monotonicity restriction | VERIFIED |
+| TRISO-DIS-541–550 | Homogeneous amplification-matrix definition | VERIFIED |
+| TRISO-DIS-551–559 | Infinity-norm contraction proof | VERIFIED |
+| TRISO-DIS-560–561 | Positivity / discrete maximum-principle interpretation | VERIFIED |
+| TRISO-DIS-562–565 | Spectral-radius consequence rho(A)<=1 | VERIFIED |
+| TRISO-DIS-567–576 | Forward-Euler eigenvalue stability framework | CONDITIONALLY VERIFIED / GENERAL FRAMEWORK |
+| TRISO-DIS-577 | Homogeneous bound explicitly excluded from arbitrary five-layer scheme | VERIFIED SCOPE STATEMENT |
+| TRISO-DIS-578–582 | Final corrected status of original notebook stability claim | VERIFIED / NECESSITY NOT PROVED |
+
+The coefficient restriction is sufficient for monotonicity, infinity-norm non-amplification, and rho(A)<=1 for the assembled homogeneous benchmark. It is not claimed necessary for spectral stability and is not a proved stability bound for the eventual discontinuous-D five-layer discretisation.
