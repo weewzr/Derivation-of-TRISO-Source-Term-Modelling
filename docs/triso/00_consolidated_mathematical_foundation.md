@@ -8275,19 +8275,767 @@ A higher-order interface treatment would require additional same-material nodes 
 
 It does not yet establish the globally preferred five-layer spatial discretisation.
 
-## 16. Robin ghost and surface
+## 16. Outer Robin boundary: ghost-point elimination and surface update
 
-At R:
+The outer surface is
 
--D(C_{N+1}^j-C_{N-1}^j)/(2Δr)=hC_N^j.
+$$
+r_N=R.
+\tag{TRISO-DIS-400}
+$$
 
-With κ=hΔr/D:
+For the homogeneous Part-I FTCS benchmark, the outer material has constant diffusivity \(D\) and the external bulk concentration is
 
-C_{N+1}^j=C_{N-1}^j-2κC_N^j.
+$$
+c_\infty=0.
+\tag{TRISO-DIS-401}
+$$
 
-Substitution gives:
+The continuous Robin condition is therefore
 
-C_N^{j+1}=[1-2Fo(1+κ(1+1/N))]C_N^j+2FoC_{N-1}^j+S0Δt.
+$$
+-D
+\frac{\partial c}{\partial r}(R,t)
+=
+h c(R,t).
+\tag{TRISO-DIS-402}
+$$
+
+The left side is the outward diffusive flux from the particle. The right side is the outward external mass-transfer flux.
+
+### 16.1 Introduce the outer ghost point
+
+The last physical node is
+
+$$
+r_N=R.
+\tag{TRISO-DIS-403}
+$$
+
+The adjacent physical interior node is
+
+$$
+r_{N-1}=R-\Delta r.
+\tag{TRISO-DIS-404}
+$$
+
+Introduce a mathematical ghost point outside the particle:
+
+$$
+r_{N+1}=R+\Delta r.
+\tag{TRISO-DIS-405}
+$$
+
+Its numerical value is denoted
+
+$$
+C_{N+1}^j.
+\tag{TRISO-DIS-406}
+$$
+
+The ghost value is not an external physical concentration. It is an algebraic device used to retain a centred derivative at \(r=R\).
+
+### 16.2 Centred approximation of the surface gradient
+
+At time \(t_j\), approximate the radial derivative by
+
+$$
+\frac{\partial c}{\partial r}(R,t_j)
+\approx
+\frac{
+C_{N+1}^j-C_{N-1}^j
+}{
+2\Delta r
+}.
+\tag{TRISO-DIS-407}
+$$
+
+Substitute this approximation into the Robin condition:
+
+$$
+-D
+\frac{
+C_{N+1}^j-C_{N-1}^j
+}{
+2\Delta r
+}
+=
+hC_N^j.
+\tag{TRISO-DIS-408}
+$$
+
+Multiply both sides by \(2\Delta r\):
+
+$$
+-D
+\left(
+C_{N+1}^j-C_{N-1}^j
+\right)
+=
+2h\Delta r\,C_N^j.
+\tag{TRISO-DIS-409}
+$$
+
+Divide by \(-D\):
+
+$$
+C_{N+1}^j-C_{N-1}^j
+=
+-\frac{2h\Delta r}{D}C_N^j.
+\tag{TRISO-DIS-410}
+$$
+
+Add \(C_{N-1}^j\) to both sides:
+
+$$
+C_{N+1}^j
+=
+C_{N-1}^j
+-
+\frac{2h\Delta r}{D}C_N^j.
+\tag{TRISO-DIS-411}
+$$
+
+Define the dimensionless mesh transfer parameter
+
+$$
+\boxed{
+\kappa
+=
+\frac{h\Delta r}{D}.
+}
+\tag{TRISO-DIS-412}
+$$
+
+Its units are
+
+$$
+[\kappa]
+=
+\frac{
+\mathrm{m\,s^{-1}}\mathrm m
+}{
+\mathrm{m^2\,s^{-1}}
+}
+=
+1.
+\tag{TRISO-DIS-413}
+$$
+
+Therefore the ghost relation is
+
+$$
+\boxed{
+C_{N+1}^j
+=
+C_{N-1}^j
+-
+2\kappa C_N^j.
+}
+\tag{TRISO-DIS-414}
+$$
+
+### 16.3 Surface approximation of the second radial derivative
+
+Use the centred second derivative at node \(N\):
+
+$$
+\frac{\partial^2c}{\partial r^2}(R,t_j)
+\approx
+\frac{
+C_{N-1}^j
+-
+2C_N^j
++
+C_{N+1}^j
+}{
+\Delta r^2
+}.
+\tag{TRISO-DIS-415}
+$$
+
+Substitute the ghost relation (TRISO-DIS-414):
+
+$$
+\frac{\partial^2c}{\partial r^2}(R,t_j)
+\approx
+\frac{
+C_{N-1}^j
+-
+2C_N^j
++
+C_{N-1}^j
+-
+2\kappa C_N^j
+}{
+\Delta r^2
+}.
+\tag{TRISO-DIS-416}
+$$
+
+Collect the two interior-neighbour terms:
+
+$$
+C_{N-1}^j+C_{N-1}^j
+=
+2C_{N-1}^j.
+\tag{TRISO-DIS-417}
+$$
+
+Collect the two surface terms:
+
+$$
+-2C_N^j-2\kappa C_N^j
+=
+-2(1+\kappa)C_N^j.
+\tag{TRISO-DIS-418}
+$$
+
+Therefore
+
+$$
+\boxed{
+\frac{\partial^2c}{\partial r^2}(R,t_j)
+\approx
+\frac{
+2C_{N-1}^j
+-
+2(1+\kappa)C_N^j
+}{
+\Delta r^2
+}.
+}
+\tag{TRISO-DIS-419}
+$$
+
+### 16.4 Surface approximation of the first radial derivative
+
+The centred derivative is
+
+$$
+\frac{\partial c}{\partial r}(R,t_j)
+\approx
+\frac{
+C_{N+1}^j-C_{N-1}^j
+}{
+2\Delta r
+}.
+\tag{TRISO-DIS-420}
+$$
+
+Substitute (TRISO-DIS-414):
+
+$$
+\frac{\partial c}{\partial r}(R,t_j)
+\approx
+\frac{
+C_{N-1}^j
+-
+2\kappa C_N^j
+-
+C_{N-1}^j
+}{
+2\Delta r
+}.
+\tag{TRISO-DIS-421}
+$$
+
+Cancel the two \(C_{N-1}^j\) terms:
+
+$$
+\frac{\partial c}{\partial r}(R,t_j)
+\approx
+-\frac{
+2\kappa C_N^j
+}{
+2\Delta r
+}.
+\tag{TRISO-DIS-422}
+$$
+
+Cancel the factor \(2\):
+
+$$
+\boxed{
+\frac{\partial c}{\partial r}(R,t_j)
+\approx
+-\frac{\kappa}{\Delta r}C_N^j.
+}
+\tag{TRISO-DIS-423}
+$$
+
+Using \(\kappa=h\Delta r/D\),
+
+$$
+-\frac{\kappa}{\Delta r}C_N^j
+=
+-\frac hD C_N^j.
+\tag{TRISO-DIS-424}
+$$
+
+Thus the eliminated ghost relation reproduces the discrete Robin gradient exactly within the chosen centred boundary approximation.
+
+### 16.5 Discrete spherical operator at the outer surface
+
+The spherical operator is
+
+$$
+\mathcal L[c](R,t)
+=
+c_{rr}(R,t)
++
+\frac2R c_r(R,t).
+\tag{TRISO-DIS-425}
+$$
+
+Substitute the discrete second derivative (TRISO-DIS-419):
+
+$$
+\mathcal L[c](R,t_j)
+\approx
+\frac{
+2C_{N-1}^j
+-
+2(1+\kappa)C_N^j
+}{
+\Delta r^2
+}
++
+\frac2R c_r(R,t_j).
+\tag{TRISO-DIS-426}
+$$
+
+Substitute the discrete first derivative (TRISO-DIS-423):
+
+$$
+\mathcal L[c](R,t_j)
+\approx
+\frac{
+2C_{N-1}^j
+-
+2(1+\kappa)C_N^j
+}{
+\Delta r^2
+}
+-
+\frac{2\kappa}{R\Delta r}C_N^j.
+\tag{TRISO-DIS-427}
+$$
+
+Use
+
+$$
+R=N\Delta r.
+\tag{TRISO-DIS-428}
+$$
+
+Therefore
+
+$$
+R\Delta r
+=
+N\Delta r^2.
+\tag{TRISO-DIS-429}
+$$
+
+Hence
+
+$$
+\frac{2\kappa}{R\Delta r}
+=
+\frac{2\kappa}{N\Delta r^2}.
+\tag{TRISO-DIS-430}
+$$
+
+Substitute:
+
+$$
+\mathcal L[c](R,t_j)
+\approx
+\frac{
+2C_{N-1}^j
+-
+2(1+\kappa)C_N^j
+}{
+\Delta r^2
+}
+-
+\frac{
+2\kappa C_N^j
+}{
+N\Delta r^2
+}.
+\tag{TRISO-DIS-431}
+$$
+
+Put the terms over the common denominator:
+
+$$
+\mathcal L[c](R,t_j)
+\approx
+\frac2{\Delta r^2}
+\left[
+C_{N-1}^j
+-
+(1+\kappa)C_N^j
+-
+\frac{\kappa}{N}C_N^j
+\right].
+\tag{TRISO-DIS-432}
+$$
+
+Collect the surface coefficient:
+
+$$
+(1+\kappa)
++
+\frac{\kappa}{N}
+=
+1+\kappa
+\left(
+1+\frac1N
+\right).
+\tag{TRISO-DIS-433}
+$$
+
+Therefore
+
+$$
+\boxed{
+\mathcal L[c](R,t_j)
+\approx
+\frac2{\Delta r^2}
+\left[
+C_{N-1}^j
+-
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right)
+C_N^j
+\right].
+}
+\tag{TRISO-DIS-434}
+$$
+
+### 16.6 Apply the surface PDE
+
+For the homogeneous benchmark,
+
+$$
+\frac{\partial c}{\partial t}(R,t)
+=
+D\mathcal L[c](R,t)
++
+S_R.
+\tag{TRISO-DIS-435}
+$$
+
+For the original homogeneous source benchmark,
+
+$$
+S_R=S_0.
+\tag{TRISO-DIS-436}
+$$
+
+For the physical five-layer kernel-confined source problem, the OPyC source would instead be zero. This distinction must be preserved when the boundary formula is reused outside the Part-I benchmark.
+
+Use forward Euler:
+
+$$
+\frac{
+C_N^{j+1}-C_N^j
+}{
+\Delta t
+}
+=
+D\mathcal L[c](R,t_j)
++
+S_R^j.
+\tag{TRISO-DIS-437}
+$$
+
+Substitute (TRISO-DIS-434):
+
+$$
+\frac{
+C_N^{j+1}-C_N^j
+}{
+\Delta t
+}
+=
+\frac{2D}{\Delta r^2}
+\left[
+C_{N-1}^j
+-
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right)
+C_N^j
+\right]
++
+S_R^j.
+\tag{TRISO-DIS-438}
+$$
+
+Multiply by \(\Delta t\):
+
+$$
+C_N^{j+1}-C_N^j
+=
+\frac{2D\Delta t}{\Delta r^2}
+\left[
+C_{N-1}^j
+-
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right)
+C_N^j
+\right]
++
+S_R^j\Delta t.
+\tag{TRISO-DIS-439}
+$$
+
+Use
+
+$$
+\mathrm{Fo}
+=
+\frac{D\Delta t}{\Delta r^2}.
+\tag{TRISO-DIS-440}
+$$
+
+Then
+
+$$
+C_N^{j+1}-C_N^j
+=
+2\mathrm{Fo}
+\left[
+C_{N-1}^j
+-
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right)
+C_N^j
+\right]
++
+S_R^j\Delta t.
+\tag{TRISO-DIS-441}
+$$
+
+Add \(C_N^j\) to both sides:
+
+$$
+C_N^{j+1}
+=
+C_N^j
++
+2\mathrm{Fo}C_{N-1}^j
+-
+2\mathrm{Fo}
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right)
+C_N^j
++
+S_R^j\Delta t.
+\tag{TRISO-DIS-442}
+$$
+
+Collect the surface coefficient:
+
+$$
+\boxed{
+C_N^{j+1}
+=
+2\mathrm{Fo}C_{N-1}^j
++
+\left[
+1
+-
+2\mathrm{Fo}
+\left(
+1+\kappa\left(1+\frac1N\right)
+\right)
+\right]
+C_N^j
++
+S_R^j\Delta t.
+}
+\tag{TRISO-DIS-443}
+$$
+
+This recovers the surface update written in the original Ray derivation.
+
+### 16.7 Dimensional checks
+
+The Fourier number is dimensionless:
+
+$$
+[\mathrm{Fo}]=1.
+\tag{TRISO-DIS-444}
+$$
+
+The mesh transfer parameter is dimensionless:
+
+$$
+[\kappa]=1.
+\tag{TRISO-DIS-445}
+$$
+
+Therefore every coefficient multiplying a concentration in (TRISO-DIS-443) is dimensionless.
+
+The source increment has units
+
+$$
+[S_R\Delta t]
+=
+\mathrm{mol\,m^{-3}}.
+\tag{TRISO-DIS-446}
+$$
+
+Thus every term in the update has concentration units.
+
+### 16.8 Limiting checks
+
+If
+
+$$
+h=0,
+\tag{TRISO-DIS-447}
+$$
+
+then
+
+$$
+\kappa=0.
+\tag{TRISO-DIS-448}
+$$
+
+The ghost relation becomes
+
+$$
+C_{N+1}^j=C_{N-1}^j.
+\tag{TRISO-DIS-449}
+$$
+
+This is the expected symmetric zero-gradient ghost condition for a zero-flux Neumann boundary.
+
+The surface update becomes
+
+$$
+C_N^{j+1}
+=
+2\mathrm{Fo}C_{N-1}^j
++
+(1-2\mathrm{Fo})C_N^j
++
+S_R^j\Delta t.
+\tag{TRISO-DIS-450}
+$$
+
+For finite \(h>0\), increasing \(h\) increases \(\kappa\), which strengthens the outward-transfer contribution in the surface coefficient.
+
+The formal limit \(h\to\infty\) is more delicate for this explicit ghost formulation because
+
+$$
+\kappa=\frac{h\Delta r}{D}\to\infty
+\tag{TRISO-DIS-451}
+$$
+
+at fixed \(\Delta r\).
+
+The continuum Robin condition approaches the absorbing Dirichlet condition \(c(R,t)=0\), but the explicit ghost update becomes increasingly stiff rather than automatically turning into a numerically well-conditioned Dirichlet update.
+
+Therefore an absorbing Dirichlet boundary should be imposed directly when that is the intended numerical model, rather than obtained by taking \(\kappa\to\infty\) in (TRISO-DIS-443).
+
+### 16.9 Accuracy of the boundary approximation
+
+Taylor-expand around \(R\):
+
+$$
+c(R+\Delta r)
+=
+c(R)
++
+\Delta r\,c_r(R)
++
+\frac{\Delta r^2}{2}c_{rr}(R)
++
+\frac{\Delta r^3}{6}c_{rrr}(R)
++
+O(\Delta r^4).
+\tag{TRISO-DIS-452}
+$$
+
+Similarly,
+
+$$
+c(R-\Delta r)
+=
+c(R)
+-
+\Delta r\,c_r(R)
++
+\frac{\Delta r^2}{2}c_{rr}(R)
+-
+\frac{\Delta r^3}{6}c_{rrr}(R)
++
+O(\Delta r^4).
+\tag{TRISO-DIS-453}
+$$
+
+Subtract the second expansion from the first:
+
+$$
+c(R+\Delta r)-c(R-\Delta r)
+=
+2\Delta r\,c_r(R)
++
+\frac{\Delta r^3}{3}c_{rrr}(R)
++
+O(\Delta r^5).
+\tag{TRISO-DIS-454}
+$$
+
+Divide by \(2\Delta r\):
+
+$$
+\frac{
+c(R+\Delta r)-c(R-\Delta r)
+}{
+2\Delta r
+}
+=
+c_r(R)
++
+O(\Delta r^2).
+\tag{TRISO-DIS-455}
+$$
+
+Thus the centred Robin derivative used to eliminate the ghost point is second-order accurate for a sufficiently smooth continuation through the boundary.
+
+However, the ghost value itself is a mathematical continuation, not a physical exterior solution.
+
+The complete surface update combines this boundary approximation with the centred second derivative and forward Euler time step. Its local consistency is therefore formally
+
+$$
+O(\Delta t)+O(\Delta r^2)
+\tag{TRISO-DIS-456}
+$$
+
+for the homogeneous smooth benchmark, subject to the Robin boundary compatibility used in the ghost construction.
+
+### 16.10 Scope
+
+Equation (TRISO-DIS-443) belongs to the homogeneous Part-I FTCS benchmark.
+
+For the physical five-layer problem, the same derivational structure may be applied to the OPyC layer by replacing \(D\) with \(D_5\) and using the physically selected outer source and boundary parameters.
+
+The formula must not be confused with the production WOS absorbing-boundary treatment.
+
+No stability conclusion is drawn in this section.
 
 ## 17. Corrected FTCS stability statement
 
