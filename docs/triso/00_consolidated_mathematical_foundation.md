@@ -16,61 +16,324 @@ Let r be distance from the particle centre, t be time, c_i(r,t) be concentration
 [ASSUMPTION] Initial ideal interfaces have no interfacial storage or resistance.
 [QUESTION FOR SUPERVISOR] The first canonical species, decay/trapping model, partition coefficients, and coolant concentration still need to be fixed.
 
-## 2. Conservation
+## 2. Conservation from a control volume
 
-Take an arbitrary control volume V. The amount inside it is N = integral over V of c dV.
+[EXACT] Begin with the amount of the conserved species inside an arbitrary fixed control volume V.
+
+$$
+N_V(t)=\int_V c(\mathbf{x},t)\,dV.
+\tag{TRISO-GOV-020}
+$$
+
+The units are
+
+$$
+[N_V]=\mathrm{mol}.
+\tag{TRISO-GOV-021}
+$$
+
+[EXACT] The rate of accumulation is
+
+$$
+\frac{dN_V}{dt}=\frac{d}{dt}\int_V c\,dV.
+\tag{TRISO-GOV-022}
+$$
+
+Let \(\mathbf J\) be the diffusive molar flux vector. Its units are
+
+$$
+[\mathbf J]=\mathrm{mol\,m^{-2}\,s^{-1}}.
+\tag{TRISO-GOV-023}
+$$
+
+Let \(S\) be the net volumetric production rate. Its units are
+
+$$
+[S]=\mathrm{mol\,m^{-3}\,s^{-1}}.
+\tag{TRISO-GOV-024}
+$$
+
+[EXACT] For outward unit normal \(\mathbf n\), the outward amount crossing a boundary element in time \(dt\) is proportional to \(\mathbf J\cdot\mathbf n\). The outward rate is therefore
+
+$$
+\dot N_{\mathrm{out}}=\int_{\partial V}\mathbf J\cdot\mathbf n\,dA.
+\tag{TRISO-GOV-025}
+$$
+
+[EXACT] The production rate inside the control volume is
+
+$$
+\dot N_{\mathrm{gen}}=\int_V S\,dV.
+\tag{TRISO-GOV-026}
+$$
 
 [EXACT] Accumulation equals production minus outward flux:
 
-d/dt (integral over V of c dV) = - integral over boundary of V of J dot n dA + integral over V of S dV.
+$$
+\frac{dN_V}{dt}=-\dot N_{\mathrm{out}}+\dot N_{\mathrm{gen}}.
+\tag{TRISO-GOV-027}
+$$
 
-[EXACT] By the divergence theorem:
+Substitute the definitions of the two rates:
 
-integral over boundary of V of J dot n dA = integral over V of div J dV.
+$$
+\frac{d}{dt}\int_V c\,dV=-\int_{\partial V}\mathbf J\cdot\mathbf n\,dA+\int_V S\,dV.
+\tag{TRISO-GOV-028}
+$$
 
-For a fixed control volume, move the time derivative inside the integral and then use the arbitrariness of V:
+[EXACT] Because \(V\) is fixed in space, the time derivative passes through the volume integral:
 
-∂c/∂t + ∇·J = S.
+$$
+\frac{d}{dt}\int_V c\,dV=\int_V\frac{\partial c}{\partial t}\,dV.
+\tag{TRISO-GOV-029}
+$$
 
-## 3. Constitutive law and general PDE
+[EXACT] Apply the divergence theorem to the surface term:
 
-[CONSTITUTIVE] Fickian diffusion:
+$$
+\int_{\partial V}\mathbf J\cdot\mathbf n\,dA=\int_V\nabla\cdot\mathbf J\,dV.
+\tag{TRISO-GOV-030}
+$$
 
-J = -D ∇c.
+Substitute this result:
 
-Substitute into conservation:
+$$
+\int_V\frac{\partial c}{\partial t}\,dV=-\int_V\nabla\cdot\mathbf J\,dV+\int_VS\,dV.
+\tag{TRISO-GOV-031}
+$$
 
-∂c/∂t + ∇·(-D∇c) = S.
+Move the flux and source terms into one integrand:
+
+$$
+\int_V\left(\frac{\partial c}{\partial t}+\nabla\cdot\mathbf J-S\right)dV=0.
+\tag{TRISO-GOV-032}
+$$
+
+[EXACT] Since the control volume is arbitrary, the integrand must vanish almost everywhere:
+
+$$
+\boxed{\frac{\partial c}{\partial t}+\nabla\cdot\mathbf J=S.}
+\tag{TRISO-GOV-033}
+$$
+
+
+## 3. Constitutive law and general heterogeneous diffusion equation
+
+[CONSTITUTIVE] Fickian diffusion relates flux to the concentration gradient:
+
+$$
+\boxed{\mathbf J=-D\nabla c.}
+\tag{TRISO-GOV-034}
+$$
+
+The gradient has units
+
+$$
+[\nabla c]=\mathrm{mol\,m^{-4}}.
+\tag{TRISO-GOV-035}
+$$
+
+Multiplying by \(D\) gives
+
+$$
+[D\nabla c]=\mathrm{m^2\,s^{-1}}\times\mathrm{mol\,m^{-4}}.
+\tag{TRISO-GOV-036}
+$$
+
+Hence
+
+$$
+[D\nabla c]=\mathrm{mol\,m^{-2}\,s^{-1}},
+\tag{TRISO-GOV-037}
+$$
+which matches the flux units.
+
+[EXACT] Substitute Fick's law into conservation:
+
+$$
+\frac{\partial c}{\partial t}+\nabla\cdot(-D\nabla c)=S.
+\tag{TRISO-GOV-038}
+$$
+
+[EXACT] Pull the minus sign through the divergence:
+
+$$
+\frac{\partial c}{\partial t}-\nabla\cdot(D\nabla c)=S.
+\tag{TRISO-GOV-039}
+$$
+
+[EXACT] Rearrange:
+
+$$
+\boxed{\frac{\partial c}{\partial t}=\nabla\cdot(D\nabla c)+S.}
+\tag{TRISO-GOV-040}
+$$
+
+[IMPORTANT] This is the general conservative form. The diffusivity must remain inside the divergence until a later layer-specific assumption establishes that it is constant with respect to the differentiated coordinate.
+
+
+## 4. Spherical-coordinate derivation
+
+[EXACT] In spherical coordinates, the gradient of a scalar field is
+
+$$
+\nabla c=\mathbf e_r\frac{\partial c}{\partial r}+\mathbf e_\theta\frac1r\frac{\partial c}{\partial\theta}+\mathbf e_\varphi\frac1{r\sin\theta}\frac{\partial c}{\partial\varphi}.
+\tag{TRISO-SPH-020}
+$$
+
+[EXACT] Write a general vector flux as \(\mathbf J=J_r\mathbf e_r+J_\theta\mathbf e_\theta+J_\varphi\mathbf e_\varphi\).
+
+[EXACT] Its spherical divergence is
+
+$$
+\nabla\cdot\mathbf J=\frac1{r^2}\frac{\partial}{\partial r}(r^2J_r)+\frac1{r\sin\theta}\frac{\partial}{\partial\theta}(\sin\theta J_\theta)+\frac1{r\sin\theta}\frac{\partial J_\varphi}{\partial\varphi}.
+\tag{TRISO-SPH-021}
+$$
+
+[ASSUMPTION] Spherical symmetry means the concentration is independent of both angular coordinates:
+
+$$
+c=c(r,t).
+\tag{TRISO-SPH-022}
+$$
+
+Therefore
+
+$$
+\frac{\partial c}{\partial\theta}=0.
+\tag{TRISO-SPH-023}
+$$
+
+and
+
+$$
+\frac{\partial c}{\partial\varphi}=0.
+\tag{TRISO-SPH-024}
+$$
+
+Substitute these zero angular derivatives into the gradient:
+
+$$
+\nabla c=\mathbf e_r\frac{\partial c}{\partial r}.
+\tag{TRISO-SPH-025}
+$$
+
+[CONSTITUTIVE] Fick's law therefore becomes radial:
+
+$$
+\boxed{\mathbf J=-D(r,t)\frac{\partial c}{\partial r}\mathbf e_r.}
+\tag{TRISO-SPH-026}
+$$
+
+Thus
+
+$$
+J_\theta=0.
+\tag{TRISO-SPH-027}
+$$
+
+and
+
+$$
+J_\varphi=0.
+\tag{TRISO-SPH-028}
+$$
+
+[EXACT] Insert the zero angular fluxes into the divergence:
+
+$$
+\nabla\cdot\mathbf J=\frac1{r^2}\frac{\partial}{\partial r}(r^2J_r).
+\tag{TRISO-SPH-029}
+$$
+
+The radial flux component is
+
+$$
+J_r=-D(r,t)\frac{\partial c}{\partial r}.
+\tag{TRISO-SPH-030}
+$$
+
+Substitution gives
+
+$$
+\nabla\cdot\mathbf J=\frac1{r^2}\frac{\partial}{\partial r}\left(-r^2D(r,t)\frac{\partial c}{\partial r}\right).
+\tag{TRISO-SPH-031}
+$$
+
+Insert this into conservation:
+
+$$
+\frac{\partial c}{\partial t}+\frac1{r^2}\frac{\partial}{\partial r}\left(-r^2D(r,t)\frac{\partial c}{\partial r}\right)=S(r,t).
+\tag{TRISO-SPH-032}
+$$
+
+[EXACT] Move the negative term to the right:
+
+$$
+\boxed{\frac{\partial c}{\partial t}=\frac1{r^2}\frac{\partial}{\partial r}\left(r^2D(r,t)\frac{\partial c}{\partial r}\right)+S(r,t).}
+\tag{TRISO-SPH-033}
+$$
+
+
+## 4.1 Specialisation to one homogeneous layer
+
+[ASSUMPTION] In one material layer \(i\), the benchmark assumes the diffusivity is constant with respect to radius and time during the analysis:
+
+$$
+D(r,t)=D_i.
+\tag{TRISO-SPH-034}
+$$
+
+[EXACT] Substitute \(D_i\) into the conservative equation:
+
+$$
+\frac{\partial c_i}{\partial t}=\frac1{r^2}\frac{\partial}{\partial r}\left(r^2D_i\frac{\partial c_i}{\partial r}\right)+S_i.
+\tag{TRISO-SPH-035}
+$$
+
+[EXACT] Because \(D_i\) is constant with respect to \(r\), take it outside the derivative:
+
+$$
+\frac{\partial c_i}{\partial t}=\frac{D_i}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial c_i}{\partial r}\right)+S_i.
+\tag{TRISO-SPH-036}
+$$
+
+[EXACT] Apply the product rule:
+
+$$
+\frac{\partial}{\partial r}\left(r^2\frac{\partial c_i}{\partial r}\right)=\frac{\partial r^2}{\partial r}\frac{\partial c_i}{\partial r}+r^2\frac{\partial^2c_i}{\partial r^2}.
+\tag{TRISO-SPH-037}
+$$
+
+Differentiate \(r^2\):
+
+$$
+\frac{\partial r^2}{\partial r}=2r.
+\tag{TRISO-SPH-038}
+$$
+
+Substitute:
+
+$$
+\frac{\partial}{\partial r}\left(r^2\frac{\partial c_i}{\partial r}\right)=2r\frac{\partial c_i}{\partial r}+r^2\frac{\partial^2c_i}{\partial r^2}.
+\tag{TRISO-SPH-039}
+$$
+
+Divide by \(r^2\):
+
+$$
+\frac1{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial c_i}{\partial r}\right)=\frac2r\frac{\partial c_i}{\partial r}+\frac{\partial^2c_i}{\partial r^2}.
+\tag{TRISO-SPH-040}
+$$
 
 Therefore:
 
-∂c/∂t = ∇·(D∇c) + S.
+$$
+\boxed{\frac{\partial c_i}{\partial t}=D_i\left(\frac{\partial^2c_i}{\partial r^2}+\frac2r\frac{\partial c_i}{\partial r}\right)+S_i.}
+\tag{TRISO-SPH-041}
+$$
 
-[IMPORTANT] The original notebook's D∇²c + S is the constant-D special case. For the five-layer problem D stays inside the divergence until a single layer is selected.
-
-[SOURCE] Hales et al. 2021, BISON TRISO diffusion modelling: https://www.osti.gov/servlets/purl/1829987.
-
-## 4. Spherical symmetry
-
-[ASSUMPTION] c=c(r,t). The radial flux is
-
-J_r = -D(r,t) ∂c/∂r.
-
-For a radial vector:
-
-∇·J = (1/r²) ∂/∂r [r² J_r].
-
-Substitution gives the heterogeneous radial equation:
-
-∂c/∂t = (1/r²) ∂/∂r [r² D(r,t) ∂c/∂r] + S(r,t).
-
-Inside one layer where D_i is constant:
-
-∂c_i/∂t = D_i (1/r²) ∂/∂r [r² ∂c_i/∂r] + S_i.
-
-Only in such a constant-D region may the operator be expanded:
-
-(1/r²) ∂/∂r (r² c_r) = c_rr + 2c_r/r.
+[IMPORTANT] Equation TRISO-SPH-041 is a within-layer constant-diffusivity equation. It must not be differentiated through a discontinuous material interface.
 
 ## 5. Source and decay
 
