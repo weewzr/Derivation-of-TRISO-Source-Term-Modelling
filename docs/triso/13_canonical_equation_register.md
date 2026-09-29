@@ -345,3 +345,25 @@ Current finite-volume gaps: assemble the final five-layer coefficient matrix, th
 | TRISO-FV-230–232 | Explicit-Euler outer-cell update | VERIFIED |
 
 The Robin boundary is now closed without equating a cell-centred/volume-averaged concentration to the physical surface concentration. The remaining deterministic tasks are global matrix assembly plus full-scheme accuracy and stability/convergence analysis.
+
+### Global five-layer finite-volume matrix and stability structure
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-FV-233–237 | Global unknowns, volume matrix, and face conductances | VERIFIED |
+| TRISO-FV-238–241 | Central-cell matrix row | VERIFIED |
+| TRISO-FV-242–250 | Ordinary-cell matrix row | VERIFIED |
+| TRISO-FV-251–254 | Robin outer-cell matrix row | VERIFIED |
+| TRISO-FV-255–260 | Complete semi-discrete matrix system and operator L=V^-1 K | VERIFIED |
+| TRISO-FV-261–267 | Volume-weighted self-adjointness | VERIFIED |
+| TRISO-FV-268–279 | Negative-semidefinite/definite conductance quadratic form | VERIFIED |
+| TRISO-FV-280–288 | Global discrete inventory balance | VERIFIED |
+| TRISO-FV-289–293 | Fully assembled explicit-Euler matrix update | VERIFIED |
+| TRISO-FV-294–300 | Completed coefficient-positivity time-step bound | VERIFIED SUFFICIENT CONDITION |
+| TRISO-FV-301–306 | Substochastic row sums and infinity-norm/spectral-radius bound | VERIFIED SUFFICIENT CONDITION |
+| TRISO-FV-307–312 | Non-positive generalized semi-discrete spectrum | VERIFIED |
+| — | Global spatial order with discontinuous D | UNVERIFIED |
+| — | Fully discrete convergence rate | UNVERIFIED |
+| — | Numerical grid/time convergence against analytical benchmarks | UNVERIFIED |
+
+The completed deterministic five-layer finite-volume system is conservative and closed. Remaining mathematical work concerns accuracy and convergence rather than missing coefficient equations.
