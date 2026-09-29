@@ -1,31 +1,54 @@
 # TRISO Fuel Particle Mathematical Derivation & Numerical Implementation
 
-This repository develops the TRISO fuel-particle source-term mathematical model from first principles and connects the continuous equations to a reproducible numerical implementation.
+This repository develops the TRISO fuel-particle source-term model from first principles and connects the continuous mathematics to the supervisor's numerical implementation.
 
-## Project status
+## Current project state
 
-The supervisor-provided repository is authoritative. Active development is isolated on the feature branch `ray/triso-foundation`; the default branch is `main`.
+Active development branch: `ray/triso-foundation`
 
-The current branch is being used for the research foundation. Scientific implementation changes should follow the first-principles derivation and verification workflow.
+Default branch: `main`
 
-## Research evidence streams
+Review 1: PASS WITH NON-BLOCKING FINDINGS; continuous-foundation findings reconciled.
 
-1. Existing research notebook / converted derivation notes
-2. Independent first-principles mathematical derivation
-3. Authoritative literature and documentation
-4. Repository implementation
-5. Analytical and numerical verification
+Review 2: FAIL — remediation in progress. The current blocker is R2-B01, requiring executed evidence for the concrete five-layer release-time estimator. The focused test is present; closure requires a passing execution against the reviewed supervisor implementation.
 
-Disagreements between these streams must be investigated and documented.
+Do not start Review 3 until R2-B01 is independently closed.
 
-## Intended trace
+## ACTIVE / CANONICAL
 
-physical principles -> geometry -> assumptions -> conservation laws -> constitutive relations -> governing equations -> spherical formulation -> boundary/interface conditions -> continuous derivation -> spatial discretisation -> temporal discretisation -> discrete algebraic system -> algorithm -> implementation -> verification
+- Original Ray derivation (raw evidence): `notes/raw/TRISO Fuel Derivation Ray V1.tex`
+- Verified first-principles derivation: `docs/triso/00_consolidated_mathematical_foundation.md`
+- Canonical equation register: `docs/triso/13_canonical_equation_register.md`
+- Frozen continuous benchmark: `docs/triso/16_frozen_continuous_benchmark.md`
+- Frozen production WOS contract: `docs/triso/21_frozen_production_wos_contract.md`
+- Production WOS numerical formulation and equation-to-code mapping: `docs/triso/22_review2_numerical_formulation.md`
+- Active R2-B01 verification test: `verification/r2_b01_supervisor_integration.rs`
+- Active R2-B01 execution workflow: `.github/workflows/r2-b01-supervisor-integration.yml`
+- Current status: this README
 
-## Documentation
+## FROZEN / HISTORICAL
 
-The rigorous derivation will be developed under `docs/triso/` as the repository architecture becomes established.
+Historical derivations, audits, intermediate benchmarks, handoffs, and completed remediation notes are preserved under `docs/triso/archive/`.
 
-## Important rule
+Review reports are preserved as immutable historical evidence under `reviews/`:
 
-Do not treat exploratory notes or an existing implementation as mathematical ground truth.
+- `reviews/review_01_continuous_mathematical_foundation.md`
+- `reviews/review_02_numerical_formulation.md`
+
+Supporting Review-2 planning/specification notes are under `reviews/archive/`.
+
+Other non-production numerical or diagnostic artifacts are preserved under `verification/archive/`.
+
+Obsolete workflows are preserved under `.github/workflows/archive/` and are not active.
+
+## Research navigation
+
+Original derivation → verified derivation → canonical equation register → production WOS contract → numerical formulation / code mapping → verification
+
+## Method distinction
+
+The original notebook's FTCS scheme is retained as a transparent deterministic benchmark. The supervisor production method is first-passage Walk-on-Spheres. The two are not treated as interchangeable.
+
+## Repository safety
+
+Do not modify or merge into `main` from this research branch. Supervisor-repository source is authoritative for the production WOS implementation; Ray changes remain isolated until the user explicitly publishes them.
