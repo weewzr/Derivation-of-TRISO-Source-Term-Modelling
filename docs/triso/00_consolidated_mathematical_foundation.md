@@ -5056,25 +5056,1315 @@ $$
 
 Thus one global decay rate \(\Lambda_n\) generates five material-dependent spatial wave numbers.
 
-### 12.12 What is and is not established
+### 12.12 Global conservative self-adjoint structure
 
-[VERIFIED] The five-layer steady source problem is solved analytically under constant layer diffusivities, kernel-only generation, ideal interfaces, and a Robin outer boundary.
+Return to the separated transient equation before the substitution \(u_i=r\phi_i\).
 
-[VERIFIED] The transient source terms cancel after subtraction of the steady solution.
+Equation (TRISO-ML-425) is
 
-[VERIFIED] A global transient mode has one temporal decay rate \(\Lambda\) and layer-dependent \(k_i=\sqrt{\Lambda/D_i}\).
+$$
+-\Lambda\phi_i
+=
+D_i
+\left(
+\phi_i''
++
+\frac2r\phi_i'
+\right).
+\tag{TRISO-ML-478}
+$$
 
-[VERIFIED] The transformed interface and Robin conditions produce the explicit \(9\times9\) homogeneous coefficient system above.
+Multiply by \(r^2\):
 
-[VERIFIED] Non-trivial global modes require \(\det\mathbf M(\Lambda)=0\).
+$$
+-\Lambda r^2\phi_i
+=
+D_i
+\left(
+r^2\phi_i''
++
+2r\phi_i'
+\right).
+\tag{TRISO-ML-479}
+$$
 
-[UNVERIFIED] Numerical enumeration of all positive roots \(\Lambda_n\).
+Because \(D_i\) is constant inside layer \(i\),
 
-[UNVERIFIED] Completeness and convergence of the five-layer modal expansion.
+$$
+D_i
+\left(
+r^2\phi_i''
++
+2r\phi_i'
+\right)
+=
+\frac{d}{dr}
+\left(
+r^2D_i\phi_i'
+\right).
+\tag{TRISO-ML-480}
+$$
 
-[UNVERIFIED] The explicit five-layer modal coefficient projection for the initial condition.
+Therefore
 
-Those unresolved items are deliberately retained rather than hidden. They are the next analytical dependencies after the present five-layer eigenvalue formulation.
+$$
+-\Lambda r^2\phi_i
+=
+\frac{d}{dr}
+\left(
+r^2D_i\phi_i'
+\right).
+\tag{TRISO-ML-481}
+$$
+
+Multiply by \(-1\):
+
+$$
+\boxed{
+-\frac{d}{dr}
+\left(
+r^2D_i\phi_i'
+\right)
+=
+\Lambda r^2\phi_i.
+}
+\tag{TRISO-ML-482}
+$$
+
+This is the conservative eigen-equation in layer \(i\).
+
+Define the piecewise diffusivity
+
+$$
+D(r)=D_i,
+\qquad
+r_{i-1}<r<r_i.
+\tag{TRISO-ML-483}
+$$
+
+Then the piecewise Sturm–Liouville coefficient is
+
+$$
+\boxed{
+p(r)=r^2D(r).
+}
+\tag{TRISO-ML-484}
+$$
+
+There is no zeroth-order potential term:
+
+$$
+\boxed{
+q(r)=0.
+}
+\tag{TRISO-ML-485}
+$$
+
+Comparing
+
+$$
+-\frac{d}{dr}
+\left(
+p(r)\phi'
+\right)
++
+q(r)\phi
+=
+\Lambda w(r)\phi
+\tag{TRISO-ML-486}
+$$
+
+with (TRISO-ML-482) shows that the weight is
+
+$$
+\boxed{
+w(r)=r^2.
+}
+\tag{TRISO-ML-487}
+$$
+
+Thus the weight \(r^2\) follows from the physical conservative eigen-equation; it is not imported by analogy with the homogeneous sphere.
+
+### 12.13 Layerwise Lagrange identity for two global modes
+
+Let global mode \(m\) have eigenvalue \(\Lambda_m\) and layer functions \(\phi_i^{(m)}\).
+
+In layer \(i\),
+
+$$
+-\frac{d}{dr}
+\left(
+r^2D_i\frac{d\phi_i^{(m)}}{dr}
+\right)
+=
+\Lambda_m r^2\phi_i^{(m)}.
+\tag{TRISO-ML-488}
+$$
+
+Let global mode \(n\) have eigenvalue \(\Lambda_n\):
+
+$$
+-\frac{d}{dr}
+\left(
+r^2D_i\frac{d\phi_i^{(n)}}{dr}
+\right)
+=
+\Lambda_n r^2\phi_i^{(n)}.
+\tag{TRISO-ML-489}
+$$
+
+Multiply the \(m\)-equation by \(\phi_i^{(n)}\):
+
+$$
+-\phi_i^{(n)}
+\frac{d}{dr}
+\left(
+r^2D_i\phi_i^{(m)\prime}
+\right)
+=
+\Lambda_m r^2
+\phi_i^{(m)}
+\phi_i^{(n)}.
+\tag{TRISO-ML-490}
+$$
+
+Multiply the \(n\)-equation by \(\phi_i^{(m)}\):
+
+$$
+-\phi_i^{(m)}
+\frac{d}{dr}
+\left(
+r^2D_i\phi_i^{(n)\prime}
+\right)
+=
+\Lambda_n r^2
+\phi_i^{(m)}
+\phi_i^{(n)}.
+\tag{TRISO-ML-491}
+$$
+
+Subtract (TRISO-ML-491) from (TRISO-ML-490):
+
+$$
+-\phi_i^{(n)}
+\frac{d}{dr}
+\left(
+r^2D_i\phi_i^{(m)\prime}
+\right)
++
+\phi_i^{(m)}
+\frac{d}{dr}
+\left(
+r^2D_i\phi_i^{(n)\prime}
+\right)
+=
+(\Lambda_m-\Lambda_n)
+r^2\phi_i^{(m)}\phi_i^{(n)}.
+\tag{TRISO-ML-492}
+$$
+
+Define
+
+$$
+P_i(r)=r^2D_i.
+\tag{TRISO-ML-493}
+$$
+
+Use the product rule:
+
+$$
+\frac{d}{dr}
+\left[
+P_i
+\left(
+\phi_i^{(m)}\phi_i^{(n)\prime}
+-
+\phi_i^{(n)}\phi_i^{(m)\prime}
+\right)
+\right]
+$$
+
+$$
+=
+\phi_i^{(m)}
+\frac{d}{dr}
+\left(
+P_i\phi_i^{(n)\prime}
+\right)
+-
+\phi_i^{(n)}
+\frac{d}{dr}
+\left(
+P_i\phi_i^{(m)\prime}
+\right).
+\tag{TRISO-ML-494}
+$$
+
+Therefore (TRISO-ML-492) becomes
+
+$$
+\frac{d}{dr}
+\left[
+r^2D_i
+\left(
+\phi_i^{(m)}\phi_i^{(n)\prime}
+-
+\phi_i^{(n)}\phi_i^{(m)\prime}
+\right)
+\right]
+=
+(\Lambda_m-\Lambda_n)
+r^2\phi_i^{(m)}\phi_i^{(n)}.
+\tag{TRISO-ML-495}
+$$
+
+Integrate over layer \(i\):
+
+$$
+\int_{r_{i-1}}^{r_i}
+\frac{d}{dr}
+\left[
+r^2D_i
+\left(
+\phi_i^{(m)}\phi_i^{(n)\prime}
+-
+\phi_i^{(n)}\phi_i^{(m)\prime}
+\right)
+\right]dr
+$$
+
+$$
+=
+(\Lambda_m-\Lambda_n)
+\int_{r_{i-1}}^{r_i}
+r^2\phi_i^{(m)}\phi_i^{(n)}\,dr.
+\tag{TRISO-ML-496}
+$$
+
+Evaluate the derivative integral:
+
+$$
+\left[
+r^2D_i
+\left(
+\phi_i^{(m)}\phi_i^{(n)\prime}
+-
+\phi_i^{(n)}\phi_i^{(m)\prime}
+\right)
+\right]_{r_{i-1}}^{r_i}
+$$
+
+$$
+=
+(\Lambda_m-\Lambda_n)
+\int_{r_{i-1}}^{r_i}
+r^2\phi_i^{(m)}\phi_i^{(n)}\,dr.
+\tag{TRISO-ML-497}
+$$
+
+### 12.14 Sum over all five layers
+
+Define the layer boundary expression
+
+$$
+\mathcal B_i(r)
+=
+r^2D_i
+\left(
+\phi_i^{(m)}\phi_i^{(n)\prime}
+-
+\phi_i^{(n)}\phi_i^{(m)\prime}
+\right).
+\tag{TRISO-ML-498}
+$$
+
+Equation (TRISO-ML-497) is
+
+$$
+\mathcal B_i(r_i)
+-
+\mathcal B_i(r_{i-1})
+=
+(\Lambda_m-\Lambda_n)
+\int_{r_{i-1}}^{r_i}
+r^2\phi_i^{(m)}\phi_i^{(n)}\,dr.
+\tag{TRISO-ML-499}
+$$
+
+Sum from \(i=1\) to \(5\):
+
+$$
+\sum_{i=1}^{5}
+\left[
+\mathcal B_i(r_i)
+-
+\mathcal B_i(r_{i-1})
+\right]
+$$
+
+$$
+=
+(\Lambda_m-\Lambda_n)
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2\phi_i^{(m)}\phi_i^{(n)}\,dr.
+\tag{TRISO-ML-500}
+$$
+
+Write the left side explicitly:
+
+$$
+\mathcal B_1(r_1)-\mathcal B_1(0)
++
+\mathcal B_2(r_2)-\mathcal B_2(r_1)
+$$
+
+$$
++
+\mathcal B_3(r_3)-\mathcal B_3(r_2)
++
+\mathcal B_4(r_4)-\mathcal B_4(r_3)
++
+\mathcal B_5(R)-\mathcal B_5(r_4).
+\tag{TRISO-ML-501}
+$$
+
+Group the four internal-interface contributions:
+
+$$
+-\mathcal B_1(0)
++
+\left[
+\mathcal B_1(r_1)-\mathcal B_2(r_1)
+\right]
++
+\left[
+\mathcal B_2(r_2)-\mathcal B_3(r_2)
+\right]
+$$
+
+$$
++
+\left[
+\mathcal B_3(r_3)-\mathcal B_4(r_3)
+\right]
++
+\left[
+\mathcal B_4(r_4)-\mathcal B_5(r_4)
+\right]
++
+\mathcal B_5(R).
+\tag{TRISO-ML-502}
+$$
+
+### 12.15 Explicit cancellation at one internal interface
+
+Consider interface \(r=r_j\) between layers \(j\) and \(j+1\).
+
+The contribution from the left layer is
+
+$$
+\mathcal B_j(r_j)
+=
+r_j^2D_j
+\left[
+\phi_j^{(m)}\phi_j^{(n)\prime}
+-
+\phi_j^{(n)}\phi_j^{(m)\prime}
+\right]_{r_j}.
+\tag{TRISO-ML-503}
+$$
+
+The contribution from the right layer enters with a minus sign:
+
+$$
+-\mathcal B_{j+1}(r_j)
+=
+-r_j^2D_{j+1}
+\left[
+\phi_{j+1}^{(m)}\phi_{j+1}^{(n)\prime}
+-
+\phi_{j+1}^{(n)}\phi_{j+1}^{(m)\prime}
+\right]_{r_j}.
+\tag{TRISO-ML-504}
+$$
+
+For ideal concentration continuity,
+
+$$
+\phi_j^{(m)}(r_j)
+=
+\phi_{j+1}^{(m)}(r_j),
+\tag{TRISO-ML-505}
+$$
+
+and
+
+$$
+\phi_j^{(n)}(r_j)
+=
+\phi_{j+1}^{(n)}(r_j).
+\tag{TRISO-ML-506}
+$$
+
+For ideal flux continuity,
+
+$$
+D_j\phi_j^{(m)\prime}(r_j)
+=
+D_{j+1}\phi_{j+1}^{(m)\prime}(r_j),
+\tag{TRISO-ML-507}
+$$
+
+and
+
+$$
+D_j\phi_j^{(n)\prime}(r_j)
+=
+D_{j+1}\phi_{j+1}^{(n)\prime}(r_j).
+\tag{TRISO-ML-508}
+$$
+
+Use (TRISO-ML-505) and (TRISO-ML-508) in the first product of (TRISO-ML-503):
+
+$$
+D_j
+\phi_j^{(m)}
+\phi_j^{(n)\prime}
+=
+\phi_{j+1}^{(m)}
+D_{j+1}\phi_{j+1}^{(n)\prime}.
+\tag{TRISO-ML-509}
+$$
+
+Use (TRISO-ML-506) and (TRISO-ML-507) in the second product:
+
+$$
+D_j
+\phi_j^{(n)}
+\phi_j^{(m)\prime}
+=
+\phi_{j+1}^{(n)}
+D_{j+1}\phi_{j+1}^{(m)\prime}.
+\tag{TRISO-ML-510}
+$$
+
+Therefore
+
+$$
+\mathcal B_j(r_j)
+=
+r_j^2D_{j+1}
+\left[
+\phi_{j+1}^{(m)}
+\phi_{j+1}^{(n)\prime}
+-
+\phi_{j+1}^{(n)}
+\phi_{j+1}^{(m)\prime}
+\right].
+\tag{TRISO-ML-511}
+$$
+
+The right side of (TRISO-ML-511) is exactly
+
+$$
+\mathcal B_{j+1}(r_j).
+\tag{TRISO-ML-512}
+$$
+
+Hence
+
+$$
+\boxed{
+\mathcal B_j(r_j)-\mathcal B_{j+1}(r_j)=0.
+}
+\tag{TRISO-ML-513}
+$$
+
+The same argument applies independently at \(r_1,r_2,r_3,r_4\), including when adjacent diffusivities are unequal.
+
+Thus all four internal-interface terms in (TRISO-ML-502) cancel pairwise.
+
+### 12.16 Centre boundary contribution
+
+At the centre,
+
+$$
+\mathcal B_1(0)
+=
+\lim_{r\to0}
+r^2D_1
+\left(
+\phi_1^{(m)}\phi_1^{(n)\prime}
+-
+\phi_1^{(n)}\phi_1^{(m)\prime}
+\right).
+\tag{TRISO-ML-514}
+$$
+
+Regularity gives finite centre values for both eigenfunctions:
+
+$$
+|\phi_1^{(m)}(0)|<\infty,
+\qquad
+|\phi_1^{(n)}(0)|<\infty.
+\tag{TRISO-ML-515}
+$$
+
+Spherical symmetry gives
+
+$$
+\phi_1^{(m)\prime}(0)=0,
+\qquad
+\phi_1^{(n)\prime}(0)=0.
+\tag{TRISO-ML-516}
+$$
+
+For regular eigenfunctions, the bracketed quantity remains bounded as \(r\to0\).
+
+Since
+
+$$
+r^2D_1\to0
+\qquad
+(r\to0),
+\tag{TRISO-ML-517}
+$$
+
+we obtain
+
+$$
+\boxed{
+\mathcal B_1(0)=0.
+}
+\tag{TRISO-ML-518}
+$$
+
+### 12.17 Outer Robin boundary contribution
+
+At \(r=R\),
+
+$$
+\mathcal B_5(R)
+=
+R^2D_5
+\left[
+\phi_5^{(m)}(R)\phi_5^{(n)\prime}(R)
+-
+\phi_5^{(n)}(R)\phi_5^{(m)\prime}(R)
+\right].
+\tag{TRISO-ML-519}
+$$
+
+Both modes satisfy the same homogeneous Robin condition:
+
+$$
+-D_5\phi_5^{(m)\prime}(R)
+=
+h\phi_5^{(m)}(R),
+\tag{TRISO-ML-520}
+$$
+
+and
+
+$$
+-D_5\phi_5^{(n)\prime}(R)
+=
+h\phi_5^{(n)}(R).
+\tag{TRISO-ML-521}
+$$
+
+Solve the first condition for the derivative:
+
+$$
+D_5\phi_5^{(m)\prime}(R)
+=
+-h\phi_5^{(m)}(R).
+\tag{TRISO-ML-522}
+$$
+
+Similarly,
+
+$$
+D_5\phi_5^{(n)\prime}(R)
+=
+-h\phi_5^{(n)}(R).
+\tag{TRISO-ML-523}
+$$
+
+Substitute into (TRISO-ML-519):
+
+$$
+\mathcal B_5(R)
+=
+R^2
+\left[
+-h\phi_5^{(m)}(R)\phi_5^{(n)}(R)
++
+h\phi_5^{(n)}(R)\phi_5^{(m)}(R)
+\right].
+\tag{TRISO-ML-524}
+$$
+
+The two products are identical and have opposite signs:
+
+$$
+\boxed{
+\mathcal B_5(R)=0.
+}
+\tag{TRISO-ML-525}
+$$
+
+### 12.18 Global multilayer orthogonality
+
+All terms on the left side of (TRISO-ML-500) now vanish:
+
+- centre term by (TRISO-ML-518);
+- four interface pairs by (TRISO-ML-513);
+- outer Robin term by (TRISO-ML-525).
+
+Therefore
+
+$$
+0
+=
+(\Lambda_m-\Lambda_n)
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+\phi_i^{(m)}(r)
+\phi_i^{(n)}(r)
+\,dr.
+\tag{TRISO-ML-526}
+$$
+
+For distinct eigenvalues,
+
+$$
+\Lambda_m\ne\Lambda_n.
+\tag{TRISO-ML-527}
+$$
+
+Divide by \(\Lambda_m-\Lambda_n\):
+
+$$
+\boxed{
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+\phi_i^{(m)}(r)
+\phi_i^{(n)}(r)
+\,dr
+=
+0,
+\qquad
+m\ne n.
+}
+\tag{TRISO-ML-528}
+$$
+
+Thus the correct global weight is
+
+$$
+\boxed{
+w(r)=r^2.
+}
+\tag{TRISO-ML-529}
+$$
+
+Define the global piecewise eigenfunction
+
+$$
+\Phi_n(r)
+=
+\phi_i^{(n)}(r),
+\qquad
+r_{i-1}<r<r_i.
+\tag{TRISO-ML-530}
+$$
+
+Then define the weighted inner product
+
+$$
+\boxed{
+\langle f,g\rangle_w
+=
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2f_i(r)g_i(r)\,dr.
+}
+\tag{TRISO-ML-531}
+$$
+
+Global orthogonality is
+
+$$
+\boxed{
+\langle\Phi_m,\Phi_n\rangle_w=0,
+\qquad
+m\ne n.
+}
+\tag{TRISO-ML-532}
+$$
+
+### 12.19 Modal norm and normalization
+
+Define the norm of mode \(n\):
+
+$$
+\boxed{
+N_n
+=
+\langle\Phi_n,\Phi_n\rangle_w
+=
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+\left[
+\phi_i^{(n)}(r)
+\right]^2
+dr.
+}
+\tag{TRISO-ML-533}
+$$
+
+If \(\phi_i\) carries concentration units, then
+
+$$
+[N_n]
+=
+\mathrm{m^3}
+[\phi]^2.
+\tag{TRISO-ML-534}
+$$
+
+If instead the eigenfunctions are chosen dimensionless, then
+
+$$
+[N_n]=\mathrm{m^3}.
+\tag{TRISO-ML-535}
+$$
+
+The eigenvalue problem determines each coefficient vector only up to an arbitrary non-zero scale.
+
+If
+
+$$
+\Phi_n\to\alpha_n\Phi_n,
+\tag{TRISO-ML-536}
+$$
+
+then
+
+$$
+N_n\to\alpha_n^2N_n.
+\tag{TRISO-ML-537}
+$$
+
+The corresponding modal amplitude transforms inversely:
+
+$$
+A_n\to\frac{A_n}{\alpha_n}.
+\tag{TRISO-ML-538}
+$$
+
+Therefore the physical product
+
+$$
+A_n\Phi_n
+\tag{TRISO-ML-539}
+$$
+
+is unchanged.
+
+One convenient convention is unit weighted norm:
+
+$$
+N_n=1.
+\tag{TRISO-ML-540}
+$$
+
+No such normalization is required for the projection formula below.
+
+### 12.20 Project the initial transient state
+
+For the source-driven benchmark,
+
+$$
+v_i(r,0)
+=
+-c_{i,\mathrm{ss}}(r).
+\tag{TRISO-ML-541}
+$$
+
+Assume the global modal representation
+
+$$
+v_i(r,t)
+=
+\sum_{n=1}^{\infty}
+A_n
+\phi_i^{(n)}(r)
+e^{-\Lambda_nt}.
+\tag{TRISO-ML-542}
+$$
+
+At \(t=0\),
+
+$$
+e^{-\Lambda_n0}=1.
+\tag{TRISO-ML-543}
+$$
+
+Therefore
+
+$$
+-c_{i,\mathrm{ss}}(r)
+=
+\sum_{n=1}^{\infty}
+A_n\phi_i^{(n)}(r),
+\qquad
+r_{i-1}<r<r_i.
+\tag{TRISO-ML-544}
+$$
+
+Multiply the equation in layer \(i\) by
+
+$$
+r^2\phi_i^{(m)}(r).
+\tag{TRISO-ML-545}
+$$
+
+This gives
+
+$$
+-r^2
+c_{i,\mathrm{ss}}(r)
+\phi_i^{(m)}(r)
+=
+\sum_{n=1}^{\infty}
+A_n
+r^2
+\phi_i^{(n)}(r)
+\phi_i^{(m)}(r).
+\tag{TRISO-ML-546}
+$$
+
+Integrate over layer \(i\):
+
+$$
+-\int_{r_{i-1}}^{r_i}
+r^2
+c_{i,\mathrm{ss}}
+\phi_i^{(m)}
+\,dr
+=
+\sum_{n=1}^{\infty}
+A_n
+\int_{r_{i-1}}^{r_i}
+r^2
+\phi_i^{(n)}
+\phi_i^{(m)}
+\,dr.
+\tag{TRISO-ML-547}
+$$
+
+Sum all five layers:
+
+$$
+-\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+c_{i,\mathrm{ss}}
+\phi_i^{(m)}
+\,dr
+$$
+
+$$
+=
+\sum_{n=1}^{\infty}
+A_n
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+\phi_i^{(n)}
+\phi_i^{(m)}
+\,dr.
+\tag{TRISO-ML-548}
+$$
+
+For every \(n\ne m\), global orthogonality gives
+
+$$
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+\phi_i^{(n)}
+\phi_i^{(m)}
+\,dr
+=
+0.
+\tag{TRISO-ML-549}
+$$
+
+Therefore only the \(n=m\) term remains:
+
+$$
+-\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+c_{i,\mathrm{ss}}
+\phi_i^{(m)}
+\,dr
+=
+A_m
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+\left[
+\phi_i^{(m)}
+\right]^2
+dr.
+\tag{TRISO-ML-550}
+$$
+
+The denominator is \(N_m\):
+
+$$
+-\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+c_{i,\mathrm{ss}}
+\phi_i^{(m)}
+\,dr
+=
+A_mN_m.
+\tag{TRISO-ML-551}
+$$
+
+Divide by \(N_m>0\):
+
+$$
+\boxed{
+A_m
+=
+-
+\frac{
+\displaystyle
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+c_{i,\mathrm{ss}}(r)
+\phi_i^{(m)}(r)
+\,dr
+}{
+\displaystyle
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2
+\left[
+\phi_i^{(m)}(r)
+\right]^2
+dr
+}.
+}
+\tag{TRISO-ML-552}
+$$
+
+This is the multilayer modal coefficient formula, conditional on the assumed completeness of the global eigenfunction family for representing the initial transient state.
+
+### 12.21 Complete formal five-layer transient solution
+
+Because
+
+$$
+c_i=v_i+c_{i,\mathrm{ss}},
+\tag{TRISO-ML-553}
+$$
+
+substitute the modal expansion (TRISO-ML-542):
+
+$$
+\boxed{
+c_i(r,t)
+=
+c_{i,\mathrm{ss}}(r)
++
+\sum_{n=1}^{\infty}
+A_n
+\phi_i^{(n)}(r)
+e^{-\Lambda_nt},
+\qquad
+r_{i-1}<r<r_i.
+}
+\tag{TRISO-ML-554}
+$$
+
+#### Initial-time check
+
+At \(t=0\),
+
+$$
+c_i(r,0)
+=
+c_{i,\mathrm{ss}}(r)
++
+\sum_{n=1}^{\infty}
+A_n\phi_i^{(n)}(r).
+\tag{TRISO-ML-555}
+$$
+
+If the eigenfunction expansion represents the initial transient,
+
+$$
+\sum_{n=1}^{\infty}
+A_n\phi_i^{(n)}(r)
+=
+-c_{i,\mathrm{ss}}(r).
+\tag{TRISO-ML-556}
+$$
+
+Therefore
+
+$$
+c_i(r,0)=0.
+\tag{TRISO-ML-557}
+$$
+
+This recovery is formal and depends on the completeness/convergence statement discussed below.
+
+#### Long-time check
+
+For every positive decay rate,
+
+$$
+\Lambda_n>0,
+\tag{TRISO-ML-558}
+$$
+
+so
+
+$$
+e^{-\Lambda_nt}\to0
+\qquad
+(t\to\infty).
+\tag{TRISO-ML-559}
+$$
+
+Formally,
+
+$$
+\boxed{
+c_i(r,t)\to c_{i,\mathrm{ss}}(r)
+\qquad
+(t\to\infty).
+}
+\tag{TRISO-ML-560}
+$$
+
+#### Interface check
+
+Every global eigenmode separately satisfies
+
+$$
+\phi_i^{(n)}(r_i)
+=
+\phi_{i+1}^{(n)}(r_i),
+\tag{TRISO-ML-561}
+$$
+
+and
+
+$$
+D_i\phi_i^{(n)\prime}(r_i)
+=
+D_{i+1}\phi_{i+1}^{(n)\prime}(r_i).
+\tag{TRISO-ML-562}
+$$
+
+A linear combination of such modes therefore preserves both homogeneous interface conditions.
+
+Adding the steady solution restores the corresponding full interface conditions.
+
+#### Centre check
+
+Every kernel eigenfunction has \(B_1=0\), so it is regular at \(r=0\).
+
+Therefore each transient mode is finite at the centre and satisfies the centre symmetry condition.
+
+#### Outer-boundary check
+
+Every mode satisfies
+
+$$
+-D_5\phi_5^{(n)\prime}(R)
+=
+h\phi_5^{(n)}(R).
+\tag{TRISO-ML-563}
+$$
+
+Multiplication by the scalar factor \(A_ne^{-\Lambda_nt}\) preserves this relation.
+
+Therefore the complete transient sum satisfies the homogeneous Robin condition whenever termwise boundary evaluation is justified.
+
+Adding the steady solution restores the full Robin boundary condition.
+
+### 12.22 Completeness and convergence status
+
+The orthogonality result (TRISO-ML-528) was derived directly from the conservative differential equations, interface conditions, centre regularity, and outer Robin condition.
+
+It does not require a completeness theorem.
+
+[VERIFIED] Distinct global eigenmodes are orthogonal in the weighted inner product with \(w(r)=r^2\).
+
+The projection algebra leading to (TRISO-ML-552) is also valid once an expansion in the eigenfunctions is admitted.
+
+[DERIVED CONDITIONALLY] The modal projection formula follows from orthogonality under the assumption that the initial transient lies in the closure of the global eigenfunction span.
+
+Completeness is a separate spectral statement.
+
+Standard regular Sturm–Liouville completeness theorems provide completeness in an appropriate weighted \(L^2\) space for regular self-adjoint problems on finite intervals. The present TRISO problem is more delicate because:
+
+1. \(p(r)=r^2D(r)\) vanishes at \(r=0\), so the centre is a singular endpoint;
+2. \(D(r)\) is piecewise constant and discontinuous at four internal interfaces;
+3. the operator domain includes transmission conditions enforcing continuity of concentration and flux.
+
+The current derivation has explicitly demonstrated the self-adjoint boundary/interface cancellation needed for symmetry of the operator.
+
+However, this project has not yet supplied a theorem specifically covering the singular endpoint together with these piecewise transmission conditions and proving completeness of the resulting eigenfunctions.
+
+[SOURCE / THEOREM NEEDED] A rigorous completeness theorem for this self-adjoint singular Sturm–Liouville/transmission problem, or an equivalent self-adjoint compact-resolvent operator formulation.
+
+Accordingly, the current statuses are:
+
+- orthogonality: **VERIFIED by direct derivation**;
+- modal projection formula: **DERIVED CONDITIONALLY**;
+- completeness: **THEOREM-DEPENDENT / NOT YET PROVED IN THIS PROJECT**;
+- numerical convergence of truncated modal sums: **UNVERIFIED**.
+
+The standard Sturm–Liouville framework and regular-problem completeness results provide mathematical context, but they are not being silently promoted to a proof for this singular piecewise problem.
+
+### 12.23 Homogeneous-diffusivity reduction check
+
+Set
+
+$$
+D_1=D_2=D_3=D_4=D_5=D.
+\tag{TRISO-ML-564}
+$$
+
+Then
+
+$$
+p(r)=r^2D
+\tag{TRISO-ML-565}
+$$
+
+throughout the sphere.
+
+Flux continuity becomes
+
+$$
+D\phi_i'(r_i)=D\phi_{i+1}'(r_i).
+\tag{TRISO-ML-566}
+$$
+
+Cancel \(D>0\):
+
+$$
+\phi_i'(r_i)=\phi_{i+1}'(r_i).
+\tag{TRISO-ML-567}
+$$
+
+Together with concentration continuity,
+
+$$
+\phi_i(r_i)=\phi_{i+1}(r_i),
+\tag{TRISO-ML-568}
+$$
+
+the artificial internal material boundaries become transparent to the homogeneous eigenfunction.
+
+The global inner product becomes
+
+$$
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2\phi_m\phi_n\,dr.
+\tag{TRISO-ML-569}
+$$
+
+Because the five intervals partition \((0,R)\),
+
+$$
+\sum_{i=1}^{5}
+\int_{r_{i-1}}^{r_i}
+r^2\phi_m\phi_n\,dr
+=
+\int_0^R
+r^2\phi_m\phi_n\,dr.
+\tag{TRISO-ML-570}
+$$
+
+Therefore the multilayer orthogonality relation reduces to
+
+$$
+\boxed{
+\int_0^R
+r^2\phi_m(r)\phi_n(r)\,dr
+=
+0,
+\qquad
+m\ne n,
+}
+\tag{TRISO-ML-571}
+$$
+
+which is exactly the homogeneous spherical weight derived in Section 10.
+
+### 12.24 Unequal-diffusivity interface check
+
+The interface cancellation did not require
+
+$$
+D_j=D_{j+1}.
+\tag{TRISO-ML-572}
+$$
+
+Instead it used the physical transmission condition
+
+$$
+D_j\phi_j'
+=
+D_{j+1}\phi_{j+1}'.
+\tag{TRISO-ML-573}
+$$
+
+Therefore unequal adjacent diffusivities remain fully compatible with the global orthogonality proof.
+
+The diffusivity discontinuity is carried by \(p(r)=r^2D(r)\), while the weight remains \(r^2\).
+
+### 12.25 Updated analytical status
+
+[VERIFIED] Five-layer steady analytical solution under the frozen ideal benchmark assumptions.
+
+[VERIFIED] Explicit global eigenvalue system and determinant condition.
+
+[VERIFIED] Piecewise conservative self-adjoint/Lagrange structure.
+
+[VERIFIED] Pairwise cancellation of all four ideal-interface boundary terms.
+
+[VERIFIED] Centre and Robin boundary cancellation.
+
+[VERIFIED] Global orthogonality with weight \(r^2\).
+
+[DERIVED CONDITIONALLY] Global modal coefficient projection.
+
+[FORMAL / CONDITIONALLY VERIFIED] Infinite five-layer transient modal representation.
+
+[THEOREM-DEPENDENT] Completeness of the global eigenfunction family.
+
+[UNVERIFIED] Numerical convergence rate and truncation error of the modal series.
 
 ## 13. Original FTCS discretisation
 
