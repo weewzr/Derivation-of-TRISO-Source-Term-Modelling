@@ -7,10 +7,9 @@ use boon_lay::{
 };
 use uom::si::{
     f64::{Length, Time},
-    length::{meter, micrometer, nanometer},
+    length::{meter, nanometer},
     time::second,
-    thermodynamic_temperature::degree_celsius,
-};
+    };
 use uom::ConstZero;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -96,7 +95,6 @@ fn five_layer_release_path_records_actual_release_time_or_explicit_censoring() {
 #[test]
 fn fixed_time_cdf_excludes_late_releases() {
     let t1 = Time::new::<second>(1.0);
-    let t2 = Time::new::<second>(2.0);
     let t3 = Time::new::<second>(3.0);
     let outcomes = [
         ReleaseOutcome::Released(t1),
@@ -121,7 +119,7 @@ fn max_step_censoring_is_not_known_nonrelease() {
     };
 
     assert_eq!(
-        five_layer_release_time(0xCENSOR, &params),
+        five_layer_release_time(0xC0DE_5EED, &params),
         ReleaseOutcome::CensoredMaxSteps
     );
 
