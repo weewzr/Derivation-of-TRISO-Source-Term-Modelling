@@ -7185,15 +7185,466 @@ The original notebook's FTCS method is retained as a transparent deterministic b
 
 ## 14. Centre discretisation
 
-Symmetry gives C_-1^j=C_1^j.
+The interior stencil in Section 13 cannot be evaluated at \(i=0\) because it contains the factor \(1/i\).
 
-Therefore c_rr(0)≈2(C_1^j-C_0^j)/Δr².
+The centre must therefore be derived from the regular spherical limit.
 
-For a regular smooth solution, lim[r→0](2/r)c_r=2c_rr(0).
+### 14.1 Continuous centre operator
 
-Thus the centre spherical operator is 6(C_1^j-C_0^j)/Δr².
+Inside the homogeneous kernel, the radial diffusion operator is
 
-Therefore C_0^{j+1}=C_0^j+6Fo(C_1^j-C_0^j)+S0Δt.
+$$
+\mathcal L[c]
+=
+\frac{\partial^2c}{\partial r^2}
++
+\frac2r\frac{\partial c}{\partial r}.
+\tag{TRISO-DIS-200}
+$$
+
+For a sufficiently smooth spherically symmetric field,
+
+$$
+\frac{\partial c}{\partial r}(0,t)=0.
+\tag{TRISO-DIS-201}
+$$
+
+Consider the apparently singular term
+
+$$
+\lim_{r\to0}
+\frac2r
+\frac{\partial c}{\partial r}.
+\tag{TRISO-DIS-202}
+$$
+
+Because the numerator tends to zero,
+
+$$
+\lim_{r\to0}
+\frac{\partial c/\partial r}{r}
+$$
+
+has the indeterminate form \(0/0\).
+
+Apply L'Hôpital's rule with respect to \(r\):
+
+$$
+\lim_{r\to0}
+\frac{\partial c/\partial r}{r}
+=
+\lim_{r\to0}
+\frac{\partial^2c/\partial r^2}{1}.
+\tag{TRISO-DIS-203}
+$$
+
+Therefore
+
+$$
+\lim_{r\to0}
+\frac1r
+\frac{\partial c}{\partial r}
+=
+\frac{\partial^2c}{\partial r^2}(0,t).
+\tag{TRISO-DIS-204}
+$$
+
+Multiply by \(2\):
+
+$$
+\lim_{r\to0}
+\frac2r
+\frac{\partial c}{\partial r}
+=
+2
+\frac{\partial^2c}{\partial r^2}(0,t).
+\tag{TRISO-DIS-205}
+$$
+
+Hence
+
+$$
+\mathcal L[c](0,t)
+=
+\frac{\partial^2c}{\partial r^2}(0,t)
++
+2\frac{\partial^2c}{\partial r^2}(0,t).
+\tag{TRISO-DIS-206}
+$$
+
+Collect the terms:
+
+$$
+\boxed{
+\mathcal L[c](0,t)
+=
+3
+\frac{\partial^2c}{\partial r^2}(0,t).
+}
+\tag{TRISO-DIS-207}
+$$
+
+This is the exact smooth-origin limit of the spherical radial operator.
+
+### 14.2 Introduce a symmetric ghost point
+
+The uniform mesh has
+
+$$
+r_0=0,
+\qquad
+r_1=\Delta r.
+\tag{TRISO-DIS-208}
+$$
+
+For the purpose of constructing a centred derivative at the origin, introduce a mathematical ghost point
+
+$$
+r_{-1}=-\Delta r.
+\tag{TRISO-DIS-209}
+$$
+
+Spherical symmetry corresponds to an even extension of the radial concentration:
+
+$$
+c(-r,t)=c(r,t).
+\tag{TRISO-DIS-210}
+$$
+
+Evaluate this at \(r=\Delta r\):
+
+$$
+c(-\Delta r,t)=c(\Delta r,t).
+\tag{TRISO-DIS-211}
+$$
+
+In nodal notation,
+
+$$
+\boxed{
+C_{-1}^j=C_1^j.
+}
+\tag{TRISO-DIS-212}
+$$
+
+The ghost point is a mathematical device. It does not represent a physical negative-radius material region.
+
+### 14.3 Centre second derivative
+
+Use the centred second-derivative formula at \(i=0\):
+
+$$
+\frac{\partial^2c}{\partial r^2}(0,t_j)
+\approx
+\frac{
+C_{-1}^j-2C_0^j+C_1^j
+}{
+\Delta r^2
+}.
+\tag{TRISO-DIS-213}
+$$
+
+Substitute the symmetry relation \(C_{-1}^j=C_1^j\):
+
+$$
+\frac{\partial^2c}{\partial r^2}(0,t_j)
+\approx
+\frac{
+C_1^j-2C_0^j+C_1^j
+}{
+\Delta r^2
+}.
+\tag{TRISO-DIS-214}
+$$
+
+Add the two \(C_1^j\) terms:
+
+$$
+\boxed{
+\frac{\partial^2c}{\partial r^2}(0,t_j)
+\approx
+\frac{
+2(C_1^j-C_0^j)
+}{
+\Delta r^2
+}.
+}
+\tag{TRISO-DIS-215}
+$$
+
+### 14.4 Discrete spherical operator at the centre
+
+From the exact centre limit,
+
+$$
+\mathcal L[c](0,t)
+=
+3c_{rr}(0,t).
+\tag{TRISO-DIS-216}
+$$
+
+Substitute the discrete second derivative (TRISO-DIS-215):
+
+$$
+\mathcal L[c](0,t_j)
+\approx
+3
+\frac{
+2(C_1^j-C_0^j)
+}{
+\Delta r^2
+}.
+\tag{TRISO-DIS-217}
+$$
+
+Multiply the factors \(3\) and \(2\):
+
+$$
+\boxed{
+\mathcal L[c](0,t_j)
+\approx
+\frac{
+6(C_1^j-C_0^j)
+}{
+\Delta r^2
+}.
+}
+\tag{TRISO-DIS-218}
+$$
+
+This is the origin of the factor \(6\) in the Ray notebook's centre update.
+
+### 14.5 Apply the centre PDE
+
+In the homogeneous kernel, the PDE at the centre is interpreted through the regular limit:
+
+$$
+\frac{\partial c}{\partial t}(0,t)
+=
+D_1\mathcal L[c](0,t)
++
+S_0.
+\tag{TRISO-DIS-219}
+$$
+
+Use the forward-time approximation:
+
+$$
+\frac{
+C_0^{j+1}-C_0^j
+}{
+\Delta t
+}
+=
+D_1\mathcal L[c](0,t_j)
++
+S_0.
+\tag{TRISO-DIS-220}
+$$
+
+Substitute (TRISO-DIS-218):
+
+$$
+\frac{
+C_0^{j+1}-C_0^j
+}{
+\Delta t
+}
+=
+D_1
+\frac{
+6(C_1^j-C_0^j)
+}{
+\Delta r^2
+}
++
+S_0.
+\tag{TRISO-DIS-221}
+$$
+
+Multiply by \(\Delta t\):
+
+$$
+C_0^{j+1}-C_0^j
+=
+\frac{
+6D_1\Delta t
+}{
+\Delta r^2
+}
+(C_1^j-C_0^j)
++
+S_0\Delta t.
+\tag{TRISO-DIS-222}
+$$
+
+Define the kernel Fourier number
+
+$$
+\boxed{
+\mathrm{Fo}_1
+=
+\frac{D_1\Delta t}{\Delta r^2}.
+}
+\tag{TRISO-DIS-223}
+$$
+
+Substitute it:
+
+$$
+C_0^{j+1}-C_0^j
+=
+6\mathrm{Fo}_1
+(C_1^j-C_0^j)
++
+S_0\Delta t.
+\tag{TRISO-DIS-224}
+$$
+
+Add \(C_0^j\) to both sides:
+
+$$
+\boxed{
+C_0^{j+1}
+=
+C_0^j
++
+6\mathrm{Fo}_1
+(C_1^j-C_0^j)
++
+S_0\Delta t.
+}
+\tag{TRISO-DIS-225}
+$$
+
+Expand the difference:
+
+$$
+C_0^{j+1}
+=
+C_0^j
++
+6\mathrm{Fo}_1C_1^j
+-
+6\mathrm{Fo}_1C_0^j
++
+S_0\Delta t.
+\tag{TRISO-DIS-226}
+$$
+
+Collect the centre coefficient:
+
+$$
+\boxed{
+C_0^{j+1}
+=
+(1-6\mathrm{Fo}_1)C_0^j
++
+6\mathrm{Fo}_1C_1^j
++
+S_0\Delta t.
+}
+\tag{TRISO-DIS-227}
+$$
+
+### 14.6 Consistency of the centre approximation
+
+For a smooth even radial field, expand about \(r=0\):
+
+$$
+c(\Delta r,t)
+=
+c(0,t)
++
+\frac{\Delta r^2}{2}c_{rr}(0,t)
++
+\frac{\Delta r^4}{24}c_{rrrr}(0,t)
++
+O(\Delta r^6).
+\tag{TRISO-DIS-228}
+$$
+
+Subtract \(c(0,t)\):
+
+$$
+c(\Delta r,t)-c(0,t)
+=
+\frac{\Delta r^2}{2}c_{rr}(0,t)
++
+\frac{\Delta r^4}{24}c_{rrrr}(0,t)
++
+O(\Delta r^6).
+\tag{TRISO-DIS-229}
+$$
+
+Multiply by \(2/\Delta r^2\):
+
+$$
+\frac{
+2[c(\Delta r,t)-c(0,t)]
+}{
+\Delta r^2
+}
+=
+c_{rr}(0,t)
++
+\frac{\Delta r^2}{12}c_{rrrr}(0,t)
++
+O(\Delta r^4).
+\tag{TRISO-DIS-230}
+$$
+
+Therefore the centre second derivative in (TRISO-DIS-215) is second-order accurate in space:
+
+$$
+c_{rr}(0,t)
+=
+\frac{
+2(C_1-C_0)
+}{
+\Delta r^2
+}
++
+O(\Delta r^2).
+\tag{TRISO-DIS-231}
+$$
+
+Multiplying by the exact factor \(3\) does not change the spatial order:
+
+$$
+\mathcal L[c](0,t)
+=
+\frac{
+6(C_1-C_0)
+}{
+\Delta r^2
+}
++
+O(\Delta r^2).
+\tag{TRISO-DIS-232}
+$$
+
+Combined with forward Euler time stepping, the centre equation is locally
+
+$$
+\boxed{
+O(\Delta t)+O(\Delta r^2).
+}
+\tag{TRISO-DIS-233}
+$$
+
+### 14.7 Scope of the centre formula
+
+The centre formula requires:
+
+- spherical symmetry;
+- sufficient smoothness at \(r=0\);
+- the centre to lie inside one homogeneous kernel material;
+- constant \(D_1\) over the centre stencil.
+
+It does not determine the treatment of material interfaces or the outer surface.
+
+The coefficient \(1-6\mathrm{Fo}_1\) will later enter the FTCS monotonicity/stability discussion, but no stability conclusion is drawn here.
 
 ## 15. Robin ghost and surface
 
