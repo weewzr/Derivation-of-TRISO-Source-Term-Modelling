@@ -240,3 +240,19 @@ Completeness note: standard regular Sturm–Liouville completeness results are n
 | TRISO-DIS-149–152 | Interior local truncation/consistency order | CONDITIONALLY VERIFIED |
 
 Scope: these equations apply only to a uniform-grid interior stencil wholly inside one homogeneous constant-D layer. Centre, material-interface, and outer-boundary equations require separate derivations.
+
+## Canonical stable equations: deterministic FTCS centre derivation
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-DIS-200–207 | Smooth-origin limit of spherical diffusion operator | VERIFIED |
+| TRISO-DIS-208–212 | Symmetric centre ghost-point construction | VERIFIED / MATHEMATICAL DEVICE |
+| TRISO-DIS-213–215 | Centre second-derivative stencil | VERIFIED |
+| TRISO-DIS-216–218 | Discrete spherical operator at r=0 | VERIFIED |
+| TRISO-DIS-219–225 | Centre PDE and explicit FTCS update | VERIFIED |
+| TRISO-DIS-223 | Kernel Fourier number Fo_1 | VERIFIED AS DEFINITION |
+| TRISO-DIS-227 | Collected centre update coefficients | VERIFIED |
+| TRISO-DIS-228–232 | Centre Taylor consistency derivation | VERIFIED |
+| TRISO-DIS-233 | Centre local consistency order | CONDITIONALLY VERIFIED |
+
+Scope: the centre stencil assumes a smooth spherically symmetric field and a homogeneous kernel around r=0. Stability implications of the coefficient 1-6Fo_1 are deferred to the dedicated stability section.
