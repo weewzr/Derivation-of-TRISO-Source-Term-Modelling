@@ -13349,7 +13349,355 @@ $$
 
 Thus an ordinary smooth same-material face flux is second-order consistent under the stated mesh assumptions.
 
-### 18A.6 What has and has not been proved
+### 18A.6 Complete smooth-cell divergence consistency
+
+The exact diffusion contribution to the cell-average evolution is
+
+$$
+\mathcal D_P
+=
+\frac{
+A_wJ_w-A_eJ_e
+}{
+V_P
+}.
+\tag{TRISO-ACC-140}
+$$
+
+The numerical diffusion contribution is
+
+$$
+\mathcal D_P^h
+=
+\frac{
+A_wJ_w^h-A_eJ_e^h
+}{
+V_P
+}.
+\tag{TRISO-ACC-141}
+$$
+
+Define the face-flux errors
+
+$$
+\varepsilon_w
+=
+J_w^h-J_w,
+\tag{TRISO-ACC-142}
+$$
+
+and
+
+$$
+\varepsilon_e
+=
+J_e^h-J_e.
+\tag{TRISO-ACC-143}
+$$
+
+Subtract the exact cell diffusion term from the numerical one:
+
+$$
+\mathcal D_P^h-\mathcal D_P
+=
+\frac{
+A_w(J_w^h-J_w)
+-
+A_e(J_e^h-J_e)
+}{
+V_P
+}.
+\tag{TRISO-ACC-144}
+$$
+
+Use the error definitions:
+
+$$
+\boxed{
+\mathcal D_P^h-\mathcal D_P
+=
+\frac{
+A_w\varepsilon_w-A_e\varepsilon_e
+}{
+V_P}.
+}
+\tag{TRISO-ACC-145}
+$$
+
+The face analysis alone gives
+
+$$
+\varepsilon_w=O(h^2),
+\qquad
+\varepsilon_e=O(h^2).
+\tag{TRISO-ACC-146}
+$$
+
+Since
+
+$$
+V_P=O(h)
+\tag{TRISO-ACC-147}
+$$
+
+for a refining shell away from pathological mesh degeneration, the estimate (TRISO-ACC-146) by itself would permit only
+
+$$
+\mathcal D_P^h-\mathcal D_P=O(h).
+\tag{TRISO-ACC-148}
+$$
+
+Therefore second-order face consistency alone is insufficient to establish second-order cell-divergence consistency.
+
+A cancellation property of the leading face errors is required.
+
+#### 18A.6.1 Smooth leading face-error field
+
+For a smooth solution and a smoothly varying, locally symmetric mesh family, assume the face-flux truncation error admits the local expansion
+
+$$
+\boxed{
+\varepsilon_f
+=
+h^2E(r_f)
++
+O(h^3),
+}
+\tag{TRISO-ACC-149}
+$$
+
+where \(E(r)\) is smooth within the material.
+
+This is stronger than the statement \(\varepsilon_f=O(h^2)\).
+
+At the west face,
+
+$$
+\varepsilon_w
+=
+h^2E(r_w)
++
+O(h^3).
+\tag{TRISO-ACC-150}
+$$
+
+At the east face,
+
+$$
+\varepsilon_e
+=
+h^2E(r_e)
++
+O(h^3).
+\tag{TRISO-ACC-151}
+$$
+
+Substitute into the numerator of (TRISO-ACC-145):
+
+$$
+A_w\varepsilon_w-A_e\varepsilon_e
+=
+h^2
+\left[
+A_wE(r_w)-A_eE(r_e)
+\right]
++
+O(h^4),
+\tag{TRISO-ACC-152}
+$$
+
+where the remainder scaling assumes a shape-regular cell with bounded spherical face areas.
+
+Define
+
+$$
+F(r)=A(r)E(r),
+\tag{TRISO-ACC-153}
+$$
+
+with
+
+$$
+A(r)=4\pi r^2.
+\tag{TRISO-ACC-154}
+$$
+
+Then
+
+$$
+A_wE(r_w)-A_eE(r_e)
+=
+F(r_w)-F(r_e).
+\tag{TRISO-ACC-155}
+$$
+
+Taylor-expand \(F(r_e)\) about \(r_w\):
+
+$$
+F(r_e)
+=
+F(r_w)
++
+(r_e-r_w)F'(r_w)
++
+O(h^2).
+\tag{TRISO-ACC-156}
+$$
+
+Since
+
+$$
+r_e-r_w=h_P=O(h),
+\tag{TRISO-ACC-157}
+$$
+
+subtracting gives
+
+$$
+F(r_w)-F(r_e)
+=
+-h_PF'(r_w)
++
+O(h^2).
+\tag{TRISO-ACC-158}
+$$
+
+Therefore
+
+$$
+F(r_w)-F(r_e)=O(h).
+\tag{TRISO-ACC-159}
+$$
+
+Return to (TRISO-ACC-152):
+
+$$
+A_w\varepsilon_w-A_e\varepsilon_e
+=
+h^2O(h)
++
+O(h^4).
+\tag{TRISO-ACC-160}
+$$
+
+Hence
+
+$$
+\boxed{
+A_w\varepsilon_w-A_e\varepsilon_e
+=
+O(h^3).
+}
+\tag{TRISO-ACC-161}
+$$
+
+Divide by
+
+$$
+V_P=O(h).
+\tag{TRISO-ACC-162}
+$$
+
+Then
+
+$$
+\boxed{
+\mathcal D_P^h-\mathcal D_P
+=
+O(h^2).
+}
+\tag{TRISO-ACC-163}
+$$
+
+Thus the complete smooth same-material finite-volume diffusion operator is second-order consistent **provided** the leading face-flux error varies smoothly from face to face as in (TRISO-ACC-149).
+
+#### 18A.6.2 Relation to the exact spherical differential operator
+
+The exact integrated diffusion term is
+
+$$
+\mathcal D_P
+=
+\frac1{V_P}
+\int_{r_w}^{r_e}
+4\pi
+\frac{\partial}{\partial r}
+\left(
+r^2D c_r
+\right)dr.
+\tag{TRISO-ACC-164}
+$$
+
+For a smooth integrand, the exact cell average of the differential operator differs from its value at the volume centroid by the same centroid-moment mechanism used in Section 18A.1.
+
+Therefore
+
+$$
+\mathcal D_P
+=
+\left[
+\frac1{r^2}
+\frac{\partial}{\partial r}
+\left(
+r^2D c_r
+\right)
+\right]_{r=r_P}
++
+O(h^2).
+\tag{TRISO-ACC-165}
+$$
+
+Combine (TRISO-ACC-163) and (TRISO-ACC-165):
+
+$$
+\boxed{
+\mathcal D_P^h
+=
+\left[
+\frac1{r^2}
+\frac{\partial}{\partial r}
+\left(
+r^2D c_r
+\right)
+\right]_{r=r_P}
++
+O(h^2).
+}
+\tag{TRISO-ACC-166}
+$$
+
+This result applies only to smooth same-material cells under the stated mesh/error-regularity assumptions.
+
+#### 18A.6.3 Why the cancellation assumption matters
+
+If the leading face-error coefficient is not smooth across the cell, then
+
+$$
+A_w\varepsilon_w-A_e\varepsilon_e
+\tag{TRISO-ACC-167}
+$$
+
+need not be \(O(h^3)\).
+
+It may remain only
+
+$$
+O(h^2).
+\tag{TRISO-ACC-168}
+$$
+
+Division by \(V_P=O(h)\) would then give only
+
+$$
+O(h)
+\tag{TRISO-ACC-169}
+$$
+
+cell-divergence consistency.
+
+This is precisely why the smooth-cell result cannot be transferred automatically across a discontinuous material interface.
+
+### 18A.7 What has and has not been proved
 
 [VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O(h^2)\) for a smooth field.
 
@@ -13357,7 +13705,7 @@ Thus an ordinary smooth same-material face flux is second-order consistent under
 
 [CONDITIONALLY VERIFIED] Under those same assumptions, the same-material diffusive face flux is \(O(h^2)\) consistent.
 
-[NOT YET ESTABLISHED] The truncation order of the complete cell divergence after combining west and east face-flux errors.
+[CONDITIONALLY VERIFIED] The complete smooth same-material cell divergence is O(h^2) consistent when the leading O(h^2) face-flux error has a smooth coefficient across neighbouring faces.
 
 [NOT YET ESTABLISHED] Interface-face consistency when \(D\) is discontinuous.
 
@@ -13365,7 +13713,7 @@ Thus an ordinary smooth same-material face flux is second-order consistent under
 
 [NOT YET ESTABLISHED] Global spatial convergence order.
 
-The next accuracy dependency is therefore the complete cell-divergence consistency and then the discontinuous-\(D\) interface face.
+The next accuracy dependency is therefore the discontinuous-\(D\) interface face, where the smooth face-error cancellation used above cannot be assumed.
 
 ## 19. Implementation provenance
 
