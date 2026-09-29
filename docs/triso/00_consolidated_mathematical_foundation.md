@@ -11593,7 +11593,1024 @@ This is the finite-volume analogue of the earlier homogeneous FTCS monotonicity 
 
 The outer Robin closure is now available in Section 18.12. The final global positivity bound must include its boundary conductance.
 
-### 18.14 Status of the five-layer deterministic discretisation
+### 18.14 Global five-layer semi-discrete matrix
+
+Let the finite-volume mesh contain \(M\) spherical cells.
+
+Index the cell-average concentrations by
+
+$$
+\mathbf C(t)
+=
+(C_0,C_1,\ldots,C_{M-1})^T.
+\tag{TRISO-FV-233}
+$$
+
+Define the diagonal volume matrix
+
+$$
+\boxed{
+\mathbf V
+=
+\operatorname{diag}
+(V_0,V_1,\ldots,V_{M-1}).
+}
+\tag{TRISO-FV-234}
+$$
+
+Every cell volume is positive:
+
+$$
+V_P>0.
+\tag{TRISO-FV-235}
+$$
+
+Let \(G_{P+\frac12}\) denote the total conductance of the face shared by cells \(P\) and \(P+1\).
+
+At an ordinary same-material face,
+
+$$
+G_{P+\frac12}
+=
+\frac{
+A_{P+\frac12}D
+}{
+r_{P+1}-r_P
+}.
+\tag{TRISO-FV-236}
+$$
+
+At a material-interface face,
+
+$$
+\boxed{
+G_{P+\frac12}
+=
+A_{P+\frac12}
+\left(
+\frac{\delta r_P}{D_P}
++
+\frac{\delta r_{P+1}}{D_{P+1}}
+\right)^{-1}.
+}
+\tag{TRISO-FV-237}
+$$
+
+Thus the matrix assembly does not require a separate interface unknown.
+
+### 18.15 Central-cell row
+
+The central-cell balance is
+
+$$
+V_0\frac{dC_0}{dt}
+=
+G_{\frac12}(C_1-C_0)
++
+S_0V_0.
+\tag{TRISO-FV-238}
+$$
+
+Expand:
+
+$$
+V_0\frac{dC_0}{dt}
+=
+-G_{\frac12}C_0
++
+G_{\frac12}C_1
++
+S_0V_0.
+\tag{TRISO-FV-239}
+$$
+
+Therefore the first row of the transport matrix contains
+
+$$
+K_{0,0}
+=
+-G_{\frac12},
+\tag{TRISO-FV-240}
+$$
+
+and
+
+$$
+K_{0,1}
+=
+G_{\frac12}.
+\tag{TRISO-FV-241}
+$$
+
+### 18.16 Ordinary-cell row
+
+For cell \(P\), with
+
+$$
+1\le P\le M-2,
+\tag{TRISO-FV-242}
+$$
+
+the conservative balance is
+
+$$
+V_P\frac{dC_P}{dt}
+=
+G_{P-\frac12}(C_{P-1}-C_P)
++
+G_{P+\frac12}(C_{P+1}-C_P)
++
+S_PV_P.
+\tag{TRISO-FV-243}
+$$
+
+Expand the west-face term:
+
+$$
+G_{P-\frac12}(C_{P-1}-C_P)
+=
+G_{P-\frac12}C_{P-1}
+-
+G_{P-\frac12}C_P.
+\tag{TRISO-FV-244}
+$$
+
+Expand the east-face term:
+
+$$
+G_{P+\frac12}(C_{P+1}-C_P)
+=
+G_{P+\frac12}C_{P+1}
+-
+G_{P+\frac12}C_P.
+\tag{TRISO-FV-245}
+$$
+
+Substitute:
+
+$$
+V_P\frac{dC_P}{dt}
+=
+G_{P-\frac12}C_{P-1}
+-
+G_{P-\frac12}C_P
++
+G_{P+\frac12}C_{P+1}
+-
+G_{P+\frac12}C_P
++
+S_PV_P.
+\tag{TRISO-FV-246}
+$$
+
+Collect the central coefficient:
+
+$$
+\boxed{
+V_P\frac{dC_P}{dt}
+=
+G_{P-\frac12}C_{P-1}
+-
+\left(
+G_{P-\frac12}+G_{P+\frac12}
+\right)C_P
++
+G_{P+\frac12}C_{P+1}
++
+S_PV_P.
+}
+\tag{TRISO-FV-247}
+$$
+
+Therefore
+
+$$
+K_{P,P-1}
+=
+G_{P-\frac12},
+\tag{TRISO-FV-248}
+$$
+
+$$
+K_{P,P}
+=
+-\left(
+G_{P-\frac12}+G_{P+\frac12}
+\right),
+\tag{TRISO-FV-249}
+$$
+
+and
+
+$$
+K_{P,P+1}
+=
+G_{P+\frac12}.
+\tag{TRISO-FV-250}
+$$
+
+These formulas remain valid when either face is a material interface because the corresponding \(G\) already contains the resistance-weighted discontinuous-\(D\) coupling.
+
+### 18.17 Outermost-cell row
+
+Let the outermost cell index be
+
+$$
+P=M-1.
+\tag{TRISO-FV-251}
+$$
+
+Section 18.12 gives
+
+$$
+V_{M-1}\frac{dC_{M-1}}{dt}
+=
+G_{M-\frac32}C_{M-2}
+-
+\left(
+G_{M-\frac32}+G_R
+\right)C_{M-1}
++
+G_Rc_\infty
++
+S_{M-1}V_{M-1}.
+\tag{TRISO-FV-252}
+$$
+
+Therefore
+
+$$
+K_{M-1,M-2}
+=
+G_{M-\frac32},
+\tag{TRISO-FV-253}
+$$
+
+and
+
+$$
+K_{M-1,M-1}
+=
+-\left(
+G_{M-\frac32}+G_R
+\right).
+\tag{TRISO-FV-254}
+$$
+
+The external concentration enters as a forcing term rather than as another particle unknown.
+
+### 18.18 Assemble the transport matrix
+
+Define the source vector
+
+$$
+\mathbf S
+=
+(S_0,S_1,\ldots,S_{M-1})^T.
+\tag{TRISO-FV-255}
+$$
+
+Define the external-boundary forcing vector
+
+$$
+\mathbf b_\infty
+=
+(0,0,\ldots,0,G_Rc_\infty)^T.
+\tag{TRISO-FV-256}
+$$
+
+The complete semi-discrete system is
+
+$$
+\boxed{
+\mathbf V
+\frac{d\mathbf C}{dt}
+=
+\mathbf K\mathbf C
++
+\mathbf V\mathbf S
++
+\mathbf b_\infty.
+}
+\tag{TRISO-FV-257}
+$$
+
+The matrix \(\mathbf K\) is tridiagonal:
+
+$$
+\mathbf K
+=
+\begin{pmatrix}
+-G_{\frac12}
+&
+G_{\frac12}
+&
+0
+&
+\cdots
+&
+0
+\\
+G_{\frac12}
+&
+-(G_{\frac12}+G_{\frac32})
+&
+G_{\frac32}
+&
+\ddots
+&
+\vdots
+\\
+0
+&
+G_{\frac32}
+&
+-(G_{\frac32}+G_{\frac52})
+&
+\ddots
+&
+0
+\\
+\vdots
+&
+\ddots
+&
+\ddots
+&
+\ddots
+&
+G_{M-\frac32}
+\\
+0
+&
+\cdots
+&
+0
+&
+G_{M-\frac32}
+&
+-(G_{M-\frac32}+G_R)
+\end{pmatrix}.
+\tag{TRISO-FV-258}
+$$
+
+Because each shared-face conductance appears identically in the two neighbouring rows,
+
+$$
+\boxed{
+\mathbf K=\mathbf K^T.
+}
+\tag{TRISO-FV-259}
+$$
+
+The time-evolution operator in concentration coordinates is
+
+$$
+\boxed{
+\mathbf L
+=
+\mathbf V^{-1}\mathbf K.
+}
+\tag{TRISO-FV-260}
+$$
+
+The matrix \(\mathbf L\) is generally not symmetric because cell volumes differ with radius.
+
+### 18.19 Weighted self-adjoint structure of the semi-discrete operator
+
+Define the discrete volume-weighted inner product
+
+$$
+\boxed{
+\langle\mathbf x,\mathbf y\rangle_V
+=
+\mathbf x^T\mathbf V\mathbf y.
+}
+\tag{TRISO-FV-261}
+$$
+
+Evaluate
+
+$$
+\langle\mathbf x,\mathbf L\mathbf y\rangle_V
+=
+\mathbf x^T\mathbf V\mathbf L\mathbf y.
+\tag{TRISO-FV-262}
+$$
+
+Use \(\mathbf L=\mathbf V^{-1}\mathbf K\):
+
+$$
+\mathbf V\mathbf L
+=
+\mathbf K.
+\tag{TRISO-FV-263}
+$$
+
+Therefore
+
+$$
+\langle\mathbf x,\mathbf L\mathbf y\rangle_V
+=
+\mathbf x^T\mathbf K\mathbf y.
+\tag{TRISO-FV-264}
+$$
+
+Because \(\mathbf K=\mathbf K^T\),
+
+$$
+\mathbf x^T\mathbf K\mathbf y
+=
+\mathbf y^T\mathbf K\mathbf x.
+\tag{TRISO-FV-265}
+$$
+
+Reverse the preceding steps:
+
+$$
+\mathbf y^T\mathbf K\mathbf x
+=
+\langle\mathbf L\mathbf x,\mathbf y\rangle_V.
+\tag{TRISO-FV-266}
+$$
+
+Hence
+
+$$
+\boxed{
+\langle\mathbf x,\mathbf L\mathbf y\rangle_V
+=
+\langle\mathbf L\mathbf x,\mathbf y\rangle_V.
+}
+\tag{TRISO-FV-267}
+$$
+
+Thus the conservative semi-discrete diffusion operator is self-adjoint in the volume-weighted discrete inner product.
+
+This is the discrete analogue of the continuum \(r^2\)-weighted self-adjoint structure.
+
+### 18.20 Negative-semidefinite diffusion form
+
+For any vector \(\mathbf x\),
+
+$$
+\mathbf x^T\mathbf K\mathbf x
+\tag{TRISO-FV-268}
+$$
+
+can be grouped face-by-face.
+
+An internal face between \(P\) and \(P+1\) contributes
+
+$$
+-G_{P+\frac12}x_P^2
++
+2G_{P+\frac12}x_Px_{P+1}
+-
+G_{P+\frac12}x_{P+1}^2.
+\tag{TRISO-FV-269}
+$$
+
+Factor \(-G_{P+\frac12}\):
+
+$$
+-G_{P+\frac12}
+\left(
+x_P^2
+-
+2x_Px_{P+1}
++
+x_{P+1}^2
+\right).
+\tag{TRISO-FV-270}
+$$
+
+Recognise the square:
+
+$$
+x_P^2
+-
+2x_Px_{P+1}
++
+x_{P+1}^2
+=
+(x_{P+1}-x_P)^2.
+\tag{TRISO-FV-271}
+$$
+
+Therefore each internal face contributes
+
+$$
+-G_{P+\frac12}
+(x_{P+1}-x_P)^2.
+\tag{TRISO-FV-272}
+$$
+
+The Robin boundary contributes
+
+$$
+-G_Rx_{M-1}^2.
+\tag{TRISO-FV-273}
+$$
+
+Thus
+
+$$
+\boxed{
+\mathbf x^T\mathbf K\mathbf x
+=
+-
+\sum_{P=0}^{M-2}
+G_{P+\frac12}
+(x_{P+1}-x_P)^2
+-
+G_Rx_{M-1}^2.
+}
+\tag{TRISO-FV-274}
+$$
+
+Since all conductances are non-negative,
+
+$$
+\boxed{
+\mathbf x^T\mathbf K\mathbf x\le0.
+}
+\tag{TRISO-FV-275}
+$$
+
+For \(G_R>0\), equality requires both
+
+$$
+x_{P+1}=x_P
+\tag{TRISO-FV-276}
+$$
+
+for every internal face and
+
+$$
+x_{M-1}=0.
+\tag{TRISO-FV-277}
+$$
+
+Therefore
+
+$$
+\mathbf x=\mathbf0.
+\tag{TRISO-FV-278}
+$$
+
+Hence, for a finite-transfer or absorbing outer boundary with \(G_R>0\),
+
+$$
+\boxed{
+\mathbf K
+\text{ is negative definite.}
+}
+\tag{TRISO-FV-279}
+$$
+
+If \(G_R=0\), the constant vector is the expected zero mode of a closed no-flux particle.
+
+### 18.21 Global discrete inventory balance
+
+Define the discrete total particle inventory
+
+$$
+\boxed{
+N_h(t)
+=
+\mathbf 1^T\mathbf V\mathbf C
+=
+\sum_{P=0}^{M-1}
+V_PC_P.
+}
+\tag{TRISO-FV-280}
+$$
+
+Differentiate:
+
+$$
+\frac{dN_h}{dt}
+=
+\mathbf1^T
+\mathbf V
+\frac{d\mathbf C}{dt}.
+\tag{TRISO-FV-281}
+$$
+
+Use the semi-discrete system:
+
+$$
+\frac{dN_h}{dt}
+=
+\mathbf1^T\mathbf K\mathbf C
++
+\mathbf1^T\mathbf V\mathbf S
++
+\mathbf1^T\mathbf b_\infty.
+\tag{TRISO-FV-282}
+$$
+
+All internal conductance contributions cancel in the row sum.
+
+The only non-zero transport contribution is the Robin boundary:
+
+$$
+\mathbf1^T\mathbf K\mathbf C
+=
+-G_RC_{M-1}.
+\tag{TRISO-FV-283}
+$$
+
+The boundary forcing is
+
+$$
+\mathbf1^T\mathbf b_\infty
+=
+G_Rc_\infty.
+\tag{TRISO-FV-284}
+$$
+
+Therefore
+
+$$
+\boxed{
+\frac{dN_h}{dt}
+=
+\sum_{P=0}^{M-1}S_PV_P
+-
+G_R(C_{M-1}-c_\infty).
+}
+\tag{TRISO-FV-285}
+$$
+
+This is exactly the discrete statement
+
+$$
+\text{accumulation}
+=
+\text{generation}
+-
+\text{outward release}.
+\tag{TRISO-FV-286}
+$$
+
+For the kernel-confined constant source,
+
+$$
+\sum_PS_PV_P
+=
+\frac{4\pi S_0r_1^3}{3}
+\tag{TRISO-FV-287}
+$$
+
+when the source/material interface is face-aligned.
+
+Thus
+
+$$
+\boxed{
+\frac{dN_h}{dt}
+=
+\frac{4\pi S_0r_1^3}{3}
+-
+G_R(C_{M-1}-c_\infty).
+}
+\tag{TRISO-FV-288}
+$$
+
+### 18.22 Explicit-Euler matrix update
+
+Apply forward Euler to (TRISO-FV-257):
+
+$$
+\mathbf V
+\frac{
+\mathbf C^{j+1}-\mathbf C^j
+}{
+\Delta t
+}
+=
+\mathbf K\mathbf C^j
++
+\mathbf V\mathbf S^j
++
+\mathbf b_\infty^j.
+\tag{TRISO-FV-289}
+$$
+
+Multiply by \(\mathbf V^{-1}\):
+
+$$
+\frac{
+\mathbf C^{j+1}-\mathbf C^j
+}{
+\Delta t
+}
+=
+\mathbf V^{-1}\mathbf K\mathbf C^j
++
+\mathbf S^j
++
+\mathbf V^{-1}\mathbf b_\infty^j.
+\tag{TRISO-FV-290}
+$$
+
+Multiply by \(\Delta t\):
+
+$$
+\mathbf C^{j+1}-\mathbf C^j
+=
+\Delta t\,\mathbf V^{-1}\mathbf K\mathbf C^j
++
+\Delta t\,\mathbf S^j
++
+\Delta t\,\mathbf V^{-1}\mathbf b_\infty^j.
+\tag{TRISO-FV-291}
+$$
+
+Add \(\mathbf C^j\):
+
+$$
+\boxed{
+\mathbf C^{j+1}
+=
+\mathbf A_{\mathrm{FV}}\mathbf C^j
++
+\Delta t\,\mathbf S^j
++
+\Delta t\,\mathbf V^{-1}\mathbf b_\infty^j,
+}
+\tag{TRISO-FV-292}
+$$
+
+where
+
+$$
+\boxed{
+\mathbf A_{\mathrm{FV}}
+=
+\mathbf I
++
+\Delta t\,\mathbf V^{-1}\mathbf K.
+}
+\tag{TRISO-FV-293}
+$$
+
+### 18.23 Completed coefficient-positivity bound
+
+For the central cell, the explicit update has central coefficient
+
+$$
+1-
+\frac{\Delta tG_{\frac12}}{V_0}.
+\tag{TRISO-FV-294}
+$$
+
+It is non-negative when
+
+$$
+\boxed{
+\Delta t
+\le
+\frac{V_0}{G_{\frac12}}.
+}
+\tag{TRISO-FV-295}
+$$
+
+For an ordinary cell \(P\),
+
+$$
+1-
+\frac{
+\Delta t
+\left(
+G_{P-\frac12}+G_{P+\frac12}
+\right)
+}{
+V_P
+}
+\ge0.
+\tag{TRISO-FV-296}
+$$
+
+Therefore
+
+$$
+\boxed{
+\Delta t
+\le
+\frac{
+V_P
+}{
+G_{P-\frac12}+G_{P+\frac12}
+}.
+}
+\tag{TRISO-FV-297}
+$$
+
+For the outer cell,
+
+$$
+1-
+\frac{
+\Delta t
+\left(
+G_{M-\frac32}+G_R
+\right)
+}{
+V_{M-1}
+}
+\ge0.
+\tag{TRISO-FV-298}
+$$
+
+Therefore
+
+$$
+\boxed{
+\Delta t
+\le
+\frac{
+V_{M-1}
+}{
+G_{M-\frac32}+G_R
+}.
+}
+\tag{TRISO-FV-299}
+$$
+
+Combine all cells:
+
+$$
+\boxed{
+\Delta t
+\le
+\min
+\left\{
+\frac{V_0}{G_{\frac12}},
+\;
+\min_{1\le P\le M-2}
+\frac{
+V_P
+}{
+G_{P-\frac12}+G_{P+\frac12}
+},
+\;
+\frac{
+V_{M-1}
+}{
+G_{M-\frac32}+G_R
+}
+\right\}.
+}
+\tag{TRISO-FV-300}
+$$
+
+Under this condition, every off-diagonal amplification coefficient is non-negative and every diagonal amplification coefficient is non-negative.
+
+### 18.24 Row sums and monotonicity
+
+For the centre row, the two homogeneous coefficients sum to
+
+$$
+1.
+\tag{TRISO-FV-301}
+$$
+
+For every ordinary interior cell, the three homogeneous coefficients sum to
+
+$$
+1.
+\tag{TRISO-FV-302}
+$$
+
+For the outer row, the particle-state coefficients sum to
+
+$$
+1-
+\frac{\Delta tG_R}{V_{M-1}}.
+\tag{TRISO-FV-303}
+$$
+
+For \(G_R\ge0\),
+
+$$
+1-
+\frac{\Delta tG_R}{V_{M-1}}
+\le1.
+\tag{TRISO-FV-304}
+$$
+
+Under (TRISO-FV-300), the row sum is also non-negative.
+
+Therefore the homogeneous particle amplification matrix is substochastic.
+
+Hence
+
+$$
+\boxed{
+\|\mathbf A_{\mathrm{FV}}\|_\infty\le1.
+}
+\tag{TRISO-FV-305}
+$$
+
+Consequently,
+
+$$
+\boxed{
+\rho(\mathbf A_{\mathrm{FV}})\le1.
+}
+\tag{TRISO-FV-306}
+$$
+
+Thus (TRISO-FV-300) is a sufficient explicit-Euler monotonicity and \(\ell_\infty\)-stability condition for the completed finite-volume system.
+
+It is not asserted to be a necessary spectral-stability condition.
+
+### 18.25 Semi-discrete spectral sign
+
+The generalized eigenproblem is
+
+$$
+\mathbf K\mathbf x
+=
+\lambda
+\mathbf V\mathbf x.
+\tag{TRISO-FV-307}
+$$
+
+Premultiply by \(\mathbf x^T\):
+
+$$
+\mathbf x^T\mathbf K\mathbf x
+=
+\lambda
+\mathbf x^T\mathbf V\mathbf x.
+\tag{TRISO-FV-308}
+$$
+
+For non-zero \(\mathbf x\),
+
+$$
+\mathbf x^T\mathbf V\mathbf x>0.
+\tag{TRISO-FV-309}
+$$
+
+From (TRISO-FV-275),
+
+$$
+\mathbf x^T\mathbf K\mathbf x\le0.
+\tag{TRISO-FV-310}
+$$
+
+Therefore
+
+$$
+\boxed{
+\lambda\le0.
+}
+\tag{TRISO-FV-311}
+$$
+
+For \(G_R>0\), \(\mathbf K\) is negative definite, so
+
+$$
+\boxed{
+\lambda<0
+}
+\tag{TRISO-FV-312}
+$$
+
+for every non-zero mode.
+
+This establishes the expected diffusive sign of the semi-discrete spectrum without numerically enumerating eigenvalues.
+
+### 18.26 Remaining accuracy and convergence questions
+
+The complete five-layer finite-volume algebra is now assembled.
+
+The following statements are established:
+
+- exact control-volume conservation;
+- resistance-weighted interface fluxes;
+- a closed cell-centred Robin boundary;
+- a symmetric conductance matrix \(\mathbf K\);
+- volume-weighted self-adjointness;
+- non-positive semi-discrete spectrum;
+- a sufficient explicit-Euler monotonicity/\(\ell_\infty\)-stability bound.
+
+The remaining mathematical questions are narrower:
+
+[UNVERIFIED] Global spatial order of accuracy when \(D(r)\) is discontinuous.
+
+[UNVERIFIED] Global temporal/spatial convergence rate of the fully discrete scheme.
+
+[UNVERIFIED] Numerical convergence study against the analytical benchmarks.
+
+These require a dedicated consistency/convergence pass rather than further coefficient assembly.
+
+### 18.27 Status of the five-layer deterministic discretisation
 
 [VERIFIED] The spherical control-volume geometry and exact integrated conservation balance.
 
@@ -11609,11 +12626,11 @@ The outer Robin closure is now available in Section 18.12. The final global posi
 
 [VERIFIED] Cell-centred Robin surface closure through half-cell diffusion plus external-film resistance.
 
-[DERIVATION GAP] Final assembled five-layer coefficient matrix including the outer boundary.
+[VERIFIED] Final assembled five-layer coefficient matrix including the outer boundary.
 
 [UNVERIFIED] Accuracy order of the complete multilayer finite-volume scheme.
 
-[UNVERIFIED] Stability/convergence of the complete multilayer scheme.
+[CONDITIONALLY VERIFIED] Sufficient explicit-Euler monotonicity/stability bound; convergence rate remains unverified.
 
 The finite-volume derivation is therefore the current canonical deterministic route for the discontinuous-\(D\) five-layer model, while the original FTCS scheme remains a transparent homogeneous benchmark.
 
