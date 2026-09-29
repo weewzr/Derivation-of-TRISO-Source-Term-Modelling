@@ -95,6 +95,19 @@ and D_i is time-independent over the benchmark interval.
 
 This does not freeze the eventual physical property model for all TRISO studies; it freezes the assumptions needed for the present verification problem.
 
+## 6A. Diffusivity freeze: implementation evidence
+
+The supervisor implementation obtains layer diffusivities through TrisoCell::try_get_diffusion_coefficient. That function supplies the layer material, nuclide, region temperature, and gamma-neutron fluence to the Jiang diffusivity correlation.
+
+Therefore the underlying property model can be state-dependent:
+
+D_i = D_i(T_i, Phi, nuclide).
+
+For the base Review-2 verification benchmark, temperature fields, neutron fluence, and nuclide identity are held fixed. The resulting D_i values are therefore constant in time for this benchmark.
+
+This is an explicit benchmark restriction, not a claim that future physical simulations may ignore temperature or fluence dependence.
+
+Status: [INFERRED FROM CODE] for the functional inputs; [ASSUMPTION] for freezing them during the benchmark.
 ## 7. Internal interface model
 
 For the base production benchmark:
