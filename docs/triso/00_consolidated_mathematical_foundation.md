@@ -3276,77 +3276,1805 @@ $$
 
 The convergence of the infinite series itself has not been numerically established here. The statements above are the formal consequences of the eigen-expansion framework.
 
-## 11. Exact steady five-layer analytical formulation
+## 11. Five-layer steady analytical formulation
 
-For kernel-only steady generation:
+### 11.1 Geometry, domains, and layer quantities
 
-Ndot_gen = 4π integral from 0 to a of S0 r² dr.
+Define the concentric radii
 
-So Ndot_gen=4πS0a³/3.
+$$
+r_0=0<r_1<r_2<r_3<r_4<r_5=R.
+\tag{TRISO-ML-300}
+$$
 
-Every spherical surface outside the kernel carries the same total rate:
+The five material regions are
 
-4πr²J_r=Ndot_gen.
+$$
+\Omega_1=(r_0,r_1)
+\quad\text{fuel kernel},
+\tag{TRISO-ML-301}
+$$
 
-Therefore J_r=S0a³/(3r²).
+$$
+\Omega_2=(r_1,r_2)
+\quad\text{buffer},
+\tag{TRISO-ML-302}
+$$
 
-In outer layer i:
+$$
+\Omega_3=(r_2,r_3)
+\quad\text{IPyC},
+\tag{TRISO-ML-303}
+$$
 
-c_i'(r)=-S0a³/(3D_i r²).
+$$
+\Omega_4=(r_3,r_4)
+\quad\text{SiC},
+\tag{TRISO-ML-304}
+$$
+
+and
+
+$$
+\Omega_5=(r_4,r_5)
+\quad\text{OPyC}.
+\tag{TRISO-ML-305}
+$$
+
+In material layer \(i\), define
+
+$$
+c_i(r,t),
+\qquad
+r_{i-1}<r<r_i.
+\tag{TRISO-ML-306}
+$$
+
+The concentration units are
+
+$$
+[c_i]=\mathrm{mol\,m^{-3}}.
+\tag{TRISO-ML-307}
+$$
+
+Let \(D_i\) be the diffusivity in layer \(i\):
+
+$$
+[D_i]=\mathrm{m^2\,s^{-1}}.
+\tag{TRISO-ML-308}
+$$
+
+Let \(S_i\) be the net volumetric source in layer \(i\):
+
+$$
+[S_i]=\mathrm{mol\,m^{-3}\,s^{-1}}.
+\tag{TRISO-ML-309}
+$$
+
+The coordinates \(r,t\), outer radius \(R\), transfer coefficient \(h\), and external concentration \(c_\infty\) are global quantities. The fields \(c_i\), diffusivities \(D_i\), and sources \(S_i\) are material-layer quantities.
+
+For the source-driven five-layer benchmark,
+
+$$
+S_1=S_0,
+\tag{TRISO-ML-310}
+$$
+
+while
+
+$$
+S_i=0,
+\qquad
+i=2,3,4,5.
+\tag{TRISO-ML-311}
+$$
+
+[ASSUMPTION] Each \(D_i>0\) is constant within its material layer for this analytical benchmark.
+
+[ASSUMPTION] Interfaces have zero storage, zero interfacial source, \(K_i=1\), and no explicit interfacial resistance.
+
+### 11.2 Kernel steady solution
+
+The steady conservative equation in the kernel is
+
+$$
+0=
+\frac1{r^2}
+\frac{d}{dr}
+\left(
+r^2D_1\frac{dc_1}{dr}
+\right)
++S_0.
+\tag{TRISO-ML-312}
+$$
+
+Move the source term to the right:
+
+$$
+\frac1{r^2}
+\frac{d}{dr}
+\left(
+r^2D_1\frac{dc_1}{dr}
+\right)
+=-S_0.
+\tag{TRISO-ML-313}
+$$
+
+Multiply by \(r^2\):
+
+$$
+\frac{d}{dr}
+\left(
+r^2D_1\frac{dc_1}{dr}
+\right)
+=-S_0r^2.
+\tag{TRISO-ML-314}
+$$
+
+Because \(D_1\) is constant in the kernel,
+
+$$
+D_1
+\frac{d}{dr}
+\left(
+r^2\frac{dc_1}{dr}
+\right)
+=-S_0r^2.
+\tag{TRISO-ML-315}
+$$
+
+Divide by \(D_1\):
+
+$$
+\frac{d}{dr}
+\left(
+r^2\frac{dc_1}{dr}
+\right)
+=-\frac{S_0}{D_1}r^2.
+\tag{TRISO-ML-316}
+$$
 
 Integrate:
 
-c_i(r)=c(r_i)+S0a³/(3D_i)[1/r-1/r_i].
+$$
+r^2\frac{dc_1}{dr}
+=
+-\frac{S_0r^3}{3D_1}
++C_1.
+\tag{TRISO-ML-317}
+$$
 
-At the OPyC surface with c_infty=0:
+Divide by \(r^2\), for \(r>0\):
 
-c_5(R)=S0a³/(3hR²).
+$$
+\frac{dc_1}{dr}
+=
+-\frac{S_0r}{3D_1}
++\frac{C_1}{r^2}.
+\tag{TRISO-ML-318}
+$$
 
-This gives an exact steady five-layer benchmark under the current ideal assumptions.
+Centre regularity requires \(dc_1/dr\) to remain finite as \(r\to0\). The term \(C_1/r^2\) diverges unless
 
-The original shell resistance is:
+$$
+C_1=0.
+\tag{TRISO-ML-319}
+$$
 
-ρ_i=[1/(4πD_i)] [1/r_{i-1}-1/r_i].
+Therefore
 
-This resistance is the steady diffusive opposition of shell i.
+$$
+\frac{dc_1}{dr}
+=
+-\frac{S_0r}{3D_1}.
+\tag{TRISO-ML-320}
+$$
 
-## 12. Five-layer transient analytical framework
+Integrate again:
 
-In layer i:
+$$
+c_1(r)
+=
+-\frac{S_0r^2}{6D_1}
++A_1.
+\tag{TRISO-ML-321}
+$$
 
-v_i(r,t)=φ_i(r) exp(-Λt).
+Hence the regular kernel profile is
 
-Then:
+$$
+\boxed{
+c_1(r)
+=
+A_1-\frac{S_0r^2}{6D_1}.
+}
+\tag{TRISO-ML-322}
+$$
 
-(1/r²)d/dr[r²D_i φ_i']+Λφ_i=0.
+### 11.3 Source-free coating solutions
 
-Define k_i²=Λ/D_i.
+For \(i=2,3,4,5\),
 
-Let u_i=rφ_i. Then u_i''+k_i²u_i=0.
+$$
+S_i=0.
+\tag{TRISO-ML-323}
+$$
 
-Therefore:
+The steady equation is
 
-u_i=A_i sin(k_i r)+B_i cos(k_i r).
+$$
+0=
+\frac1{r^2}
+\frac{d}{dr}
+\left(
+r^2D_i\frac{dc_i}{dr}
+\right).
+\tag{TRISO-ML-324}
+$$
 
-Centre regularity gives B_1=0.
+Multiply by \(r^2\):
 
-At an ideal interface:
+$$
+\frac{d}{dr}
+\left(
+r^2D_i\frac{dc_i}{dr}
+\right)=0.
+\tag{TRISO-ML-325}
+$$
 
-u_k(r_k)=u_{k+1}(r_k).
+Use constant \(D_i\):
 
-D_k[u_k'(r_k)-u_k(r_k)/r_k] = D_{k+1}[u_{k+1}'(r_k)-u_{k+1}(r_k)/r_k].
+$$
+D_i
+\frac{d}{dr}
+\left(
+r^2\frac{dc_i}{dr}
+\right)=0.
+\tag{TRISO-ML-326}
+$$
 
-At R:
+Divide by \(D_i>0\):
 
--D_5[u_5'(R)-u_5(R)/R]=h u_5(R).
+$$
+\frac{d}{dr}
+\left(
+r^2\frac{dc_i}{dr}
+\right)=0.
+\tag{TRISO-ML-327}
+$$
 
-These equations form a homogeneous linear system for the layer coefficients. A non-zero solution requires
+Integrate:
 
-F(Λ)=0,
+$$
+r^2\frac{dc_i}{dr}=C_i.
+\tag{TRISO-ML-328}
+$$
 
-where F is the determinant of the coefficient system.
+Divide by \(r^2\):
 
-This substantially advances the previously omitted multilayer analytical model. Numerical root enumeration and modal-coefficient convergence remain unverified.
+$$
+\frac{dc_i}{dr}=\frac{C_i}{r^2}.
+\tag{TRISO-ML-329}
+$$
+
+Integrate:
+
+$$
+c_i(r)=C_i\int r^{-2}dr+A_i.
+\tag{TRISO-ML-330}
+$$
+
+Since
+
+$$
+\int r^{-2}dr=-\frac1r,
+\tag{TRISO-ML-331}
+$$
+
+we obtain
+
+$$
+c_i(r)=A_i-\frac{C_i}{r}.
+\tag{TRISO-ML-332}
+$$
+
+Define \(B_i=-C_i\). Then
+
+$$
+\boxed{
+c_i(r)=A_i+\frac{B_i}{r},
+\qquad i=2,3,4,5.
+}
+\tag{TRISO-ML-333}
+$$
+
+The coating layers do not include \(r=0\), so their \(1/r\) terms are finite within their own domains and are not removed by centre regularity.
+
+### 11.4 Total kernel generation and common steady flux
+
+The total kernel generation rate is
+
+$$
+\dot N_{\mathrm{gen}}
+=
+4\pi
+\int_0^{r_1}
+S_0r^2\,dr.
+\tag{TRISO-ML-334}
+$$
+
+Pull the constants outside:
+
+$$
+\dot N_{\mathrm{gen}}
+=
+4\pi S_0
+\int_0^{r_1}r^2\,dr.
+\tag{TRISO-ML-335}
+$$
+
+Evaluate the integral:
+
+$$
+\int_0^{r_1}r^2\,dr
+=
+\left[\frac{r^3}{3}\right]_0^{r_1}.
+\tag{TRISO-ML-336}
+$$
+
+Therefore
+
+$$
+\int_0^{r_1}r^2\,dr
+=
+\frac{r_1^3}{3}.
+\tag{TRISO-ML-337}
+$$
+
+Hence
+
+$$
+\boxed{
+\dot N_{\mathrm{gen}}
+=
+\frac{4\pi S_0r_1^3}{3}.
+}
+\tag{TRISO-ML-338}
+$$
+
+At steady state, with no coating source, reaction, or storage, the same total amount rate crosses every sphere outside the kernel:
+
+$$
+4\pi r^2J_r(r)
+=
+\dot N_{\mathrm{gen}},
+\qquad r>r_1.
+\tag{TRISO-ML-339}
+$$
+
+Substitute (TRISO-ML-338):
+
+$$
+4\pi r^2J_r(r)
+=
+\frac{4\pi S_0r_1^3}{3}.
+\tag{TRISO-ML-340}
+$$
+
+Cancel \(4\pi\):
+
+$$
+r^2J_r(r)=\frac{S_0r_1^3}{3}.
+\tag{TRISO-ML-341}
+$$
+
+Divide by \(r^2\):
+
+$$
+\boxed{
+J_r(r)=\frac{S_0r_1^3}{3r^2}.
+}
+\tag{TRISO-ML-342}
+$$
+
+The positive sign is outward.
+
+### 11.5 Recover shell gradients from Fick's law
+
+In shell \(i\),
+
+$$
+J_r=-D_i\frac{dc_i}{dr}.
+\tag{TRISO-ML-343}
+$$
+
+Substitute (TRISO-ML-342):
+
+$$
+-D_i\frac{dc_i}{dr}
+=
+\frac{S_0r_1^3}{3r^2}.
+\tag{TRISO-ML-344}
+$$
+
+Divide by \(-D_i\):
+
+$$
+\boxed{
+\frac{dc_i}{dr}
+=
+-\frac{S_0r_1^3}{3D_ir^2}.
+}
+\tag{TRISO-ML-345}
+$$
+
+Integrate from \(r\) to the outer radius \(r_i\) of that shell:
+
+$$
+\int_{c_i(r)}^{c_i(r_i)}dc_i
+=
+-\frac{S_0r_1^3}{3D_i}
+\int_r^{r_i}\rho^{-2}d\rho.
+\tag{TRISO-ML-346}
+$$
+
+The radial integral is
+
+$$
+\int_r^{r_i}\rho^{-2}d\rho
+=
+\frac1r-\frac1{r_i}.
+\tag{TRISO-ML-347}
+$$
+
+Therefore
+
+$$
+c_i(r_i)-c_i(r)
+=
+-\frac{S_0r_1^3}{3D_i}
+\left(
+\frac1r-\frac1{r_i}
+\right).
+\tag{TRISO-ML-348}
+$$
+
+Multiply by \(-1\):
+
+$$
+\boxed{
+c_i(r)-c_i(r_i)
+=
+\frac{S_0r_1^3}{3D_i}
+\left(
+\frac1r-\frac1{r_i}
+\right).
+}
+\tag{TRISO-ML-349}
+$$
+
+Differentiating \(A_i+B_i/r\) gives
+
+$$
+\frac{dc_i}{dr}=-\frac{B_i}{r^2}.
+\tag{TRISO-ML-350}
+$$
+
+Compare with (TRISO-ML-345):
+
+$$
+-\frac{B_i}{r^2}
+=
+-\frac{S_0r_1^3}{3D_ir^2}.
+\tag{TRISO-ML-351}
+$$
+
+Hence
+
+$$
+\boxed{
+B_i=\frac{S_0r_1^3}{3D_i}.
+}
+\tag{TRISO-ML-352}
+$$
+
+This independently agrees with the direct shell ODE solution.
+
+### 11.6 Interface matching
+
+At \(r=r_1\), flux continuity is
+
+$$
+-D_1c_1'(r_1)
+=
+-D_2c_2'(r_1),
+\tag{TRISO-ML-353}
+$$
+
+and ideal concentration continuity is
+
+$$
+c_1(r_1)=c_2(r_1).
+\tag{TRISO-ML-354}
+$$
+
+At \(r=r_2\),
+
+$$
+-D_2c_2'(r_2)
+=
+-D_3c_3'(r_2),
+\tag{TRISO-ML-355}
+$$
+
+and
+
+$$
+c_2(r_2)=c_3(r_2).
+\tag{TRISO-ML-356}
+$$
+
+At \(r=r_3\),
+
+$$
+-D_3c_3'(r_3)
+=
+-D_4c_4'(r_3),
+\tag{TRISO-ML-357}
+$$
+
+and
+
+$$
+c_3(r_3)=c_4(r_3).
+\tag{TRISO-ML-358}
+$$
+
+At \(r=r_4\),
+
+$$
+-D_4c_4'(r_4)
+=
+-D_5c_5'(r_4),
+\tag{TRISO-ML-359}
+$$
+
+and
+
+$$
+c_4(r_4)=c_5(r_4).
+\tag{TRISO-ML-360}
+$$
+
+The flux equations are already satisfied by the common steady amount rate. The concentration equations relate the additive constants.
+
+Across shell \(i\),
+
+$$
+c_i(r_{i-1})-c_i(r_i)
+=
+\frac{S_0r_1^3}{3D_i}
+\left(
+\frac1{r_{i-1}}-\frac1{r_i}
+\right),
+\qquad i=2,3,4,5.
+\tag{TRISO-ML-361}
+$$
+
+Thus each inner interface concentration is obtained from the next outer interface concentration by adding that shell's concentration drop.
+
+### 11.7 Outer Robin condition and inward propagation
+
+At \(R=r_5\),
+
+$$
+-D_5c_5'(R)
+=
+h[c_5(R)-c_\infty].
+\tag{TRISO-ML-362}
+$$
+
+For the benchmark,
+
+$$
+c_\infty=0.
+\tag{TRISO-ML-363}
+$$
+
+Therefore
+
+$$
+-D_5c_5'(R)=hc_5(R).
+\tag{TRISO-ML-364}
+$$
+
+The common flux gives
+
+$$
+-D_5c_5'(R)
+=
+\frac{S_0r_1^3}{3R^2}.
+\tag{TRISO-ML-365}
+$$
+
+Equate the two expressions:
+
+$$
+hc_5(R)
+=
+\frac{S_0r_1^3}{3R^2}.
+\tag{TRISO-ML-366}
+$$
+
+Divide by \(h\):
+
+$$
+\boxed{
+c_5(R)
+=
+\frac{S_0r_1^3}{3hR^2}.
+}
+\tag{TRISO-ML-367}
+$$
+
+Move inward through OPyC:
+
+$$
+c_5(r_4)
+=
+c_5(R)
++
+\frac{S_0r_1^3}{3D_5}
+\left(
+\frac1{r_4}-\frac1R
+\right).
+\tag{TRISO-ML-368}
+$$
+
+Apply continuity:
+
+$$
+c_4(r_4)=c_5(r_4).
+\tag{TRISO-ML-369}
+$$
+
+Move inward through SiC:
+
+$$
+c_4(r_3)
+=
+c_4(r_4)
++
+\frac{S_0r_1^3}{3D_4}
+\left(
+\frac1{r_3}-\frac1{r_4}
+\right).
+\tag{TRISO-ML-370}
+$$
+
+Apply continuity:
+
+$$
+c_3(r_3)=c_4(r_3).
+\tag{TRISO-ML-371}
+$$
+
+Move inward through IPyC:
+
+$$
+c_3(r_2)
+=
+c_3(r_3)
++
+\frac{S_0r_1^3}{3D_3}
+\left(
+\frac1{r_2}-\frac1{r_3}
+\right).
+\tag{TRISO-ML-372}
+$$
+
+Apply continuity:
+
+$$
+c_2(r_2)=c_3(r_2).
+\tag{TRISO-ML-373}
+$$
+
+Move inward through the buffer:
+
+$$
+c_2(r_1)
+=
+c_2(r_2)
++
+\frac{S_0r_1^3}{3D_2}
+\left(
+\frac1{r_1}-\frac1{r_2}
+\right).
+\tag{TRISO-ML-374}
+$$
+
+Apply continuity:
+
+$$
+c_1(r_1)=c_2(r_1).
+\tag{TRISO-ML-375}
+$$
+
+From the kernel profile,
+
+$$
+c_1(r)-c_1(r_1)
+=
+\frac{S_0}{6D_1}(r_1^2-r^2).
+\tag{TRISO-ML-376}
+$$
+
+Hence
+
+$$
+\boxed{
+c_1(r)
+=
+c_2(r_1)
++
+\frac{S_0}{6D_1}(r_1^2-r^2).
+}
+\tag{TRISO-ML-377}
+$$
+
+Equations (TRISO-ML-367) through (TRISO-ML-377) give the complete steady five-layer solution recursively.
+
+### 11.8 Spherical resistance formulation
+
+Define the common steady amount rate outside the kernel:
+
+$$
+\dot N=4\pi r^2J_r.
+\tag{TRISO-ML-378}
+$$
+
+In shell \(i\),
+
+$$
+\dot N
+=
+-4\pi r^2D_i\frac{dc_i}{dr}.
+\tag{TRISO-ML-379}
+$$
+
+Rearrange:
+
+$$
+dc_i
+=
+-\frac{\dot N}{4\pi D_i}\frac{dr}{r^2}.
+\tag{TRISO-ML-380}
+$$
+
+Integrate from \(r_{i-1}\) to \(r_i\):
+
+$$
+c_i(r_i)-c_i(r_{i-1})
+=
+-\frac{\dot N}{4\pi D_i}
+\int_{r_{i-1}}^{r_i}r^{-2}dr.
+\tag{TRISO-ML-381}
+$$
+
+Evaluate the radial integral:
+
+$$
+\int_{r_{i-1}}^{r_i}r^{-2}dr
+=
+\frac1{r_{i-1}}-\frac1{r_i}.
+\tag{TRISO-ML-382}
+$$
+
+Therefore
+
+$$
+c_i(r_{i-1})-c_i(r_i)
+=
+\dot N
+\frac1{4\pi D_i}
+\left(
+\frac1{r_{i-1}}-\frac1{r_i}
+\right).
+\tag{TRISO-ML-383}
+$$
+
+Define
+
+$$
+\boxed{
+\mathcal R_i
+=
+\frac1{4\pi D_i}
+\left(
+\frac1{r_{i-1}}-\frac1{r_i}
+\right),
+\qquad i=2,3,4,5.
+}
+\tag{TRISO-ML-384}
+$$
+
+Then
+
+$$
+c_i(r_{i-1})-c_i(r_i)=\dot N\mathcal R_i.
+\tag{TRISO-ML-385}
+$$
+
+Its units are
+
+$$
+[\mathcal R_i]
+=
+\mathrm{s\,m^{-3}}.
+\tag{TRISO-ML-386}
+$$
+
+For external transfer,
+
+$$
+\dot N
+=
+4\pi R^2h[c_5(R)-c_\infty].
+\tag{TRISO-ML-387}
+$$
+
+Rearrange:
+
+$$
+c_5(R)-c_\infty
+=
+\dot N
+\frac1{4\pi R^2h}.
+\tag{TRISO-ML-388}
+$$
+
+Define
+
+$$
+\boxed{
+\mathcal R_h
+=
+\frac1{4\pi R^2h}.
+}
+\tag{TRISO-ML-389}
+$$
+
+Its units are also
+
+$$
+[\mathcal R_h]=\mathrm{s\,m^{-3}}.
+\tag{TRISO-ML-390}
+$$
+
+Because the same \(\dot N\) passes through every coating and the external film, the concentration drops add:
+
+$$
+c_2(r_1)-c_\infty
+=
+\dot N
+\left(
+\mathcal R_2+\mathcal R_3+\mathcal R_4+\mathcal R_5+\mathcal R_h
+\right).
+\tag{TRISO-ML-391}
+$$
+
+Thus
+
+$$
+\boxed{
+c_2(r_1)
+=
+c_\infty
++
+\dot N
+\left(
+\mathcal R_2+\mathcal R_3+\mathcal R_4+\mathcal R_5+\mathcal R_h
+\right).
+}
+\tag{TRISO-ML-392}
+$$
+
+For the benchmark \(c_\infty=0\) and
+
+$$
+\dot N=\frac{4\pi S_0r_1^3}{3}.
+\tag{TRISO-ML-393}
+$$
+
+Substituting (TRISO-ML-384), (TRISO-ML-389), and (TRISO-ML-393) into (TRISO-ML-392) reproduces exactly the inward-recursion concentration at \(r_1\).
+
+The kernel itself is source-containing, so it is not represented by the same source-free shell resistance. Its centre-to-interface concentration rise is instead
+
+$$
+c_1(0)-c_1(r_1)
+=
+\frac{S_0r_1^2}{6D_1}.
+\tag{TRISO-ML-394}
+$$
+
+This distinction prevents a source-containing kernel from being incorrectly treated as an ordinary source-free series resistance.
+
+## 12. Five-layer transient analytical formulation
+
+### 12.1 Define the steady reference and transient deviation
+
+Let
+
+$$
+c_{i,\mathrm{ss}}(r)
+\tag{TRISO-ML-400}
+$$
+
+denote the steady five-layer solution derived in Section 11.
+
+Define the transient deviation in each layer:
+
+$$
+\boxed{
+v_i(r,t)
+=
+c_i(r,t)-c_{i,\mathrm{ss}}(r).
+}
+\tag{TRISO-ML-401}
+$$
+
+Rearrange:
+
+$$
+c_i(r,t)
+=
+v_i(r,t)+c_{i,\mathrm{ss}}(r).
+\tag{TRISO-ML-402}
+$$
+
+Because the steady reference is time independent,
+
+$$
+\frac{\partial c_{i,\mathrm{ss}}}{\partial t}=0.
+\tag{TRISO-ML-403}
+$$
+
+Therefore
+
+$$
+\frac{\partial c_i}{\partial t}
+=
+\frac{\partial v_i}{\partial t}.
+\tag{TRISO-ML-404}
+$$
+
+Similarly,
+
+$$
+\frac{\partial c_i}{\partial r}
+=
+\frac{\partial v_i}{\partial r}
++
+\frac{dc_{i,\mathrm{ss}}}{dr},
+\tag{TRISO-ML-405}
+$$
+
+and
+
+$$
+\frac{\partial^2c_i}{\partial r^2}
+=
+\frac{\partial^2v_i}{\partial r^2}
++
+\frac{d^2c_{i,\mathrm{ss}}}{dr^2}.
+\tag{TRISO-ML-406}
+$$
+
+The full layer equation is
+
+$$
+\frac{\partial c_i}{\partial t}
+=
+D_i
+\left(
+\frac{\partial^2c_i}{\partial r^2}
++
+\frac2r\frac{\partial c_i}{\partial r}
+\right)
++
+S_i.
+\tag{TRISO-ML-407}
+$$
+
+Substitute (TRISO-ML-404) through (TRISO-ML-406):
+
+$$
+\frac{\partial v_i}{\partial t}
+=
+D_i
+\left(
+v_{i,rr}
++
+c_{i,\mathrm{ss}}''
++
+\frac2r v_{i,r}
++
+\frac2r c_{i,\mathrm{ss}}'
+\right)
++
+S_i.
+\tag{TRISO-ML-408}
+$$
+
+Group transient and steady terms:
+
+$$
+\frac{\partial v_i}{\partial t}
+=
+D_i
+\left(
+v_{i,rr}+\frac2r v_{i,r}
+\right)
++
+\left[
+D_i
+\left(
+c_{i,\mathrm{ss}}''
++\frac2r c_{i,\mathrm{ss}}'
+\right)
++
+S_i
+\right].
+\tag{TRISO-ML-409}
+$$
+
+The steady solution satisfies
+
+$$
+D_i
+\left(
+c_{i,\mathrm{ss}}''
++\frac2r c_{i,\mathrm{ss}}'
+\right)
++
+S_i
+=
+0.
+\tag{TRISO-ML-410}
+$$
+
+Therefore
+
+$$
+\boxed{
+\frac{\partial v_i}{\partial t}
+=
+D_i
+\left(
+\frac{\partial^2v_i}{\partial r^2}
++
+\frac2r\frac{\partial v_i}{\partial r}
+\right).
+}
+\tag{TRISO-ML-411}
+$$
+
+### 12.2 Homogeneous transient conditions
+
+At the centre, both \(c_1\) and \(c_{1,\mathrm{ss}}\) satisfy zero radial derivative. Therefore
+
+$$
+\boxed{
+v_{1,r}(0,t)=0.
+}
+\tag{TRISO-ML-412}
+$$
+
+At interface \(r=r_i\), both the full and steady solutions satisfy concentration continuity. Subtracting the steady relation from the full relation gives
+
+$$
+\boxed{
+v_i(r_i,t)=v_{i+1}(r_i,t).
+}
+\tag{TRISO-ML-413}
+$$
+
+Both the full and steady solutions also satisfy flux continuity. Subtraction gives
+
+$$
+\boxed{
+-D_iv_i'(r_i,t)
+=
+-D_{i+1}v_{i+1}'(r_i,t).
+}
+\tag{TRISO-ML-414}
+$$
+
+At \(R\), the full Robin condition is
+
+$$
+-D_5c_5'(R,t)=h[c_5(R,t)-c_\infty].
+\tag{TRISO-ML-415}
+$$
+
+The steady solution satisfies
+
+$$
+-D_5c_{5,\mathrm{ss}}'(R)
+=
+h[c_{5,\mathrm{ss}}(R)-c_\infty].
+\tag{TRISO-ML-416}
+$$
+
+Subtract (TRISO-ML-416) from (TRISO-ML-415):
+
+$$
+\boxed{
+-D_5v_5'(R,t)=hv_5(R,t).
+}
+\tag{TRISO-ML-417}
+$$
+
+For the initially empty source-driven problem,
+
+$$
+c_i(r,0)=0.
+\tag{TRISO-ML-418}
+$$
+
+Hence
+
+$$
+\boxed{
+v_i(r,0)
+=
+-c_{i,\mathrm{ss}}(r).
+}
+\tag{TRISO-ML-419}
+$$
+
+### 12.3 Separation in each layer
+
+For one global transient mode, assume
+
+$$
+v_i(r,t)
+=
+\phi_i(r)e^{-\Lambda t}.
+\tag{TRISO-ML-420}
+$$
+
+The same temporal factor must apply in every layer because the interface conditions couple the layer amplitudes at the same physical time. A single global eigenmode cannot use independent exponential time factors on the two sides of one interface and still satisfy the interface equations for all \(t\), except in a degenerate zero-amplitude case.
+
+Differentiate with respect to time:
+
+$$
+\frac{\partial v_i}{\partial t}
+=
+-\Lambda\phi_i e^{-\Lambda t}.
+\tag{TRISO-ML-421}
+$$
+
+Differentiate with respect to radius:
+
+$$
+\frac{\partial v_i}{\partial r}
+=
+\phi_i'e^{-\Lambda t}.
+\tag{TRISO-ML-422}
+$$
+
+Differentiate again:
+
+$$
+\frac{\partial^2v_i}{\partial r^2}
+=
+\phi_i''e^{-\Lambda t}.
+\tag{TRISO-ML-423}
+$$
+
+Substitute into (TRISO-ML-411):
+
+$$
+-\Lambda\phi_i e^{-\Lambda t}
+=
+D_i
+\left(
+\phi_i''
++\frac2r\phi_i'
+\right)
+e^{-\Lambda t}.
+\tag{TRISO-ML-424}
+$$
+
+Cancel the non-zero exponential factor:
+
+$$
+-\Lambda\phi_i
+=
+D_i
+\left(
+\phi_i''
++\frac2r\phi_i'
+\right).
+\tag{TRISO-ML-425}
+$$
+
+Divide by \(D_i\):
+
+$$
+\phi_i''
++\frac2r\phi_i'
++
+\frac{\Lambda}{D_i}\phi_i
+=
+0.
+\tag{TRISO-ML-426}
+$$
+
+Define
+
+$$
+\boxed{
+k_i^2=\frac{\Lambda}{D_i}.
+}
+\tag{TRISO-ML-427}
+$$
+
+Then
+
+$$
+[k_i^2]
+=
+\frac{\mathrm{s^{-1}}}{\mathrm{m^2\,s^{-1}}}
+=
+\mathrm{m^{-2}},
+\tag{TRISO-ML-428}
+$$
+
+so
+
+$$
+[k_i]=\mathrm{m^{-1}}.
+\tag{TRISO-ML-429}
+$$
+
+Each layer generally has a different \(k_i\), because each layer has a different \(D_i\), even though all layers in one global mode share the same \(\Lambda\).
+
+The radial equation is
+
+$$
+\boxed{
+\phi_i''
++\frac2r\phi_i'
++k_i^2\phi_i
+=
+0.
+}
+\tag{TRISO-ML-430}
+$$
+
+### 12.4 Apply the proven transformation \(u_i=r\phi_i\)
+
+Section 10 proved that the transformation
+
+$$
+u_i=r\phi_i
+\tag{TRISO-ML-431}
+$$
+
+maps (TRISO-ML-430) to
+
+$$
+\boxed{
+u_i''+k_i^2u_i=0.
+}
+\tag{TRISO-ML-432}
+$$
+
+Therefore
+
+$$
+\boxed{
+u_i(r)
+=
+A_i\sin(k_ir)+B_i\cos(k_ir).
+}
+\tag{TRISO-ML-433}
+$$
+
+In the kernel,
+
+$$
+\phi_1(r)=\frac{u_1(r)}{r}.
+\tag{TRISO-ML-434}
+$$
+
+The cosine contribution \(B_1\cos(k_1r)/r\) diverges as \(r\to0\), exactly as proved in Section 10.
+
+Therefore
+
+$$
+\boxed{
+B_1=0.
+}
+\tag{TRISO-ML-435}
+$$
+
+Thus
+
+$$
+u_1(r)=A_1\sin(k_1r).
+\tag{TRISO-ML-436}
+$$
+
+No coating layer contains the origin, so \(B_i\) is not forced to zero for \(i=2,3,4,5\).
+
+### 12.5 Transform concentration continuity
+
+At interface \(r=r_i\),
+
+$$
+\phi_i(r_i)=\phi_{i+1}(r_i).
+\tag{TRISO-ML-437}
+$$
+
+Use \(\phi_i=u_i/r\):
+
+$$
+\frac{u_i(r_i)}{r_i}
+=
+\frac{u_{i+1}(r_i)}{r_i}.
+\tag{TRISO-ML-438}
+$$
+
+Multiply by the common non-zero radius \(r_i\):
+
+$$
+\boxed{
+u_i(r_i)=u_{i+1}(r_i).
+}
+\tag{TRISO-ML-439}
+$$
+
+### 12.6 Transform flux continuity
+
+Start from
+
+$$
+\phi_i(r)=\frac{u_i(r)}{r}.
+\tag{TRISO-ML-440}
+$$
+
+Differentiate using the quotient rule:
+
+$$
+\phi_i'(r)
+=
+\frac{ru_i'(r)-u_i(r)}{r^2}.
+\tag{TRISO-ML-441}
+$$
+
+Separate the two terms:
+
+$$
+\boxed{
+\phi_i'(r)
+=
+\frac{u_i'(r)}{r}
+-
+\frac{u_i(r)}{r^2}.
+}
+\tag{TRISO-ML-442}
+$$
+
+Flux continuity at \(r=r_i\) is
+
+$$
+-D_i\phi_i'(r_i)
+=
+-D_{i+1}\phi_{i+1}'(r_i).
+\tag{TRISO-ML-443}
+$$
+
+Cancel the common minus sign:
+
+$$
+D_i\phi_i'(r_i)
+=
+D_{i+1}\phi_{i+1}'(r_i).
+\tag{TRISO-ML-444}
+$$
+
+Substitute (TRISO-ML-442) on both sides:
+
+$$
+D_i
+\left[
+\frac{u_i'(r_i)}{r_i}
+-
+\frac{u_i(r_i)}{r_i^2}
+\right]
+=
+D_{i+1}
+\left[
+\frac{u_{i+1}'(r_i)}{r_i}
+-
+\frac{u_{i+1}(r_i)}{r_i^2}
+\right].
+\tag{TRISO-ML-445}
+$$
+
+Multiply by the common factor \(r_i\):
+
+$$
+\boxed{
+D_i
+\left[
+u_i'(r_i)-\frac{u_i(r_i)}{r_i}
+\right]
+=
+D_{i+1}
+\left[
+u_{i+1}'(r_i)-\frac{u_{i+1}(r_i)}{r_i}
+\right].
+}
+\tag{TRISO-ML-446}
+$$
+
+This is the transformed ideal flux-continuity condition.
+
+### 12.7 Transform the outer Robin condition
+
+The transient Robin condition is
+
+$$
+-D_5\phi_5'(R)=h\phi_5(R).
+\tag{TRISO-ML-447}
+$$
+
+Use
+
+$$
+\phi_5'(R)
+=
+\frac{u_5'(R)}{R}
+-
+\frac{u_5(R)}{R^2},
+\tag{TRISO-ML-448}
+$$
+
+and
+
+$$
+\phi_5(R)=\frac{u_5(R)}{R}.
+\tag{TRISO-ML-449}
+$$
+
+Substitute both:
+
+$$
+-D_5
+\left[
+\frac{u_5'(R)}{R}
+-
+\frac{u_5(R)}{R^2}
+\right]
+=
+h\frac{u_5(R)}{R}.
+\tag{TRISO-ML-450}
+$$
+
+Multiply by \(R\):
+
+$$
+\boxed{
+-D_5
+\left[
+u_5'(R)-\frac{u_5(R)}{R}
+\right]
+=
+hu_5(R).
+}
+\tag{TRISO-ML-451}
+$$
+
+Equivalently,
+
+$$
+D_5u_5'(R)
++
+\left(
+h-\frac{D_5}{R}
+\right)u_5(R)
+=
+0.
+\tag{TRISO-ML-452}
+$$
+
+### 12.8 Count the unknown coefficients
+
+Before centre regularity, five layers would provide ten coefficients:
+
+$$
+(A_1,B_1,A_2,B_2,A_3,B_3,A_4,B_4,A_5,B_5).
+\tag{TRISO-ML-453}
+$$
+
+Centre regularity fixes
+
+$$
+B_1=0.
+\tag{TRISO-ML-454}
+$$
+
+Therefore nine independent coefficients remain.
+
+Define
+
+$$
+\boxed{
+\mathbf a
+=
+(A_1,A_2,B_2,A_3,B_3,A_4,B_4,A_5,B_5)^T.
+}
+\tag{TRISO-ML-455}
+$$
+
+Thus
+
+$$
+\mathbf a\in\mathbb R^9
+\tag{TRISO-ML-456}
+$$
+
+for real \(\Lambda>0\).
+
+### 12.9 Define interface shorthand
+
+For compact matrix notation, define at interface \(r=r_j\)
+
+$$
+s_{ij}=\sin(k_ir_j),
+\qquad
+c_{ij}=\cos(k_ir_j).
+\tag{TRISO-ML-457}
+$$
+
+For a sine basis term,
+
+$$
+u_i=A_i\sin(k_ir),
+\tag{TRISO-ML-458}
+$$
+
+and
+
+$$
+u_i'=A_ik_i\cos(k_ir).
+\tag{TRISO-ML-459}
+$$
+
+Therefore the transformed flux factor for the sine basis at \(r_j\) is
+
+$$
+F^{(s)}_{ij}
+=
+D_i
+\left(
+k_ic_{ij}-\frac{s_{ij}}{r_j}
+\right).
+\tag{TRISO-ML-460}
+$$
+
+For a cosine basis term,
+
+$$
+u_i=B_i\cos(k_ir),
+\tag{TRISO-ML-461}
+$$
+
+and
+
+$$
+u_i'=-B_ik_i\sin(k_ir).
+\tag{TRISO-ML-462}
+$$
+
+Therefore its transformed flux factor is
+
+$$
+F^{(c)}_{ij}
+=
+D_i
+\left(
+-k_is_{ij}-\frac{c_{ij}}{r_j}
+\right).
+\tag{TRISO-ML-463}
+$$
+
+These quantities depend on \(\Lambda\) through \(k_i=\sqrt{\Lambda/D_i}\).
+
+### 12.10 Assemble the global homogeneous coefficient system
+
+There are two equations at each of the four internal interfaces:
+
+- one concentration-continuity equation;
+- one flux-continuity equation.
+
+This gives
+
+$$
+4\times2=8
+\tag{TRISO-ML-464}
+$$
+
+interface equations.
+
+The outer Robin boundary supplies one more equation:
+
+$$
+8+1=9.
+\tag{TRISO-ML-465}
+$$
+
+These nine equations determine the nine coefficients up to an arbitrary overall modal normalization when \(\Lambda\) is an eigenvalue.
+
+Write
+
+$$
+\boxed{
+\mathbf M(\Lambda)\mathbf a=\mathbf0.
+}
+\tag{TRISO-ML-466}
+$$
+
+The matrix dimensions are
+
+$$
+\boxed{
+\mathbf M(\Lambda)\in\mathbb R^{9\times9}.
+}
+\tag{TRISO-ML-467}
+$$
+
+Using the coefficient order in (TRISO-ML-455), rows 1–2 correspond to \(r_1\), rows 3–4 to \(r_2\), rows 5–6 to \(r_3\), rows 7–8 to \(r_4\), and row 9 to the outer Robin condition.
+
+The explicit matrix is
+
+$$
+\mathbf M(\Lambda)=
+\begin{pmatrix}
+s_{11} & -s_{21} & -c_{21} & 0 & 0 & 0 & 0 & 0 & 0\\
+F^{(s)}_{11} & -F^{(s)}_{21} & -F^{(c)}_{21} & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & s_{22} & c_{22} & -s_{32} & -c_{32} & 0 & 0 & 0 & 0\\
+0 & F^{(s)}_{22} & F^{(c)}_{22} & -F^{(s)}_{32} & -F^{(c)}_{32} & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & s_{33} & c_{33} & -s_{43} & -c_{43} & 0 & 0\\
+0 & 0 & 0 & F^{(s)}_{33} & F^{(c)}_{33} & -F^{(s)}_{43} & -F^{(c)}_{43} & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & s_{44} & c_{44} & -s_{54} & -c_{54}\\
+0 & 0 & 0 & 0 & 0 & F^{(s)}_{44} & F^{(c)}_{44} & -F^{(s)}_{54} & -F^{(c)}_{54}\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & G_s & G_c
+\end{pmatrix}.
+\tag{TRISO-ML-468}
+$$
+
+The outer-row coefficients follow from (TRISO-ML-452).
+
+For the sine basis,
+
+$$
+G_s
+=
+D_5k_5\cos(k_5R)
++
+\left(
+h-\frac{D_5}{R}
+\right)
+\sin(k_5R).
+\tag{TRISO-ML-469}
+$$
+
+For the cosine basis,
+
+$$
+G_c
+=
+-D_5k_5\sin(k_5R)
++
+\left(
+h-\frac{D_5}{R}
+\right)
+\cos(k_5R).
+\tag{TRISO-ML-470}
+$$
+
+Centre regularity does not appear as a matrix row because it has already been used to eliminate \(B_1\) from the unknown vector.
+
+### 12.11 Global eigenvalue condition
+
+For a generic value of \(\Lambda\), the homogeneous system
+
+$$
+\mathbf M(\Lambda)\mathbf a=\mathbf0
+\tag{TRISO-ML-471}
+$$
+
+has only the trivial solution
+
+$$
+\mathbf a=\mathbf0
+\tag{TRISO-ML-472}
+$$
+
+when \(\mathbf M\) is nonsingular.
+
+A non-zero global eigenmode requires a non-trivial coefficient vector:
+
+$$
+\mathbf a\ne\mathbf0.
+\tag{TRISO-ML-473}
+$$
+
+A square homogeneous linear system has a non-trivial solution only if its matrix is singular.
+
+Therefore
+
+$$
+\boxed{
+\det\mathbf M(\Lambda)=0.
+}
+\tag{TRISO-ML-474}
+$$
+
+Define
+
+$$
+\boxed{
+F(\Lambda)=\det\mathbf M(\Lambda).
+}
+\tag{TRISO-ML-475}
+$$
+
+The global modal decay rates are the positive roots
+
+$$
+F(\Lambda_n)=0.
+\tag{TRISO-ML-476}
+$$
+
+For each root \(\Lambda_n\), the layer wave numbers are
+
+$$
+\boxed{
+k_{i,n}
+=
+\sqrt{\frac{\Lambda_n}{D_i}}.
+}
+\tag{TRISO-ML-477}
+$$
+
+Thus one global decay rate \(\Lambda_n\) generates five material-dependent spatial wave numbers.
+
+### 12.12 What is and is not established
+
+[VERIFIED] The five-layer steady source problem is solved analytically under constant layer diffusivities, kernel-only generation, ideal interfaces, and a Robin outer boundary.
+
+[VERIFIED] The transient source terms cancel after subtraction of the steady solution.
+
+[VERIFIED] A global transient mode has one temporal decay rate \(\Lambda\) and layer-dependent \(k_i=\sqrt{\Lambda/D_i}\).
+
+[VERIFIED] The transformed interface and Robin conditions produce the explicit \(9\times9\) homogeneous coefficient system above.
+
+[VERIFIED] Non-trivial global modes require \(\det\mathbf M(\Lambda)=0\).
+
+[UNVERIFIED] Numerical enumeration of all positive roots \(\Lambda_n\).
+
+[UNVERIFIED] Completeness and convergence of the five-layer modal expansion.
+
+[UNVERIFIED] The explicit five-layer modal coefficient projection for the initial condition.
+
+Those unresolved items are deliberately retained rather than hidden. They are the next analytical dependencies after the present five-layer eigenvalue formulation.
 
 ## 13. Original FTCS discretisation
 

@@ -143,3 +143,55 @@ These IDs belong to the current canonical derivation and supplement, rather than
 The canonical derivation uses a direct orthogonality derivation rather than relying on an unqualified regular-endpoint theorem, because the radial endpoint at r=0 has p(0)=0. The standard Sturm–Liouville framework and eigenvalue/eigenfunction terminology are supported by the NIST Digital Library of Mathematical Functions, §1.13(viii) and §3.7(iv): https://dlmf.nist.gov/1.13 and https://dlmf.nist.gov/3.7.
 
 The direct orthogonality calculation in TRISO-SL-210 through TRISO-SL-224 is the project's own derivation for this radial problem.
+
+## Canonical stable equations: five-layer analytical formulation
+
+The five-layer expansion uses the TRISO-ML-300 through TRISO-ML-477 namespace. This range is reserved for the multilayer steady and transient analytical formulation.
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-ML-300 | Five concentric TRISO radii | VERIFIED AS DEFINITION |
+| TRISO-ML-301–305 | Kernel, buffer, IPyC, SiC, OPyC domains | VERIFIED AS DEFINITIONS |
+| TRISO-ML-306–309 | Layer fields and units | VERIFIED |
+| TRISO-ML-310–311 | Kernel-only steady source benchmark | ASSUMPTION |
+| TRISO-ML-312 | Kernel steady conservative equation | VERIFIED |
+| TRISO-ML-322 | Regular kernel steady profile | VERIFIED |
+| TRISO-ML-324 | Source-free coating steady equation | VERIFIED |
+| TRISO-ML-333 | General coating solution A_i+B_i/r | VERIFIED |
+| TRISO-ML-338 | Total kernel generation rate | VERIFIED |
+| TRISO-ML-342 | Common steady radial flux outside kernel | VERIFIED |
+| TRISO-ML-345 | Coating concentration gradient from Fick's law | VERIFIED |
+| TRISO-ML-349 | Explicit shell concentration drop | VERIFIED |
+| TRISO-ML-352 | Shell 1/r coefficient | VERIFIED |
+| TRISO-ML-353–360 | Four explicit ideal-interface matching pairs | VERIFIED / ASSUMPTION FOR CONCENTRATION CONTINUITY |
+| TRISO-ML-361 | Recursive shell concentration drop | VERIFIED |
+| TRISO-ML-367 | OPyC surface concentration from Robin boundary | VERIFIED |
+| TRISO-ML-368–377 | Inward recursive five-layer steady solution | VERIFIED |
+| TRISO-ML-384 | Spherical shell diffusion resistance | VERIFIED |
+| TRISO-ML-389 | External mass-transfer resistance | VERIFIED |
+| TRISO-ML-391–393 | Series-resistance concentration relation | VERIFIED |
+| TRISO-ML-394 | Source-containing kernel centre-to-interface rise | VERIFIED |
+| TRISO-ML-401 | Layer transient deviation definition | VERIFIED |
+| TRISO-ML-411 | Homogeneous transient PDE in each layer | VERIFIED |
+| TRISO-ML-412–419 | Homogeneous centre/interface/Robin/initial conditions | VERIFIED |
+| TRISO-ML-420 | Common global temporal-mode ansatz | METHOD / ASSUMPTION |
+| TRISO-ML-427 | Layer wave number k_i^2=Lambda/D_i | VERIFIED |
+| TRISO-ML-430 | Layer radial eigenproblem | VERIFIED |
+| TRISO-ML-432 | Transformed layer ODE u_i''+k_i^2u_i=0 | VERIFIED |
+| TRISO-ML-433 | General layer sine/cosine solution | VERIFIED |
+| TRISO-ML-435 | Kernel centre regularity B_1=0 | VERIFIED |
+| TRISO-ML-439 | Transformed concentration-continuity condition | VERIFIED |
+| TRISO-ML-446 | Transformed flux-continuity condition | VERIFIED |
+| TRISO-ML-451–452 | Transformed outer Robin condition | VERIFIED |
+| TRISO-ML-455 | Nine-component coefficient vector | VERIFIED AS DEFINITION |
+| TRISO-ML-460–463 | Interface sine/cosine flux factors | VERIFIED |
+| TRISO-ML-466–468 | Explicit 9x9 global homogeneous system | VERIFIED |
+| TRISO-ML-469–470 | Outer Robin matrix coefficients | VERIFIED |
+| TRISO-ML-474 | Global determinant eigencondition | VERIFIED |
+| TRISO-ML-475–476 | Characteristic function and modal roots | VERIFIED AS DEFINITIONS |
+| TRISO-ML-477 | Layer wave numbers for global mode n | VERIFIED |
+| — | Numerical root enumeration | UNVERIFIED |
+| — | Five-layer modal completeness/convergence | UNVERIFIED |
+| — | Five-layer modal coefficient projection | DERIVATION GAP |
+
+The original 33 notebook mappings and the 100/200-series canonical expansions remain unchanged.
