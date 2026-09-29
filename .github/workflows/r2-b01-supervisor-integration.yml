@@ -1,0 +1,33 @@
+name: R2-B01 supervisor integration
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ray/triso-foundation
+
+jobs:
+  r2-b01:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
+      SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
+    steps:
+      - name: Checkout Ray staging repository
+        uses: actions/checkout@v4
+      - name: Install stable Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Checkout exact supervisor source
+        run: |
+          git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
+          cd supervisor
+          git fetch --no-tags origin "$SUPERVISOR_REF"
+          git checkout --detach "$SUPERVISOR_REF"
+      - name: Install focused integration test
+        run: |
+          mkdir -p supervisor/crates/boon-lay/tests
+          cp verification/r2_b01_supervisor_integration.rs supervisor/crates/boon-lay/tests/r2_b01_supervisor_integration.rs
+      - name: Run R2-B01 focused tests
+        working-directory: supervisor
+        run: cargo test -p boon-lay --test r2_b01_supervisor_integration -- --nocapture
