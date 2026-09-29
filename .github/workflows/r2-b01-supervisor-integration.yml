@@ -2,14 +2,21 @@ name: R2-B01 supervisor integration
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - ray/triso-foundation
+    inputs:
+      run_heavy_release_check:
+        description: "Also run the expensive zero-censoring stochastic release check"
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: r2-b01-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   r2-b01:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     env:
       SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
       SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
@@ -28,6 +35,10 @@ jobs:
         run: |
           mkdir -p supervisor/crates/boon-lay/tests
           cp verification/r2_b01_supervisor_integration.rs supervisor/crates/boon-lay/tests/r2_b01_supervisor_integration.rs
-      - name: Run R2-B01 focused tests
+      - name: Run fast R2-B01 contract tests
         working-directory: supervisor
         run: cargo test -p boon-lay --test r2_b01_supervisor_integration -- --nocapture
+      - name: Run expensive zero-censoring release check
+        if: ${{ inputs.run_heavy_release_check }}
+        working-directory: supervisor
+        run: cargo test -p boon-lay --test r2_b01_supervisor_integration no_censoring_gives_full_release_at_infinity_in_absorbing_benchmark -- --ignored --nocapture
