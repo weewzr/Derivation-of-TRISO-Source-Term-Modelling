@@ -1625,77 +1625,1656 @@ The production WOS verification problem is Problem B and uses an initial kernel 
 
 Keeping these benchmarks separate prevents source and boundary semantics from being mixed.
 
-## 8. Homogeneous transient eigenproblem
+## 8. Homogeneous transient deviation problem
 
-Define v=c-w.
+The following transient benchmark belongs to Problem A: an initially empty homogeneous sphere with a continuing uniform source and a Robin outer boundary.
 
-Then v_t=D(v_rr+2v_r/r), with v_r(0,t)=0, -Dv_r(R,t)=hv(R,t), and v(r,0)=-w(r).
+The steady solution (w(r)) has already been obtained. We now remove the steady part so that the remaining transient problem has no source term.
 
-Use v(r,t)=φ(r)T(t).
+### 8.1 Define the transient deviation
 
-Substitution gives φT'=D(φ''+2φ'/r)T.
+Define
 
-Divide by DφT:
+$$
+v(r,t)=c(r,t)-w(r).
+\tag{TRISO-ANA-200}
+$$
 
-T'/(DT)=(φ''+2φ'/r)/φ.
+Rearrange this definition:
 
-Set both sides equal to -k²:
+$$
+c(r,t)=v(r,t)+w(r).
+\tag{TRISO-ANA-201}
+$$
 
-T'=-Dk²T.
+Because (w) is a steady solution, it does not depend on time:
 
-φ''+2φ'/r+k²φ=0.
+$$
+\frac{\partial w}{\partial t}=0.
+\tag{TRISO-ANA-202}
+$$
 
-Define the temporal decay rate Λ=Dk².
+Differentiate (c=v+w) with respect to time:
 
-Here k has units m^-1 and Λ has units s^-1. This corrects the original notebook's mixed eigenvalue dimensions.
+$$
+\frac{\partial c}{\partial t}
+=
+\frac{\partial v}{\partial t}
++
+\frac{\partial w}{\partial t}.
+\tag{TRISO-ANA-203}
+$$
 
-Let u=rφ.
+Substitute (TRISO-ANA-202):
 
-Then φ=u/r and φ'=(ru'-u)/r².
+$$
+\boxed{
+\frac{\partial c}{\partial t}
+=
+\frac{\partial v}{\partial t}.
+}
+\tag{TRISO-ANA-204}
+$$
 
-The radial equation becomes u''+k²u=0.
+Differentiate (c=v+w) with respect to radius:
 
-Regularity at the centre removes the cosine branch, giving u=A sin(kr).
+$$
+\frac{\partial c}{\partial r}
+=
+\frac{\partial v}{\partial r}
++
+\frac{dw}{dr}.
+\tag{TRISO-ANA-205}
+$$
 
-Thus φ=A sin(kr)/r.
+Differentiate once more:
 
-At the origin use the limit lim[r→0] sin(kr)/r=k.
+$$
+\frac{\partial^2 c}{\partial r^2}
+=
+\frac{\partial^2v}{\partial r^2}
++
+\frac{d^2w}{dr^2}.
+\tag{TRISO-ANA-206}
+$$
 
-## 9. Robin eigencondition
+Start from the full homogeneous source-driven PDE:
 
-Differentiate φ=A[kr cos(kr)-sin(kr)]/r².
+$$
+\frac{\partial c}{\partial t}
+=
+D
+\left(
+\frac{\partial^2c}{\partial r^2}
++
+\frac2r\frac{\partial c}{\partial r}
+\right)
++
+S_0.
+\tag{TRISO-ANA-207}
+$$
 
-Apply -Dφ'(R)=hφ(R).
+Substitute the time derivative from (TRISO-ANA-204):
 
-Define μ=kR and Bi=hR/D.
+$$
+\frac{\partial v}{\partial t}
+=
+D
+\left(
+\frac{\partial^2c}{\partial r^2}
++
+\frac2r\frac{\partial c}{\partial r}
+\right)
++
+S_0.
+\tag{TRISO-ANA-208}
+$$
 
-The raw equation is:
+Substitute the second spatial derivative from (TRISO-ANA-206):
 
-sin μ - μ cos μ = Bi sin μ.
+$$
+\frac{\partial v}{\partial t}
+=
+D
+\left(
+\frac{\partial^2v}{\partial r^2}
++
+\frac{d^2w}{dr^2}
++
+\frac2r\frac{\partial c}{\partial r}
+\right)
++
+S_0.
+\tag{TRISO-ANA-209}
+$$
 
-Therefore, away from sin μ=0:
+Substitute the first spatial derivative from (TRISO-ANA-205):
 
-μ cot μ = 1 - Bi.
+$$
+\frac{\partial v}{\partial t}
+=
+D
+\left(
+\frac{\partial^2v}{\partial r^2}
++
+\frac{d^2w}{dr^2}
++
+\frac2r
+\left[
+\frac{\partial v}{\partial r}
++
+\frac{dw}{dr}
+\right]
+\right)
++
+S_0.
+\tag{TRISO-ANA-210}
+$$
 
-The modal decay rate is Λ_n=D μ_n²/R².
+Distribute the factor (D):
 
-## 10. Transient eigenfunction expansion
+$$
+\frac{\partial v}{\partial t}
+=
+D\frac{\partial^2v}{\partial r^2}
++
+D\frac{d^2w}{dr^2}
++
+\frac{2D}{r}\frac{\partial v}{\partial r}
++
+\frac{2D}{r}\frac{dw}{dr}
++
+S_0.
+\tag{TRISO-ANA-211}
+$$
 
-Distinct eigenmodes satisfy radial weighted orthogonality:
+Rearrange the terms into transient and steady groups:
 
-integral from 0 to R of r² φ_m φ_n dr = 0 for m not equal to n.
+$$
+\frac{\partial v}{\partial t}
+=
+D
+\left(
+\frac{\partial^2v}{\partial r^2}
++
+\frac2r\frac{\partial v}{\partial r}
+\right)
++
+\left[
+D
+\left(
+\frac{d^2w}{dr^2}
++
+\frac2r\frac{dw}{dr}
+\right)
++
+S_0
+\right].
+\tag{TRISO-ANA-212}
+$$
 
-Expand -w(r)=sum over n of A_n φ_n(r).
+The steady solution satisfies
 
-Projection gives
+$$
+D
+\left(
+\frac{d^2w}{dr^2}
++
+\frac2r\frac{dw}{dr}
+\right)
++
+S_0
+=
+0.
+\tag{TRISO-ANA-213}
+$$
 
-A_n = - [integral of r² w φ_n dr] / [integral of r² φ_n² dr].
+Substitute (TRISO-ANA-213) into (TRISO-ANA-212):
 
-Therefore:
+$$
+\boxed{
+\frac{\partial v}{\partial t}
+=
+D
+\left(
+\frac{\partial^2v}{\partial r^2}
++
+\frac2r\frac{\partial v}{\partial r}
+\right).
+}
+\tag{TRISO-ANA-214}
+$$
 
-c(r,t)=w(r)+sum over n of A_n φ_n(r) exp(-Λ_n t).
+The source has disappeared because the steady part (w) already accounts for the long-time source balance.
 
-This closes the Part-I analytical chain beyond the original raw eigencondition.
+### 8.2 Transform the centre condition
+
+The original centre condition is
+
+$$
+\frac{\partial c}{\partial r}(0,t)=0.
+\tag{TRISO-ANA-215}
+$$
+
+Substitute (TRISO-ANA-205):
+
+$$
+\frac{\partial v}{\partial r}(0,t)+w'(0)=0.
+\tag{TRISO-ANA-216}
+$$
+
+The steady solution has
+
+$$
+w'(r)=-\frac{S_0r}{3D}.
+\tag{TRISO-ANA-217}
+$$
+
+Evaluate it at the centre:
+
+$$
+w'(0)=0.
+\tag{TRISO-ANA-218}
+$$
+
+Therefore
+
+$$
+\boxed{
+\frac{\partial v}{\partial r}(0,t)=0.
+}
+\tag{TRISO-ANA-219}
+$$
+
+### 8.3 Transform the outer Robin condition
+
+The original Robin condition is
+
+$$
+-Dc_r(R,t)=hw(R,t).
+\tag{TRISO-ANA-220}
+$$
+
+Substitute (c=v+w):
+
+$$
+-D
+\left[
+v_r(R,t)+w'(R)
+\right]
+=
+h
+\left[
+v(R,t)+w(R)
+\right].
+\tag{TRISO-ANA-221}
+$$
+
+Rearrange the transient and steady terms:
+
+$$
+-Dv_r(R,t)-hw(R)
+=
+hv(R,t)+Dw'(R).
+\tag{TRISO-ANA-222}
+$$
+
+The steady solution satisfies
+
+$$
+-Dw'(R)=hw(R).
+\tag{TRISO-ANA-223}
+$$
+
+Therefore
+
+$$
+-Dv_r(R,t)=hv(R,t).
+\tag{TRISO-ANA-224}
+$$
+
+Hence the transient Robin condition is
+
+$$
+\boxed{
+-Dv_r(R,t)=hv(R,t).
+}
+\tag{TRISO-ANA-225}
+$$
+
+### 8.4 Transform the initial condition
+
+The original initial condition for Problem A is
+
+$$
+c(r,0)=0.
+\tag{TRISO-ANA-226}
+$$
+
+Apply the definition (v=c-w):
+
+$$
+v(r,0)=c(r,0)-w(r).
+\tag{TRISO-ANA-227}
+$$
+
+Substitute (c(r,0)=0):
+
+$$
+\boxed{
+v(r,0)=-w(r).
+}
+\tag{TRISO-ANA-228}
+$$
+
+Thus the complete transient deviation problem is
+
+$$
+v_t
+=
+D
+\left(
+v_{rr}+\frac2r v_r
+\right),
+$$
+
+with
+
+$$
+v_r(0,t)=0,
+$$
+
+$$
+-Dv_r(R,t)=hv(R,t),
+$$
+
+and
+
+$$
+v(r,0)=-w(r).
+$$
+
+## 9. Separation of variables
+
+### 9.1 Assume a separated solution
+
+Seek a non-zero transient mode in the form
+
+$$
+v(r,t)=\phi(r)T(t).
+\tag{TRISO-ANA-229}
+$$
+
+Differentiate with respect to time:
+
+$$
+v_t=\phi(r)T'(t).
+\tag{TRISO-ANA-230}
+$$
+
+Differentiate with respect to radius:
+
+$$
+v_r=\phi'(r)T(t).
+\tag{TRISO-ANA-231}
+$$
+
+Differentiate once more:
+
+$$
+v_{rr}=\phi''(r)T(t).
+\tag{TRISO-ANA-232}
+$$
+
+Substitute these three expressions into the transient PDE:
+
+$$
+\phi T'
+=
+D
+\left[
+\phi''T
++
+\frac2r\phi'T
+\right].
+\tag{TRISO-ANA-233}
+$$
+
+Factor out (T) on the right:
+
+$$
+\phi T'
+=
+DT
+\left(
+\phi''+\frac2r\phi'
+\right).
+\tag{TRISO-ANA-234}
+$$
+
+Divide by (D\phi T), assuming the separated factors are non-zero at the point considered:
+
+$$
+\frac{T'}{DT}
+=
+\frac{\phi''+2\phi'/r}{\phi}.
+\tag{TRISO-ANA-235}
+$$
+
+The left side depends only on (t), while the right side depends only on (r).
+
+For one separated mode to satisfy the equation for every (r) and (t), both sides must equal the same constant.
+
+Choose the separation constant as (-k^2):
+
+$$
+\frac{T'}{DT}=-k^2.
+\tag{TRISO-ANA-236}
+$$
+
+Then the time equation is
+
+$$
+T'=-Dk^2T.
+\tag{TRISO-ANA-237}
+$$
+
+The radial equation is
+
+$$
+\boxed{
+\phi''
++
+\frac2r\phi'
++
+k^2\phi
+=
+0.
+}
+\tag{TRISO-ANA-238}
+$$
+
+### 9.2 Dimensions of the separation constant
+
+The left side of (TRISO-ANA-236) has units
+
+$$
+\left[
+\frac{T'}{DT}
+\right]
+=
+\frac{\mathrm{s^{-1}}}{\mathrm{m^2\,s^{-1}}}
+=
+\mathrm{m^{-2}}.
+\tag{TRISO-ANA-239}
+$$
+
+Therefore
+
+$$
+[k^2]=\mathrm{m^{-2}}.
+\tag{TRISO-ANA-240}
+$$
+
+Hence
+
+$$
+[k]=\mathrm{m^{-1}}.
+\tag{TRISO-ANA-241}
+$$
+
+Define the temporal decay rate
+
+$$
+\boxed{
+\Lambda=Dk^2.
+}
+\tag{TRISO-ANA-242}
+$$
+
+Then
+
+$$
+[\Lambda]
+=
+\mathrm{m^2\,s^{-1}}
+\times
+\mathrm{m^{-2}}
+=
+\mathrm{s^{-1}}.
+\tag{TRISO-ANA-243}
+$$
+
+Thus (k) is a spatial wave number, while (Lambda) is a temporal decay rate.
+
+### 9.3 Solve the temporal equation
+
+Starting from
+
+$$
+T'=-\Lambda T,
+\tag{TRISO-ANA-244}
+$$
+
+divide by (T):
+
+$$
+\frac{T'}{T}=-\Lambda.
+\tag{TRISO-ANA-245}
+$$
+
+Write the derivative as a differential:
+
+$$
+\frac{dT}{T}=-\Lambda\,dt.
+\tag{TRISO-ANA-246}
+$$
+
+Integrate:
+
+$$
+\int\frac{dT}{T}
+=
+-\Lambda\int dt.
+\tag{TRISO-ANA-247}
+$$
+
+Therefore
+
+$$
+\ln|T|
+=
+-\Lambda t+C.
+\tag{TRISO-ANA-248}
+$$
+
+Exponentiate:
+
+$$
+|T|=e^{C}e^{-\Lambda t}.
+\tag{TRISO-ANA-249}
+$$
+
+Absorb the constant into an arbitrary amplitude (C_T):
+
+$$
+T(t)=C_Te^{-\Lambda t}.
+\tag{TRISO-ANA-250}
+$$
+
+The constant (C_T) can be absorbed into the spatial amplitude, so take
+
+$$
+\boxed{
+T(t)=e^{-\Lambda t}.
+}
+\tag{TRISO-ANA-251}
+$$
+
+Therefore each separated mode has the form
+
+$$
+v(r,t)=\phi(r)e^{-\Lambda t}.
+\tag{TRISO-ANA-252}
+$$
+
+## 10. Radial eigenproblem, Robin condition, and modal expansion
+
+### 10.1 Transform the radial eigenproblem with (u=r\phi)
+
+Start from
+
+$$
+\phi''
++
+\frac2r\phi'
++
+k^2\phi
+=
+0.
+\tag{TRISO-ANA-253}
+$$
+
+Introduce
+
+$$
+u(r)=r\phi(r).
+\tag{TRISO-ANA-254}
+$$
+
+Solve the definition for (phi):
+
+$$
+\phi(r)=\frac{u(r)}{r}.
+\tag{TRISO-ANA-255}
+$$
+
+Differentiate using the quotient rule:
+
+$$
+\phi'
+=
+\frac{r u'-u}{r^2}.
+\tag{TRISO-ANA-256}
+$$
+
+Differentiate again. Write the numerator as (n=ru'-u):
+
+$$
+n'=u'+ru''-u'.
+\tag{TRISO-ANA-257}
+$$
+
+Therefore
+
+$$
+n'=ru''.
+\tag{TRISO-ANA-258}
+$$
+
+Apply the quotient rule to (n/r^2):
+
+$$
+\phi''
+=
+\frac{n'r^2-n(2r)}{r^4}.
+\tag{TRISO-ANA-259}
+$$
+
+Substitute (n'=ru'') and (n=ru'-u):
+
+$$
+\phi''
+=
+\frac{r^3u''-2r(ru'-u)}{r^4}.
+\tag{TRISO-ANA-260}
+$$
+
+Expand the numerator:
+
+$$
+\phi''
+=
+\frac{r^3u''-2r^2u'+2ru}{r^4}.
+\tag{TRISO-ANA-261}
+$$
+
+Divide each term by (r^4):
+
+$$
+\phi''
+=
+\frac{u''}{r}
+-
+\frac{2u'}{r^2}
++
+\frac{2u}{r^3}.
+\tag{TRISO-ANA-262}
+$$
+
+Now substitute (TRISO-ANA-256), (TRISO-ANA-255), and (TRISO-ANA-262) into (TRISO-ANA-253):
+
+$$
+\left(
+\frac{u''}{r}
+-
+\frac{2u'}{r^2}
++
+\frac{2u}{r^3}
+\right)
++
+\frac2r
+\left(
+\frac{ru'-u}{r^2}
+\right)
++
+k^2\frac{u}{r}
+=
+0.
+\tag{TRISO-ANA-263}
+$$
+
+Expand the second term:
+
+$$
+\frac{u''}{r}
+-
+\frac{2u'}{r^2}
++
+\frac{2u}{r^3}
++
+\frac{2u'}{r^2}
+-
+\frac{2u}{r^3}
++
+k^2\frac{u}{r}
+=
+0.
+\tag{TRISO-ANA-264}
+$$
+
+Cancel the (u') terms explicitly:
+
+$$
+\frac{u''}{r}
++
+k^2\frac{u}{r}
+=
+0.
+\tag{TRISO-ANA-265}
+$$
+
+Multiply by (r):
+
+$$
+\boxed{
+u''+k^2u=0.
+}
+\tag{TRISO-ANA-266}
+$$
+
+### 10.2 Solve the transformed radial equation
+
+The characteristic equation is
+
+$$
+m^2+k^2=0.
+\tag{TRISO-ANA-267}
+$$
+
+Its roots are
+
+$$
+m=\pm ik.
+\tag{TRISO-ANA-268}
+$$
+
+Therefore the real-valued solution is
+
+$$
+\boxed{
+u(r)=A\sin(kr)+B\cos(kr).
+}
+\tag{TRISO-ANA-269}
+$$
+
+Substitute into (phi=u/r):
+
+$$
+\phi(r)
+=
+\frac{A\sin(kr)+B\cos(kr)}{r}.
+\tag{TRISO-ANA-270}
+$$
+
+### 10.3 Centre regularity
+
+Examine the cosine contribution as (r	o0).
+
+Use the known limit
+
+$$
+\lim_{r\to0}\cos(kr)=1.
+\tag{TRISO-ANA-271}
+$$
+
+Therefore
+
+$$
+\lim_{r\to0}\frac{B\cos(kr)}{r}
+=
+\lim_{r\to0}\frac{B}{r}.
+\tag{TRISO-ANA-272}
+$$
+
+For (B\ne0), this diverges.
+
+A physical concentration perturbation must remain finite at the particle centre.
+
+Therefore
+
+$$
+B=0.
+\tag{TRISO-ANA-273}
+$$
+
+The eigenfunction becomes
+
+$$
+\phi(r)=A\frac{\sin(kr)}{r}.
+\tag{TRISO-ANA-274}
+$$
+
+For the sine term, use
+
+$$
+\sin(kr)=kr+O(r^3)
+\qquad
+(r\to0).
+\tag{TRISO-ANA-275}
+$$
+
+Divide by (r):
+
+$$
+\frac{\sin(kr)}{r}
+=
+k+O(r^2).
+\tag{TRISO-ANA-276}
+$$
+
+Therefore
+
+$$
+\boxed{
+\lim_{r\to0}\phi(r)=Ak.
+}
+\tag{TRISO-ANA-277}
+$$
+
+The apparent (1/r) singularity is removable for the sine branch.
+
+It is often convenient to absorb (k) into the modal amplitude. Define
+
+$$
+C=A k.
+\tag{TRISO-ANA-278}
+$$
+
+Then the same mode may be written as
+
+$$
+\phi(r)=C\frac{\sin(kr)}{kr}.
+\tag{TRISO-ANA-279}
+$$
+
+The normalization is arbitrary; only the relative spatial shape matters for the eigenvalue problem.
+
+### 10.4 Derive the Robin eigencondition
+
+Start from the normalized form
+
+$$
+\phi(r)=C\frac{\sin(kr)}{kr}.
+\tag{TRISO-ANA-280}
+$$
+
+The derivative is easier to obtain by treating (C/k) as a constant:
+
+$$
+\phi(r)=\frac{C}{k}\frac{\sin(kr)}{r}.
+\tag{TRISO-ANA-281}
+$$
+
+Differentiate (\sin(kr)/r) using the quotient rule:
+
+$$
+\frac{d}{dr}
+\left(
+\frac{\sin(kr)}{r}
+\right)
+=
+\frac{
+kr\cos(kr)-\sin(kr)
+}{
+r^2
+}.
+\tag{TRISO-ANA-282}
+$$
+
+Therefore
+
+$$
+\boxed{
+\phi'(r)
+=
+\frac{C}{k}
+\frac{
+kr\cos(kr)-\sin(kr)
+}{
+r^2
+}.
+}
+\tag{TRISO-ANA-283}
+$$
+
+At the outer boundary,
+
+$$
+-D\phi'(R)=h\phi(R).
+\tag{TRISO-ANA-284}
+$$
+
+Substitute (phi'(R)):
+
+$$
+-D
+\frac{C}{k}
+\frac{
+kR\cos(kR)-\sin(kR)
+}{
+R^2
+}
+=
+h\phi(R).
+\tag{TRISO-ANA-285}
+$$
+
+Substitute (phi(R)=C\sin(kR)/(kR)):
+
+$$
+-D
+\frac{C}{k}
+\frac{
+kR\cos(kR)-\sin(kR)
+}{
+R^2
+}
+=
+h
+\frac{C}{kR}
+\sin(kR).
+\tag{TRISO-ANA-286}
+$$
+
+Multiply both sides by (kR^2/C), assuming (C\ne0):
+
+$$
+-D
+\left[
+kR\cos(kR)-\sin(kR)
+\right]
+=
+hR\sin(kR).
+\tag{TRISO-ANA-287}
+$$
+
+Multiply by (-1):
+
+$$
+D
+\left[
+\sin(kR)-kR\cos(kR)
+\right]
+=
+hR\sin(kR).
+\tag{TRISO-ANA-288}
+$$
+
+Define the dimensionless eigenvariable
+
+$$
+\mu=kR.
+\tag{TRISO-ANA-289}
+$$
+
+Its dimensions are
+
+$$
+[\mu]=[k][R]=\mathrm{m^{-1}}\times\mathrm m=1.
+\tag{TRISO-ANA-290}
+$$
+
+Define the Biot number
+
+$$
+\mathrm{Bi}=\frac{hR}{D}.
+\tag{TRISO-ANA-291}
+$$
+
+Its dimensions are
+
+$$
+[\mathrm{Bi}]
+=
+\frac{
+\mathrm{m\,s^{-1}}\times\mathrm m
+}{
+\mathrm{m^2\,s^{-1}}
+}
+=
+1.
+\tag{TRISO-ANA-292}
+$$
+
+Substitute (\mu=kR) and (hR/D=\mathrm{Bi}) into (TRISO-ANA-288):
+
+$$
+\boxed{
+\sin\mu-\mu\cos\mu
+=
+\mathrm{Bi}\sin\mu.
+}
+\tag{TRISO-ANA-293}
+$$
+
+Rearrange:
+
+$$
+(1-\mathrm{Bi})\sin\mu
+=
+\mu\cos\mu.
+\tag{TRISO-ANA-294}
+$$
+
+For (\sin\mu\ne0), divide by (\sin\mu):
+
+$$
+1-\mathrm{Bi}
+=
+\mu\frac{\cos\mu}{\sin\mu}.
+\tag{TRISO-ANA-295}
+$$
+
+Use (\cot\mu=\cos\mu/\sin\mu):
+
+$$
+\boxed{
+\mu\cot\mu=1-\mathrm{Bi}.
+}
+\tag{TRISO-ANA-296}
+$$
+
+### 10.5 Check whether division by (sinmu) loses roots
+
+The undivided equation (TRISO-ANA-293) must be used for this check.
+
+Suppose
+
+$$
+\sin\mu=0.
+\tag{TRISO-ANA-297}
+$$
+
+Then (mu=n\pi) for integer (n).
+
+Substitute into (TRISO-ANA-293):
+
+$$
+0-n\pi\cos(n\pi)=0.
+\tag{TRISO-ANA-298}
+$$
+
+Because
+
+$$
+\cos(n\pi)=(-1)^n,
+\tag{TRISO-ANA-299}
+$$
+
+this becomes
+
+$$
+-n\pi(-1)^n=0.
+\tag{TRISO-ANA-300}
+$$
+
+For positive (n), this is not zero.
+
+Therefore no positive eigenvalue is lost when dividing by (sinmu).
+
+The only simultaneous zero is (mu=0), which does not satisfy the positive transient-mode condition for the Robin problem with (h>0).
+
+### 10.6 Eigenvalue definitions
+
+Let (mu_n) denote the positive roots of (TRISO-ANA-293).
+
+Then
+
+$$
+k_nR=\mu_n.
+\tag{TRISO-ANA-301}
+$$
+
+Therefore
+
+$$
+\boxed{
+k_n=\frac{\mu_n}{R}.
+}
+\tag{TRISO-ANA-302}
+$$
+
+Since
+
+$$
+\Lambda_n=Dk_n^2,
+\tag{TRISO-ANA-303}
+$$
+
+substitute (TRISO-ANA-302):
+
+$$
+\Lambda_n
+=
+D
+\left(
+\frac{\mu_n}{R}
+\right)^2.
+\tag{TRISO-ANA-304}
+$$
+
+Thus
+
+$$
+\boxed{
+\Lambda_n
+=
+D\frac{\mu_n^2}{R^2}.
+}
+\tag{TRISO-ANA-305}
+$$
+
+The dimensions are
+
+$$
+[\Lambda_n]
+=
+\mathrm{m^2\,s^{-1}}
+\times
+\mathrm{m^{-2}}
+=
+\mathrm{s^{-1}}.
+\tag{TRISO-ANA-306}
+$$
+
+The separated transient mode is therefore
+
+$$
+v_n(r,t)=\phi_n(r)e^{-\Lambda_nt}.
+\tag{TRISO-ANA-307}
+$$
+
+### 10.7 Sturm–Liouville form
+
+Start from the radial eigenproblem:
+
+$$
+\phi_n''
++
+\frac2r\phi_n'
++
+k_n^2\phi_n
+=
+0.
+\tag{TRISO-SL-200}
+$$
+
+Multiply by (r^2):
+
+$$
+r^2\phi_n''
++
+2r\phi_n'
++
+k_n^2r^2\phi_n
+=
+0.
+\tag{TRISO-SL-201}
+$$
+
+The first two terms are a product derivative because
+
+$$
+\frac{d}{dr}(r^2\phi_n')
+=
+2r\phi_n'
++
+r^2\phi_n''.
+\tag{TRISO-SL-202}
+$$
+
+Therefore
+
+$$
+\frac{d}{dr}(r^2\phi_n')
++
+k_n^2r^2\phi_n
+=
+0.
+\tag{TRISO-SL-203}
+$$
+
+Move the eigenvalue term to the other side:
+
+$$
+-\frac{d}{dr}(r^2\phi_n')
+=
+k_n^2r^2\phi_n.
+\tag{TRISO-SL-204}
+$$
+
+This is the self-adjoint Sturm–Liouville form
+
+$$
+-\frac{d}{dr}
+\left(
+p(r)\frac{d\phi_n}{dr}
+\right)
++
+q(r)\phi_n
+=
+\lambda_n w(r)\phi_n
+$$
+
+with the identifications
+
+$$
+p(r)=r^2,
+\tag{TRISO-SL-205}
+$$
+
+$$
+q(r)=0,
+\tag{TRISO-SL-206}
+$$
+
+$$
+w(r)=r^2,
+\tag{TRISO-SL-207}
+$$
+
+and
+
+$$
+\lambda_n=k_n^2.
+\tag{TRISO-SL-208}
+$$
+
+The eigenvalue in this Sturm–Liouville problem is therefore (k_n^2), with units (mathrm{m^{-2}}), not the temporal decay rate (Lambda_n).
+
+The interval is (0<r<R).
+
+The centre condition is regularity of (phi_n), equivalent for these modes to a finite (phi_n(0)) and zero radial derivative at the centre.
+
+The outer boundary is the homogeneous Robin condition
+
+$$
+-D\phi_n'(R)=h\phi_n(R).
+\tag{TRISO-SL-209}
+$$
+
+[THEOREM / STANDARD FORM] Sturm–Liouville theory provides the framework for eigenvalues and eigenfunctions of self-adjoint second-order problems. See the NIST Digital Library of Mathematical Functions, §1.13(viii), which identifies Sturm–Liouville eigenvalues/eigenfunctions and the Liouville form. \cite{DLMFSturmLiouville}.
+
+Because the centre endpoint has (p(0)=0), it is more precise to call this a radial **singular** Sturm–Liouville endpoint rather than an ordinary regular endpoint. The orthogonality used below can nevertheless be derived directly for the present eigenfunctions, so no stronger theorem is needed.
+
+### 10.8 Derive orthogonality directly
+
+Take two distinct eigenfunctions (phi_m) and (phi_n) with eigenvalues (k_m^2) and (k_n^2):
+
+$$
+-\frac{d}{dr}
+(r^2\phi_m')
+=
+k_m^2r^2\phi_m,
+\tag{TRISO-SL-210}
+$$
+
+and
+
+$$
+-\frac{d}{dr}
+(r^2\phi_n')
+=
+k_n^2r^2\phi_n.
+\tag{TRISO-SL-211}
+$$
+
+Multiply the first equation by (phi_n):
+
+$$
+-\phi_n\frac{d}{dr}(r^2\phi_m')
+=
+k_m^2r^2\phi_m\phi_n.
+\tag{TRISO-SL-212}
+$$
+
+Multiply the second equation by (phi_m):
+
+$$
+-\phi_m\frac{d}{dr}(r^2\phi_n')
+=
+k_n^2r^2\phi_m\phi_n.
+\tag{TRISO-SL-213}
+$$
+
+Subtract the second equation from the first:
+
+$$
+-\phi_n\frac{d}{dr}(r^2\phi_m')
++
+\phi_m\frac{d}{dr}(r^2\phi_n')
+=
+(k_m^2-k_n^2)r^2\phi_m\phi_n.
+\tag{TRISO-SL-214}
+$$
+
+Recognise the left side as a derivative:
+
+$$
+\frac{d}{dr}
+\left[
+r^2
+(
+\phi_m\phi_n'
+-
+\phi_n\phi_m'
+)
+\right]
+=
+(k_n^2-k_m^2)r^2\phi_m\phi_n.
+\tag{TRISO-SL-215}
+$$
+
+Integrate from (0) to (R):
+
+$$
+\int_0^R
+\frac{d}{dr}
+\left[
+r^2
+(
+\phi_m\phi_n'
+-
+\phi_n\phi_m'
+)
+\right]dr
+=
+(k_n^2-k_m^2)
+\int_0^R
+r^2\phi_m\phi_n\,dr.
+\tag{TRISO-SL-216}
+$$
+
+Evaluate the left-hand integral:
+
+$$
+\left[
+r^2
+(
+\phi_m\phi_n'
+-
+\phi_n\phi_m'
+)
+\right]_0^R
+=
+(k_n^2-k_m^2)
+\int_0^R
+r^2\phi_m\phi_n\,dr.
+\tag{TRISO-SL-217}
+$$
+
+At (r=R), both eigenfunctions satisfy the same Robin condition:
+
+$$
+\phi_m'(R)=-\frac{h}{D}\phi_m(R),
+\tag{TRISO-SL-218}
+$$
+
+and
+
+$$
+\phi_n'(R)=-\frac{h}{D}\phi_n(R).
+\tag{TRISO-SL-219}
+$$
+
+Therefore the outer boundary term is zero:
+
+$$
+R^2
+[
+\phi_m(R)\phi_n'(R)
+-
+\phi_n(R)\phi_m'(R)
+]
+=0.
+\tag{TRISO-SL-220}
+$$
+
+At the centre, the regular eigenfunctions are finite and their derivatives remain bounded, while (r^2\to0).
+
+Hence
+
+$$
+\lim_{r\to0}
+r^2
+[
+\phi_m\phi_n'
+-
+\phi_n\phi_m'
+]
+=0.
+\tag{TRISO-SL-221}
+$$
+
+Therefore the complete boundary term is zero:
+
+$$
+(k_n^2-k_m^2)
+\int_0^R
+r^2\phi_m\phi_n\,dr
+=
+0.
+\tag{TRISO-SL-222}
+$$
+
+For distinct eigenvalues,
+
+$$
+k_n^2\ne k_m^2,
+\tag{TRISO-SL-223}
+$$
+
+so
+
+$$
+\boxed{
+\int_0^R
+r^2\phi_m(r)\phi_n(r)\,dr
+=
+0,
+\qquad m\ne n.
+}
+\tag{TRISO-SL-224}
+$$
+
+The weight is therefore
+
+$$
+\boxed{
+w(r)=r^2.
+}
+\tag{TRISO-SL-225}
+$$
+
+The same (r^2) weight also follows directly from spherical volume (dV=4\pi r^2dr).
+
+### 10.9 Modal coefficient projection
+
+At (t=0), (TRISO-ANA-228) gives
+
+$$
+v(r,0)=-w(r).
+\tag{TRISO-SL-226}
+$$
+
+Represent the initial transient as an eigenfunction series:
+
+$$
+-w(r)
+=
+\sum_{n=1}^{\infty}
+A_n\phi_n(r).
+\tag{TRISO-SL-227}
+$$
+
+Multiply both sides by (r^2\phi_m(r)):
+
+$$
+-r^2w(r)\phi_m(r)
+=
+\sum_{n=1}^{\infty}
+A_n r^2\phi_n(r)\phi_m(r).
+\tag{TRISO-SL-228}
+$$
+
+Integrate from (0) to (R):
+
+$$
+-\int_0^R
+r^2w(r)\phi_m(r)\,dr
+=
+\sum_{n=1}^{\infty}
+A_n
+\int_0^R
+r^2\phi_n(r)\phi_m(r)\,dr.
+\tag{TRISO-SL-229}
+$$
+
+For (n\ne m), orthogonality makes the corresponding integrals zero:
+
+$$
+\int_0^R
+r^2\phi_n\phi_m\,dr
+=
+0.
+\tag{TRISO-SL-230}
+$$
+
+The remaining (n=m) term is
+
+$$
+-\int_0^R
+r^2w(r)\phi_m(r)\,dr
+=
+A_m
+\int_0^R
+r^2\phi_m(r)^2\,dr.
+\tag{TRISO-SL-231}
+$$
+
+Divide by the non-zero mode norm:
+
+$$
+\boxed{
+A_m
+=
+-
+\frac{
+\int_0^R
+r^2w(r)\phi_m(r)\,dr
+}{
+\int_0^R
+r^2\phi_m(r)^2\,dr
+}.
+}
+\tag{TRISO-SL-232}
+$$
+
+Rename (m) to (n):
+
+$$
+\boxed{
+A_n
+=
+-
+\frac{
+\int_0^R
+r^2w(r)\phi_n(r)\,dr
+}{
+\int_0^R
+r^2\phi_n(r)^2\,dr
+}.
+}
+\tag{TRISO-SL-233}
+$$
+
+Each mode evolves with (e^{-\Lambda_nt}), so
+
+$$
+v(r,t)
+=
+\sum_{n=1}^{\infty}
+A_n\phi_n(r)e^{-\Lambda_nt}.
+\tag{TRISO-SL-234}
+$$
+
+Since (c=v+w),
+
+$$
+\boxed{
+c(r,t)
+=
+w(r)
++
+\sum_{n=1}^{\infty}
+A_n\phi_n(r)e^{-\Lambda_nt}.
+}
+\tag{TRISO-SL-235}
+$$
+
+### 10.10 Checks on the transient series
+
+Each mode has decay factor
+
+$$
+e^{-\Lambda_nt}.
+\tag{TRISO-SL-236}
+$$
+
+At (t=0),
+
+$$
+e^{-\Lambda_n\cdot0}=1.
+\tag{TRISO-SL-237}
+$$
+
+Therefore
+
+$$
+c(r,0)
+=
+w(r)
++
+\sum_{n=1}^{\infty}A_n\phi_n(r).
+\tag{TRISO-SL-238}
+$$
+
+Using the defining expansion (TRISO-SL-227),
+
+$$
+\sum_{n=1}^{\infty}A_n\phi_n(r)
+=
+-w(r).
+\tag{TRISO-SL-239}
+$$
+
+Hence, formally,
+
+$$
+\boxed{
+c(r,0)=0.
+}
+\tag{TRISO-SL-240}
+$$
+
+As (t\to\infty), every mode with (Lambda_n>0) satisfies
+
+$$
+e^{-\Lambda_nt}\to0.
+\tag{TRISO-SL-241}
+$$
+
+Therefore, provided the modal expansion has the required convergence,
+
+$$
+\boxed{
+c(r,t)\to w(r).
+}
+\tag{TRISO-SL-242}
+$$
+
+The convergence of the infinite series itself has not been numerically established here. The statements above are the formal consequences of the eigen-expansion framework.
 
 ## 11. Exact steady five-layer analytical formulation
 
