@@ -195,3 +195,30 @@ The five-layer expansion uses the TRISO-ML-300 through TRISO-ML-477 namespace. T
 | — | Five-layer modal coefficient projection | DERIVATION GAP |
 
 The original 33 notebook mappings and the 100/200-series canonical expansions remain unchanged.
+
+### Five-layer global modal structure and projection
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-ML-482 | Conservative layer eigen-equation | VERIFIED |
+| TRISO-ML-484 | Piecewise self-adjoint coefficient p(r)=r^2 D(r) | VERIFIED |
+| TRISO-ML-485 | q(r)=0 | VERIFIED |
+| TRISO-ML-487 | Global Sturm–Liouville weight w(r)=r^2 | VERIFIED |
+| TRISO-ML-488–497 | Layerwise Lagrange identity and integrated boundary form | VERIFIED |
+| TRISO-ML-500–502 | Sum of all five layer boundary contributions | VERIFIED |
+| TRISO-ML-503–513 | Explicit internal-interface cancellation | VERIFIED |
+| TRISO-ML-514–518 | Centre boundary contribution | VERIFIED |
+| TRISO-ML-519–525 | Outer Robin boundary cancellation | VERIFIED |
+| TRISO-ML-528 | Global multilayer orthogonality | VERIFIED |
+| TRISO-ML-531–532 | Global weighted inner product and orthogonality notation | VERIFIED AS DEFINITIONS / RESULT |
+| TRISO-ML-533 | Modal norm | VERIFIED AS DEFINITION |
+| TRISO-ML-536–540 | Modal scaling and normalization | VERIFIED |
+| TRISO-ML-541–552 | Initial-state projection and modal coefficient formula | DERIVED CONDITIONALLY |
+| TRISO-ML-554 | Complete formal five-layer transient series | FORMAL / CONDITIONALLY VERIFIED |
+| TRISO-ML-555–563 | Initial, long-time, interface, centre, and Robin checks | CONDITIONALLY VERIFIED |
+| TRISO-ML-564–571 | Homogeneous-diffusivity reduction | VERIFIED |
+| TRISO-ML-572–573 | Unequal-diffusivity interface cancellation check | VERIFIED |
+| — | Completeness of singular piecewise transmission eigenfunctions | THEOREM-DEPENDENT / SOURCE NEEDED |
+| — | Numerical modal convergence and truncation error | UNVERIFIED |
+
+Completeness note: standard regular Sturm–Liouville completeness results are not treated as a proof for this problem because p(0)=0 makes the centre singular and D(r) is piecewise discontinuous with transmission conditions. The project has directly established the self-adjoint boundary/interface cancellation and orthogonality, but a theorem specifically covering the singular piecewise transmission problem remains to be sourced or proved.
