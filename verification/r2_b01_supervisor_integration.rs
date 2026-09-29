@@ -145,6 +145,7 @@ fn empirical_cdf_is_monotone() {
 }
 
 #[test]
+#[ignore = "expensive stochastic closure check; run explicitly in the R2-B01 workflow"]
 fn no_censoring_gives_full_release_at_infinity_in_absorbing_benchmark() {
     let params = WalkParams {
         capture_eps: Length::new::<nanometer>(10.0),
