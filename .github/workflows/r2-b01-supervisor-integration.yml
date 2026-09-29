@@ -3,8 +3,13 @@ name: R2-B01 supervisor integration
 on:
   workflow_dispatch:
     inputs:
+      run_five_layer_smoke:
+        description: "Run one bounded real five-layer WOS release path"
+        required: false
+        default: false
+        type: boolean
       run_heavy_release_check:
-        description: "Also run the expensive zero-censoring stochastic release check"
+        description: "Run the expensive zero-censoring stochastic release check"
         required: false
         default: false
         type: boolean
@@ -23,22 +28,46 @@ jobs:
     steps:
       - name: Checkout Ray staging repository
         uses: actions/checkout@v4
+
       - name: Install stable Rust
         uses: dtolnay/rust-toolchain@stable
+
       - name: Checkout exact supervisor source
         run: |
           git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
           cd supervisor
           git fetch --no-tags origin "$SUPERVISOR_REF"
           git checkout --detach "$SUPERVISOR_REF"
+
       - name: Install focused integration test
         run: |
           mkdir -p supervisor/crates/boon-lay/tests
           cp verification/r2_b01_supervisor_integration.rs supervisor/crates/boon-lay/tests/r2_b01_supervisor_integration.rs
-      - name: Run fast R2-B01 contract tests
+
+      - name: Compile focused R2-B01 test only
         working-directory: supervisor
-        run: cargo test -p boon-lay --test r2_b01_supervisor_integration -- --nocapture
+        timeout-minutes: 20
+        run: |
+          echo "::group::Compile focused integration target"
+          time cargo test -p boon-lay --test r2_b01_supervisor_integration --no-run
+          echo "::endgroup::"
+
+      - name: Run fast deterministic contract tests
+        working-directory: supervisor
+        timeout-minutes: 3
+        run: |
+          time cargo test -p boon-lay --test r2_b01_supervisor_integration -- --nocapture
+
+      - name: Run bounded real five-layer WOS smoke test
+        if: ${{ inputs.run_five_layer_smoke }}
+        working-directory: supervisor
+        timeout-minutes: 5
+        run: |
+          time cargo test -p boon-lay --test r2_b01_supervisor_integration five_layer_release_path_records_actual_release_time_or_explicit_censoring -- --ignored --nocapture
+
       - name: Run expensive zero-censoring release check
         if: ${{ inputs.run_heavy_release_check }}
         working-directory: supervisor
-        run: cargo test -p boon-lay --test r2_b01_supervisor_integration no_censoring_gives_full_release_at_infinity_in_absorbing_benchmark -- --ignored --nocapture
+        timeout-minutes: 30
+        run: |
+          time cargo test -p boon-lay --test r2_b01_supervisor_integration no_censoring_gives_full_release_at_infinity_in_absorbing_benchmark -- --ignored --nocapture
