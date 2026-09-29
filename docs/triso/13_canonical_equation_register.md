@@ -389,3 +389,14 @@ R2-D01 remains OPEN until the reviewer-requested grid-refinement evidence is pro
 | TRISO-ACC-136–139 | Smooth same-material face-flux consistency | CONDITIONALLY VERIFIED O(h^2) |
 
 Conditions for the O(h^2) face result: smooth solution within one material, shape-regular refinement, smoothly varying adjacent cell-average representation errors, and local face-centering d_E-d_P=O(h^2). Complete cell-divergence, interface, boundary, and global convergence orders remain unproved.
+
+### Smooth-cell finite-volume divergence consistency
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-ACC-140–148 | Cell-divergence error expressed from face-flux errors; face O(h^2) alone is insufficient | VERIFIED |
+| TRISO-ACC-149–163 | Smooth leading face-error cancellation and O(h^2) cell-divergence result | CONDITIONALLY VERIFIED |
+| TRISO-ACC-164–166 | Relation of exact cell-average diffusion operator to centroid differential operator | CONDITIONALLY VERIFIED O(h^2) |
+| TRISO-ACC-167–169 | Failure mode when leading face-error coefficient is not smooth | VERIFIED ORDER ARGUMENT |
+
+The O(h^2) smooth-cell divergence result requires a smooth same-material solution, shape-regular/local-symmetry mesh assumptions from TRISO-ACC-123–135, and a smooth leading face-error expansion epsilon_f=h^2 E(r_f)+O(h^3). It must not be transferred across a material discontinuity without a separate interface analysis.
