@@ -59,27 +59,49 @@ Rule: this table is the only authoritative original-equation → stable-equation
 The raw notebook was preserved from the supplied project file without mathematical edits. SHA-256: `5ce5f77e5148a234a7e7339a485923df982b54edfc79ff96796d26e0673158ce`.
 ## Canonical stable equations added during mathematical expansion
 
+The original 33 notebook mappings above are preserved. The equations introduced by later first-principles expansion use a separate 100-series namespace so that stable identifiers never collide.
+
 | Stable ID | Mathematical role | Status |
 |---|---|---|
-| `TRISO-GOV-020` | Control-volume conserved inventory definition | VERIFIED |
-| `TRISO-GOV-027` | Control-volume accumulation = generation - outward flux | VERIFIED |
-| `TRISO-GOV-029` | Integral conservation statement with flux and source | VERIFIED |
-| `TRISO-GOV-034` | Local differential conservation law | VERIFIED |
-| `TRISO-GOV-035` | Fickian constitutive relation | CONSTITUTIVE |
-| `TRISO-GOV-038` | Fick substitution into conservation | VERIFIED |
-| `TRISO-GOV-040` | General conservative diffusion equation | VERIFIED |
-| `TRISO-SPH-020` | Spherical-coordinate gradient | VERIFIED |
-| `TRISO-SPH-021` | Spherical-coordinate divergence | VERIFIED |
-| `TRISO-SPH-022` | Spherical symmetry specialization c=c(r,t) | ASSUMPTION |
-| `TRISO-SPH-025` | Radial gradient after angular elimination | VERIFIED |
-| `TRISO-SPH-026` | Radial Fickian flux | CONSTITUTIVE |
-| `TRISO-SPH-029` | Radial spherical divergence | VERIFIED |
-| `TRISO-SPH-033` | General heterogeneous spherical conservative PDE | VERIFIED |
-| `TRISO-SPH-034` | Layer-specific constant-D assumption | ASSUMPTION |
-| `TRISO-SPH-036` | D_i moved outside radial derivative | CONDITIONALLY VERIFIED |
-| `TRISO-SPH-037` | Explicit product-rule expansion | VERIFIED |
-| `TRISO-SPH-039` | Product-rule result | VERIFIED |
-| `TRISO-SPH-040` | Divide by r^2 and collect terms | VERIFIED |
-| `TRISO-SPH-041` | Familiar within-layer radial diffusion equation | CONDITIONALLY VERIFIED |
+| `TRISO-GOV-100` | Net source/reaction bookkeeping definition | VERIFIED AS DEFINITION |
+| `TRISO-GOV-102` | Kernel-confined generation benchmark | ASSUMPTION |
+| `TRISO-GOV-104` | Decay constant definition | VERIFIED AS DEFINITION |
+| `TRISO-GOV-111` | First-order radioactive-decay sink | CONDITIONALLY VERIFIED / CONSTITUTIVE |
+| `TRISO-GOV-118` | General layer-wise reaction-inclusive equation | CONDITIONALLY VERIFIED |
+| `TRISO-IC-100` | Initially empty source-driven problem | ASSUMPTION |
+| `TRISO-IC-102` | Initial kernel inventory condition | ASSUMPTION |
+| `TRISO-IC-104` | No post-initial generation for release benchmark | ASSUMPTION |
+| `TRISO-BC-100` | Even radial extension about centre | ASSUMPTION |
+| `TRISO-BC-103` | Centre derivative condition | VERIFIED |
+| `TRISO-BC-105` | L'Hopital limit of c_r/r | VERIFIED |
+| `TRISO-BC-109` | Centre spherical-operator limit | VERIFIED |
+| `TRISO-INT-100` | Infinitesimal interface-control-volume geometry | VERIFIED |
+| `TRISO-INT-107` | General interface storage/source balance | VERIFIED |
+| `TRISO-INT-111` | Flux continuity for ideal interface | VERIFIED |
+| `TRISO-INT-114` | Fickian flux continuity | VERIFIED |
+| `TRISO-INT-115` | Ideal concentration continuity | ASSUMPTION / CONSTITUTIVE |
+| `TRISO-INT-116` | Partition coefficient condition | CONDITIONALLY VERIFIED / CONSTITUTIVE |
+| `TRISO-INT-117` | Example finite interfacial resistance law | SOURCE NEEDED |
+| `TRISO-BC-112` | Absorbing Dirichlet boundary | ASSUMPTION |
+| `TRISO-BC-114` | Prescribed-flux Neumann boundary | VERIFIED AS DEFINITION |
+| `TRISO-BC-117` | External mass-transfer law | CONSTITUTIVE |
+| `TRISO-BC-119` | Robin boundary after flux matching | VERIFIED |
+| `TRISO-BC-123` | Large-h limit to Dirichlet behaviour | CONDITIONALLY VERIFIED |
+| `TRISO-BC-125` | Small-h limit to zero-flux behaviour | CONDITIONALLY VERIFIED |
+| `TRISO-IC-106` | Initial-kernel release benchmark | ASSUMPTION |
+| `TRISO-ANA-100` | Part-I homogeneous steady benchmark PDE | CONDITIONALLY VERIFIED |
+| `TRISO-ANA-109` | Conservative steady equation | VERIFIED |
+| `TRISO-ANA-113` | First integrated steady profile | VERIFIED |
+| `TRISO-ANA-114` | First integration constant fixed by centre regularity | VERIFIED |
+| `TRISO-ANA-120` | Second integrated steady profile | VERIFIED |
+| `TRISO-ANA-121` | Robin condition applied at R | VERIFIED |
+| `TRISO-ANA-127` | Steady integration constant B | VERIFIED |
+| `TRISO-ANA-129` | Final homogeneous steady profile | VERIFIED |
+| `TRISO-ANA-130` | First-term dimensional check | VERIFIED |
+| `TRISO-ANA-131` | Second-term dimensional check | VERIFIED |
+| `TRISO-ANA-135` | Total steady generation rate | VERIFIED |
+| `TRISO-ANA-137` | Global steady generation/release equality | VERIFIED |
+| `TRISO-ANA-139` | Surface concentration from global balance | VERIFIED |
+| `TRISO-ANA-141` | Analytical surface concentration check | VERIFIED |
 
-These identifiers are now part of the active canonical derivation. They supplement the one-to-one mapping of the original 33 notebook equations; they do not replace any original mapping.
+These IDs belong to the current canonical derivation and supplement, rather than replace, the one-to-one mapping of the original 33 notebook equations.
