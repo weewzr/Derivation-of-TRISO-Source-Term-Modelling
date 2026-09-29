@@ -1,4 +1,4 @@
-# Historical Equation Status Register
+> HISTORICAL ARCHIVE: superseded working document.\n\n# Historical Equation Status Register
 
 This file is retained for provenance. The authoritative current mapping is:
 

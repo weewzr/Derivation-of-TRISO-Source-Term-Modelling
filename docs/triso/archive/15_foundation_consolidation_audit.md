@@ -1,4 +1,4 @@
-# Historical Foundation Consolidation Audit
+> HISTORICAL ARCHIVE: superseded working document.\n\n# Historical Foundation Consolidation Audit
 
 This file records an earlier pre-Review-1 consolidation snapshot.
 
