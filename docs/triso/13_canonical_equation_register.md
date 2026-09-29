@@ -222,3 +222,21 @@ The original 33 notebook mappings and the 100/200-series canonical expansions re
 | — | Numerical modal convergence and truncation error | UNVERIFIED |
 
 Completeness note: standard regular Sturm–Liouville completeness results are not treated as a proof for this problem because p(0)=0 makes the centre singular and D(r) is piecewise discontinuous with transmission conditions. The project has directly established the self-adjoint boundary/interface cancellation and orthogonality, but a theorem specifically covering the singular piecewise transmission problem remains to be sourced or proved.
+
+## Canonical stable equations: deterministic FTCS interior derivation
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-DIS-100 | Homogeneous-layer PDE used for interior FTCS | CONDITIONALLY VERIFIED |
+| TRISO-DIS-102–110 | Uniform spatial/time mesh and nodal approximation definitions | VERIFIED AS DEFINITIONS |
+| TRISO-DIS-112–116 | Forward-time derivative derivation | VERIFIED |
+| TRISO-DIS-117–121 | Centred first-radial-derivative derivation | VERIFIED |
+| TRISO-DIS-122–125 | Centred second-radial-derivative derivation | VERIFIED |
+| TRISO-DIS-126–133 | Substitution into spherical PDE | VERIFIED |
+| TRISO-DIS-134–139 | Explicit neighbour-coefficient collection | VERIFIED |
+| TRISO-DIS-140–141 | Fourier number and dimensional check | VERIFIED |
+| TRISO-DIS-145 | Original Ray interior FTCS update | CONDITIONALLY VERIFIED |
+| TRISO-DIS-146–148 | Source-increment dimensional check | VERIFIED |
+| TRISO-DIS-149–152 | Interior local truncation/consistency order | CONDITIONALLY VERIFIED |
+
+Scope: these equations apply only to a uniform-grid interior stencil wholly inside one homogeneous constant-D layer. Centre, material-interface, and outer-boundary equations require separate derivations.
