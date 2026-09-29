@@ -10862,16 +10862,110 @@ $$
 
 The aligned finite-volume source inventory exactly reproduces the continuous total generation for constant \(S_0\).
 
-### 18.12 Outer Robin boundary as a face flux
+### 18.12 Cell-centred Robin boundary closure
 
-At the outer face,
+At the physical outer surface,
 
 $$
-r_e=R.
+r=R.
 \tag{TRISO-FV-175}
 $$
 
-The outward boundary flux is prescribed by the Robin law:
+Let the centre of the outermost OPyC control volume be at
+
+$$
+r_P<R.
+\tag{TRISO-FV-176}
+$$
+
+Define the centre-to-surface distance
+
+$$
+\boxed{
+\delta r_R=R-r_P.
+}
+\tag{TRISO-FV-177}
+$$
+
+Let the outer OPyC diffusivity be
+
+$$
+D_5.
+\tag{TRISO-FV-178}
+$$
+
+Let the physical surface concentration be
+
+$$
+C_R.
+\tag{TRISO-FV-179}
+$$
+
+The outer-cell unknown is the cell-centred or cell-average concentration
+
+$$
+C_P.
+\tag{TRISO-FV-180}
+$$
+
+These two concentrations are not silently identified.
+
+#### 18.12.1 Half-cell diffusion relation
+
+Approximate the OPyC concentration gradient between the outer cell centre and the physical surface by
+
+$$
+\left.
+\frac{\partial c}{\partial r}
+\right|_{P\rightarrow R}
+\approx
+\frac{C_R-C_P}{\delta r_R}.
+\tag{TRISO-FV-181}
+$$
+
+Fick's law gives the outward radial flux
+
+$$
+J_R
+=
+-D_5
+\frac{C_R-C_P}{\delta r_R}.
+\tag{TRISO-FV-182}
+$$
+
+Reverse the concentration difference:
+
+$$
+\boxed{
+J_R
+=
+D_5
+\frac{C_P-C_R}{\delta r_R}.
+}
+\tag{TRISO-FV-183}
+$$
+
+Solve for the half-cell concentration drop:
+
+$$
+C_P-C_R
+=
+J_R\frac{\delta r_R}{D_5}.
+\tag{TRISO-FV-184}
+$$
+
+The quantity
+
+$$
+\frac{\delta r_R}{D_5}
+\tag{TRISO-FV-185}
+$$
+
+is the diffusion resistance per unit area of the outer half-cell.
+
+#### 18.12.2 External film relation
+
+The physical Robin law is
 
 $$
 \boxed{
@@ -10879,19 +10973,370 @@ J_R
 =
 h(C_R-c_\infty).
 }
-\tag{TRISO-FV-176}
+\tag{TRISO-FV-186}
 $$
 
-The outer-face amount rate is
+Solve for the film concentration drop:
+
+$$
+C_R-c_\infty
+=
+\frac{J_R}{h}.
+\tag{TRISO-FV-187}
+$$
+
+The external-film resistance per unit area is therefore
+
+$$
+\frac1h.
+\tag{TRISO-FV-188}
+$$
+
+#### 18.12.3 Add the two series concentration drops
+
+Write the total cell-centre-to-bulk concentration difference as
+
+$$
+C_P-c_\infty
+=
+(C_P-C_R)
++
+(C_R-c_\infty).
+\tag{TRISO-FV-189}
+$$
+
+Substitute the half-cell drop (TRISO-FV-184):
+
+$$
+C_P-c_\infty
+=
+J_R\frac{\delta r_R}{D_5}
++
+(C_R-c_\infty).
+\tag{TRISO-FV-190}
+$$
+
+Substitute the film drop (TRISO-FV-187):
+
+$$
+C_P-c_\infty
+=
+J_R\frac{\delta r_R}{D_5}
++
+\frac{J_R}{h}.
+\tag{TRISO-FV-191}
+$$
+
+Factor out \(J_R\):
+
+$$
+C_P-c_\infty
+=
+J_R
+\left(
+\frac{\delta r_R}{D_5}
++
+\frac1h
+\right).
+\tag{TRISO-FV-192}
+$$
+
+Solve for the outward boundary flux:
+
+$$
+\boxed{
+J_R
+=
+\frac{
+C_P-c_\infty
+}{
+\dfrac{\delta r_R}{D_5}
++
+\dfrac1h
+}.
+}
+\tag{TRISO-FV-193}
+$$
+
+Thus the half-cell diffusion resistance and external-film resistance add in series.
+
+#### 18.12.4 Effective boundary transfer coefficient
+
+Define the effective cell-centre-to-bulk transfer coefficient
+
+$$
+\boxed{
+h_{\mathrm{eff}}
+=
+\left(
+\frac{\delta r_R}{D_5}
++
+\frac1h
+\right)^{-1}.
+}
+\tag{TRISO-FV-194}
+$$
+
+Then
+
+$$
+\boxed{
+J_R
+=
+h_{\mathrm{eff}}
+(C_P-c_\infty).
+}
+\tag{TRISO-FV-195}
+$$
+
+Multiply numerator and denominator of (TRISO-FV-194) by \(hD_5\):
+
+$$
+h_{\mathrm{eff}}
+=
+\frac{hD_5}{
+h\delta r_R+D_5
+}.
+\tag{TRISO-FV-196}
+$$
+
+Therefore
+
+$$
+\boxed{
+h_{\mathrm{eff}}
+=
+\frac{hD_5}{
+D_5+h\delta r_R
+}.
+}
+\tag{TRISO-FV-197}
+$$
+
+The units are
+
+$$
+[h_{\mathrm{eff}}]
+=
+\mathrm{m\,s^{-1}}.
+\tag{TRISO-FV-198}
+$$
+
+#### 18.12.5 Recover the physical surface concentration
+
+The surface concentration can also be obtained explicitly.
+
+From (TRISO-FV-187),
+
+$$
+C_R
+=
+c_\infty+\frac{J_R}{h}.
+\tag{TRISO-FV-199}
+$$
+
+Substitute (TRISO-FV-193):
+
+$$
+C_R
+=
+c_\infty
++
+\frac1h
+\frac{
+C_P-c_\infty
+}{
+\dfrac{\delta r_R}{D_5}
++
+\dfrac1h
+}.
+\tag{TRISO-FV-200}
+$$
+
+Multiply the second term's denominator by \(h\):
+
+$$
+C_R
+=
+c_\infty
++
+\frac{
+C_P-c_\infty
+}{
+1+\dfrac{h\delta r_R}{D_5}
+}.
+\tag{TRISO-FV-201}
+$$
+
+Define the half-cell boundary Biot number
+
+$$
+\boxed{
+\mathrm{Bi}_R
+=
+\frac{h\delta r_R}{D_5}.
+}
+\tag{TRISO-FV-202}
+$$
+
+Then
+
+$$
+\boxed{
+C_R
+=
+c_\infty
++
+\frac{
+C_P-c_\infty
+}{
+1+\mathrm{Bi}_R
+}.
+}
+\tag{TRISO-FV-203}
+$$
+
+This expression keeps the cell-centre and physical surface concentrations distinct.
+
+#### 18.12.6 Limiting checks
+
+If
+
+$$
+h\to0,
+\tag{TRISO-FV-204}
+$$
+
+then
+
+$$
+\frac1h\to\infty.
+\tag{TRISO-FV-205}
+$$
+
+Therefore
+
+$$
+h_{\mathrm{eff}}\to0.
+\tag{TRISO-FV-206}
+$$
+
+Hence
+
+$$
+J_R\to0.
+\tag{TRISO-FV-207}
+$$
+
+This recovers the insulating Neumann limit.
+
+If
+
+$$
+\delta r_R\to0,
+\tag{TRISO-FV-208}
+$$
+
+then the half-cell resistance vanishes:
+
+$$
+\frac{\delta r_R}{D_5}\to0.
+\tag{TRISO-FV-209}
+$$
+
+Therefore
+
+$$
+h_{\mathrm{eff}}\to h.
+\tag{TRISO-FV-210}
+$$
+
+Thus the cell-centred closure approaches the physical Robin law as the outer cell centre approaches the surface.
+
+If
+
+$$
+h\to\infty,
+\tag{TRISO-FV-211}
+$$
+
+then the film resistance vanishes:
+
+$$
+\frac1h\to0.
+\tag{TRISO-FV-212}
+$$
+
+Therefore
+
+$$
+\boxed{
+h_{\mathrm{eff}}
+\to
+\frac{D_5}{\delta r_R}.
+}
+\tag{TRISO-FV-213}
+$$
+
+The resulting flux is
+
+$$
+J_R
+\to
+\frac{D_5}{\delta r_R}
+(C_P-c_\infty).
+\tag{TRISO-FV-214}
+$$
+
+This is the expected half-cell diffusion flux to a prescribed Dirichlet surface concentration \(C_R=c_\infty\).
+
+Unlike the ghost-point formula, this cell-centred resistance closure remains finite in the \(h\to\infty\) limit.
+
+#### 18.12.7 Outer-face amount conductance
+
+The physical outer area is
+
+$$
+\boxed{
+A_R=4\pi R^2.
+}
+\tag{TRISO-FV-215}
+$$
+
+Define the total outer-boundary conductance
+
+$$
+\boxed{
+G_R=A_Rh_{\mathrm{eff}}.
+}
+\tag{TRISO-FV-216}
+$$
+
+Its units are
+
+$$
+[G_R]
+=
+\mathrm{m^2}
+\times
+\mathrm{m\,s^{-1}}
+=
+\mathrm{m^3\,s^{-1}}.
+\tag{TRISO-FV-217}
+$$
+
+The outward amount rate is
 
 $$
 A_RJ_R
 =
-4\pi R^2h(C_R-c_\infty).
-\tag{TRISO-FV-177}
+G_R(C_P-c_\infty).
+\tag{TRISO-FV-218}
 $$
 
-For the outermost control volume \(P\), the balance is
+#### 18.12.8 Final outer-cell semi-discrete balance
+
+For the outermost control volume, the exact balance is
 
 $$
 V_P\frac{dC_P}{dt}
@@ -10901,29 +11346,191 @@ A_wJ_w
 A_RJ_R
 +
 S_PV_P.
-\tag{TRISO-FV-178}
+\tag{TRISO-FV-219}
 $$
 
-Substitute the Robin flux:
+The west-face amount rate is
+
+$$
+A_wJ_w
+=
+G_w(C_W-C_P).
+\tag{TRISO-FV-220}
+$$
+
+The outer amount rate is
+
+$$
+A_RJ_R
+=
+G_R(C_P-c_\infty).
+\tag{TRISO-FV-221}
+$$
+
+Substitute both:
+
+$$
+V_P\frac{dC_P}{dt}
+=
+G_w(C_W-C_P)
+-
+G_R(C_P-c_\infty)
++
+S_PV_P.
+\tag{TRISO-FV-222}
+$$
+
+Expand the west term:
+
+$$
+V_P\frac{dC_P}{dt}
+=
+G_wC_W
+-
+G_wC_P
+-
+G_R(C_P-c_\infty)
++
+S_PV_P.
+\tag{TRISO-FV-223}
+$$
+
+Expand the boundary term:
+
+$$
+V_P\frac{dC_P}{dt}
+=
+G_wC_W
+-
+G_wC_P
+-
+G_RC_P
++
+G_Rc_\infty
++
+S_PV_P.
+\tag{TRISO-FV-224}
+$$
+
+Collect the cell-centre concentration:
 
 $$
 \boxed{
 V_P\frac{dC_P}{dt}
 =
-A_wJ_w
+G_wC_W
 -
-4\pi R^2h(C_R-c_\infty)
+(G_w+G_R)C_P
++
+G_Rc_\infty
 +
 S_PV_P.
 }
-\tag{TRISO-FV-179}
+\tag{TRISO-FV-225}
 $$
 
-[DERIVATION GAP] If \(C_P\) is a cell-centred volume average rather than a boundary value, a closure is still required to relate the cell-centre concentration to the surface concentration \(C_R\).
+Divide by \(V_P\):
 
-Possible choices include a half-cell diffusion resistance in series with the external film resistance.
+$$
+\boxed{
+\frac{dC_P}{dt}
+=
+\frac{G_w}{V_P}C_W
+-
+\frac{G_w+G_R}{V_P}C_P
++
+\frac{G_R}{V_P}c_\infty
++
+S_P.
+}
+\tag{TRISO-FV-226}
+$$
 
-That closure must be derived before a final cell-centred Robin coefficient is claimed.
+For the benchmark
+
+$$
+c_\infty=0,
+\tag{TRISO-FV-227}
+$$
+
+this reduces to
+
+$$
+\boxed{
+\frac{dC_P}{dt}
+=
+\frac{G_w}{V_P}C_W
+-
+\frac{G_w+G_R}{V_P}C_P
++
+S_P.
+}
+\tag{TRISO-FV-228}
+$$
+
+For the physical five-layer kernel-confined source model, the outer OPyC cell has
+
+$$
+S_P=0.
+\tag{TRISO-FV-229}
+$$
+
+#### 18.12.9 Explicit Euler outer-cell update
+
+Apply forward Euler to (TRISO-FV-226):
+
+$$
+\frac{
+C_P^{j+1}-C_P^j
+}{
+\Delta t
+}
+=
+\frac{G_w}{V_P}C_W^j
+-
+\frac{G_w+G_R}{V_P}C_P^j
++
+\frac{G_R}{V_P}c_\infty^j
++
+S_P^j.
+\tag{TRISO-FV-230}
+$$
+
+Multiply by \(\Delta t\):
+
+$$
+C_P^{j+1}-C_P^j
+=
+\frac{\Delta tG_w}{V_P}C_W^j
+-
+\frac{\Delta t(G_w+G_R)}{V_P}C_P^j
++
+\frac{\Delta tG_R}{V_P}c_\infty^j
++
+S_P^j\Delta t.
+\tag{TRISO-FV-231}
+$$
+
+Add \(C_P^j\):
+
+$$
+\boxed{
+C_P^{j+1}
+=
+\frac{\Delta tG_w}{V_P}C_W^j
++
+\left[
+1-\frac{\Delta t(G_w+G_R)}{V_P}
+\right]C_P^j
++
+\frac{\Delta tG_R}{V_P}c_\infty^j
++
+S_P^j\Delta t.
+}
+\tag{TRISO-FV-232}
+$$
+
+This closes the cell-centred Robin boundary without identifying the cell-centre concentration with the physical surface concentration.
 
 ### 18.13 Explicit-Euler positivity condition for an ordinary cell
 
@@ -10984,7 +11591,7 @@ $$
 
 This is the finite-volume analogue of the earlier homogeneous FTCS monotonicity restriction.
 
-It is not yet the final bound because the outer Robin cell requires the unresolved surface closure in Section 18.12.
+The outer Robin closure is now available in Section 18.12. The final global positivity bound must include its boundary conductance.
 
 ### 18.14 Status of the five-layer deterministic discretisation
 
@@ -11000,7 +11607,7 @@ It is not yet the final bound because the outer Robin cell requires the unresolv
 
 [VERIFIED] Exact kernel generation inventory when material/source interfaces align with control-volume faces.
 
-[DERIVATION GAP] Final cell-centred Robin surface closure.
+[VERIFIED] Cell-centred Robin surface closure through half-cell diffusion plus external-film resistance.
 
 [DERIVATION GAP] Final assembled five-layer coefficient matrix including the outer boundary.
 
