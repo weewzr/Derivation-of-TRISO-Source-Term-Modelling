@@ -286,7 +286,7 @@ Accuracy note: the single-neighbour one-sided gradients used at the exact interf
 | TRISO-DIS-444–446 | Dimensional checks | VERIFIED |
 | TRISO-DIS-447–450 | Zero-transfer / Neumann limiting check | VERIFIED |
 | TRISO-DIS-451 | Large-h stiffness observation | VERIFIED QUALITATIVELY |
-| TRISO-DIS-452–456 | Boundary Taylor consistency analysis | CONDITIONALLY VERIFIED |
+| TRISO-DIS-452–470 | Complete Robin ghost/surface truncation-error derivation | VERIFIED: GENERIC LOCAL SPATIAL ERROR O(Delta r); GLOBAL ORDER UNVERIFIED |
 
 Scope: the surface update is the homogeneous Part-I Robin benchmark formula. The continuum limit h→infinity approaches Dirichlet, but the explicit ghost scheme becomes stiff at fixed mesh spacing; an absorbing Dirichlet boundary should therefore be imposed directly when that is the intended discrete model.
 
@@ -326,7 +326,7 @@ The coefficient restriction is sufficient for monotonicity, infinity-norm non-am
 | TRISO-FV-164–169 | Geometric centre control volume | VERIFIED |
 | TRISO-FV-170–174 | Kernel-confined source and exact discrete total generation | VERIFIED |
 | TRISO-FV-175–179 | Outer Robin geometry and distinct cell-centre/surface variables | VERIFIED |
-| TRISO-FV-180–185 | Ordinary-cell explicit positivity bound | CONDITIONALLY VERIFIED |
+| TRISO-FV-600–605 | Ordinary-cell explicit positivity bound | CONDITIONALLY VERIFIED |
 
 Current finite-volume gaps: assemble the final five-layer coefficient matrix, then establish accuracy and stability/convergence for that completed scheme.
 
@@ -367,3 +367,13 @@ The Robin boundary is now closed without equating a cell-centred/volume-averaged
 | — | Numerical grid/time convergence against analytical benchmarks | UNVERIFIED |
 
 The completed deterministic five-layer finite-volume system is conservative and closed. Remaining mathematical work concerns accuracy and convergence rather than missing coefficient equations.
+
+### Independent discrete-audit remediation bookkeeping
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-FV-109A–109E | Frozen FV representation: exact cell average, spherical volume centroid, face/half-cell distances | VERIFIED AS DEFINITIONS; RECONSTRUCTION ORDER UNVERIFIED |
+| TRISO-FV-600–605 | Renumbered ordinary-cell positivity equations; replaces collided former TRISO-FV-180–185 positivity IDs | VERIFIED |
+| TRISO-DIS-452–470 | Corrected complete FTCS Robin boundary truncation analysis | VERIFIED LOCALLY; GRID-CONVERGENCE EVIDENCE PENDING |
+
+R2-D01 remains OPEN until the reviewer-requested grid-refinement evidence is produced. R2-D02 and R2-D04 are remediated in the canonical mathematics/register; formal spatial-order analysis remains the next stage.
