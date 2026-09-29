@@ -1,0 +1,18 @@
+> HISTORICAL ARCHIVE: superseded active artifact. Do not use for current verification.
+
+name: TRISO verification oracle
+
+on:
+  push:
+    branches:
+      - ray/triso-foundation
+  workflow_dispatch:
+
+jobs:
+  continuum-oracles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo run --release --bin two-layer-continuum-oracle
+      - run: cargo run --release --bin two-layer-transient-reference
