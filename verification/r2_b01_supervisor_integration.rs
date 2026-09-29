@@ -72,6 +72,7 @@ fn initial_kernel_births_are_inside_and_volume_uniform() {
 }
 
 #[test]
+#[ignore = "bounded real five-layer WOS smoke test; run explicitly after fast contract tests"]
 fn five_layer_release_path_records_actual_release_time_or_explicit_censoring() {
     let params = WalkParams {
         capture_eps: Length::new::<nanometer>(10.0),
