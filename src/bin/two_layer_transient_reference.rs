@@ -5,7 +5,7 @@
 /// results can be compared against a reference that does not depend on the
 /// implementation being tested.
 
-#[(derive(Clone, Copy, Debug))]
+#[derive(Clone, Copy, Debug)]
 struct Params {
     a: f64,
     r_outer: f64,
