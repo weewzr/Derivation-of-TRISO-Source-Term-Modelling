@@ -325,7 +325,23 @@ The coefficient restriction is sufficient for monotonicity, infinity-norm non-am
 | TRISO-FV-159–163 | Exact pairwise internal-flux cancellation / global conservation | VERIFIED |
 | TRISO-FV-164–169 | Geometric centre control volume | VERIFIED |
 | TRISO-FV-170–174 | Kernel-confined source and exact discrete total generation | VERIFIED |
-| TRISO-FV-175–179 | Outer Robin face-flux balance before cell-centre closure | VERIFIED / INCOMPLETE CLOSURE |
+| TRISO-FV-175–179 | Outer Robin geometry and distinct cell-centre/surface variables | VERIFIED |
 | TRISO-FV-180–185 | Ordinary-cell explicit positivity bound | CONDITIONALLY VERIFIED |
 
-Current finite-volume gaps: derive the cell-centred Robin surface closure, assemble the final five-layer coefficient matrix, then establish accuracy and stability/convergence for that completed scheme.
+Current finite-volume gaps: assemble the final five-layer coefficient matrix, then establish accuracy and stability/convergence for that completed scheme.
+
+### Cell-centred Robin finite-volume closure
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-FV-181–185 | Outer OPyC half-cell diffusion relation/resistance | VERIFIED GIVEN LINEAR HALF-CELL APPROXIMATION |
+| TRISO-FV-186–188 | External Robin film relation/resistance | CONSTITUTIVE / VERIFIED |
+| TRISO-FV-189–193 | Series resistance derivation of cell-centre-to-bulk flux | VERIFIED |
+| TRISO-FV-194–198 | Effective boundary transfer coefficient h_eff | VERIFIED |
+| TRISO-FV-199–203 | Physical surface concentration recovered from cell-centre value | VERIFIED |
+| TRISO-FV-204–214 | Neumann, mesh-refinement, and Dirichlet limiting checks | VERIFIED |
+| TRISO-FV-215–218 | Outer area and total boundary conductance G_R | VERIFIED |
+| TRISO-FV-219–229 | Closed outer-cell semi-discrete balance | VERIFIED |
+| TRISO-FV-230–232 | Explicit-Euler outer-cell update | VERIFIED |
+
+The Robin boundary is now closed without equating a cell-centred/volume-averaged concentration to the physical surface concentration. The remaining deterministic tasks are global matrix assembly plus full-scheme accuracy and stability/convergence analysis.
