@@ -12892,6 +12892,481 @@ These require a dedicated consistency/convergence pass rather than further coeff
 
 The finite-volume derivation is therefore the current canonical deterministic route for the discontinuous-\(D\) five-layer model, while the original FTCS scheme remains a transparent homogeneous benchmark.
 
+## 18A. Finite-volume consistency: smooth same-material cells
+
+This section begins the accuracy/convergence stage authorised by the independent discrete-mathematics audit.
+
+It treats only smooth cells whose two faces lie inside one material with constant diffusivity \(D\). Material-interface and outer-boundary consistency are deferred to subsequent subsections.
+
+### 18A.1 Exact cell average versus representative point value
+
+The canonical unknown is the exact spherical volume average
+
+$$
+C_P
+=
+\frac1{V_P}
+\int_{r_w}^{r_e}
+c(r)\,4\pi r^2\,dr.
+\tag{TRISO-ACC-100}
+$$
+
+The representative coordinate \(r_P\) is the spherical volume centroid:
+
+$$
+r_P
+=
+\frac1{V_P}
+\int_{r_w}^{r_e}
+r\,4\pi r^2\,dr.
+\tag{TRISO-ACC-101}
+$$
+
+Subtract \(r_P\) inside the weighted first moment:
+
+$$
+\int_{r_w}^{r_e}
+(r-r_P)\,4\pi r^2\,dr
+=
+\int_{r_w}^{r_e}
+r\,4\pi r^2\,dr
+-
+r_P
+\int_{r_w}^{r_e}
+4\pi r^2\,dr.
+\tag{TRISO-ACC-102}
+$$
+
+Use the centroid definition in the first term:
+
+$$
+\int_{r_w}^{r_e}
+r\,4\pi r^2\,dr
+=
+r_PV_P.
+\tag{TRISO-ACC-103}
+$$
+
+Use the volume definition in the second term:
+
+$$
+\int_{r_w}^{r_e}
+4\pi r^2\,dr
+=
+V_P.
+\tag{TRISO-ACC-104}
+$$
+
+Therefore
+
+$$
+\boxed{
+\int_{r_w}^{r_e}
+(r-r_P)\,4\pi r^2\,dr
+=
+0.
+}
+\tag{TRISO-ACC-105}
+$$
+
+Taylor-expand a smooth concentration about \(r_P\):
+
+$$
+c(r)
+=
+c(r_P)
++
+c_r(r_P)(r-r_P)
++
+\frac12c_{rr}(r_P)(r-r_P)^2
++
+O(h_P^3),
+\tag{TRISO-ACC-106}
+$$
+
+where
+
+$$
+h_P=r_e-r_w.
+\tag{TRISO-ACC-107}
+$$
+
+Insert (TRISO-ACC-106) into the exact average:
+
+$$
+C_P
+=
+\frac1{V_P}
+\int_{r_w}^{r_e}
+\left[
+c(r_P)
++
+c_r(r_P)(r-r_P)
++
+\frac12c_{rr}(r_P)(r-r_P)^2
++
+O(h_P^3)
+\right]
+4\pi r^2\,dr.
+\tag{TRISO-ACC-108}
+$$
+
+Separate the constant term:
+
+$$
+\frac{c(r_P)}{V_P}
+\int_{r_w}^{r_e}4\pi r^2\,dr
+=
+c(r_P).
+\tag{TRISO-ACC-109}
+$$
+
+The first-order term vanishes by (TRISO-ACC-105):
+
+$$
+\frac{c_r(r_P)}{V_P}
+\int_{r_w}^{r_e}
+(r-r_P)4\pi r^2\,dr
+=
+0.
+\tag{TRISO-ACC-110}
+$$
+
+Define the weighted second central moment
+
+$$
+\mu_{2,P}
+=
+\frac1{V_P}
+\int_{r_w}^{r_e}
+(r-r_P)^2\,4\pi r^2\,dr.
+\tag{TRISO-ACC-111}
+$$
+
+For a shape-regular refining radial mesh,
+
+$$
+\mu_{2,P}=O(h_P^2).
+\tag{TRISO-ACC-112}
+$$
+
+Therefore
+
+$$
+\boxed{
+C_P
+=
+c(r_P)
++
+\frac12c_{rr}(r_P)\mu_{2,P}
++
+O(h_P^3).
+}
+\tag{TRISO-ACC-113}
+$$
+
+In particular,
+
+$$
+\boxed{
+C_P-c(r_P)=O(h_P^2).
+}
+\tag{TRISO-ACC-114}
+$$
+
+Thus locating the exact cell average at the spherical volume centroid is a second-order point-representation approximation for a smooth field. It is not exact equality.
+
+### 18A.2 Exact integrated balance remains independent of reconstruction
+
+The control-volume identity
+
+$$
+V_P\frac{dC_P}{dt}
+=
+A_wJ_w-A_eJ_e+S_PV_P
+\tag{TRISO-ACC-115}
+$$
+
+was obtained by exact integration.
+
+No point-value approximation was used to obtain (TRISO-ACC-115).
+
+Therefore the spatial consistency question is isolated to the approximation of the face fluxes.
+
+### 18A.3 Two-point gradient on a smooth same-material face
+
+Consider a face \(f=r_{P+\frac12}\) between cells \(P\) and \(E=P+1\).
+
+Define
+
+$$
+d_P=r_f-r_P,
+\tag{TRISO-ACC-116}
+$$
+
+and
+
+$$
+d_E=r_E-r_f.
+\tag{TRISO-ACC-117}
+$$
+
+Hence
+
+$$
+r_E-r_P=d_P+d_E.
+\tag{TRISO-ACC-118}
+$$
+
+Taylor-expand the exact point value at \(r_P\) about the face:
+
+$$
+c(r_P)
+=
+c_f
+-
+d_Pc_f'
++
+\frac{d_P^2}{2}c_f''
+-
+\frac{d_P^3}{6}c_f'''
++
+O(h^4).
+\tag{TRISO-ACC-119}
+$$
+
+Taylor-expand the exact point value at \(r_E\):
+
+$$
+c(r_E)
+=
+c_f
++
+d_Ec_f'
++
+\frac{d_E^2}{2}c_f''
++
+\frac{d_E^3}{6}c_f'''
++
+O(h^4).
+\tag{TRISO-ACC-120}
+$$
+
+Subtract (TRISO-ACC-119) from (TRISO-ACC-120):
+
+$$
+c(r_E)-c(r_P)
+=
+(d_P+d_E)c_f'
++
+\frac{d_E^2-d_P^2}{2}c_f''
++
+\frac{d_E^3+d_P^3}{6}c_f'''
++
+O(h^4).
+\tag{TRISO-ACC-121}
+$$
+
+Divide by \(d_P+d_E\):
+
+$$
+\frac{c(r_E)-c(r_P)}{r_E-r_P}
+=
+c_f'
++
+\frac{d_E-d_P}{2}c_f''
++
+\frac{d_E^3+d_P^3}{6(d_P+d_E)}c_f'''
++
+O(h^3).
+\tag{TRISO-ACC-122}
+$$
+
+For a locally symmetric representative geometry,
+
+$$
+d_E-d_P=O(h^2),
+\tag{TRISO-ACC-123}
+$$
+
+while
+
+$$
+d_P=O(h),
+\qquad
+d_E=O(h).
+\tag{TRISO-ACC-124}
+$$
+
+Therefore
+
+$$
+\frac{d_E^3+d_P^3}{d_P+d_E}
+=
+O(h^2).
+\tag{TRISO-ACC-125}
+$$
+
+Hence the point-value two-point gradient is
+
+$$
+\boxed{
+\frac{c(r_E)-c(r_P)}{r_E-r_P}
+=
+c_r(r_f)
++
+O(h^2)
+}
+\tag{TRISO-ACC-126}
+$$
+
+under the local-symmetry condition (TRISO-ACC-123).
+
+### 18A.4 Effect of using exact cell averages
+
+Write the exact cell averages as
+
+$$
+C_P=c(r_P)+\eta_P,
+\tag{TRISO-ACC-127}
+$$
+
+and
+
+$$
+C_E=c(r_E)+\eta_E,
+\tag{TRISO-ACC-128}
+$$
+
+where
+
+$$
+\eta_P=O(h^2),
+\qquad
+\eta_E=O(h^2).
+\tag{TRISO-ACC-129}
+$$
+
+The numerical gradient is
+
+$$
+\frac{C_E-C_P}{r_E-r_P}.
+\tag{TRISO-ACC-130}
+$$
+
+Substitute (TRISO-ACC-127) and (TRISO-ACC-128):
+
+$$
+\frac{C_E-C_P}{r_E-r_P}
+=
+\frac{c(r_E)-c(r_P)}{r_E-r_P}
++
+\frac{\eta_E-\eta_P}{r_E-r_P}.
+\tag{TRISO-ACC-131}
+$$
+
+For a smoothly varying family of shape-regular cells, the cell-average representation error varies smoothly between adjacent cells, so
+
+$$
+\eta_E-\eta_P=O(h^3).
+\tag{TRISO-ACC-132}
+$$
+
+Since
+
+$$
+r_E-r_P=O(h),
+\tag{TRISO-ACC-133}
+$$
+
+we obtain
+
+$$
+\frac{\eta_E-\eta_P}{r_E-r_P}
+=
+O(h^2).
+\tag{TRISO-ACC-134}
+$$
+
+Combine (TRISO-ACC-126) and (TRISO-ACC-134):
+
+$$
+\boxed{
+\frac{C_E-C_P}{r_E-r_P}
+=
+c_r(r_f)
++
+O(h^2).
+}
+\tag{TRISO-ACC-135}
+$$
+
+This result is conditional on smooth solution data, shape-regular refinement, and the local geometric relation (TRISO-ACC-123).
+
+### 18A.5 Same-material face-flux consistency
+
+Inside one material,
+
+$$
+J_f=-D\,c_r(r_f).
+\tag{TRISO-ACC-136}
+$$
+
+The two-point numerical flux is
+
+$$
+J_f^h
+=
+-D
+\frac{C_E-C_P}{r_E-r_P}.
+\tag{TRISO-ACC-137}
+$$
+
+Use (TRISO-ACC-135):
+
+$$
+J_f^h
+=
+-D
+\left[
+c_r(r_f)+O(h^2)
+\right].
+\tag{TRISO-ACC-138}
+$$
+
+Because \(D\) is constant and finite,
+
+$$
+\boxed{
+J_f^h
+=
+J_f
++
+O(h^2).
+}
+\tag{TRISO-ACC-139}
+$$
+
+Thus an ordinary smooth same-material face flux is second-order consistent under the stated mesh assumptions.
+
+### 18A.6 What has and has not been proved
+
+[VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O(h^2)\) for a smooth field.
+
+[CONDITIONALLY VERIFIED] The two-point same-material face gradient is \(O(h^2)\) consistent when the refining mesh is shape regular, adjacent cell-average representation errors vary smoothly, and the face is locally centred between representative coordinates to \(O(h^2)\).
+
+[CONDITIONALLY VERIFIED] Under those same assumptions, the same-material diffusive face flux is \(O(h^2)\) consistent.
+
+[NOT YET ESTABLISHED] The truncation order of the complete cell divergence after combining west and east face-flux errors.
+
+[NOT YET ESTABLISHED] Interface-face consistency when \(D\) is discontinuous.
+
+[NOT YET ESTABLISHED] Robin boundary consistency for the cell-centred FV closure.
+
+[NOT YET ESTABLISHED] Global spatial convergence order.
+
+The next accuracy dependency is therefore the complete cell-divergence consistency and then the discontinuous-\(D\) interface face.
+
 ## 19. Implementation provenance
 
 Repository: theodoreOnzGit/outram-park-backend.
