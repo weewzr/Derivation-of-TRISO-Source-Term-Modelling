@@ -272,3 +272,20 @@ Scope: the centre stencil assumes a smooth spherically symmetric field and a hom
 | TRISO-DIS-349 | Strong diffusivity-contrast limiting case | VERIFIED QUALITATIVELY |
 
 Accuracy note: the single-neighbour one-sided gradients used at the exact interface are first-order approximations to the limiting derivatives. The derivation establishes conservative transmission logic and harmonic resistance weighting, but does not yet select the final globally preferred five-layer discretisation.
+
+## Canonical stable equations: deterministic outer Robin discretisation
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-DIS-400–406 | Outer node and ghost-point definitions | VERIFIED AS DEFINITIONS |
+| TRISO-DIS-407–414 | Centred Robin gradient and ghost elimination | VERIFIED |
+| TRISO-DIS-415–419 | Surface second-derivative after ghost substitution | VERIFIED |
+| TRISO-DIS-420–424 | Surface first derivative and Robin consistency | VERIFIED |
+| TRISO-DIS-425–434 | Discrete spherical operator at r=R | VERIFIED |
+| TRISO-DIS-435–443 | Explicit Robin surface FTCS update | CONDITIONALLY VERIFIED |
+| TRISO-DIS-444–446 | Dimensional checks | VERIFIED |
+| TRISO-DIS-447–450 | Zero-transfer / Neumann limiting check | VERIFIED |
+| TRISO-DIS-451 | Large-h stiffness observation | VERIFIED QUALITATIVELY |
+| TRISO-DIS-452–456 | Boundary Taylor consistency analysis | CONDITIONALLY VERIFIED |
+
+Scope: the surface update is the homogeneous Part-I Robin benchmark formula. The continuum limit h→infinity approaches Dirichlet, but the explicit ghost scheme becomes stiff at fixed mesh spacing; an absorbing Dirichlet boundary should therefore be imposed directly when that is the intended discrete model.
