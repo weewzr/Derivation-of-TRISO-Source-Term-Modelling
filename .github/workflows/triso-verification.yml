@@ -1,0 +1,15 @@
+name: TRISO verification oracle
+
+on:
+  push:
+    branches:
+      - ray/triso-foundation
+  workflow_dispatch:
+
+jobs:
+  two-layer-continuum-oracle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo run --release --bin two-layer-continuum-oracle
