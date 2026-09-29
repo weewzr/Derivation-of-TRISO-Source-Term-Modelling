@@ -377,3 +377,15 @@ The completed deterministic five-layer finite-volume system is conservative and 
 | TRISO-DIS-452–470 | Corrected complete FTCS Robin boundary truncation analysis | VERIFIED LOCALLY; GRID-CONVERGENCE EVIDENCE PENDING |
 
 R2-D01 remains OPEN until the reviewer-requested grid-refinement evidence is produced. R2-D02 and R2-D04 are remediated in the canonical mathematics/register; formal spatial-order analysis remains the next stage.
+
+## Canonical stable equations: finite-volume accuracy / consistency
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-ACC-100–114 | Exact cell average versus spherical volume-centroid point representation | VERIFIED / O(h^2) FOR SMOOTH FIELD |
+| TRISO-ACC-115 | Exact integrated cell balance independent of reconstruction | VERIFIED |
+| TRISO-ACC-116–126 | Point-value two-point face-gradient Taylor analysis | CONDITIONALLY VERIFIED O(h^2) |
+| TRISO-ACC-127–135 | Effect of exact cell-average representation on face gradient | CONDITIONALLY VERIFIED O(h^2) |
+| TRISO-ACC-136–139 | Smooth same-material face-flux consistency | CONDITIONALLY VERIFIED O(h^2) |
+
+Conditions for the O(h^2) face result: smooth solution within one material, shape-regular refinement, smoothly varying adjacent cell-average representation errors, and local face-centering d_E-d_P=O(h^2). Complete cell-divergence, interface, boundary, and global convergence orders remain unproved.
