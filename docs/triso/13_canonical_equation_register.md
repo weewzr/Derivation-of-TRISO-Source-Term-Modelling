@@ -44,9 +44,9 @@ Rule: this table is the only authoritative original-equation → stable-equation
 
 | Stable ID | Purpose | Status |
 |---|---|---|
-| `TRISO-GOV-008` | General conservative PDE ∂c/∂t = ∇·(D∇c)+S | VERIFIED |
+| `TRISO-GOV-040` | General conservative PDE ∂c/∂t = ∇·(D∇c)+S | VERIFIED |
 | `TRISO-SPH-004` | General heterogeneous spherical PDE | VERIFIED |
-| `TRISO-BC-005` | General outer Robin condition with c∞ | VERIFIED |
+| `TRISO-BC-119` | General outer Robin condition with c∞ | VERIFIED |
 | `TRISO-INT-001` | Ideal concentration continuity | CONDITIONALLY VERIFIED |
 | `TRISO-INT-002` | Ideal flux continuity | VERIFIED |
 | `TRISO-GOV-015` | Signed decay/source convention | CONDITIONALLY VERIFIED |
