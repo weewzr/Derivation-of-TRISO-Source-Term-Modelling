@@ -105,3 +105,41 @@ The original 33 notebook mappings above are preserved. The equations introduced 
 | `TRISO-ANA-141` | Analytical surface concentration check | VERIFIED |
 
 These IDs belong to the current canonical derivation and supplement, rather than replace, the one-to-one mapping of the original 33 notebook equations.
+
+
+## Canonical stable equations: transient eigenproblem expansion
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| `TRISO-ANA-200` | Definition of transient deviation v=c-w | VERIFIED |
+| `TRISO-ANA-204` | Time derivative relation c_t=v_t | VERIFIED |
+| `TRISO-ANA-210` | Full source-PDE substitution of c=v+w | VERIFIED |
+| `TRISO-ANA-214` | Homogeneous transient PDE for v | VERIFIED |
+| `TRISO-ANA-225` | Homogeneous transient Robin condition | VERIFIED |
+| `TRISO-ANA-228` | Transformed initial condition v(r,0)=-w(r) | VERIFIED |
+| `TRISO-ANA-229` | Separated form v=phi T | ASSUMPTION / METHOD |
+| `TRISO-ANA-238` | Radial eigenproblem | VERIFIED |
+| `TRISO-ANA-242` | Temporal decay rate Lambda=Dk^2 | VERIFIED |
+| `TRISO-ANA-251` | Temporal mode exp(-Lambda t) | VERIFIED |
+| `TRISO-ANA-266` | u=r phi transformed radial ODE | VERIFIED |
+| `TRISO-ANA-269` | General sine/cosine solution for u | VERIFIED |
+| `TRISO-ANA-273` | Centre regularity forces B=0 | VERIFIED |
+| `TRISO-ANA-279` | Normalized regular eigenfunction form | VERIFIED |
+| `TRISO-ANA-293` | Undivided Robin characteristic equation | VERIFIED |
+| `TRISO-ANA-296` | Reduced Robin characteristic equation mu cot(mu)=1-Bi | CONDITIONALLY VERIFIED |
+| `TRISO-ANA-305` | Modal decay rate Lambda_n=D mu_n^2/R^2 | VERIFIED |
+| `TRISO-SL-204` | Self-adjoint Sturm–Liouville form | VERIFIED |
+| `TRISO-SL-205` | Sturm–Liouville p(r)=r^2 | VERIFIED |
+| `TRISO-SL-207` | Sturm–Liouville weight w(r)=r^2 | VERIFIED |
+| `TRISO-SL-208` | Sturm–Liouville eigenvalue lambda_n=k_n^2 | VERIFIED |
+| `TRISO-SL-215` | Lagrange-identity derivative for two modes | VERIFIED |
+| `TRISO-SL-224` | Weighted eigenfunction orthogonality | VERIFIED |
+| `TRISO-SL-233` | Modal coefficient projection | VERIFIED |
+| `TRISO-SL-235` | Formal transient eigenfunction series | CONDITIONALLY VERIFIED |
+| `TRISO-SL-242` | Formal t→infinity steady-state limit | CONDITIONALLY VERIFIED |
+
+### Sturm–Liouville provenance
+
+The canonical derivation uses a direct orthogonality derivation rather than relying on an unqualified regular-endpoint theorem, because the radial endpoint at r=0 has p(0)=0. The standard Sturm–Liouville framework and eigenvalue/eigenfunction terminology are supported by the NIST Digital Library of Mathematical Functions, §1.13(viii) and §3.7(iv): https://dlmf.nist.gov/1.13 and https://dlmf.nist.gov/3.7.
+
+The direct orthogonality calculation in TRISO-SL-210 through TRISO-SL-224 is the project's own derivation for this radial problem.
