@@ -1,0 +1,8 @@
+[package]
+name = "triso-verification-oracle"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "two-layer-continuum-oracle"
+path = "src/bin/two_layer_continuum_oracle.rs"
