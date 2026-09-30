@@ -39,7 +39,7 @@ Current reconciliation:
 - R3-m02: **VALID — CLOSED**. Post-remediation run `36661249962` explicitly selected stable Rust and recorded `rustc 1.98.1 (48a229cea 2026-09-01)` in the raw execution evidence.
 - R3-m03: **VALID — OPEN / NON-BLOCKING**. Transient release-rate convergence remains deferred; no release-rate temporal convergence claim is made.
 - R2-D01: **OPEN** and remains restricted to the retained FTCS Robin benchmark; FV convergence does not close it.
-- R2-B01: **OPEN / SEPARATE** and remains a distinct production-WOS implementation-verification finding.
+- R2-B01: **OPEN / SEPARATE**. Stage-A run `36669658813` executed the concrete five-layer production path but yielded `0/24` releases and `24/24` `CensoredMaxSteps` outcomes at 5,000,000 steps/history. This is diagnostic evidence only; the censoring mechanism must be localised before Stage B.
 
 The evidence layers remain distinct: continuous analytical reference → deterministic FV reference → production WOS verification. The deterministic FV model is cleared to serve as the numerical reference for the subsequent deterministic/analytical ↔ WOS verification stage after this reconciliation is independently checked. This FV evidence does not validate WOS.
 
@@ -76,6 +76,10 @@ Do not infer Review-2 closure from the continuous-mathematics PASS.
 - Active R2-B01 verification test: `verification/r2_b01_supervisor_integration.rs`
 - Active R2-B01 execution workflow: `.github/workflows/r2-b01-supervisor-integration.yml`
 - Stage-A WOS smoke harness: `verification/wos_stage_a_smoke.rs`
+- Stage-A executed evidence: `verification/wos_stage_a_evidence.md`
+- Targeted WOS step diagnostic: `verification/wos_targeted_step_diagnostic.rs`
+- Targeted diagnostic workflow: `.github/workflows/wos-targeted-diagnostic.yml`
+- Semantic diagnostic workflow: `.github/workflows/wos-semantic-diagnostics.yml`
 - Stage-A bounded workflow: `.github/workflows/wos-stage-a.yml`
 - Active three-method scope freeze: `docs/triso/23_active_method_scope.md`
 - Current status: this README
