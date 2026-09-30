@@ -1,4 +1,5 @@
 name: Two-layer accelerated shell-interface coupling
+# Bounded verification of corrected exact ball/shell coupling harness.
 on:
   push:
     branches: [main]
