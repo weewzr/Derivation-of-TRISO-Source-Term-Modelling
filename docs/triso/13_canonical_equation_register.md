@@ -426,3 +426,16 @@ The canonical harmonic/resistance interface flux is conservative but generically
 | TRISO-ACC-257–262 | Absorbing Dirichlet-limit warning | VERIFIED ORDER ARGUMENT; SECOND-ORDER FLUX NOT ESTABLISHED |
 
 For fixed finite physical transfer coefficient h, the canonical cell-centred Robin resistance closure gives O(mesh^2) boundary flux/release-rate consistency. This does not imply uniform O(mesh^2) pointwise truncation at the outer cell, and the h->infinity absorbing limit requires separate analysis.
+
+### Global finite-volume stability/convergence framework
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-ACC-263–266 | Volume-weighted discrete norm and cell-volume scaling | VERIFIED |
+| TRISO-ACC-267–284 | Semi-discrete residual/error equation and energy stability estimate | VERIFIED |
+| TRISO-ACC-285–298 | Global residual-norm scaling from smooth/interface/boundary regions | CONDITIONALLY VERIFIED; O(mesh^1/2) DOMINANT BOUND |
+| TRISO-ACC-299–303 | Conditional semi-discrete convergence bound in V-norm | CONDITIONALLY VERIFIED O(mesh^1/2) UPPER BOUND |
+| TRISO-ACC-304–310 | Explicit-Euler temporal order and dt~mesh^2 refinement path | VERIFIED / STANDARD CONSISTENCY FRAMEWORK |
+| TRISO-ACC-311–317 | Spatial, temporal, and conservation refinement-study specification | VERIFIED AS STUDY DEFINITION |
+
+The O(mesh^1/2) result is a conservative analytical upper-bound rate implied by the currently established local residual estimates, not a claim that the observed FV solution order must equal 1/2. The sharp global order remains to be measured or established by a stronger transmission-problem estimate.
