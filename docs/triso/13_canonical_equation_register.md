@@ -413,3 +413,16 @@ The O(h^2) smooth-cell divergence result requires a smooth same-material solutio
 | TRISO-ACC-215–219 | Interface-adjacent cell truncation scaling warning | VERIFIED ORDER ARGUMENT; GLOBAL CONSEQUENCE NOT INFERRED |
 
 The canonical harmonic/resistance interface flux is conservative but generically first-order locally for piecewise-smooth unequal-D transmission data. This does not by itself determine global solution convergence order; boundary consistency and a global stability/convergence or grid-refinement argument remain required.
+
+### Cell-centred Robin finite-volume boundary consistency
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-ACC-220–237 | Surface-to-cell Taylor expansion and point-value series-resistance Robin flux | VERIFIED O(mesh^2) FOR FIXED FINITE h |
+| TRISO-ACC-238–244 | Exact cell-average effect on finite-transfer Robin flux | VERIFIED O(mesh^2) |
+| TRISO-ACC-245–249 | Total outer release amount-rate consistency | VERIFIED O(mesh^2) |
+| TRISO-ACC-250–252 | Outer-cell local residual scaling | VERIFIED: MAY BE O(mesh) |
+| TRISO-ACC-253–256 | Insulating Neumann limit | VERIFIED |
+| TRISO-ACC-257–262 | Absorbing Dirichlet-limit warning | VERIFIED ORDER ARGUMENT; SECOND-ORDER FLUX NOT ESTABLISHED |
+
+For fixed finite physical transfer coefficient h, the canonical cell-centred Robin resistance closure gives O(mesh^2) boundary flux/release-rate consistency. This does not imply uniform O(mesh^2) pointwise truncation at the outer cell, and the h->infinity absorbing limit requires separate analysis.
