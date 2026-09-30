@@ -14275,7 +14275,477 @@ A global stability-plus-consistency argument in an appropriate integrated norm, 
 
 [NOT ESTABLISHED] The global spatial convergence order of the conservative scheme.
 
-### 18A.8 What has and has not been proved
+### 18A.8 Cell-centred Robin boundary consistency
+
+Consider the outermost OPyC cell with representative coordinate
+
+$$
+r_P=R-d,
+\tag{TRISO-ACC-220}
+$$
+
+where
+
+$$
+d=\delta r_R=O(h).
+\tag{TRISO-ACC-221}
+$$
+
+Let
+
+$$
+c_R=c(R)
+\tag{TRISO-ACC-222}
+$$
+
+denote the exact physical surface concentration.
+
+The exact Robin condition is
+
+$$
+J_R=h(c_R-c_\infty).
+\tag{TRISO-ACC-223}
+$$
+
+The same exact outward flux also satisfies
+
+$$
+J_R=-D_5c_r(R).
+\tag{TRISO-ACC-224}
+$$
+
+The numerical cell-centred closure is
+
+$$
+J_R^h
+=
+\frac{
+C_P-c_\infty
+}{
+\dfrac d{D_5}+\dfrac1h
+}.
+\tag{TRISO-ACC-225}
+$$
+
+The objective is to compare (TRISO-ACC-225) with the exact \(J_R\).
+
+#### 18A.8.1 Exact point-value expansion from the surface to the cell representative point
+
+Taylor-expand the exact OPyC solution from \(R\) inward to \(r_P=R-d\):
+
+$$
+c(r_P)
+=
+c_R
+-
+dc_r(R)
++
+\frac{d^2}{2}c_{rr}(R)
+-
+\frac{d^3}{6}c_{rrr}(R)
++
+O(h^4).
+\tag{TRISO-ACC-226}
+$$
+
+Use the exact flux relation
+
+$$
+c_r(R)
+=
+-\frac{J_R}{D_5}.
+\tag{TRISO-ACC-227}
+$$
+
+Substitute:
+
+$$
+c(r_P)
+=
+c_R
++
+\frac d{D_5}J_R
++
+\frac{d^2}{2}c_{rr}(R)
+-
+\frac{d^3}{6}c_{rrr}(R)
++
+O(h^4).
+\tag{TRISO-ACC-228}
+$$
+
+The Robin law gives
+
+$$
+c_R-c_\infty
+=
+\frac{J_R}{h}.
+\tag{TRISO-ACC-229}
+$$
+
+Subtract \(c_\infty\) from (TRISO-ACC-228):
+
+$$
+c(r_P)-c_\infty
+=
+(c_R-c_\infty)
++
+\frac d{D_5}J_R
++
+\frac{d^2}{2}c_{rr}(R)
+-
+\frac{d^3}{6}c_{rrr}(R)
++
+O(h^4).
+\tag{TRISO-ACC-230}
+$$
+
+Substitute (TRISO-ACC-229):
+
+$$
+c(r_P)-c_\infty
+=
+J_R
+\left(
+\frac1h+\frac d{D_5}
+\right)
++
+\frac{d^2}{2}c_{rr}(R)
+-
+\frac{d^3}{6}c_{rrr}(R)
++
+O(h^4).
+\tag{TRISO-ACC-231}
+$$
+
+Define the exact cell-centre-to-bulk resistance
+
+$$
+R_B
+=
+\frac1h+\frac d{D_5}.
+\tag{TRISO-ACC-232}
+$$
+
+For fixed finite \(h>0\),
+
+$$
+R_B=O(1)
+\tag{TRISO-ACC-233}
+$$
+
+as \(h\to0\) in the mesh-refinement sense \(d\to0\); here \(h\) is the physical transfer coefficient and is held fixed.
+
+Equation (TRISO-ACC-231) becomes
+
+$$
+c(r_P)-c_\infty
+=
+J_RR_B
++
+\frac{d^2}{2}c_{rr}(R)
++
+O(h^3).
+\tag{TRISO-ACC-234}
+$$
+
+Solve for \(J_R\):
+
+$$
+J_R
+=
+\frac{
+c(r_P)-c_\infty
+}{
+R_B
+}
+-
+\frac{
+d^2c_{rr}(R)
+}{
+2R_B
+}
++
+O(h^3).
+\tag{TRISO-ACC-235}
+$$
+
+Therefore the point-value series-resistance flux
+
+$$
+J_R^{h,\mathrm{pt}}
+=
+\frac{
+c(r_P)-c_\infty
+}{
+R_B
+}
+\tag{TRISO-ACC-236}
+$$
+
+satisfies
+
+$$
+\boxed{
+J_R^{h,\mathrm{pt}}
+=
+J_R+O(h^2)
+}
+\tag{TRISO-ACC-237}
+$$
+
+for fixed finite \(h>0\).
+
+#### 18A.8.2 Effect of the exact cell average
+
+The numerical closure uses the exact cell average \(C_P\), not \(c(r_P)\).
+
+Write
+
+$$
+C_P=c(r_P)+\eta_P.
+\tag{TRISO-ACC-238}
+$$
+
+From the centroid analysis,
+
+$$
+\eta_P=O(h^2).
+\tag{TRISO-ACC-239}
+$$
+
+Substitute into the numerical boundary flux:
+
+$$
+J_R^h
+=
+\frac{
+c(r_P)+\eta_P-c_\infty
+}{
+R_B
+}.
+\tag{TRISO-ACC-240}
+$$
+
+Separate the point-value part:
+
+$$
+J_R^h
+=
+\frac{
+c(r_P)-c_\infty
+}{
+R_B
+}
++
+\frac{\eta_P}{R_B}.
+\tag{TRISO-ACC-241}
+$$
+
+For fixed finite \(h>0\),
+
+$$
+R_B=O(1).
+\tag{TRISO-ACC-242}
+$$
+
+Therefore
+
+$$
+\frac{\eta_P}{R_B}=O(h^2).
+\tag{TRISO-ACC-243}
+$$
+
+Combine with (TRISO-ACC-237):
+
+$$
+\boxed{
+J_R^h
+=
+J_R+O(h^2)
+}
+\tag{TRISO-ACC-244}
+$$
+
+for the finite-transfer Robin boundary under smooth OPyC data and fixed physical \(h\).
+
+### 18A.8.3 Boundary amount-rate consistency
+
+The exact outer area is
+
+$$
+A_R=4\pi R^2.
+\tag{TRISO-ACC-245}
+$$
+
+The exact outward amount rate is
+
+$$
+\dot N_R=A_RJ_R.
+\tag{TRISO-ACC-246}
+$$
+
+The numerical amount rate is
+
+$$
+\dot N_R^h=A_RJ_R^h.
+\tag{TRISO-ACC-247}
+$$
+
+Subtract:
+
+$$
+\dot N_R^h-\dot N_R
+=
+A_R(J_R^h-J_R).
+\tag{TRISO-ACC-248}
+$$
+
+Because \(A_R\) is fixed under mesh refinement and (TRISO-ACC-244) gives \(J_R^h-J_R=O(h^2)\),
+
+$$
+\boxed{
+\dot N_R^h-\dot N_R
+=
+O(h^2).
+}
+\tag{TRISO-ACC-249}
+$$
+
+Thus the total Robin release rate is second-order consistent for fixed finite \(h\).
+
+### 18A.8.4 Outer-cell local residual scaling
+
+The outer-cell volume satisfies
+
+$$
+V_P=O(h).
+\tag{TRISO-ACC-250}
+$$
+
+If the boundary amount-rate error is
+
+$$
+O(h^2),
+\tag{TRISO-ACC-251}
+$$
+
+then its contribution to the outer cell-average time-derivative residual can scale as
+
+$$
+\frac{O(h^2)}{O(h)}
+=
+O(h).
+\tag{TRISO-ACC-252}
+$$
+
+Therefore the outermost cell can have only first-order pointwise local truncation consistency even though the physical boundary release rate itself is second-order accurate.
+
+This is analogous to the distinction already identified at material interfaces: a lower pointwise residual in \(O(1)\) special cells does not by itself determine the global solution convergence order.
+
+### 18A.8.5 Neumann and Dirichlet limiting regimes
+
+For the insulating limit
+
+$$
+h=0,
+\tag{TRISO-ACC-253}
+$$
+
+the exact boundary condition is
+
+$$
+J_R=0.
+\tag{TRISO-ACC-254}
+$$
+
+The resistance formula is interpreted by its limit
+
+$$
+\frac1h\to\infty,
+\tag{TRISO-ACC-255}
+$$
+
+which gives
+
+$$
+J_R^h\to0.
+\tag{TRISO-ACC-256}
+$$
+
+Thus the no-flux boundary is represented exactly as a limiting boundary law.
+
+The absorbing Dirichlet limit is different.
+
+If
+
+$$
+h\to\infty,
+\tag{TRISO-ACC-257}
+$$
+
+then
+
+$$
+R_B
+=
+\frac d{D_5}.
+\tag{TRISO-ACC-258}
+$$
+
+Now
+
+$$
+R_B=O(h)
+\tag{TRISO-ACC-259}
+$$
+
+where here \(h\) denotes the mesh-size order symbol, not the transfer coefficient.
+
+To avoid this notational collision, denote the mesh scale by \(\mathfrak h\).
+
+Then
+
+$$
+d=O(\mathfrak h),
+\tag{TRISO-ACC-260}
+$$
+
+and
+
+$$
+R_B=O(\mathfrak h).
+\tag{TRISO-ACC-261}
+$$
+
+The \(O(\mathfrak h^2)\) cell-average representation error divided by \(R_B=O(\mathfrak h)\) can contribute
+
+$$
+O(\mathfrak h)
+\tag{TRISO-ACC-262}
+$$
+
+to the Dirichlet-limit boundary flux.
+
+Therefore the finite-\(h\) second-order flux result (TRISO-ACC-244) must **not** be transferred automatically to the absorbing Dirichlet limit.
+
+For a true absorbing boundary, a separate Dirichlet-boundary consistency analysis is required.
+
+### 18A.8.6 Robin boundary consistency status
+
+[VERIFIED] For fixed finite physical transfer coefficient \(0<h<\infty\), the cell-centred series-resistance Robin flux is \(O(\mathfrak h^2)\) consistent under smooth OPyC data and the centroid representation assumptions.
+
+[VERIFIED] The total outer release amount rate is also \(O(\mathfrak h^2)\) consistent.
+
+[VERIFIED] The outer-cell pointwise time-derivative residual may be only \(O(\mathfrak h)\) because the boundary amount-rate error is divided by a cell volume \(O(\mathfrak h)\).
+
+[VERIFIED] The no-flux Neumann limit is recovered.
+
+[NOT ESTABLISHED] Second-order boundary-flux accuracy in the absorbing Dirichlet limit \(h\to\infty\).
+
+[NOT ESTABLISHED] Global spatial convergence order.
+
+### 18A.9 What has and has not been proved
 
 [VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O(h^2)\) for a smooth field.
 
@@ -14287,11 +14757,11 @@ A global stability-plus-consistency argument in an appropriate integrated norm, 
 
 [VERIFIED] The canonical resistance-weighted interface flux is conservative and generically O(h) accurate for piecewise-smooth unequal-D transmission data; second-order interface accuracy is not established.
 
-[NOT YET ESTABLISHED] Robin boundary consistency for the cell-centred FV closure.
+[VERIFIED] For fixed finite physical h, the cell-centred Robin FV boundary flux and total release rate are O(mesh^2) consistent; the outer-cell pointwise residual may remain O(mesh).
 
 [NOT YET ESTABLISHED] Global spatial convergence order.
 
-The next accuracy dependency is the cell-centred Robin finite-volume boundary consistency, followed by a global convergence argument or grid-refinement study that can accommodate the lower-order interface region.
+The next accuracy dependency is the global stability-plus-convergence argument and corresponding grid/time refinement specification, which must accommodate O(1) special interface-adjacent residuals and an O(mesh) outer-cell residual without assuming uniform pointwise consistency.
 
 ## 19. Implementation provenance
 
