@@ -4,9 +4,9 @@ This repository develops the TRISO fuel-particle source-term model from first pr
 
 ## Current project state
 
-Active development branch: `ray/triso-foundation`
+Canonical active research branch: `main`
 
-Default branch: `main`
+Historical/frozen research pointer: `ray/triso-foundation`
 
 ### Continuous-mathematics track
 
@@ -89,4 +89,4 @@ The original notebook's FTCS scheme is retained as a transparent deterministic b
 
 ## Repository safety
 
-Do not modify or merge into `main` from this research branch. Supervisor-repository source is authoritative for the production WOS implementation; Ray changes remain isolated until the user explicitly publishes them.
+`main` is the canonical active research branch for this repository. `ray/triso-foundation` is retained as a historical/frozen pointer and is not the active development branch. The separate supervisor repository remains authoritative for the production WOS implementation and must not be modified or pushed to unless explicitly requested.
