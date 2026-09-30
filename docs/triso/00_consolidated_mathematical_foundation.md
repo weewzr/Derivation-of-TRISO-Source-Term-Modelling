@@ -15387,7 +15387,146 @@ For the algebraically conservative semi-discrete formulation this should vanish 
 
 The study must report the norm definition, mesh geometry, interface alignment, time-step scaling, and whether the comparison uses exact cell averages or point samples.
 
-### 18A.11 What has and has not been proved
+### 18A.11 Executed refinement evidence
+
+The canonical refinement specification has now been executed with the standalone Rust driver `verification/fv_convergence.rs` through GitHub Actions run `36654437525`.
+
+The persisted raw results are `verification/fv_convergence_results.txt`.
+
+The benchmark uses five aligned unit-thickness layers,
+
+$$
+(r_1,r_2,r_3,r_4,R)=(1,2,3,4,5).
+\tag{TRISO-ACC-318}
+$$
+
+with
+
+$$
+(D_1,D_2,D_3,D_4,D_5)=(1,0.5,2,0.25,1.5),
+\tag{TRISO-ACC-319}
+$$
+
+and
+
+$$
+S_0=1,\qquad h=0.8,\qquad c_\infty=0.
+\tag{TRISO-ACC-320}
+$$
+
+These are normalized verification parameters, not claimed physical TRISO material data.
+
+#### Spatial refinement result
+
+The volume-weighted steady errors were
+
+$$
+E_{25}=1.832317223290\times10^{-2},
+\tag{TRISO-ACC-321}
+$$
+
+$$
+E_{50}=4.621922061067\times10^{-3},
+\tag{TRISO-ACC-322}
+$$
+
+$$
+E_{100}=1.158126274643\times10^{-3},
+\tag{TRISO-ACC-323}
+$$
+
+$$
+E_{200}=2.896983800097\times10^{-4},
+\tag{TRISO-ACC-324}
+$$
+
+$$
+E_{400}=7.243504635747\times10^{-5}.
+\tag{TRISO-ACC-325}
+$$
+
+The corresponding observed orders were
+
+$$
+1.987104,\quad1.996700,\quad1.999169,\quad1.999792.
+\tag{TRISO-ACC-326}
+$$
+
+Therefore this aligned five-layer steady benchmark exhibits asymptotic behavior consistent with
+
+$$
+\boxed{E_h=O(\mathfrak h^2).}
+\tag{TRISO-ACC-327}
+$$
+
+This observed second-order behavior is substantially sharper than the conservative analytical O(h^(1/2)) bound in TRISO-ACC-303. It demonstrates that the local interface-adjacent residual estimate is not predictive of the observed global steady error for this benchmark. It does not prove second-order convergence for every discontinuous-D problem.
+
+#### Temporal refinement result
+
+On the fixed N=200 spatial mesh, successive-step Richardson differences gave observed temporal orders
+
+$$
+0.999700,\quad0.999780,\quad1.000066,\quad0.999962.
+\tag{TRISO-ACC-328}
+$$
+
+Therefore the executed result is consistent with
+
+$$
+\boxed{p_t=1.}
+\tag{TRISO-ACC-329}
+$$
+
+#### Conservation result
+
+The exact benchmark generation rate is
+
+$$
+\frac{4\pi}{3}=4.188790204786\ldots
+\tag{TRISO-ACC-330}
+$$
+
+Across the steady spatial sequence, the computed release rate remained equal to this value to approximately 10^-12 or better.
+
+The steady conservation residual ranged from approximately
+
+$$
+2.7\times10^{-15}
+\tag{TRISO-ACC-331}
+$$
+
+to
+
+$$
+2.9\times10^{-12}.
+\tag{TRISO-ACC-332}
+$$
+
+During the temporal study, the maximum discrete inventory residual remained below
+
+$$
+\boxed{4\times10^{-10}.}
+\tag{TRISO-ACC-333}
+$$
+
+The increase in the reported absolute residual as the time step becomes very small is consistent with floating-point cancellation in the finite-difference evaluation of the inventory time derivative; no systematic conservation drift is observed in this study.
+
+#### Scope of the executed evidence
+
+[EXECUTED / VERIFIED] The canonical aligned five-layer FV benchmark converges approximately second order in the steady volume-weighted spatial norm over the tested meshes.
+
+[EXECUTED / VERIFIED] Forward Euler converges first order in time on the tested fixed spatial mesh.
+
+[EXECUTED / VERIFIED] The conservative FV balance closes to floating-point accuracy in the tested steady and transient runs.
+
+[NOT ESTABLISHED] The same spatial order for non-interface-aligned meshes.
+
+[NOT ESTABLISHED] The same spatial order for arbitrary diffusivity ratios, geometries, or source distributions.
+
+[NOT ESTABLISHED] The absorbing Dirichlet boundary convergence order.
+
+[NOT APPLICABLE] These deterministic FV results do not validate the production WOS algorithm.
+### 18A.12 What has and has not been proved
 
 [VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O(h^2)\) for a smooth field.
 
@@ -15401,9 +15540,9 @@ The study must report the norm definition, mesh geometry, interface alignment, t
 
 [VERIFIED] For fixed finite physical h, the cell-centred Robin FV boundary flux and total release rate are O(mesh^2) consistent; the outer-cell pointwise residual may remain O(mesh).
 
-[CONDITIONALLY ESTABLISHED] A volume-weighted energy argument gives a conservative O(mesh^1/2) convergence upper bound under the currently proved local residual estimates and regularity assumptions; the sharp global order remains unverified.
+[CONDITIONALLY ESTABLISHED] The energy argument gives a conservative O(mesh^1/2) bound from local residual estimates. [EXECUTED] The aligned five-layer steady benchmark instead exhibits asymptotic O(mesh^2) volume-weighted convergence over N=25–400; this observed rate is benchmark-specific rather than a universal theorem.
 
-The analytical stability/convergence framework and refinement-study specification are now established. The next step is to execute the prescribed spatial/temporal/conservation refinement study and compare the observed rate with this conservative bound; no higher global order should be claimed beforehand.
+The prescribed aligned five-layer spatial/temporal/conservation refinement study has now executed successfully. The next verification decision is whether to broaden the parameter/interface-alignment study or submit this deterministic accuracy/convergence milestone for independent audit; no WOS conclusion follows from these FV results.
 
 ## 19. Implementation provenance
 
