@@ -14745,7 +14745,649 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 [NOT ESTABLISHED] Global spatial convergence order.
 
-### 18A.9 What has and has not been proved
+### 18A.9 Global stability and conditional convergence framework
+
+The local consistency results are not uniform over the particle:
+
+- smooth same-material cells have conditional \(O(\mathfrak h^2)\) divergence consistency;
+- a fixed number of cells adjacent to the four material interfaces can have \(O(1)\) pointwise residuals under the present two-point transmission flux;
+- the outer Robin cell can have an \(O(\mathfrak h)\) pointwise residual for fixed finite physical \(h\).
+
+A global convergence argument must therefore use a norm that respects cell volumes rather than taking the maximum pointwise residual as the only consistency measure.
+
+#### 18A.9.1 Volume-weighted discrete norm
+
+Define the discrete volume-weighted norm
+
+$$
+\boxed{
+\|\mathbf x\|_V^2
+=
+\mathbf x^T\mathbf V\mathbf x
+=
+\sum_{P=0}^{M-1}
+V_Px_P^2.
+}
+\tag{TRISO-ACC-263}
+$$
+
+This is the natural discrete analogue of the spherical \(L^2\) norm because
+
+$$
+V_P
+=
+\int_{\Omega_P}dV.
+\tag{TRISO-ACC-264}
+$$
+
+For a shape-regular radial refinement of a fixed particle,
+
+$$
+V_P=O(\mathfrak h)
+\tag{TRISO-ACC-265}
+$$
+
+for cells away from the origin.
+
+The central cell is smaller:
+
+$$
+V_0=O(\mathfrak h^3),
+\tag{TRISO-ACC-266}
+$$
+
+because its radius is itself \(O(\mathfrak h)\).
+
+### 18A.9.2 Semi-discrete error equation
+
+Let
+
+$$
+\overline{\mathbf c}(t)
+\tag{TRISO-ACC-267}
+$$
+
+denote the vector of exact spherical cell averages of the continuum solution on the numerical mesh.
+
+Define the semi-discrete residual \(\boldsymbol\tau_h(t)\) by inserting these exact cell averages into the numerical operator:
+
+$$
+\boxed{
+\mathbf V
+\frac{d\overline{\mathbf c}}{dt}
+=
+\mathbf K\overline{\mathbf c}
++
+\mathbf V\mathbf S
++
+\mathbf b_\infty
++
+\mathbf V\boldsymbol\tau_h.
+}
+\tag{TRISO-ACC-268}
+$$
+
+The numerical semi-discrete solution satisfies
+
+$$
+\mathbf V
+\frac{d\mathbf C}{dt}
+=
+\mathbf K\mathbf C
++
+\mathbf V\mathbf S
++
+\mathbf b_\infty.
+\tag{TRISO-ACC-269}
+$$
+
+Define the error
+
+$$
+\boxed{
+\mathbf e
+=
+\mathbf C-\overline{\mathbf c}.
+}
+\tag{TRISO-ACC-270}
+$$
+
+Subtract (TRISO-ACC-268) from (TRISO-ACC-269):
+
+$$
+\mathbf V
+\frac{d\mathbf e}{dt}
+=
+\mathbf K\mathbf e
+-
+\mathbf V\boldsymbol\tau_h.
+\tag{TRISO-ACC-271}
+$$
+
+### 18A.9.3 Energy identity
+
+Premultiply by \(\mathbf e^T\):
+
+$$
+\mathbf e^T\mathbf V
+\frac{d\mathbf e}{dt}
+=
+\mathbf e^T\mathbf K\mathbf e
+-
+\mathbf e^T\mathbf V\boldsymbol\tau_h.
+\tag{TRISO-ACC-272}
+$$
+
+Because \(\mathbf V\) is time independent,
+
+$$
+\mathbf e^T\mathbf V
+\frac{d\mathbf e}{dt}
+=
+\frac12
+\frac{d}{dt}
+\left(
+\mathbf e^T\mathbf V\mathbf e
+\right).
+\tag{TRISO-ACC-273}
+$$
+
+Use the norm definition:
+
+$$
+\boxed{
+\frac12
+\frac{d}{dt}
+\|\mathbf e\|_V^2
+=
+\mathbf e^T\mathbf K\mathbf e
+-
+\langle\mathbf e,\boldsymbol\tau_h\rangle_V.
+}
+\tag{TRISO-ACC-274}
+$$
+
+From the previously proved conductance identity,
+
+$$
+\mathbf e^T\mathbf K\mathbf e
+\le0.
+\tag{TRISO-ACC-275}
+$$
+
+Therefore
+
+$$
+\frac12
+\frac{d}{dt}
+\|\mathbf e\|_V^2
+\le
+-
+\langle\mathbf e,\boldsymbol\tau_h\rangle_V.
+\tag{TRISO-ACC-276}
+$$
+
+Take absolute value of the forcing term:
+
+$$
+-\langle\mathbf e,\boldsymbol\tau_h\rangle_V
+\le
+\left|
+\langle\mathbf e,\boldsymbol\tau_h\rangle_V
+\right|.
+\tag{TRISO-ACC-277}
+$$
+
+Apply Cauchy-Schwarz in the \(V\)-inner product:
+
+$$
+\left|
+\langle\mathbf e,\boldsymbol\tau_h\rangle_V
+\right|
+\le
+\|\mathbf e\|_V
+\|\boldsymbol\tau_h\|_V.
+\tag{TRISO-ACC-278}
+$$
+
+Hence
+
+$$
+\frac12
+\frac{d}{dt}
+\|\mathbf e\|_V^2
+\le
+\|\mathbf e\|_V
+\|\boldsymbol\tau_h\|_V.
+\tag{TRISO-ACC-279}
+$$
+
+For \(\|\mathbf e\|_V>0\),
+
+$$
+\frac{d}{dt}
+\|\mathbf e\|_V^2
+=
+2\|\mathbf e\|_V
+\frac{d}{dt}\|\mathbf e\|_V.
+\tag{TRISO-ACC-280}
+$$
+
+Substitute into (TRISO-ACC-279):
+
+$$
+\|\mathbf e\|_V
+\frac{d}{dt}\|\mathbf e\|_V
+\le
+\|\mathbf e\|_V
+\|\boldsymbol\tau_h\|_V.
+\tag{TRISO-ACC-281}
+$$
+
+Cancel \(\|\mathbf e\|_V\):
+
+$$
+\boxed{
+\frac{d}{dt}\|\mathbf e\|_V
+\le
+\|\boldsymbol\tau_h\|_V.
+}
+\tag{TRISO-ACC-282}
+$$
+
+The same inequality follows by continuity through instants at which the error norm is zero.
+
+Integrate from \(0\) to \(t\):
+
+$$
+\|\mathbf e(t)\|_V-\|\mathbf e(0)\|_V
+\le
+\int_0^t
+\|\boldsymbol\tau_h(s)\|_V\,ds.
+\tag{TRISO-ACC-283}
+$$
+
+Therefore
+
+$$
+\boxed{
+\|\mathbf e(t)\|_V
+\le
+\|\mathbf e(0)\|_V
++
+\int_0^t
+\|\boldsymbol\tau_h(s)\|_V\,ds.
+}
+\tag{TRISO-ACC-284}
+$$
+
+This proves semi-discrete energy stability and shows that convergence follows if the volume-weighted residual norm tends to zero and the initial discrete representation converges.
+
+### 18A.9.4 Residual scaling from the established local results
+
+Assume the number of material interfaces remains fixed at four as the mesh is refined.
+
+For \(O(\mathfrak h^{-1})\) ordinary smooth cells,
+
+$$
+\tau_P=O(\mathfrak h^2).
+\tag{TRISO-ACC-285}
+$$
+
+Each such cell contributes to the squared \(V\)-norm
+
+$$
+V_P\tau_P^2
+=
+O(\mathfrak h)
+O(\mathfrak h^4)
+=
+O(\mathfrak h^5).
+\tag{TRISO-ACC-286}
+$$
+
+Summing \(O(\mathfrak h^{-1})\) smooth cells gives
+
+$$
+O(\mathfrak h^{-1})
+O(\mathfrak h^5)
+=
+O(\mathfrak h^4).
+\tag{TRISO-ACC-287}
+$$
+
+Therefore the smooth-region contribution to the residual norm is
+
+$$
+O(\mathfrak h^2).
+\tag{TRISO-ACC-288}
+$$
+
+Now consider the fixed number of interface-adjacent cells.
+
+The local analysis permits
+
+$$
+\tau_P=O(1).
+\tag{TRISO-ACC-289}
+$$
+
+Each such cell has
+
+$$
+V_P=O(\mathfrak h).
+\tag{TRISO-ACC-290}
+$$
+
+Therefore each contributes
+
+$$
+V_P\tau_P^2
+=
+O(\mathfrak h).
+\tag{TRISO-ACC-291}
+$$
+
+A fixed number of such cells still contributes
+
+$$
+O(\mathfrak h)
+\tag{TRISO-ACC-292}
+$$
+
+to the squared residual norm.
+
+Hence the interface-region contribution can be only
+
+$$
+\boxed{
+O(\mathfrak h^{1/2})
+}
+\tag{TRISO-ACC-293}
+$$
+
+in the \(V\)-norm under the currently proved local bounds.
+
+For the single outer Robin cell,
+
+$$
+\tau_{M-1}=O(\mathfrak h).
+\tag{TRISO-ACC-294}
+$$
+
+Its volume is
+
+$$
+V_{M-1}=O(\mathfrak h).
+\tag{TRISO-ACC-295}
+$$
+
+Therefore its squared contribution is
+
+$$
+V_{M-1}\tau_{M-1}^2
+=
+O(\mathfrak h^3).
+\tag{TRISO-ACC-296}
+$$
+
+and its contribution to the \(V\)-norm is
+
+$$
+O(\mathfrak h^{3/2}).
+\tag{TRISO-ACC-297}
+$$
+
+The conservative interface region therefore dominates the currently provable residual estimate:
+
+$$
+\boxed{
+\|\boldsymbol\tau_h\|_V
+=
+O(\mathfrak h^{1/2})
+}
+\tag{TRISO-ACC-298}
+$$
+
+under the local bounds established so far.
+
+### 18A.9.5 Conditional semi-discrete convergence bound
+
+If the exact initial condition is represented by exact cell averages, then
+
+$$
+\mathbf e(0)=\mathbf0.
+\tag{TRISO-ACC-299}
+$$
+
+Use (TRISO-ACC-284):
+
+$$
+\|\mathbf e(t)\|_V
+\le
+\int_0^t
+\|\boldsymbol\tau_h(s)\|_V\,ds.
+\tag{TRISO-ACC-300}
+$$
+
+If the residual bound is uniform for \(0\le s\le T\),
+
+$$
+\|\boldsymbol\tau_h(s)\|_V
+\le
+C_T\mathfrak h^{1/2},
+\tag{TRISO-ACC-301}
+$$
+
+then
+
+$$
+\|\mathbf e(t)\|_V
+\le
+\int_0^t
+C_T\mathfrak h^{1/2}\,ds.
+\tag{TRISO-ACC-302}
+$$
+
+Evaluate the integral:
+
+$$
+\boxed{
+\|\mathbf e(t)\|_V
+\le
+tC_T\mathfrak h^{1/2},
+\qquad
+0\le t\le T.
+}
+\tag{TRISO-ACC-303}
+$$
+
+Thus the present energy argument supports at least a **conditional \(O(\mathfrak h^{1/2})\) upper-bound convergence rate in the volume-weighted norm**, given the established local residual estimates and sufficient regularity.
+
+This is a conservative bound, not a prediction of the observed numerical order.
+
+Diffusive smoothing, transmission structure, cancellation, or a sharper negative-norm/interface analysis may yield a higher actual rate.
+
+### 18A.9.6 Fully discrete temporal error
+
+The explicit Euler method has local temporal truncation error
+
+$$
+O(\Delta t^2)
+\tag{TRISO-ACC-304}
+$$
+
+per step.
+
+Over a fixed time interval, under stability, its global temporal order is
+
+$$
+O(\Delta t).
+\tag{TRISO-ACC-305}
+$$
+
+Therefore the fully discrete error should be separated conceptually as
+
+$$
+\boxed{
+\text{error}
+=
+\text{spatial error}
++
+O(\Delta t),
+}
+\tag{TRISO-ACC-306}
+$$
+
+rather than inferring spatial order from a refinement study in which \(\Delta t\) is not reduced sufficiently.
+
+The previously derived explicit positivity/stability condition requires
+
+$$
+\Delta t
+\le
+\Delta t_{\max}(h).
+\tag{TRISO-ACC-307}
+$$
+
+For diffusion on a regular mesh,
+
+$$
+\Delta t_{\max}=O(\mathfrak h^2)
+\tag{TRISO-ACC-308}
+$$
+
+away from pathological coefficient scaling.
+
+Choosing
+
+$$
+\Delta t\propto\mathfrak h^2
+\tag{TRISO-ACC-309}
+$$
+
+therefore both respects the expected explicit-diffusion stability scaling and makes the first-order temporal error
+
+$$
+O(\Delta t)=O(\mathfrak h^2).
+\tag{TRISO-ACC-310}
+$$
+
+Under that refinement path, temporal error should not dominate a spatial rate lower than second order.
+
+### 18A.9.7 What the proof does not establish
+
+The energy estimate proves stability of the semi-discrete error equation in the \(V\)-norm.
+
+It does not establish that the \(O(\mathfrak h^{1/2})\) bound is sharp.
+
+It does not establish an \(L^\infty\) convergence rate.
+
+It does not prove second-order global convergence.
+
+It does not replace numerical grid refinement.
+
+The four material interfaces are a measure-shrinking set under refinement, but their stronger local residuals require either a sharper transmission-problem estimate or empirical convergence evidence before a better global rate is claimed.
+
+### 18A.10 Accuracy/convergence study specification
+
+The subsequent numerical study should distinguish three questions.
+
+#### Spatial refinement
+
+Use a sequence of interface-aligned meshes with refinement ratio
+
+$$
+q=\frac{h_k}{h_{k+1}}>1.
+\tag{TRISO-ACC-311}
+$$
+
+Keep the physical geometry, diffusivities, source, \(h\), and final observation time fixed.
+
+Choose time steps satisfying
+
+$$
+\Delta t_k
+=
+C h_k^2
+\tag{TRISO-ACC-312}
+$$
+
+with \(C\) below the explicit stability bound on every mesh.
+
+Compare numerical solutions using at least:
+
+1. the volume-weighted concentration norm;
+2. total particle inventory;
+3. outer release rate;
+4. selected interface-adjacent concentrations.
+
+When an exact analytical benchmark is available, define
+
+$$
+E_k
+=
+\|\mathbf C_{h_k}-\overline{\mathbf c}_{\mathrm{exact},h_k}\|_V.
+\tag{TRISO-ACC-313}
+$$
+
+The observed order between successive meshes is
+
+$$
+\boxed{
+p_{\mathrm{obs}}
+=
+\frac{
+\log(E_k/E_{k+1})
+}{
+\log q
+}.
+}
+\tag{TRISO-ACC-314}
+$$
+
+No target value of \(p_{\mathrm{obs}}\) is assumed in advance for the discontinuous-\(D\) five-layer problem.
+
+#### Temporal refinement
+
+On a sufficiently fine fixed spatial mesh, refine
+
+$$
+\Delta t_k
+\to
+\frac{\Delta t_k}{q_t}.
+\tag{TRISO-ACC-315}
+$$
+
+The expected explicit-Euler temporal order is one:
+
+$$
+p_t\approx1
+\tag{TRISO-ACC-316}
+$$
+
+once spatial error is subdominant.
+
+#### Conservation refinement
+
+For every run, evaluate the discrete inventory residual
+
+$$
+\mathcal R_{\mathrm{cons}}
+=
+\frac{dN_h}{dt}
+-
+\sum_PS_PV_P
++
+G_R(C_{M-1}-c_\infty).
+\tag{TRISO-ACC-317}
+$$
+
+For the algebraically conservative semi-discrete formulation this should vanish up to time-discretisation and floating-point effects when evaluated consistently.
+
+The study must report the norm definition, mesh geometry, interface alignment, time-step scaling, and whether the comparison uses exact cell averages or point samples.
+
+### 18A.11 What has and has not been proved
 
 [VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O(h^2)\) for a smooth field.
 
@@ -14759,9 +15401,9 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 [VERIFIED] For fixed finite physical h, the cell-centred Robin FV boundary flux and total release rate are O(mesh^2) consistent; the outer-cell pointwise residual may remain O(mesh).
 
-[NOT YET ESTABLISHED] Global spatial convergence order.
+[CONDITIONALLY ESTABLISHED] A volume-weighted energy argument gives a conservative O(mesh^1/2) convergence upper bound under the currently proved local residual estimates and regularity assumptions; the sharp global order remains unverified.
 
-The next accuracy dependency is the global stability-plus-convergence argument and corresponding grid/time refinement specification, which must accommodate O(1) special interface-adjacent residuals and an O(mesh) outer-cell residual without assuming uniform pointwise consistency.
+The analytical stability/convergence framework and refinement-study specification are now established. The next step is to execute the prescribed spatial/temporal/conservation refinement study and compare the observed rate with this conservative bound; no higher global order should be claimed beforehand.
 
 ## 19. Implementation provenance
 
