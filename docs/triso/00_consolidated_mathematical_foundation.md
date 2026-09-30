@@ -13697,7 +13697,585 @@ cell-divergence consistency.
 
 This is precisely why the smooth-cell result cannot be transferred automatically across a discontinuous material interface.
 
-### 18A.7 What has and has not been proved
+### 18A.7 Discontinuous-diffusivity interface-face consistency
+
+Consider a physical material interface at
+
+$$
+r=r_I.
+\tag{TRISO-ACC-170}
+$$
+
+Let cell \(P\) lie immediately to the left of the interface and cell \(E\) immediately to the right.
+
+Define
+
+$$
+d_P=r_I-r_P,
+\tag{TRISO-ACC-171}
+$$
+
+and
+
+$$
+d_E=r_E-r_I.
+\tag{TRISO-ACC-172}
+$$
+
+Let the diffusivities be
+
+$$
+D^- \quad\text{for }r<r_I,
+\tag{TRISO-ACC-173}
+$$
+
+and
+
+$$
+D^+ \quad\text{for }r>r_I.
+\tag{TRISO-ACC-174}
+$$
+
+For the frozen ideal interface,
+
+$$
+c^-(r_I)=c^+(r_I)=c_I.
+\tag{TRISO-ACC-175}
+$$
+
+The exact outward flux is continuous:
+
+$$
+J_I
+=
+-D^-c_r^-(r_I)
+=
+-D^+c_r^+(r_I).
+\tag{TRISO-ACC-176}
+$$
+
+### 18A.7.1 Expand the left-side concentration
+
+Taylor-expand the exact point value at \(r_P=r_I-d_P\) about the interface from the left:
+
+$$
+c(r_P)
+=
+c_I
+-
+d_Pc_r^-(r_I)
++
+\frac{d_P^2}{2}c_{rr}^-(r_I)
+-
+\frac{d_P^3}{6}c_{rrr}^-(r_I)
++
+O(h^4).
+\tag{TRISO-ACC-177}
+$$
+
+Use
+
+$$
+c_r^-(r_I)
+=
+-\frac{J_I}{D^-}.
+\tag{TRISO-ACC-178}
+$$
+
+Substitute:
+
+$$
+c(r_P)
+=
+c_I
++
+\frac{d_P}{D^-}J_I
++
+\frac{d_P^2}{2}c_{rr}^-(r_I)
+-
+\frac{d_P^3}{6}c_{rrr}^-(r_I)
++
+O(h^4).
+\tag{TRISO-ACC-179}
+$$
+
+Rearrange the interface-to-left concentration difference:
+
+$$
+c(r_P)-c_I
+=
+\frac{d_P}{D^-}J_I
++
+\frac{d_P^2}{2}c_{rr}^-(r_I)
+-
+\frac{d_P^3}{6}c_{rrr}^-(r_I)
++
+O(h^4).
+\tag{TRISO-ACC-180}
+$$
+
+### 18A.7.2 Expand the right-side concentration
+
+Taylor-expand from the right:
+
+$$
+c(r_E)
+=
+c_I
++
+d_Ec_r^+(r_I)
++
+\frac{d_E^2}{2}c_{rr}^+(r_I)
++
+\frac{d_E^3}{6}c_{rrr}^+(r_I)
++
+O(h^4).
+\tag{TRISO-ACC-181}
+$$
+
+Use
+
+$$
+c_r^+(r_I)
+=
+-\frac{J_I}{D^+}.
+\tag{TRISO-ACC-182}
+$$
+
+Therefore
+
+$$
+c(r_E)
+=
+c_I
+-
+\frac{d_E}{D^+}J_I
++
+\frac{d_E^2}{2}c_{rr}^+(r_I)
++
+\frac{d_E^3}{6}c_{rrr}^+(r_I)
++
+O(h^4).
+\tag{TRISO-ACC-183}
+$$
+
+Rearrange:
+
+$$
+c_I-c(r_E)
+=
+\frac{d_E}{D^+}J_I
+-
+\frac{d_E^2}{2}c_{rr}^+(r_I)
+-
+\frac{d_E^3}{6}c_{rrr}^+(r_I)
++
+O(h^4).
+\tag{TRISO-ACC-184}
+$$
+
+### 18A.7.3 Add the two exact concentration drops
+
+Add (TRISO-ACC-180) and (TRISO-ACC-184):
+
+$$
+c(r_P)-c(r_E)
+=
+J_I
+\left(
+\frac{d_P}{D^-}
++
+\frac{d_E}{D^+}
+\right)
+$$
+
+$$
++
+\frac{d_P^2}{2}c_{rr}^-(r_I)
+-
+\frac{d_E^2}{2}c_{rr}^+(r_I)
+-
+\frac{d_P^3}{6}c_{rrr}^-(r_I)
+-
+\frac{d_E^3}{6}c_{rrr}^+(r_I)
++
+O(h^4).
+\tag{TRISO-ACC-185}
+$$
+
+Define the two-half-cell resistance
+
+$$
+\boxed{
+R_I
+=
+\frac{d_P}{D^-}
++
+\frac{d_E}{D^+}.
+}
+\tag{TRISO-ACC-186}
+$$
+
+For a shape-regular mesh,
+
+$$
+R_I=O(h).
+\tag{TRISO-ACC-187}
+$$
+
+Define the second-order remainder
+
+$$
+Q_I
+=
+\frac{d_P^2}{2}c_{rr}^-(r_I)
+-
+\frac{d_E^2}{2}c_{rr}^+(r_I).
+\tag{TRISO-ACC-188}
+$$
+
+Then
+
+$$
+Q_I=O(h^2).
+\tag{TRISO-ACC-189}
+$$
+
+Equation (TRISO-ACC-185) becomes
+
+$$
+c(r_P)-c(r_E)
+=
+J_IR_I
++
+Q_I
++
+O(h^3).
+\tag{TRISO-ACC-190}
+$$
+
+Solve for the exact flux:
+
+$$
+J_I
+=
+\frac{
+c(r_P)-c(r_E)-Q_I+O(h^3)
+}{
+R_I
+}.
+\tag{TRISO-ACC-191}
+$$
+
+Separate the resistance formula:
+
+$$
+J_I
+=
+\frac{
+c(r_P)-c(r_E)
+}{
+R_I
+}
+-
+\frac{Q_I}{R_I}
++
+O(h^2).
+\tag{TRISO-ACC-192}
+$$
+
+Because
+
+$$
+Q_I=O(h^2)
+\tag{TRISO-ACC-193}
+$$
+
+and
+
+$$
+R_I=O(h),
+\tag{TRISO-ACC-194}
+$$
+
+we have
+
+$$
+\frac{Q_I}{R_I}=O(h).
+\tag{TRISO-ACC-195}
+$$
+
+Therefore the point-value resistance flux
+
+$$
+J_I^{h,\mathrm{pt}}
+=
+\frac{
+c(r_P)-c(r_E)
+}{
+R_I
+}
+\tag{TRISO-ACC-196}
+$$
+
+satisfies, generically,
+
+$$
+\boxed{
+J_I^{h,\mathrm{pt}}
+=
+J_I
++
+O(h).
+}
+\tag{TRISO-ACC-197}
+$$
+
+Thus the basic two-point harmonic/resistance interface flux is generically first-order accurate at a discontinuity.
+
+### 18A.7.4 Special cancellation condition
+
+The leading \(O(h)\) flux error vanishes if
+
+$$
+Q_I=O(h^3).
+\tag{TRISO-ACC-198}
+$$
+
+At leading order this requires
+
+$$
+d_P^2c_{rr}^-(r_I)
+-
+d_E^2c_{rr}^+(r_I)
+=
+O(h^3).
+\tag{TRISO-ACC-199}
+$$
+
+For equal half-distances,
+
+$$
+d_P=d_E,
+\tag{TRISO-ACC-200}
+$$
+
+a sufficient leading-order cancellation condition is
+
+$$
+c_{rr}^-(r_I)
+=
+c_{rr}^+(r_I).
+\tag{TRISO-ACC-201}
+$$
+
+Such equality is not generally implied by concentration continuity and flux continuity when \(D^-\ne D^+\).
+
+Therefore second-order interface flux accuracy must not be assumed merely because the harmonic resistance is physically conservative.
+
+### 18A.7.5 Effect of exact cell averages
+
+The numerical scheme uses exact cell averages rather than exact point values.
+
+Write
+
+$$
+C_P=c(r_P)+\eta_P,
+\tag{TRISO-ACC-202}
+$$
+
+and
+
+$$
+C_E=c(r_E)+\eta_E.
+\tag{TRISO-ACC-203}
+$$
+
+For smooth one-sided fields within each material,
+
+$$
+\eta_P=O(h^2),
+\qquad
+\eta_E=O(h^2).
+\tag{TRISO-ACC-204}
+$$
+
+The numerical interface flux is
+
+$$
+J_I^h
+=
+\frac{
+C_P-C_E
+}{
+R_I
+}.
+\tag{TRISO-ACC-205}
+$$
+
+Substitute the average representations:
+
+$$
+J_I^h
+=
+\frac{
+c(r_P)-c(r_E)
+}{
+R_I
+}
++
+\frac{
+\eta_P-\eta_E
+}{
+R_I
+}.
+\tag{TRISO-ACC-206}
+$$
+
+Across a material discontinuity, the leading \(O(h^2)\) average-representation coefficients on the two sides need not match smoothly.
+
+Therefore, generically,
+
+$$
+\eta_P-\eta_E=O(h^2).
+\tag{TRISO-ACC-207}
+$$
+
+Since
+
+$$
+R_I=O(h),
+\tag{TRISO-ACC-208}
+$$
+
+the cell-average correction contributes
+
+$$
+\frac{\eta_P-\eta_E}{R_I}
+=
+O(h).
+\tag{TRISO-ACC-209}
+$$
+
+Combine this with (TRISO-ACC-197):
+
+$$
+\boxed{
+J_I^h
+=
+J_I
++
+O(h)
+}
+\tag{TRISO-ACC-210}
+$$
+
+generically for the canonical cell-average, two-point resistance interface flux.
+
+### 18A.7.6 Conservation remains exact despite first-order local accuracy
+
+The same numerical interface flux \(J_I^h\) is used by both adjacent control volumes.
+
+The left cell contains the outward interface amount rate
+
+$$
+-A_IJ_I^h.
+\tag{TRISO-ACC-211}
+$$
+
+The right cell contains the corresponding inward amount rate
+
+$$
++A_IJ_I^h.
+\tag{TRISO-ACC-212}
+$$
+
+Add them:
+
+$$
+-A_IJ_I^h+A_IJ_I^h=0.
+\tag{TRISO-ACC-213}
+$$
+
+Therefore
+
+$$
+\boxed{
+\text{interface conservation is exact at the discrete level}
+}
+\tag{TRISO-ACC-214}
+$$
+
+even though the local interface flux is generically only first-order accurate.
+
+Conservation and formal order are separate properties.
+
+### 18A.7.7 Consequence for cells adjacent to the interface
+
+Let the interface face-flux error be
+
+$$
+\varepsilon_I=O(h).
+\tag{TRISO-ACC-215}
+$$
+
+The interface amount-rate error is
+
+$$
+A_I\varepsilon_I.
+\tag{TRISO-ACC-216}
+$$
+
+For an interface away from the origin,
+
+$$
+A_I=O(1)
+\tag{TRISO-ACC-217}
+$$
+
+under radial refinement of a fixed physical geometry.
+
+The adjacent cell volume satisfies
+
+$$
+V_P=O(h).
+\tag{TRISO-ACC-218}
+$$
+
+Therefore the contribution of the interface flux error to the adjacent cell-average time derivative can scale as
+
+$$
+\frac{
+A_I\varepsilon_I
+}{
+V_P
+}
+=
+O(1).
+\tag{TRISO-ACC-219}
+$$
+
+This does **not** by itself prove that the global solution fails to converge.
+
+It shows that a pointwise local truncation-error argument at the interface-adjacent cell is insufficient for establishing a global order.
+
+A global stability-plus-consistency argument in an appropriate integrated norm, or direct grid-refinement evidence, is required.
+
+### 18A.7.8 Interface consistency status
+
+[VERIFIED] The harmonic/resistance interface flux exactly enforces one common discrete flux and therefore exact discrete conservation.
+
+[VERIFIED] For piecewise smooth solutions satisfying ideal concentration and flux continuity, the basic two-point point-value interface flux is generically \(O(h)\) accurate.
+
+[VERIFIED] Using exact cell averages at volume centroids does not generically improve that interface order; the canonical interface flux remains \(O(h)\) unless additional cancellation occurs.
+
+[NOT ESTABLISHED] A second-order interface flux for unequal diffusivities.
+
+[NOT ESTABLISHED] A pointwise vanishing truncation error in the cells directly adjacent to a discontinuous interface.
+
+[NOT ESTABLISHED] The global spatial convergence order of the conservative scheme.
+
+### 18A.8 What has and has not been proved
 
 [VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O(h^2)\) for a smooth field.
 
@@ -13707,13 +14285,13 @@ This is precisely why the smooth-cell result cannot be transferred automatically
 
 [CONDITIONALLY VERIFIED] The complete smooth same-material cell divergence is O(h^2) consistent when the leading O(h^2) face-flux error has a smooth coefficient across neighbouring faces.
 
-[NOT YET ESTABLISHED] Interface-face consistency when \(D\) is discontinuous.
+[VERIFIED] The canonical resistance-weighted interface flux is conservative and generically O(h) accurate for piecewise-smooth unequal-D transmission data; second-order interface accuracy is not established.
 
 [NOT YET ESTABLISHED] Robin boundary consistency for the cell-centred FV closure.
 
 [NOT YET ESTABLISHED] Global spatial convergence order.
 
-The next accuracy dependency is therefore the discontinuous-\(D\) interface face, where the smooth face-error cancellation used above cannot be assumed.
+The next accuracy dependency is the cell-centred Robin finite-volume boundary consistency, followed by a global convergence argument or grid-refinement study that can accommodate the lower-order interface region.
 
 ## 19. Implementation provenance
 
