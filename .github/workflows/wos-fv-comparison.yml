@@ -1,0 +1,35 @@
+name: WOS versus matched FV verification
+on:
+  workflow_dispatch:
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
+      SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Record provenance
+        run: |
+          echo "ray_commit=$GITHUB_SHA" | tee verification/wos_fv_comparison_results.txt
+          rustc --version | tee -a verification/wos_fv_comparison_results.txt
+      - name: Checkout exact supervisor source
+        run: |
+          git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
+          cd supervisor
+          git fetch --no-tags origin "$SUPERVISOR_REF"
+          git checkout --detach "$SUPERVISOR_REF"
+          echo "supervisor_commit=$(git rev-parse HEAD)" | tee -a ../verification/wos_fv_comparison_results.txt
+      - name: Install comparison harness
+        run: |
+          mkdir -p supervisor/crates/boon-lay/examples
+          cp verification/wos_fv_comparison.rs supervisor/crates/boon-lay/examples/wos_fv_comparison.rs
+      - name: Run matched comparison
+        working-directory: supervisor
+        run: cargo run -p boon-lay --example wos_fv_comparison --release | tee -a ../verification/wos_fv_comparison_results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wos-fv-comparison-results
+          path: verification/wos_fv_comparison_results.txt
