@@ -38,6 +38,7 @@ jobs:
           set -o pipefail
           cargo run -p boon-lay --example wos_fv_comparison --release 2>&1 | tee -a ../verification/wos_fv_comparison_results.txt
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: wos-fv-comparison-results
           path: verification/wos_fv_comparison_results.txt
