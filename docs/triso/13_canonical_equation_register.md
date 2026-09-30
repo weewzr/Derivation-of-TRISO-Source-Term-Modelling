@@ -400,3 +400,16 @@ Conditions for the O(h^2) face result: smooth solution within one material, shap
 | TRISO-ACC-167–169 | Failure mode when leading face-error coefficient is not smooth | VERIFIED ORDER ARGUMENT |
 
 The O(h^2) smooth-cell divergence result requires a smooth same-material solution, shape-regular/local-symmetry mesh assumptions from TRISO-ACC-123–135, and a smooth leading face-error expansion epsilon_f=h^2 E(r_f)+O(h^3). It must not be transferred across a material discontinuity without a separate interface analysis.
+
+### Discontinuous-D interface consistency
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-ACC-170–176 | Ideal material-interface geometry and exact transmission conditions | VERIFIED |
+| TRISO-ACC-177–197 | One-sided Taylor expansions and point-value resistance-flux error | VERIFIED: GENERIC O(h) INTERFACE FLUX |
+| TRISO-ACC-198–201 | Special leading-error cancellation condition | VERIFIED AS SUFFICIENT CONDITION, NOT GENERIC |
+| TRISO-ACC-202–210 | Exact cell-average effect on resistance interface flux | VERIFIED: GENERIC O(h) |
+| TRISO-ACC-211–214 | Exact discrete interface conservation | VERIFIED |
+| TRISO-ACC-215–219 | Interface-adjacent cell truncation scaling warning | VERIFIED ORDER ARGUMENT; GLOBAL CONSEQUENCE NOT INFERRED |
+
+The canonical harmonic/resistance interface flux is conservative but generically first-order locally for piecewise-smooth unequal-D transmission data. This does not by itself determine global solution convergence order; boundary consistency and a global stability/convergence or grid-refinement argument remain required.
