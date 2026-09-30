@@ -439,3 +439,14 @@ For fixed finite physical transfer coefficient h, the canonical cell-centred Rob
 | TRISO-ACC-311–317 | Spatial, temporal, and conservation refinement-study specification | VERIFIED AS STUDY DEFINITION |
 
 The O(mesh^1/2) result is a conservative analytical upper-bound rate implied by the currently established local residual estimates, not a claim that the observed FV solution order must equal 1/2. The sharp global order remains to be measured or established by a stronger transmission-problem estimate.
+
+### Executed five-layer FV refinement evidence
+
+| Stable ID | Mathematical role | Status |
+|---|---|---|
+| TRISO-ACC-318–320 | Executed normalized five-layer benchmark parameters | EXECUTED / VERIFIED AS TEST DEFINITION |
+| TRISO-ACC-321–327 | Steady spatial errors and observed order | EXECUTED: ASYMPTOTIC p APPROX 2 ON N=25–400 |
+| TRISO-ACC-328–329 | Successive-step temporal Richardson orders | EXECUTED: p_t APPROX 1 |
+| TRISO-ACC-330–333 | Generation/release and transient conservation evidence | EXECUTED: ROUND-OFF LEVEL |
+
+Execution provenance: `verification/fv_convergence.rs`, workflow run 36654437525, raw persisted output `verification/fv_convergence_results.txt`. The observed second-order spatial result is benchmark-specific and does not replace the conservative analytical bound or establish the same order for non-aligned meshes, arbitrary parameters, absorbing Dirichlet boundaries, or WOS.
