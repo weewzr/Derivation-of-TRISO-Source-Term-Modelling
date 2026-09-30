@@ -43,6 +43,16 @@ Current reconciliation:
 
 The evidence layers remain distinct: continuous analytical reference → deterministic FV reference → production WOS verification. The deterministic FV model is cleared to serve as the numerical reference for the subsequent deterministic/analytical ↔ WOS verification stage after this reconciliation is independently checked. This FV evidence does not validate WOS.
 
+### Active method scope
+
+The active project is frozen to exactly three reproducible methods:
+
+1. **Method 1 — first-principles analytical diffusion:** conservation → Fick's law → spherical multilayer PDE → interfaces/boundaries → analytical/modal solution.
+2. **Method 2 — first-principles computational diffusion:** the same governing physics solved by deterministic FV and stochastic production WOS as distinct evidence streams.
+3. **Method 3 — semi-empirical mechanistic / reduced-order:** experimentally fitted diffusivities → D(T) → Booth / breakthrough / release-to-birth formulations → release fraction/rate.
+
+BISON, PARFUME, CFDT, FRESCO-II, COPA, STACY and other packages are external/archive references only, not additional active methods. The detailed scope freeze and staged WOS-verification architecture are in `docs/triso/23_active_method_scope.md`. Method 3 implementation has not begun.
+
 ### Numerical / WOS implementation-verification track
 
 Review 2: **FAIL — remediation required**. R2-B01 concerns executed evidence for the concrete five-layer release-time estimator. This finding is separate from the continuous-mathematics gate and is **not marked closed** here.
@@ -65,6 +75,9 @@ Do not infer Review-2 closure from the continuous-mathematics PASS.
 - Production WOS numerical formulation and equation-to-code mapping: `docs/triso/22_review2_numerical_formulation.md`
 - Active R2-B01 verification test: `verification/r2_b01_supervisor_integration.rs`
 - Active R2-B01 execution workflow: `.github/workflows/r2-b01-supervisor-integration.yml`
+- Stage-A WOS smoke harness: `verification/wos_stage_a_smoke.rs`
+- Stage-A bounded workflow: `.github/workflows/wos-stage-a.yml`
+- Active three-method scope freeze: `docs/triso/23_active_method_scope.md`
 - Current status: this README
 
 ## FROZEN / HISTORICAL
