@@ -15,6 +15,10 @@ fn shell_exit(seed:&mut u64,a:f64,b:f64,r:f64,d:f64)->(bool,f64){
  for n in 1..=TERMS{if prn(seed)>=q{let u=prn(seed).max(f64::MIN_POSITIVE);t+=-u.ln()*scale/(n as f64).powi(2)}}(outer,t)
 }
 fn ball_radius(seed:&mut u64,r:f64)->f64{r*prn(seed).cbrt()}
+fn ball_exit_time(seed:&mut u64,r:f64,b:f64,d:f64)->f64{
+ let q=(r/b).powi(2);let scale=b*b/(d*PI*PI);let mut t=0.0;
+ for n in 1..=TERMS{if prn(seed)>=q{let u=prn(seed).max(f64::MIN_POSITIVE);t+=-u.ln()*scale/(n as f64).powi(2)}}t
+}
 fn main(){
  println!("TWO_LAYER_ACCELERATED_COUPLING N={N} eps_nm=100 alpha={ALPHA} K={K} terms={TERMS} a={A:.12e} R={R:.12e} D1={D1:.12e} D2={D2:.12e} times={TIMES:?}");
  let mut releases=Vec::with_capacity(N);let mut interface_events=0u64;let mut tx=0u64;let mut refl=0u64;let mut renewal_events=0u64;
@@ -23,13 +27,10 @@ fn main(){
   for _ in 0..1_000_000u64{
    renewal_events+=1;
    if inner{
-    // Kernel-like inner ball: direct absorbing-sphere first-passage to A is not a shell.
-    // Preserve exact production sphere-FPT primitive for this first segment.
-    let dist=A-r;let diff=DiffusionCoefficient::new::<square_meter_per_second>(D1);
-    let tau=boon_lay::lagrangian_decay_simulator::lagrangian_diffusion::first_passage::sphere_fpt::sample_first_passage_time(&mut rng.0,uom::si::f64::Length::new::<uom::si::length::meter>(dist),diff);
-    time+=tau.get::<uom::si::time::second>();r=A-EPS; // captured at interface from inner side
+    // Exact centered-ball first exit to radius A, preserving physical first-passage time.
+    time+=ball_exit_time(&mut rng.0,r,A,D1);r=A-EPS;
     interface_events+=1;
-    let ok=does_transmit(&mut rng.0,diff,DiffusionCoefficient::new::<square_meter_per_second>(D2),K);
+    let ok=does_transmit(&mut rng.0,DiffusionCoefficient::new::<square_meter_per_second>(D1),DiffusionCoefficient::new::<square_meter_per_second>(D2),K);
     if ok{tx+=1;inner=false;r=A+ALPHA*EPS}else{refl+=1;r=A-ALPHA*EPS}
    }else{
     let (outer,dt)=shell_exit(&mut rng.0,A,R,r,D2);time+=dt;
