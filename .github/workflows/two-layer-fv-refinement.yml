@@ -1,0 +1,22 @@
+name: Two-layer FV transient refinement
+on:
+  workflow_dispatch:
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Compile and run deterministic refinement
+        run: |
+          set -o pipefail
+          echo "research_commit=$GITHUB_SHA" | tee verification/two_layer_fv_refinement_results.txt
+          rustc --version | tee -a verification/two_layer_fv_refinement_results.txt
+          rustc -O verification/two_layer_fv_refinement.rs -o /tmp/two_layer_fv
+          /tmp/two_layer_fv 2>&1 | tee -a verification/two_layer_fv_refinement_results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: two-layer-fv-refinement-results
+          path: verification/two_layer_fv_refinement_results.txt
