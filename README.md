@@ -60,10 +60,10 @@ Independent audit: `reviews/independent_method2_wos_diagnostic_audit.md`.
 Gate: **DIAGNOSTIC EVIDENCE SUFFICIENT TO LOCALISE THE PATHOLOGY, BUT FULL METHOD-2 VERIFICATION IS NOT YET ESTABLISHED.**
 
 Open findings:
-- R2-WOS-01 **MAJOR — OPEN**: interface-resolved computation dominates observed step counts; systematic transient bias is unresolved.
+- R2-WOS-01 **MAJOR — OPEN**: the requested N=2500 two-layer transient epsilon-refinement comparison is executed; WOS is broadly close to FV at tested epsilons, but no consistent epsilon→0 convergence trend is resolved. Independent review is warranted before further remediation.
 - R2-WOS-02 **MODERATE — OPEN**: Stage A remains 100% censored, so no five-layer release CDF exists.
-- R2-WOS-03 **MODERATE — OPEN**: equilibrium interface evidence does not establish transient PDE equivalence.
-- R2-WOS-04 **MINOR — OPEN**: direct transmission/reflection execution evidence is required.
+- R2-WOS-03 **MODERATE — OPEN pending review**: transient WOS↔FV comparison is now executed and broadly compatible at MC scale, but finite-epsilon convergence remains unresolved.
+- R2-WOS-04 **MINOR — closure evidence available pending review**: direct interface/transmission/reflection/crossing diagnostics are executed.
 - R2-B01 **OPEN / SEPARATE**.
 
 The next controlled experiment is frozen in `verification/two_layer_wos_fv_benchmark.md`: a non-equilibrium two-layer absorbing transient with deterministic FV refinement and WOS capture-epsilon refinement. The two-layer WOS harness is a verification geometry adapter that reuses the pinned supervisor production first-passage, isotropic-direction and transmission primitives; it does not modify the supervisor repository and is not itself the five-layer production estimator.
