@@ -1,0 +1,39 @@
+name: Two-layer accelerated shell-interface coupling
+on:
+  push:
+    branches: [main]
+    paths:
+      - verification/two_layer_accelerated_coupling.rs
+      - .github/workflows/two-layer-accelerated-coupling.yml
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
+      SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: |
+          echo "research_commit=$GITHUB_SHA" | tee verification/two_layer_accelerated_coupling_results.txt
+          rustc --version | tee -a verification/two_layer_accelerated_coupling_results.txt
+      - run: |
+          git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
+          cd supervisor
+          git fetch --no-tags origin "$SUPERVISOR_REF"
+          git checkout --detach "$SUPERVISOR_REF"
+          echo "supervisor_commit=$(git rev-parse HEAD)" | tee -a ../verification/two_layer_accelerated_coupling_results.txt
+      - run: |
+          mkdir -p supervisor/crates/boon-lay/examples
+          cp verification/two_layer_accelerated_coupling.rs supervisor/crates/boon-lay/examples/two_layer_accelerated_coupling.rs
+      - working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo run -p boon-lay --example two_layer_accelerated_coupling --release 2>&1 | tee -a ../verification/two_layer_accelerated_coupling_results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: two-layer-accelerated-coupling-results
+          path: verification/two_layer_accelerated_coupling_results.txt
