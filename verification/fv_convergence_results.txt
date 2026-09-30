@@ -1,10 +1,16 @@
-FV convergence study — executed evidence
+FV convergence study — post-remediation executed evidence
 
-Workflow run: 36654437525
+Workflow run: 36661249962
 Workflow: .github/workflows/fv-convergence.yml
+Event: workflow_dispatch
+Branch: ray/triso-foundation
 Driver: verification/fv_convergence.rs
-Driver commit: 039095e3b9419f6700950dbb426eb2a6210310fb
+Driver commit: 13e9d37a59082c809e21446b631621444023152c
+Rust: rustc 1.98.1 (48a229cea 2026-09-01)
 Conclusion: success
+Artifact: fv-convergence-results
+Artifact ID: 11073864894
+Artifact SHA-256: 6be2ba8835283771c2f5646c2871e077fbd70b0df0578184fcf1fb72c098729f
 
 Benchmark:
 radii = [0,1,2,3,4,5]
@@ -16,23 +22,26 @@ interfaces aligned with mesh faces
 unknown = exact spherical cell average
 representative coordinate = spherical volume centroid
 
+RAW ARTIFACT OUTPUT
+rustc 1.98.1 (48a229cea 2026-09-01)
 SPATIAL
-N=25  h=2.000000000000e-1 E_V=1.832317223290e-2 p=-        release=4.188790204786e0 cons=2.665e-15
-N=50  h=1.000000000000e-1 E_V=4.621922061067e-3 p=1.987104 release=4.188790204786e0 cons=1.039e-13
+N=25 h=2.000000000000e-1 E_V=1.832317223290e-2 p=- release=4.188790204786e0 cons=2.665e-15
+N=50 h=1.000000000000e-1 E_V=4.621922061067e-3 p=1.987104 release=4.188790204786e0 cons=1.039e-13
 N=100 h=5.000000000000e-2 E_V=1.158126274643e-3 p=1.996700 release=4.188790204787e0 cons=2.878e-13
 N=200 h=2.500000000000e-2 E_V=2.896983800097e-4 p=1.999169 release=4.188790204786e0 cons=4.663e-13
 N=400 h=1.250000000000e-2 E_V=7.243504635747e-5 p=1.999792 release=4.188790204789e0 cons=2.854e-12
-
-TEMPORAL (N=200, successive-step Richardson differences)
-dt_req=3.906053979375e-5 pair_diff_V=4.481502492252e-6 p=-        max_cons=1.938e-11
-dt_req=1.953026989688e-5 pair_diff_V=2.241216677982e-6 p=0.999700 max_cons=4.712e-11
-dt_req=9.765134948438e-6 pair_diff_V=1.120779441064e-6 p=0.999780 max_cons=8.257e-11
-dt_req=4.882567474219e-6 pair_diff_V=5.603640282583e-7 p=1.000066 max_cons=1.903e-10
-dt_req=2.441283737109e-6 pair_diff_V=2.801893399962e-7 p=0.999962 max_cons=3.739e-10
+TEMPORAL
+dt_req=3.906053979375e-5 dt_actual=3.904724716907e-5 dt_actual_fine=1.952743604765e-5 pair_diff_V=4.481502492252e-6 p=- max_cons=1.938e-11
+dt_req=1.953026989688e-5 dt_actual=1.952743604765e-5 dt_actual_fine=9.764671418807e-6 pair_diff_V=2.241216677982e-6 p=0.999841 max_cons=4.712e-11
+dt_req=9.765134948438e-6 dt_actual=9.764671418807e-6 dt_actual_fine=4.882335709403e-6 pair_diff_V=1.120779441064e-6 p=0.999780 max_cons=8.257e-11
+dt_req=4.882567474219e-6 dt_actual=4.882335709403e-6 dt_actual_fine=2.441227449161e-6 pair_diff_V=5.603640282583e-7 p=1.000101 max_cons=1.903e-10
+dt_req=2.441283737109e-6 dt_actual=2.441227449161e-6 dt_actual_fine=1.220628623741e-6 pair_diff_V=2.801893399962e-7 p=0.999980 max_cons=3.739e-10
 
 Interpretation:
-- This benchmark exhibits asymptotic second-order steady spatial convergence in the volume-weighted norm.
-- This benchmark exhibits first-order Forward Euler temporal convergence.
-- Steady global generation/release balance is satisfied to floating-point roundoff.
-- Transient discrete inventory balance remains near floating-point roundoff; the increasing absolute residual at smaller dt is consistent with subtraction/roundoff amplification in the finite-difference inventory derivative.
-- These results are benchmark evidence, not a proof that every five-layer parameter set, non-aligned mesh, absorbing Dirichlet limit, or production WOS model has the same convergence order.
+- The post-remediation run checked out driver commit 13e9d37a59082c809e21446b631621444023152c.
+- The stable Rust toolchain was explicitly selected and rustc --version was recorded.
+- Temporal observed order is computed by the remediated driver using actual executed timestep ratios.
+- Corrected temporal orders remain approximately 1, consistent with first-order Forward Euler self-convergence.
+- Spatial orders remain approximately 2 for the aligned five-layer benchmark.
+- Steady generation/release balance and transient inventory balance remain at floating-point residual scale.
+- These results validate the deterministic FV verification claims for this benchmark only; they do not validate production WOS.
