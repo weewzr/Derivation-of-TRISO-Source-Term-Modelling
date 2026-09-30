@@ -35,8 +35,8 @@ The canonical conservative five-layer FV route is cleared to proceed to formal a
 Independent accuracy/convergence audit: **PASS FOR DETERMINISTIC REFERENCE / WOS COMPARISON**. Immutable audit: `reviews/independent_accuracy_convergence_audit.md`; reconciliation: `reviews/independent_accuracy_convergence_audit_resolution.md`.
 
 Current reconciliation:
-- R3-m01: **VALID — CLOSED**. Temporal observed order now uses actual executed timestep ratios.
-- R3-m02: **VALID — CLOSED**. The FV convergence workflow explicitly installs the stable Rust toolchain and records `rustc --version` in the raw execution evidence.
+- R3-m01: **VALID — OPEN (execution closure pending)**. Temporal observed order now uses actual executed timestep ratios; the corrected driver is committed but the regenerated Actions run is not connector-verifiable in this session.
+- R3-m02: **VALID — OPEN (execution closure pending)**. The FV convergence workflow explicitly installs the stable Rust toolchain and records `rustc --version` in the raw execution evidence; post-remediation execution is not connector-verifiable in this session.
 - R3-m03: **VALID — OPEN / NON-BLOCKING**. Transient release-rate convergence remains deferred; no release-rate temporal convergence claim is made.
 - R2-D01: **OPEN** and remains restricted to the retained FTCS Robin benchmark; FV convergence does not close it.
 - R2-B01: **OPEN / SEPARATE** and remains a distinct production-WOS implementation-verification finding.
