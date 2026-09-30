@@ -1,0 +1,42 @@
+name: WOS semantic contract diagnostics
+on:
+  workflow_dispatch:
+jobs:
+  semantics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
+      SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Checkout exact supervisor
+        run: |
+          git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
+          cd supervisor
+          git fetch --no-tags origin "$SUPERVISOR_REF"
+          git checkout --detach "$SUPERVISOR_REF"
+          echo "research_commit=$GITHUB_SHA" | tee ../verification/wos_semantic_diagnostic_results.txt
+          echo "supervisor_commit=$(git rev-parse HEAD)" | tee -a ../verification/wos_semantic_diagnostic_results.txt
+          rustc --version | tee -a ../verification/wos_semantic_diagnostic_results.txt
+      - name: Homogeneous absorbing-sphere analytical check
+        working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo test -p boon-lay absorbing_sphere_release_matches_crank --release -- --nocapture 2>&1 | tee -a ../verification/wos_semantic_diagnostic_results.txt
+      - name: Outer absorbing-boundary event check
+        working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo test -p boon-lay hop_releases_at_outer_surface --release -- --nocapture 2>&1 | tee -a ../verification/wos_semantic_diagnostic_results.txt
+      - name: Two-material interface equilibrium check
+        working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo test -p boon-lay interface_rule_gives_uniform_equilibrium_density --release -- --nocapture 2>&1 | tee -a ../verification/wos_semantic_diagnostic_results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wos-semantic-diagnostic-results
+          path: verification/wos_semantic_diagnostic_results.txt
