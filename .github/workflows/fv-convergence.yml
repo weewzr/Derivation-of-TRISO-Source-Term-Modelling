@@ -1,0 +1,22 @@
+name: FV convergence study
+on:
+  push:
+    branches: [ray/triso-foundation]
+    paths:
+      - verification/fv_convergence.rs
+      - .github/workflows/fv-convergence.yml
+  workflow_dispatch:
+
+jobs:
+  convergence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile standalone Rust driver
+        run: rustc -O verification/fv_convergence.rs -o /tmp/fv_convergence
+      - name: Run convergence study
+        run: /tmp/fv_convergence | tee verification/fv_convergence_results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fv-convergence-results
+          path: verification/fv_convergence_results.txt
