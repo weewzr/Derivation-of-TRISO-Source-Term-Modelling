@@ -53,6 +53,21 @@ The active project is frozen to exactly three reproducible methods:
 
 BISON, PARFUME, CFDT, FRESCO-II, COPA, STACY and other packages are external/archive references only, not additional active methods. The detailed scope freeze and staged WOS-verification architecture are in `docs/triso/23_active_method_scope.md`. Method 3 implementation has not begun.
 
+### Independent Method-2 WOS diagnostic gate
+
+Independent audit: `reviews/independent_method2_wos_diagnostic_audit.md`.
+
+Gate: **DIAGNOSTIC EVIDENCE SUFFICIENT TO LOCALISE THE PATHOLOGY, BUT FULL METHOD-2 VERIFICATION IS NOT YET ESTABLISHED.**
+
+Open findings:
+- R2-WOS-01 **MAJOR — OPEN**: interface-resolved computation dominates observed step counts; systematic transient bias is unresolved.
+- R2-WOS-02 **MODERATE — OPEN**: Stage A remains 100% censored, so no five-layer release CDF exists.
+- R2-WOS-03 **MODERATE — OPEN**: equilibrium interface evidence does not establish transient PDE equivalence.
+- R2-WOS-04 **MINOR — OPEN**: direct transmission/reflection execution evidence is required.
+- R2-B01 **OPEN / SEPARATE**.
+
+The next controlled experiment is frozen in `verification/two_layer_wos_fv_benchmark.md`: a non-equilibrium two-layer absorbing transient with deterministic FV refinement and WOS capture-epsilon refinement. The two-layer WOS harness is a verification geometry adapter that reuses the pinned supervisor production first-passage, isotropic-direction and transmission primitives; it does not modify the supervisor repository and is not itself the five-layer production estimator.
+
 ### Numerical / WOS implementation-verification track
 
 Review 2: **FAIL — remediation required**. R2-B01 concerns executed evidence for the concrete five-layer release-time estimator. This finding is separate from the continuous-mathematics gate and is **not marked closed** here.
