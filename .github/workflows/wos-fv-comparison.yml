@@ -32,6 +32,11 @@ jobs:
         run: |
           mkdir -p supervisor/crates/boon-lay/examples
           cp verification/wos_fv_comparison.rs supervisor/crates/boon-lay/examples/wos_fv_comparison.rs
+      - name: Compile matched comparison
+        working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo check -p boon-lay --example wos_fv_comparison --release 2>&1 | tee -a ../verification/wos_fv_comparison_results.txt
       - name: Run matched comparison
         working-directory: supervisor
         run: |
