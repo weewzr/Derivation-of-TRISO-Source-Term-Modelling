@@ -51,6 +51,6 @@ fn integrate(m:&Mesh,req:f64,tend:f64)->Vec<f64>{
 }
 fn main(){
  println!("SPATIAL");let mut prev=None;for n in [25usize,50,100,200,400]{let (e,rel,cons)=spatial(n);let p=prev.map(|pe:f64|(pe/e).ln()/2f64.ln());println!("N={n} h={:.12e} E_V={e:.12e} p={} release={rel:.12e} cons={cons:.3e}",R[5]/n as f64,p.map(|v|format!("{v:.6}")).unwrap_or("-".into()));prev=Some(e);}
- println!("TEMPORAL");let m=mesh(200);let dm=dtmax(&m);let tend=0.1;let reference=integrate(&m,dm/128.0,tend);let mut prev=None;
- for q in [4.0,8.0,16.0,32.0,64.0]{let req=dm/q;let x=integrate(&m,req,tend);let er:Vec<f64>=x.iter().zip(&reference).map(|(a,b)|a-b).collect();let e=vnorm(&m,&er);let p=prev.map(|pe:f64|(pe/e).ln()/2f64.ln());println!("dt_req={req:.12e} E_V={e:.12e} p={}",p.map(|v|format!("{v:.6}")).unwrap_or("-".into()));prev=Some(e);}
+ println!("TEMPORAL");let m=mesh(200);let dm=dtmax(&m);let tend=0.1;let qs=[4.0,8.0,16.0,32.0,64.0,128.0];let sols:Vec<(f64,Vec<f64>)>=qs.iter().map(|q|{let req=dm/q;(req,integrate(&m,req,tend))}).collect();let mut prev_diff:Option<f64>=None;
+ for k in 0..sols.len()-1{let (dt,ref x)=sols[k];let (_,ref fine)=sols[k+1];let er:Vec<f64>=x.iter().zip(fine).map(|(a,b)|a-b).collect();let diff=vnorm(&m,&er);let p=prev_diff.map(|pd|(pd/diff).ln()/2f64.ln());println!("dt_req={dt:.12e} pair_diff_V={diff:.12e} p={}",p.map(|v|format!("{v:.6}")).unwrap_or("-".into()));prev_diff=Some(diff);}
 }
