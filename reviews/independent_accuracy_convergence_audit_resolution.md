@@ -18,7 +18,7 @@ The project evidence layers remain distinct:
 
 FV convergence evidence is not WOS validation.
 
-## R3-m01 — VALID — OPEN (execution closure pending)
+## R3-m01 — VALID — CLOSED
 
 The audit correctly identified that the temporal study forms the actual executed timestep as
 
@@ -42,19 +42,19 @@ The driver now retains both requested and actual timesteps in the temporal refin
 
 No numerical values are hand-edited.
 
-The regenerated workflow run is required for closure; the expected scientific conclusion remains approximately first-order temporal convergence:
+Closure evidence: GitHub Actions run `36661249962` completed successfully at driver commit `13e9d37a59082c809e21446b631621444023152c`. The artifact reports actual-ratio temporal orders `0.999841`, `0.999780`, `1.000101`, and `0.999980`, confirming approximately first-order temporal convergence:
 
 [
 p_t approx 1.
 ]
 
-## R3-m02 — VALID — OPEN (execution closure pending)
+## R3-m02 — VALID — CLOSED
 
 The audit correctly identified that the prior workflow relied on the runner's ambient `rustc` without pinning or recording its version.
 
 The workflow now explicitly installs the stable Rust toolchain with `dtolnay/rust-toolchain@stable`, compiles with that toolchain, and records `rustc --version` into `verification/fv_convergence_results.txt` before the numerical output.
 
-The regenerated workflow run is required for closure.
+Closure evidence: GitHub Actions run `36661249962` completed successfully using `rustc 1.98.1 (48a229cea 2026-09-01)` and persisted that version in the uploaded artifact.
 
 ## R3-m03 — VALID — OPEN / NON-BLOCKING
 
@@ -96,11 +96,11 @@ No new equation identifier is required. The existing `TRISO-ACC-328–329` entry
 
 No stable equation IDs are renamed, duplicated, or renumbered.
 
-The execution-provenance note continues to reference `verification/fv_convergence.rs` and `verification/fv_convergence_results.txt`; the workflow now adds explicit compiler-version provenance to that raw evidence.
+The execution-provenance evidence is `verification/fv_convergence.rs`, post-remediation workflow run `36661249962`, and `verification/fv_convergence_results.txt`. The run used driver commit `13e9d37a59082c809e21446b631621444023152c` and Rust `1.98.1`.
 
 ## Final reconciliation state
 
-**Blocking FV findings:** none identified by this audit; R3-m01 and R3-m02 remain open only because post-remediation execution evidence is not yet connector-verifiable.
+**Blocking FV findings:** none. R3-m01 and R3-m02 are CLOSED by post-remediation GitHub Actions run `36661249962`.
 
 **Non-blocking/open findings:** R3-m03; R2-D01 remains open but isolated to the retained FTCS track; R2-B01 remains separately open for the production WOS verification track.
 
