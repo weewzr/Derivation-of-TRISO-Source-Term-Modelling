@@ -30,6 +30,19 @@ Current finding status:
 
 The canonical conservative five-layer FV route is cleared to proceed to formal accuracy/convergence analysis. The open FTCS boundary finding does not block that FV study, but it prevents treating the retained FTCS Robin benchmark as a proven second-order boundary reference.
 
+### Deterministic accuracy/convergence reconciliation
+
+Independent accuracy/convergence audit: **PASS FOR DETERMINISTIC REFERENCE / WOS COMPARISON**. Immutable audit: `reviews/independent_accuracy_convergence_audit.md`; reconciliation: `reviews/independent_accuracy_convergence_audit_resolution.md`.
+
+Current reconciliation:
+- R3-m01: **VALID — CLOSED**. Temporal observed order now uses actual executed timestep ratios.
+- R3-m02: **VALID — CLOSED**. The FV convergence workflow explicitly installs the stable Rust toolchain and records `rustc --version` in the raw execution evidence.
+- R3-m03: **VALID — OPEN / NON-BLOCKING**. Transient release-rate convergence remains deferred; no release-rate temporal convergence claim is made.
+- R2-D01: **OPEN** and remains restricted to the retained FTCS Robin benchmark; FV convergence does not close it.
+- R2-B01: **OPEN / SEPARATE** and remains a distinct production-WOS implementation-verification finding.
+
+The evidence layers remain distinct: continuous analytical reference → deterministic FV reference → production WOS verification. The deterministic FV model is cleared to serve as the numerical reference for the subsequent deterministic/analytical ↔ WOS verification stage after this reconciliation is independently checked. This FV evidence does not validate WOS.
+
 ### Numerical / WOS implementation-verification track
 
 Review 2: **FAIL — remediation required**. R2-B01 concerns executed evidence for the concrete five-layer release-time estimator. This finding is separate from the continuous-mathematics gate and is **not marked closed** here.
