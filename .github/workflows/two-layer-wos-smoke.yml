@@ -1,5 +1,11 @@
 name: Two-layer WOS epsilon smoke
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - verification/two_layer_wos_epsilon_smoke.rs
+      - .github/workflows/two-layer-wos-smoke.yml
   workflow_dispatch:
 jobs:
   smoke:
