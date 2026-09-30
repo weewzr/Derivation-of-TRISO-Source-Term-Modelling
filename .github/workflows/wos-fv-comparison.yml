@@ -34,7 +34,9 @@ jobs:
           cp verification/wos_fv_comparison.rs supervisor/crates/boon-lay/examples/wos_fv_comparison.rs
       - name: Run matched comparison
         working-directory: supervisor
-        run: cargo run -p boon-lay --example wos_fv_comparison --release | tee -a ../verification/wos_fv_comparison_results.txt
+        run: |
+          set -o pipefail
+          cargo run -p boon-lay --example wos_fv_comparison --release 2>&1 | tee -a ../verification/wos_fv_comparison_results.txt
       - uses: actions/upload-artifact@v4
         with:
           name: wos-fv-comparison-results
