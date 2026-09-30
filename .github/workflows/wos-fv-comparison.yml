@@ -2,7 +2,7 @@ name: WOS versus matched FV verification
 on:
   push:
     branches:
-      - ray/triso-foundation
+      - main
     paths:
       - verification/wos_fv_comparison.rs
       - .github/workflows/wos-fv-comparison.yml
