@@ -39,7 +39,7 @@ Current reconciliation:
 - R3-m02: **VALID — CLOSED**. Post-remediation run `36661249962` explicitly selected stable Rust and recorded `rustc 1.98.1 (48a229cea 2026-09-01)` in the raw execution evidence.
 - R3-m03: **VALID — OPEN / NON-BLOCKING**. Transient release-rate convergence remains deferred; no release-rate temporal convergence claim is made.
 - R2-D01: **OPEN** and remains restricted to the retained FTCS Robin benchmark; FV convergence does not close it.
-- R2-B01: **OPEN / SEPARATE**. Stage-A run `36669658813` executed the concrete five-layer production path but yielded `0/24` releases and `24/24` `CensoredMaxSteps` outcomes at 5,000,000 steps/history. This is diagnostic evidence only; the censoring mechanism must be localised before Stage B.
+- R2-B01: **OPEN / SEPARATE**. Stage-A remains 0/24 released at 5,000,000 steps/history. Integrated diagnostic run `36735378843` adds 8/8 censored at 1,000,000 steps: every history terminates in Buffer, none enters SiC/OPyC, and ~153k zero-time interface events/history accompany negligible deeper-stack progress. The frozen 10-nm integrated path fails the predeclared computational-usability gate; a larger ensemble or blind max-step increase is not justified.
 
 The evidence layers remain distinct: continuous analytical reference → deterministic FV reference → production WOS verification. The deterministic FV model is cleared to serve as the numerical reference for the subsequent deterministic/analytical ↔ WOS verification stage after this reconciliation is independently checked. This FV evidence does not validate WOS.
 
