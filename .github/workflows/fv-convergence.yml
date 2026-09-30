@@ -12,10 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up pinned Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
       - name: Compile standalone Rust driver
         run: rustc -O verification/fv_convergence.rs -o /tmp/fv_convergence
-      - name: Run convergence study
-        run: /tmp/fv_convergence | tee verification/fv_convergence_results.txt
+      - name: Record Rust toolchain and run convergence study
+        run: |
+          rustc --version | tee verification/fv_convergence_results.txt
+          /tmp/fv_convergence | tee -a verification/fv_convergence_results.txt
       - uses: actions/upload-artifact@v4
         with:
           name: fv-convergence-results
