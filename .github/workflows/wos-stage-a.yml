@@ -1,0 +1,45 @@
+name: WOS Stage A smoke contract
+on:
+  workflow_dispatch:
+
+jobs:
+  stage-a:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
+      SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Record provenance
+        run: |
+          echo "stage=A" | tee verification/wos_stage_a_results.txt
+          echo "research_commit=$GITHUB_SHA" | tee -a verification/wos_stage_a_results.txt
+          rustc --version | tee -a verification/wos_stage_a_results.txt
+      - name: Checkout exact supervisor source
+        run: |
+          git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
+          cd supervisor
+          git fetch --no-tags origin "$SUPERVISOR_REF"
+          git checkout --detach "$SUPERVISOR_REF"
+          echo "supervisor_commit=$(git rev-parse HEAD)" | tee -a ../verification/wos_stage_a_results.txt
+      - name: Install Stage-A harness
+        run: |
+          mkdir -p supervisor/crates/boon-lay/examples
+          cp verification/wos_stage_a_smoke.rs supervisor/crates/boon-lay/examples/wos_stage_a_smoke.rs
+      - name: Compile Stage-A harness
+        working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo check -p boon-lay --example wos_stage_a_smoke --release 2>&1 | tee -a ../verification/wos_stage_a_results.txt
+      - name: Run Stage-A smoke contract
+        working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo run -p boon-lay --example wos_stage_a_smoke --release 2>&1 | tee -a ../verification/wos_stage_a_results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wos-stage-a-results
+          path: verification/wos_stage_a_results.txt
