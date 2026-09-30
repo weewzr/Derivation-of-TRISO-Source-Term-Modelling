@@ -25,7 +25,7 @@ fn fv(r:[f64;6],d:[f64;5],m:usize)->Fv{
  let c=(0..n).map(|i|if f[i+1]<=r[1]*(1.0+1e-12){1.0/kv}else{0.0}).collect();Fv{n,v,g,gr,c}
 }
 fn dtmax(m:&Fv)->f64{let mut z=f64::INFINITY;for i in 0..m.n{let gw=if i==0{0.0}else{m.g[i-1]};let ge=if i==m.n-1{m.gr}else{m.g[i]};z=z.min(m.v[i]/(gw+ge));}z}
-fn curve(mut m:Fv,times:&[f64])->Vec<f64>{let dt=0.8*dtmax(&m);let mut out=Vec::new();let mut t=0.0;let mut rel=0.0;let mut k=0;let mut nx=vec![0.0;m.n];while k<times.len(){if t>=times[k]{out.push(rel.min(1.0));k+=1;continue}let h=dt.min(times[k]-t);let q=m.gr*m.c[m.n-1];for i in 0..m.n{let gw=if i==0{0.0}else{m.g[i-1]};let ge=if i==m.n-1{m.gr}else{m.g[i]};let w=if i==0{0.0}else{m.c[i-1]};let e=if i==m.n-1{0.0}else{m.c[i+1]};nx[i]=m.c[i]+h/m.v[i]*(gw*w-(gw+ge)*m.c[i]+if i==m.n-1{0.0}else{ge*e});}rel+=h*q;std::mem::swap(&mut m.c,&mut nx);t+=h;}out}
+fn curve(mut m:Fv,times:&[f64])->Vec<f64>{let dt=0.8*dtmax(&m);let mut out=Vec::new();let mut t:f64=0.0;let mut rel:f64=0.0;let mut k=0;let mut nx=vec![0.0;m.n];while k<times.len(){if t>=times[k]{out.push(rel.min(1.0));k+=1;continue}let h=dt.min(times[k]-t);let q=m.gr*m.c[m.n-1];for i in 0..m.n{let gw=if i==0{0.0}else{m.g[i-1]};let ge=if i==m.n-1{m.gr}else{m.g[i]};let w=if i==0{0.0}else{m.c[i-1]};let e=if i==m.n-1{0.0}else{m.c[i+1]};nx[i]=m.c[i]+h/m.v[i]*(gw*w-(gw+ge)*m.c[i]+if i==m.n-1{0.0}else{ge*e});}rel+=h*q;std::mem::swap(&mut m.c,&mut nx);t+=h;}out}
 fn main(){
  let cell=TrisoCell::new_crp6_geometry();let(r,d)=layer_data(&cell);println!("WOS_FV_COMPARISON");println!("radii_m={r:?}");println!("D_m2_s={d:?}");
  let scale=r[5]*r[5]/d.iter().copied().fold(f64::INFINITY,f64::min);let times:Vec<f64>=[0.01,0.03,0.1,0.3,1.0,3.0].iter().map(|x|x*scale).collect();let fref=curve(fv(r,d,40),&times);
