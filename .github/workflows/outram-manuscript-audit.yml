@@ -31,6 +31,8 @@ jobs:
         run: |
           rm -rf verification/tmp_candidate
           python verification/build_structured_candidate.py
+          python verification/migrate_github_math.py
+          python verification/validate_github_math_candidate.py
       - name: Stage A candidate source gate
         run: |
           python verification/stage_a_gate.py verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.md verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.tex
