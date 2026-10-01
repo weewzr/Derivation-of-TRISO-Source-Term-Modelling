@@ -1,0 +1,42 @@
+name: Outram Park manuscript render audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ray to outram park/TRISO_Source_Term_Derivation.md'
+      - 'ray to outram park/TRISO_Source_Term_Derivation.tex'
+      - 'ray to outram park/references.bib'
+      - '.github/workflows/outram-manuscript-audit.yml'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq texlive-luatex texlive-latex-extra texlive-fonts-recommended
+      - name: Compile twice
+        working-directory: ray to outram park
+        run: |
+          set -o pipefail
+          lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass1.log
+          lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass2.log
+      - name: Audit warnings
+        working-directory: ray to outram park
+        run: |
+          if grep -E 'LaTeX Warning: (Reference|Citation).*undefined|multiply defined' latex_pass2.log; then
+            echo 'Undefined reference/citation or duplicate label detected'
+            exit 1
+          fi
+          echo 'LaTeX compile/reference audit PASS'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: outram-manuscript-render-audit
+          path: |
+            ray to outram park/TRISO_Source_Term_Derivation.pdf
+            ray to outram park/latex_pass1.log
+            ray to outram park/latex_pass2.log
