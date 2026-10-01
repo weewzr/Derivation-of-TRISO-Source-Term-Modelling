@@ -1,0 +1,40 @@
+name: Two-layer finite-capture matrix reconciliation
+on:
+  push:
+    branches: [main]
+    paths:
+      - verification/two_layer_matrix_reconciliation.rs
+      - .github/workflows/two-layer-matrix-reconciliation.yml
+  workflow_dispatch:
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
+      SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: |
+          echo "research_commit=$GITHUB_SHA" | tee verification/two_layer_matrix_reconciliation_results.txt
+          echo "N=20000 s_points=0,0.25,0.5,1,2,4 norm_tol=1e-10 residual_tol=1e-10" | tee -a verification/two_layer_matrix_reconciliation_results.txt
+          rustc --version | tee -a verification/two_layer_matrix_reconciliation_results.txt
+      - run: |
+          git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
+          cd supervisor
+          git fetch --no-tags origin "$SUPERVISOR_REF"
+          git checkout --detach "$SUPERVISOR_REF"
+          echo "supervisor_commit=$(git rev-parse HEAD)" | tee -a ../verification/two_layer_matrix_reconciliation_results.txt
+      - run: |
+          mkdir -p supervisor/crates/boon-lay/examples
+          cp verification/two_layer_matrix_reconciliation.rs supervisor/crates/boon-lay/examples/two_layer_matrix_reconciliation.rs
+      - working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo run -p boon-lay --example two_layer_matrix_reconciliation --release 2>&1 | tee -a ../verification/two_layer_matrix_reconciliation_results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: two-layer-matrix-reconciliation-results
+          path: verification/two_layer_matrix_reconciliation_results.txt
