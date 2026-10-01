@@ -92,7 +92,7 @@ At N=10,000, accelerated MC SE ranges from ~0.00065 to 0.0050 away from saturati
 
 The independently accepted direct-WOS conclusion is a finite-epsilon plateau over 25–200 nm, not a privileged single epsilon and not an asymptotic epsilon→0 claim.
 
-At every observation time, F_ACCEL lies within the executed N=10,000 direct-WOS 25–200 nm band.
+F_ACCEL is statistically compatible with the executed N=10,000 direct-WOS 25–200 nm plateau at the declared precision. Literal empirical min-max containment is not exact at t=0.5 s: F_ACCEL=0.0752 versus observed direct-WOS maximum 0.0749; the 0.0003 excess is negligible relative to the relevant MC/finite-epsilon scale.
 
 For the same 100-nm direct-WOS realization:
 F_direct=[.0089,.0692,.2329,.5005,.7619,.9439,.9966,1.0].
@@ -125,7 +125,7 @@ Evidence:
 - real coupling defect exposed and corrected;
 - corrected result reproduced bit-for-bit;
 - accelerated CDF agrees with FV at MC scale;
-- accelerated CDF remains inside the independently accepted direct-WOS plateau band at all times;
+- accelerated CDF is statistically compatible with the independently accepted direct-WOS plateau at the declared precision (with the documented 0.0003 empirical-band excess at t=0.5 s);
 - zero censoring;
 - substantial event-count reduction.
 
