@@ -17021,4 +17021,95 @@ $$
 
 # 26. Verification linked to the matrix derivation
 
-[VERIFIED] Controlled two-state and four-state matrix tests are documented in TRACEABILITY.md and the canonical verification evidence. Detailed numerical values are retained in those evidence files.
+## 26.1 Controlled two-layer B/C reconciliation
+
+[VERIFIED] The explicit Process-B sample size was
+
+$
+N_B=20000.
+\tag{TRISO-VER-300}
+$
+
+At every predeclared positive transform point, define the standardized matrix discrepancy
+
+$
+z(s)=
+\frac{\Phi_B(s)-\Phi_C(s)}
+{\mathrm{SE}[\Phi_B(s)]}.
+\tag{TRISO-VER-301}
+$
+
+The executed maximum magnitude was
+
+$
+\boxed{
+\max_s|z(s)|=1.004.
+}
+\tag{TRISO-VER-302}
+$
+
+At zero transform frequency,
+
+$
+\boxed{
+\Phi_{\rm init}(0)=1
+}
+\tag{TRISO-VER-303}
+$
+
+to the predeclared numerical tolerance.
+
+Thus the deterministic matrix is compatible with the explicit exact-interface renewal at the controlled Monte-Carlo precision.
+
+## 26.2 Genuine three-layer multistate verification
+
+The controlled radii were
+
+$
+(R_1,R_2,R_3)
+=
+(50,75,100)\,\mu\mathrm m.
+\tag{TRISO-VER-304}
+$
+
+The controlled diffusivities were
+
+$
+(D_1,D_2,D_3)
+=
+(1,2,5)\times10^{-9}\,\mathrm{m^2s^{-1}}.
+\tag{TRISO-VER-305}
+$
+
+The four-state Process-B/Process-C transform comparison gave
+
+$
+\boxed{
+\max_s|z(s)|=0.729.
+}
+\tag{TRISO-VER-306}
+$
+
+Against the independently refined FV reference,
+
+$
+\boxed{
+\mathrm{RMS}(F_B-F_{FV})
+=
+1.0395\times10^{-3}.
+}
+\tag{TRISO-VER-307}
+$
+
+The maximum absolute CDF discrepancy was
+
+$
+\boxed{
+\max_t|F_B-F_{FV}|
+=
+1.7794\times10^{-3}.
+}
+\tag{TRISO-VER-308}
+$
+
+[VERIFIED] The FV spatial/time refinement changes were smaller than the stochastic uncertainty, so the continuum-reference discretization error did not dominate this comparison.
