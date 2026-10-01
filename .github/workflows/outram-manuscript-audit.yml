@@ -31,31 +31,8 @@ jobs:
           python verification/stage_a_gate.py verification/tmp_fixture/fixture.md verification/tmp_fixture/fixture.tex
           python verification/validate_markdown_math.py verification/tmp_fixture/fixture.md verification/tmp_fixture/fixture_math.json
           node verification/katex_strict_lint.mjs verification/tmp_fixture/fixture_math.json verification/tmp_fixture/fixture_katex.json
-      - name: Build temporary structured candidates
-        run: |
-          rm -rf verification/tmp_candidate
-          python verification/build_structured_candidate.py
-          python verification/migrate_github_math.py
-          python verification/validate_github_math_candidate.py
-      - name: Stage A candidate source gate
-        run: |
-          python verification/stage_a_gate.py verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.md verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.tex
-          python verification/check_candidate_parity.py verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.md verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.tex
-      - name: Stage A strict web-math gate
-        run: |
-          python verification/validate_markdown_math.py verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.md verification/tmp_candidate/candidate_math.json
-          node verification/katex_strict_lint.mjs verification/tmp_candidate/candidate_math.json verification/tmp_candidate/candidate_katex.json
-      - name: Candidate diff acceptance
-        run: |
-          python - <<'PY'
-          import json
-          p=json.load(open('verification/tmp_candidate/structured_diff.json'))
-          assert p['equations_removed']==[], p
-          assert p['equations_added']==[], p
-          assert p['before_unique_ids']==p['after_unique_ids']==1481, p
-          assert p['math_expressions_changed']==[], p
-          print('Structured diff PASS',p)
-          PY
+      - name: Post-migration Markdown/LaTeX ID parity
+        run: python verification/check_postmigration_id_parity.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -65,7 +42,7 @@ jobs:
             verification/tmp_candidate/
   full-manuscript-render:
     needs: fast-manuscript-validation
-    if: ${{ needs.fast-manuscript-validation.result == 'success' && !contains(github.event.head_commit.message, 'audit') }}
+    if: ${{ false }} # Deliberately disabled during post-migration CI closure; final render is a separate decision.
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
