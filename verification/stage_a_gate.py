@@ -16,6 +16,12 @@ def validate(paths):
    for env,code in [("cases","ENV001_UNMATCHED_CASES"),("aligned","ENV002_UNMATCHED_ALIGNED"),("matrix","ENV003_UNMATCHED_MATRIX"),("bmatrix","ENV003_UNMATCHED_MATRIX"),("pmatrix","ENV003_UNMATCHED_MATRIX")]:
     if t.count("\\begin{"+env+"}")!=t.count("\\end{"+env+"}"):
      errors.append({"code":code,"file":str(p)})
+   # Known presentation regressions: fragmented units must remain atomic math.
+   import re
+   unit_patterns=[r"\\bmol\\s+m\\$\\^",r"\\bm\\$\\^\\{?[-+]?\\d+\\}?\\$\\s+s\\$\\^"]
+   for pat in unit_patterns:
+    if re.search(pat,t):
+     errors.append({"code":"REG005_UNIT_FRAGMENTATION","file":str(p),"pattern":pat})
    for token,code in [("\\textbackslash","SER001_TEXTBACKSLASH_ARTIFACT"),("\\textasciicircum","SER002_TEXTASCIICIRCUM_ARTIFACT")]:
     if token in t:
      errors.append({"code":code,"file":str(p),"token":token})
