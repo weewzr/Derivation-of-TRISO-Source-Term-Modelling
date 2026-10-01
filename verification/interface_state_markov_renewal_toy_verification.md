@@ -1,5 +1,9 @@
 # Interface-State Renewal Minimal Analytical Verification
 
+## Status
+
+**ALGEBRAIC SANITY CHECK ONLY — NOT STOCHASTIC VALIDATION.**
+
 ## Purpose
 
 Verify the algebraic marginalisation identity before any hard five-layer transform implementation.
