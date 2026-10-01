@@ -13495,7 +13495,7 @@ $$
 
 where $E(r)$ is smooth within the material.
 
-This is stronger than the statement $\varepsilon_f=$O(h^2)$.
+This is stronger than the statement $\varepsilon_f=O(h^2)$.
 
 At the west face,
 
@@ -13713,7 +13713,7 @@ O(h^2).
 \tag{TRISO-ACC-168}
 $$
 
-Division by $V_P=$O(h)$ would then give only
+Division by $V_P=O(h)$ would then give only
 
 $$
 O(h)
@@ -14628,7 +14628,7 @@ A_R(J_R^h-J_R).
 \tag{TRISO-ACC-248}
 $$
 
-Because $A_R$ is fixed under mesh refinement and (TRISO-ACC-244) gives $J_R^h-J_R=$O(h^2)$,
+Because $A_R$ is fixed under mesh refinement and (TRISO-ACC-244) gives $J_R^h-J_R=O(h^2)$,
 
 $$
 \boxed{
@@ -14745,7 +14745,7 @@ R_B=O(\mathfrak h).
 \tag{TRISO-ACC-261}
 $$
 
-The $O(\mathfrak h^2)$ cell-average representation error divided by $R_B=$O(\mathfrak h)$ can contribute
+The $O(\mathfrak h^2)$ cell-average representation error divided by $R_B=O(\mathfrak h)$ can contribute
 
 $$
 O(\mathfrak h)
