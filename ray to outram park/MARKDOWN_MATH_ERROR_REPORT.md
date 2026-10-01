@@ -148,3 +148,31 @@ The run printed `stable_tags=0` although direct source audit confirms **1481 `\t
 R2-WOS-02: **OPEN**.
 
 R2-B01: **OPEN**.
+
+
+## Validated-candidate promotion — run 36888699218
+
+Canonical validation run **36888699218** at source head `0d63a6215e45a0bde5d737f2b90beeeba96beb41` completed successfully under the permanent two-stage architecture.
+
+Executed evidence:
+
+- Stage A `fast-manuscript-validation`: **PASS**.
+- Validator self-test and serializer fixture: **PASS**.
+- Stable equation IDs: **1481 Markdown / 1481 LaTeX**, unique and synchronized.
+- Structured diff: **0 equations added, 0 removed, 0 equation IDs changed**.
+- Strict KaTeX 0.16.22: **1498 PASS / 0 FAIL**.
+- Authorized serialization restorations only: **TRISO-ANA-270, TRISO-MR-023, TRISO-MR-024**.
+- Scientific mathematics changed: **NO**.
+- Stage B `full-manuscript-render`: **PASS**.
+- LuaLaTeX/BibTeX repeated build and final reference/citation audit: **PASS**.
+- PDF artifact: **143 pages**.
+
+The validated candidate from this run was promoted to the canonical Markdown and LaTeX deliverables without an additional normalization or regex-cleanup pass. The historical failure evidence above is retained.
+
+The programming-escape/control-character defect class demonstrated by the prior `0x09` / `0x08` corruptions is closed for the promoted candidate: the canonical promoted targets contain no forbidden control characters.
+
+The permanent build architecture remains Stage A fast validation followed by dependency-gated Stage B full render.
+
+R2-WOS-02 remains **OPEN**.
+
+R2-B01 remains **OPEN**.
