@@ -38,13 +38,13 @@ All four transient states at s=0 equal one to ~1e-14 and Phi_init(0)=1 to floati
 
 Residual criterion 1e-10: PASS.
 
-Note: the harness reports a Frobenius-norm condition estimate ||A||_F ||A^-1||_F, not an exact spectral 2-norm condition number. It is retained as a conservative conditioning diagnostic and must not be mislabeled cond_2.
+Note: the harness reports a Frobenius-norm condition estimate ||A||_F ||A^-1||_F, not an exact spectral Frobenius-norm condition estimate. It is retained as a conservative conditioning diagnostic and must not be mislabeled cond_2.
 
 ## FV refinement
 
 Fine resolved reference uses 200 cells/layer and q=0.2 timestep.
 
-Spatial F at 50,100,200 cells/layer converges consistently. Maximum 100->200 change is below ~9.2e-6.
+Spatial F at 50,100,200 cells/layer converges consistently. Maximum 100->200 change from the stored CDF arrays is 1.31488e-5.
 
 Fine timestep:
 - q=.4 dt=4.16377e-7 s
