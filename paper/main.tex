@@ -216,7 +216,7 @@ Ordinary f64 arithmetic gave
 \end{equation}
 missing the predeclared $10^{-9}$ normalization criterion. At $s=10^{-5}$ the residual was $1.138\times10^{-10}$, narrowly above the $10^{-10}$ criterion. The f64 Frobenius condition estimate is of order $10^{11}$ at $s=0$.
 
-These failures are not waived. A predeclared 50/80/120-decimal-digit high-precision cross-check using robust LU/eigen/SVD diagnostics is currently pending execution/reconciliation. No high-precision scientific conclusion is included until that evidence is executed and reviewed.
+These failures were not waived. The predeclared 50/80/120-decimal-digit high-precision cross-check has now executed successfully. At the 80-digit reference, $\\Phi_{\\rm init}(0)=1$, relative residuals are of order $10^{-85}$, $\\rho[\\bm K(0)]=0.9999999999499492888$, and robust SVD gives $\\kappa_2(I-K)\\approx5.20\\times10^{10}$. The 50-to-80 and 80-to-120 digit results converge far beyond the original criteria. This is candidate evidence that the f64 failures were conditioning error; independent review remains mandatory before inverse-Laplace work.
 
 \textbf{No inverse-Laplace recovery has been verified and no final five-layer release CDF is reported.}
 
