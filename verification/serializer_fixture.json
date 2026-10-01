@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "blocks": [
+    {"id":"FIX-SCALAR","status":"[EXACT]","prose_before":"Scalar","math":"D=D_i","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-FRAC","status":"[EXACT]","prose_before":"Fraction","math":"q=\\frac{a}{b}","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-INTEGRAL","status":"[EXACT]","prose_before":"Integral","math":"N_V=\\int_V c(\\mathbf{x},t)\\,dV","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-DERIV","status":"[EXACT]","prose_before":"Derivative","math":"\\frac{dc}{dr}=0","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-PARTIAL","status":"[EXACT]","prose_before":"Partial","math":"\\frac{\\partial c}{\\partial t}=D\\frac{\\partial^2c}{\\partial r^2}","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-VECTOR","status":"[EXACT]","prose_before":"Vector","math":"\\mathbf J=-D\\nabla c","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-BOLD","status":"[EXACT]","prose_before":"Boldsymbol regression","math":"\\boldsymbol\\Phi=\\mathbf I\\boldsymbol\\Phi","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-TO","status":"[EXACT]","prose_before":"Arrow regression","math":"r\\to0","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-GREEK","status":"[EXACT]","prose_before":"Greek","math":"\\lambda+\\theta+\\beta+\\epsilon","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-UNITS","status":"[EXACT]","prose_before":"Units","math":"[c]=\\mathrm{mol\\,m^{-3}\\,s^{-1}}","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-CASES","status":"[EXACT]","prose_before":"Cases","math":"S_{i,\\mathrm{gen}}=\\begin{cases}S_0,&0\\le r<r_1,\\\\0,&r_1<r<R.\\end{cases}","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-ALIGNED","status":"[EXACT]","prose_before":"Aligned","math":"\\begin{aligned}\\Phi&=K\\Phi+B,\\\\\\Phi-K\\Phi&=B,\\\\(I-K)\\Phi&=B,\\\\\\Phi&=(I-K)^{-1}B.\\end{aligned}","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-MATRIX","status":"[EXACT]","prose_before":"Matrix","math":"\\begin{bmatrix}a&b\\\\c&d\\end{bmatrix}","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-8X8","status":"[EXACT]","prose_before":"8x8","math":"\\mathbf K=\\begin{bmatrix}K_{00}&K_{01}&0&0&0&0&0&0\\\\K_{10}&K_{11}&K_{12}&K_{13}&0&0&0&0\\\\0&0&K_{22}&K_{23}&0&0&0&0\\\\0&0&K_{32}&K_{33}&K_{34}&K_{35}&0&0\\\\0&0&K_{42}&K_{43}&K_{44}&K_{45}&0&0\\\\0&0&0&0&K_{54}&K_{55}&K_{56}&K_{57}\\\\0&0&0&0&K_{64}&K_{65}&K_{66}&K_{67}\\\\0&0&0&0&0&0&K_{76}&K_{77}\\end{bmatrix}","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-NESTED","status":"[EXACT]","prose_before":"Nested","math":"\\left\\{\\frac{a_{i,{j+1}}}{b^{2}}\\right\\}","prose_after":"","variables":[],"traceability":[]},
+    {"id":"FIX-LONG","status":"[EXACT]","prose_before":"Long","math":"\\frac{\\partial c_i}{\\partial t}=\\frac1{r^2}\\frac{\\partial}{\\partial r}\\left(r^2D_i\\frac{\\partial c_i}{\\partial r}\\right)+S_{i,\\mathrm{gen}}-S_{i,\\mathrm{decay}}","prose_after":"","variables":[],"traceability":[]}
+  ]
+}
