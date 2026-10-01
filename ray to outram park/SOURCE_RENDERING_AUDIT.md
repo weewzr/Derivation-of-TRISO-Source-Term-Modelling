@@ -1,0 +1,73 @@
+# Source Rendering Audit
+
+Baseline recovered: `main` at `d518996918df726cfba05e984ffd2e609af7cfa3`.
+
+Scope: presentation/source remediation only. No verified scientific equation, physical model, inverse-Laplace calculation, release CDF, Method 3 model, or supervisor repository content was changed.
+
+## Whole-document artifact audit
+
+| Artifact class | Markdown found/repaired | LaTeX found/repaired | Final known count |
+|---|---:|---:|---:|
+| GitHub-incompatible inline `\\(...\\)` / residual delimiter tokens | 604 simple pairs plus 83 residual opening and 79 residual closing tokens normalized | 0 | 0 |
+| Nested asymptotic inline-math delimiters | 4 | 4 | 0 |
+| Missing backslash on Greek commands (`lambda`, `epsilon`) | 5 | 3 | 0 |
+| Missing backslash on vector/matrix command `mathbf` | 4 command starts plus associated prose occurrences | 0 after normalization | 0 |
+| Plain prose `(dt)`, `(dV)`, `(0/0)` used as mathematical notation | 4 | 0 | 0 |
+| `\\textbackslash` | 0 | 0 | 0 |
+| `\\textasciicircum` | 0 | 0 | 0 |
+| HTML remnants (`&amp;`, `&lt;`, `&gt;`, `&#x20;`) | 0 | 0 | 0 |
+
+The first simple-pair count and later residual-token counts are sequential audit counts, not additive estimates of unique original defects.
+
+## Delimiter and equation-ID audit
+
+- Markdown display `$$` state closes cleanly.
+- Markdown inline-dollar audit: 0 lines with an odd number of unescaped inline dollar delimiters outside display blocks.
+- Markdown stable displayed equation tags: **1481 total / 1481 unique**.
+- LaTeX stable displayed equation tags: **1481 total / 1481 unique**.
+- Duplicate stable equation IDs: **0** in each representation.
+- Equation loss during this remediation: **0**.
+- Scientific equation changes: **0**. All changes in this pass are classified **FORMAT ONLY**.
+
+## Representative source audit A-R
+
+| Block | Markdown human-readable | LaTeX source human-readable | Mathematics synchronized |
+|---|---|---|---|
+| A. conservation derivation | YES | YES | YES |
+| B. spherical-coordinate derivation | YES | YES | YES |
+| C. interface conditions | YES | YES | YES |
+| D. analytical eigenproblem | YES | YES | YES |
+| E. finite-volume derivation | YES | YES | YES |
+| F. centre-cell derivation | YES | YES | YES |
+| G. WOS derivation | YES | YES | YES |
+| H. centred-ball first passage | YES | YES | YES |
+| I. spherical-shell first passage | YES | YES | YES |
+| J. interface transmission | YES | YES | YES |
+| K. accelerated renewal | YES | YES | YES |
+| L. Markov-renewal state definitions | YES | YES | YES |
+| M. complete K(s) construction | YES | YES | YES |
+| N. matrix inverse derivation | YES | YES | YES |
+| O. Neumann-series interpretation | YES | YES | YES |
+| P. hard five-layer verification | YES | YES | YES |
+| Q. high-precision conditioning | YES | YES | YES |
+| R. references / traceability material | YES | YES | YES |
+
+## Tables, units, headings and paths
+
+The nomenclature table was a confirmed visible defect: it used literal `\\(...\\)` notation and escaped superscripts. It now uses GitHub inline math such as `$D_i$`, `$\\mathbf J$`, and mathematical units.
+
+Whole-source scans found no remaining `\\textbackslash`, `\\textasciicircum`, or listed HTML conversion remnants. Code/repository paths remain code/path text rather than being converted to mathematics.
+
+## Status
+
+**Markdown source-level human readability: PASS.**
+
+**LaTeX source-level human readability: PASS.**
+
+**Markdown/LaTeX equation parity: PASS (1481 / 1481 unique stable equation IDs).**
+
+This is a source-level result only. It does **not** classify the final manuscript READY. Executed CI render and visual inspection remain required.
+
+R2-WOS-02: **OPEN**.
+
+R2-B01: **OPEN**.
