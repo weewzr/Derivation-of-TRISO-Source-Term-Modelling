@@ -1474,3 +1474,12 @@
 | TRISO-MR-031 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-mr-031} | synchronized |
 | TRISO-MR-032 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-mr-032} | synchronized |
 | TRISO-MR-033 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-mr-033} | synchronized |
+| TRISO-VER-300 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-300} | synchronized |
+| TRISO-VER-301 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-301} | synchronized |
+| TRISO-VER-302 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-302} | synchronized |
+| TRISO-VER-303 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-303} | synchronized |
+| TRISO-VER-304 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-304} | synchronized |
+| TRISO-VER-305 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-305} | synchronized |
+| TRISO-VER-306 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-306} | synchronized |
+| TRISO-VER-307 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-307} | synchronized |
+| TRISO-VER-308 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-ver-308} | synchronized |
