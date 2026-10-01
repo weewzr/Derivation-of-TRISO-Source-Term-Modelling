@@ -16,6 +16,12 @@ def validate(paths):
    for env,code in [("cases","ENV001_UNMATCHED_CASES"),("aligned","ENV002_UNMATCHED_ALIGNED"),("matrix","ENV003_UNMATCHED_MATRIX"),("bmatrix","ENV003_UNMATCHED_MATRIX"),("pmatrix","ENV003_UNMATCHED_MATRIX")]:
     if t.count("\\begin{"+env+"}")!=t.count("\\end{"+env+"}"):
      errors.append({"code":code,"file":str(p)})
+   # Known inline-prose presentation regressions. These are deliberately
+   # exact/targeted strings, not an attempt to parse arbitrary mathematics.
+   prose_regressions=("$mu","$phi","(sinmu)","(cosmu)","(tanmu)","(mathbf B)","finite-(epsilon)")
+   for token in prose_regressions:
+    if token in t:
+     errors.append({"code":"REG006_INLINE_PROSE_MATH","file":str(p),"token":token})
    # Known presentation regressions: fragmented units must remain atomic math.
    import re
    unit_patterns=[r"\\bmol\\s+m\\$\\^",r"\\bm\\$\\^\\{?[-+]?\\d+\\}?\\$\\s+s\\$\\^"]
