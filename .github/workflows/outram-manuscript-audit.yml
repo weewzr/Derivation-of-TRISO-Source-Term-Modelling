@@ -23,11 +23,13 @@ jobs:
         run: |
           set -o pipefail
           lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass1.log
-          lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass2.log
+          bibtex TRISO_Source_Term_Derivation | tee bibtex.log
+          lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass3.log
+          lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass3.log
       - name: Audit warnings
         working-directory: ray to outram park
         run: |
-          if grep -E 'LaTeX Warning: (Reference|Citation).*undefined|multiply defined|ignoring duplicate destination' latex_pass2.log; then
+          if grep -E 'LaTeX Warning: (Reference|Citation).*undefined|multiply defined|ignoring duplicate destination' latex_pass3.log; then
             echo 'Undefined reference/citation, duplicate label, or duplicate PDF destination detected'
             exit 1
           fi
@@ -39,4 +41,4 @@ jobs:
           path: |
             ray to outram park/TRISO_Source_Term_Derivation.pdf
             ray to outram park/latex_pass1.log
-            ray to outram park/latex_pass2.log
+            ray to outram park/latex_pass3.log
