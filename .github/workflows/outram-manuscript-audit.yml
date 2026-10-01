@@ -18,6 +18,8 @@ jobs:
       - name: Install web-math parser
         working-directory: verification
         run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Validator self-test
+        run: python verification/test_stage_a_gate.py
       - name: Serializer fixture
         run: |
           rm -rf verification/tmp_fixture
