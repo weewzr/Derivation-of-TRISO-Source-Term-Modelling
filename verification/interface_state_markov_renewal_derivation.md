@@ -149,11 +149,15 @@ with K=1 concentration continuity, flux continuity and absorbing outer boundary.
 
 The shell transforms G are solutions of the corresponding backward generator equation D(u''+2u'/r)=s u inside each homogeneous material.
 
-By the strong Markov property, stopping the diffusion at each interface first-passage time and restarting from the production reinsertion state gives the same finite-epsilon stochastic process as the verified shell/interface renewal implementation.
+Three levels must be distinguished.
 
-The matrix equation performs only algebraic marginalisation of repeated renewal cycles. It does not alter D, interface probabilities, reinsertion radius or physical first-passage time law.
+**Level 1 — exact mathematical equivalence.** By the strong Markov property, the matrix is an exact algebraic reduction of the explicitly defined accelerated **exact-interface renewal process**: region kernels stop at the physical material interface, then the frozen transmission/reflection decision is applied with zero event time and alpha*epsilon reinsertion.
 
-Important limitation: this establishes equivalence to the frozen finite-epsilon stochastic renewal process, not automatically to the ideal epsilon->0 continuum PDE. The controlled two-layer audit supplies the existing finite-epsilon compatibility evidence.
+**Level 2 — controlled empirical compatibility.** The original production WOS is a different finite-capture process: it resolves an interface once distance <= epsilon_capture. Its stopping radius and physical stopping time therefore differ from exact-interface first hitting. Existing two-layer evidence supports compatibility at controlled precision but does not prove identity. A dedicated A/B/C reconciliation is mandatory before presenting the matrix as a replacement for finite-capture production WOS.
+
+**Level 3 — continuum relevance.** Compatibility of either finite-epsilon process with the ideal epsilon->0 divergence-form PDE is a separate claim. Existing controlled FV/WOS evidence supplies empirical support only.
+
+The matrix equation changes none of the parameters of Process B; it algebraically marginalises its repeated renewal cycles.
 
 ## 10. Release-time recovery
 
@@ -188,6 +192,7 @@ Before frozen five-layer release use:
 
 A. analytical two/three-state toy chain with closed-form geometric/renewal sum;
 B. matrix-transform result vs explicit accelerated renewal simulation in a feasible controlled regime;
+H. explicit finite-capture production WOS versus exact-interface accelerated-process reconciliation;
 C. controlled two-layer FV comparison;
 D. controlled three-layer or reduced-contrast multilayer comparison;
 E. Phi(0)=1 probability normalization;
