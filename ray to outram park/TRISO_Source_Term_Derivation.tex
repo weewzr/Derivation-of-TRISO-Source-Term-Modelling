@@ -10023,7 +10023,7 @@ O(\Delta t)+O(\Delta r),
 
 unless additional cancellation or superconvergence is demonstrated.
 
-[CORRECTION] The previous claim of $\(O(\Delta t)$+$O(\Delta r^2)$\textbackslash\{\}) for the complete Robin surface update was overstated. Only the centred first-derivative approximation was second-order.
+[CORRECTION] The previous claim of $O(\Delta t)$+$O(\Delta r^2)$ for the complete Robin surface update was overstated. Only the centred first-derivative approximation was second-order.
 
 [OPEN REVIEW FINDING R2-D01] The analytical overclaim is corrected, but the independent reviewer requires an actual grid-refinement study before this finding is closed. No global FTCS convergence order is claimed here.
 
@@ -14651,7 +14651,7 @@ O(h^3),
 
 where $E(r)$ is smooth within the material.
 
-This is stronger than the statement $\varepsilon_f=\(O(h^2)$\textbackslash\{\}).
+This is stronger than the statement $\varepsilon_f=\(O(h^2)$.
 
 At the west face,
 
@@ -14878,7 +14878,7 @@ A_w\varepsilon_w-A_e\varepsilon_e
 \label{eq:triso-acc-167}
 \end{equation}
 
-need not be $\(O(h^3)$\textbackslash\{\}).
+need not be $O(h^3)$.
 
 It may remain only
 
@@ -14888,7 +14888,7 @@ O(h^2).
 \label{eq:triso-acc-168}
 \end{equation}
 
-Division by $V_P=\(O(h)$\textbackslash\{\}) would then give only
+Division by $V_P=\(O(h)$ would then give only
 
 \begin{equation}
 O(h)
@@ -15266,7 +15266,7 @@ Thus the basic two-point harmonic/resistance interface flux is generically first
 
 \subsubsection*{18A.7.4 Special cancellation condition}
 
-The leading $\(O(h)$\textbackslash\{\}) flux error vanishes if
+The leading $O(h)$ flux error vanishes if
 
 \begin{equation}
 Q_I=O(h^3).
@@ -15372,7 +15372,7 @@ R_I
 \label{eq:triso-acc-206}
 \end{equation}
 
-Across a material discontinuity, the leading $\(O(h^2)$\textbackslash\{\}) average-representation coefficients on the two sides need not match smoothly.
+Across a material discontinuity, the leading $O(h^2)$ average-representation coefficients on the two sides need not match smoothly.
 
 Therefore, generically,
 
@@ -15518,9 +15518,9 @@ A global stability-plus-consistency argument in an appropriate integrated norm, 
 
 \textbf{[VERIFIED]} The harmonic/resistance interface flux exactly enforces one common discrete flux and therefore exact discrete conservation.
 
-\textbf{[VERIFIED]} For piecewise smooth solutions satisfying ideal concentration and flux continuity, the basic two-point point-value interface flux is generically $\(O(h)$\textbackslash\{\}) accurate.
+\textbf{[VERIFIED]} For piecewise smooth solutions satisfying ideal concentration and flux continuity, the basic two-point point-value interface flux is generically $O(h)$ accurate.
 
-\textbf{[VERIFIED]} Using exact cell averages at volume centroids does not generically improve that interface order; the canonical interface flux remains $\(O(h)$\textbackslash\{\}) unless additional cancellation occurs.
+\textbf{[VERIFIED]} Using exact cell averages at volume centroids does not generically improve that interface order; the canonical interface flux remains $O(h)$ unless additional cancellation occurs.
 
 [NOT ESTABLISHED] A second-order interface flux for unequal diffusivities.
 
@@ -15883,7 +15883,7 @@ A_R(J_R^h-J_R).
 \label{eq:triso-acc-248}
 \end{equation}
 
-Because $A_R$ is fixed under mesh refinement and (TRISO-ACC-244) gives $J_R^h-J_R=\(O(h^2)$\textbackslash\{\}),
+Because $A_R$ is fixed under mesh refinement and (TRISO-ACC-244) gives $J_R^h-J_R=\(O(h^2)$,
 
 \begin{equation}
 \boxed{
@@ -15927,7 +15927,7 @@ O(h).
 
 Therefore the outermost cell can have only first-order pointwise local truncation consistency even though the physical boundary release rate itself is second-order accurate.
 
-This is analogous to the distinction already identified at material interfaces: a lower pointwise residual in $\(O(1)$\textbackslash\{\}) special cells does not by itself determine the global solution convergence order.
+This is analogous to the distinction already identified at material interfaces: a lower pointwise residual in $O(1)$ special cells does not by itself determine the global solution convergence order.
 
 \subsubsection*{18A.8.5 Neumann and Dirichlet limiting regimes}
 
@@ -16013,7 +16013,7 @@ R_B=O(\mathfrak h).
 \label{eq:triso-acc-261}
 \end{equation}
 
-The $\(O(\mathfrak h^2)$\textbackslash\{\}) cell-average representation error divided by $R_B=\(O(\mathfrak h)$\textbackslash\{\}) can contribute
+The $O(\mathfrak h^2)$ cell-average representation error divided by $R_B=\(O(\mathfrak h)$ can contribute
 
 \begin{equation}
 O(\mathfrak h)
@@ -16029,11 +16029,11 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 \subsubsection*{18A.8.6 Robin boundary consistency status}
 
-\textbf{[VERIFIED]} For fixed finite physical transfer coefficient $0<h<\infty$, the cell-centred series-resistance Robin flux is $\(O(\mathfrak h^2)$\textbackslash\{\}) consistent under smooth OPyC data and the centroid representation assumptions.
+\textbf{[VERIFIED]} For fixed finite physical transfer coefficient $0<h<\infty$, the cell-centred series-resistance Robin flux is $O(\mathfrak h^2)$ consistent under smooth OPyC data and the centroid representation assumptions.
 
-\textbf{[VERIFIED]} The total outer release amount rate is also $\(O(\mathfrak h^2)$\textbackslash\{\}) consistent.
+\textbf{[VERIFIED]} The total outer release amount rate is also $O(\mathfrak h^2)$ consistent.
 
-\textbf{[VERIFIED]} The outer-cell pointwise time-derivative residual may be only $\(O(\mathfrak h)$\textbackslash\{\}) because the boundary amount-rate error is divided by a cell volume $\(O(\mathfrak h)$\textbackslash\{\}).
+\textbf{[VERIFIED]} The outer-cell pointwise time-derivative residual may be only $O(\mathfrak h)$ because the boundary amount-rate error is divided by a cell volume $O(\mathfrak h)$.
 
 \textbf{[VERIFIED]} The no-flux Neumann limit is recovered.
 
@@ -16045,9 +16045,9 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 The local consistency results are not uniform over the particle:
 
-\noindent\textbullet\ smooth same-material cells have conditional $\(O(\mathfrak h^2)$\textbackslash\{\}) divergence consistency;\\
-\noindent\textbullet\ a fixed number of cells adjacent to the four material interfaces can have $\(O(1)$\textbackslash\{\}) pointwise residuals under the present two-point transmission flux;\\
-\noindent\textbullet\ the outer Robin cell can have an $\(O(\mathfrak h)$\textbackslash\{\}) pointwise residual for fixed finite physical $h$.\\
+\noindent\textbullet\ smooth same-material cells have conditional $O(\mathfrak h^2)$ divergence consistency;\\
+\noindent\textbullet\ a fixed number of cells adjacent to the four material interfaces can have $O(1)$ pointwise residuals under the present two-point transmission flux;\\
+\noindent\textbullet\ the outer Robin cell can have an $O(\mathfrak h)$ pointwise residual for fixed finite physical $h$.\\
 
 A global convergence argument must therefore use a norm that respects cell volumes rather than taking the maximum pointwise residual as the only consistency measure.
 
@@ -16096,7 +16096,7 @@ V_0=O(\mathfrak h^3),
 \label{eq:triso-acc-266}
 \end{equation}
 
-because its radius is itself $\(O(\mathfrak h)$\textbackslash\{\}).
+because its radius is itself $O(\mathfrak h)$.
 
 \subsubsection*{18A.9.2 Semi-discrete error equation}
 
@@ -16345,7 +16345,7 @@ This proves semi-discrete energy stability and shows that convergence follows if
 
 Assume the number of material interfaces remains fixed at four as the mesh is refined.
 
-For $\(O(\mathfrak h^{-1})$\textbackslash\{\}) ordinary smooth cells,
+For $O(\mathfrak h^{-1})$ ordinary smooth cells,
 
 \begin{equation}
 \tau_P=O(\mathfrak h^2).
@@ -16366,7 +16366,7 @@ O(\mathfrak h^5).
 \label{eq:triso-acc-286}
 \end{equation}
 
-Summing $\(O(\mathfrak h^{-1})$\textbackslash\{\}) smooth cells gives
+Summing $O(\mathfrak h^{-1})$ smooth cells gives
 
 \begin{equation}
 O(\mathfrak h^{-1})
@@ -16539,7 +16539,7 @@ tC_T\mathfrak h^{1/2},
 \label{eq:triso-acc-303}
 \end{equation}
 
-Thus the present energy argument supports at least a \textbf{conditional $\(O(\mathfrak h^{1/2})$\textbackslash\{\}) upper-bound convergence rate in the volume-weighted norm}, given the established local residual estimates and sufficient regularity.
+Thus the present energy argument supports at least a \textbf{conditional $O(\mathfrak h^{1/2})$ upper-bound convergence rate in the volume-weighted norm}, given the established local residual estimates and sufficient regularity.
 
 This is a conservative bound, not a prediction of the observed numerical order.
 
@@ -16623,7 +16623,7 @@ Under that refinement path, temporal error should not dominate a spatial rate lo
 
 The energy estimate proves stability of the semi-discrete error equation in the $V$-norm.
 
-It does not establish that the $\(O(\mathfrak h^{1/2})$\textbackslash\{\}) bound is sharp.
+It does not establish that the $O(\mathfrak h^{1/2})$ bound is sharp.
 
 It does not establish an $L^\infty$ convergence rate.
 
@@ -16895,11 +16895,11 @@ The increase in the reported absolute residual as the time step becomes very sma
 [NOT APPLICABLE] These deterministic FV results do not validate the production WOS algorithm.
 \subsubsection*{18A.12 What has and has not been proved}
 
-\textbf{[VERIFIED]} The exact spherical cell average differs from the point value at the spherical volume centroid by $\(O(h^2)$\textbackslash\{\}) for a smooth field.
+\textbf{[VERIFIED]} The exact spherical cell average differs from the point value at the spherical volume centroid by $O(h^2)$ for a smooth field.
 
-[CONDITIONALLY VERIFIED] The two-point same-material face gradient is $\(O(h^2)$\textbackslash\{\}) consistent when the refining mesh is shape regular, adjacent cell-average representation errors vary smoothly, and the face is locally centred between representative coordinates to $\(O(h^2)$\textbackslash\{\}).
+[CONDITIONALLY VERIFIED] The two-point same-material face gradient is $O(h^2)$ consistent when the refining mesh is shape regular, adjacent cell-average representation errors vary smoothly, and the face is locally centred between representative coordinates to $O(h^2)$.
 
-[CONDITIONALLY VERIFIED] Under those same assumptions, the same-material diffusive face flux is $\(O(h^2)$\textbackslash\{\}) consistent.
+[CONDITIONALLY VERIFIED] Under those same assumptions, the same-material diffusive face flux is $O(h^2)$ consistent.
 
 [CONDITIONALLY VERIFIED] The complete smooth same-material cell divergence is $O(h^2)$ consistent when the leading $O(h^2)$ face-flux error has a smooth coefficient across neighbouring faces.
 
