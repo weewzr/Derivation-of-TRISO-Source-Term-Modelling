@@ -16219,7 +16219,7 @@ $$
 \tag{TRISO-FPT-056}
 $$
 
-As $s\rightarrow0$, $lambda\rightarrow0$.
+As $s\rightarrow0$, $\lambda\rightarrow0$.
 
 Apply TRISO-FPT-056 to TRISO-FPT-045:
 
@@ -16232,7 +16232,7 @@ G_b(r,0)
 \tag{TRISO-FPT-057}
 $$
 
-Cancel $lambda$:
+Cancel $\lambda$:
 
 $$
 \boxed{
@@ -16254,7 +16254,7 @@ G_a(r,0)
 \tag{TRISO-FPT-059}
 $$
 
-Cancel $lambda$:
+Cancel $\lambda$:
 
 $$
 \boxed{
@@ -16382,7 +16382,7 @@ P_{\rm cap}
 \tag{TRISO-WOS-025}
 $$
 
-For $a=50\,\mu\mathrm m$ and $epsilon=0.1\,\mu\mathrm m$,
+For $a=50\,\mu\mathrm m$ and $\epsilon=0.1\,\mu\mathrm m$,
 
 $$
 \frac{\epsilon}{a}=0.002.
@@ -16872,7 +16872,7 @@ $$
 \tag{TRISO-MR-022}
 $$
 
-Subtract $mathbf K\boldsymbol\Phi$ from both sides:
+Subtract $\mathbf K\boldsymbol\Phi$ from both sides:
 
 $$
 \boldsymbol\Phi
@@ -16903,7 +16903,7 @@ $$
 \tag{TRISO-MR-025}
 $$
 
-When $mathbf I-\mathbf K$ is nonsingular, left-multiply by its inverse:
+When $\mathbf I-\mathbf K$ is nonsingular, left-multiply by its inverse:
 
 $$
 (\mathbf I-\mathbf K)^{-1}
@@ -16968,9 +16968,9 @@ $$
 
 The term (mathbf B) is direct absorption without another transient renewal.
 
-The term $mathbf K\mathbf B$ is absorption after one transient renewal.
+The term $\mathbf K\mathbf B$ is absorption after one transient renewal.
 
-The term $mathbf K^2\mathbf B$ is absorption after two transient renewals.
+The term $\mathbf K^2\mathbf B$ is absorption after two transient renewals.
 
 Thus the inverse sums arbitrarily long repeated interface-renewal paths without sampling each path individually.
 
@@ -17028,7 +17028,7 @@ $$
 
 [EMPIRICAL COMPATIBILITY] Process A and Process B/C have controlled finite-(epsilon) compatibility evidence.
 
-[IMPORTANT] Neither statement is a proof of the $epsilon\rightarrow0$ continuum limit.
+[IMPORTANT] Neither statement is a proof of the $\epsilon\rightarrow0$ continuum limit.
 
 
 # 26. Verification linked to the matrix derivation
