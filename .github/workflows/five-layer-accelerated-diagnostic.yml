@@ -1,0 +1,40 @@
+name: Five-layer accelerated bounded diagnostic
+on:
+  push:
+    branches: [main]
+    paths:
+      - verification/five_layer_accelerated_diagnostic.rs
+      - .github/workflows/five-layer-accelerated-diagnostic.yml
+  workflow_dispatch:
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
+      SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: |
+          echo "research_commit=$GITHUB_SHA" | tee verification/five_layer_accelerated_diagnostic_results.txt
+          echo "N=16 max_renewals=100000 terms=2000 epsilon_nm=100 alpha=2 K=1" | tee -a verification/five_layer_accelerated_diagnostic_results.txt
+          rustc --version | tee -a verification/five_layer_accelerated_diagnostic_results.txt
+      - run: |
+          git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
+          cd supervisor
+          git fetch --no-tags origin "$SUPERVISOR_REF"
+          git checkout --detach "$SUPERVISOR_REF"
+          echo "supervisor_commit=$(git rev-parse HEAD)" | tee -a ../verification/five_layer_accelerated_diagnostic_results.txt
+      - run: |
+          mkdir -p supervisor/crates/boon-lay/examples
+          cp verification/five_layer_accelerated_diagnostic.rs supervisor/crates/boon-lay/examples/five_layer_accelerated_diagnostic.rs
+      - working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo run -p boon-lay --example five_layer_accelerated_diagnostic --release 2>&1 | tee -a ../verification/five_layer_accelerated_diagnostic_results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: five-layer-accelerated-diagnostic-results
+          path: verification/five_layer_accelerated_diagnostic_results.txt
