@@ -4,12 +4,12 @@ import json,sys
 def forbidden(s):
  return [(i,ord(c)) for i,c in enumerate(s) if ord(c)<32 and c not in "\n"]
 def md(blocks):
- out=["# Serializer compatibility fixture",""]
+ out=["# Serializer compatibility fixture","","Inline Markdown math regression: $r\\to0$ and $\\boldsymbol\\Phi$.",""]
  for b in blocks:
   out += [b["status"]+" "+b["prose_before"],"",f'**Equation {b["id"]}**',"","$$",b["math"],"$$",""]
  return "\n".join(out)
 def tex(blocks):
- out=[r"\\documentclass{article}",r"\\usepackage{amsmath,amssymb,bm}",r"\\begin{document}"]
+ out=[r"\\documentclass{article}",r"\\usepackage{amsmath,amssymb,bm}",r"\\begin{document}",r"Inline LaTeX math regression: \\(r\\to0\\) and \\(\\boldsymbol\\Phi\\)."]
  for b in blocks:
   out += [b["status"]+" "+b["prose_before"],r"\\begin{equation}",b["math"],r"\\tag{"+b["id"]+"}",r"\\end{equation}"]
  out += [r"\\end{document}"]
