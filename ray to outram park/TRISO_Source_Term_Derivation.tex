@@ -3210,7 +3210,7 @@ The outer boundary is the homogeneous Robin condition
 \label{eq:triso-sl-209}
 \end{equation}
 
-[THEOREM / STANDARD FORM] Sturm–Liouville theory provides the framework for eigenvalues and eigenfunctions of self-adjoint second-order problems. See the NIST Digital Library of Mathematical Functions, §1.13(viii), which identifies Sturm–Liouville eigenvalues/eigenfunctions and the Liouville form. \textbackslash\{\}cite\{DLMFSturmLiouville\}.
+[THEOREM / STANDARD FORM] Sturm–Liouville theory provides the framework for eigenvalues and eigenfunctions of self-adjoint second-order problems. See the NIST Digital Library of Mathematical Functions, §1.13(viii), which identifies Sturm–Liouville eigenvalues/eigenfunctions and the Liouville form. \cite{NIST_DLMF}.
 
 Because the centre endpoint has (p(0)=0), it is more precise to call this a radial \textbf{singular} Sturm–Liouville endpoint rather than an ordinary regular endpoint. The orthogonality used below can nevertheless be derived directly for the present eigenfunctions, so no stronger theorem is needed.
 
@@ -16996,7 +16996,7 @@ The backward first-exit equation is
 \label{eq:triso-fpt-004}
 \end{equation}
 
-Substitute TRISO-FPT-002:
+Substituting Eq.~\eqref{eq:triso-fpt-002} into Eq.~\eqref{eq:triso-fpt-004} gives:
 
 \begin{equation}
 D\nabla^2u=su.
@@ -17016,7 +17016,7 @@ The radial Laplacian is
 \label{eq:triso-fpt-006}
 \end{equation}
 
-Substitute into TRISO-FPT-005:
+Substituting the radial Laplacian into Eq.~\eqref{eq:triso-fpt-005} gives:
 
 \begin{equation}
 D\frac{1}{r^2}\frac{d}{dr}(r^2u')=su.
@@ -17118,7 +17118,7 @@ p_{i\rightarrow i}
 \label{eq:triso-wos-006}
 \end{equation}
 
-Substitute TRISO-WOS-005:
+Substituting Eq.~\eqref{eq:triso-wos-005} into the reflection identity gives:
 
 \begin{equation}
 p_{i\rightarrow i}
@@ -17400,7 +17400,7 @@ G_b''+\frac{2}{r}G_b'
 \label{eq:triso-fpt-030}
 \end{equation}
 
-Substitute into TRISO-FPT-022:
+Substituting the transformed derivative into Eq.~\eqref{eq:triso-fpt-022} gives:
 
 \begin{equation}
 D\frac{v''}{r}
@@ -17494,7 +17494,7 @@ v(b)=bG_b(b,s)=b.
 \label{eq:triso-fpt-041}
 \end{equation}
 
-Substitute TRISO-FPT-040:
+Substituting Eq.~\eqref{eq:triso-fpt-040} at $r=b$ gives:
 
 \begin{equation}
 b=A\sinh[\lambda(b-a)].
@@ -17799,7 +17799,7 @@ P_{\rm cap}
 \label{eq:triso-wos-023}
 \end{equation}
 
-Substitute TRISO-WOS-020 through TRISO-WOS-022:
+Substituting Eqs. (TRISO-WOS-020)–(TRISO-WOS-022) gives:
 
 \begin{equation}
 P_{\rm cap}
@@ -18635,4 +18635,6 @@ The maximum absolute CDF discrepancy was
 
 \textbf{[VERIFIED]} The FV spatial/time refinement changes were smaller than the stochastic uncertainty, so the continuum-reference discretization error did not dominate this comparison.
 
+\bibliographystyle{plain}
+\bibliography{references}
 \end{document}
