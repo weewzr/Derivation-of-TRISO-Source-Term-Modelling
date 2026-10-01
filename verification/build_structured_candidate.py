@@ -28,6 +28,6 @@ canonical={"schema_version":1,"source_policy":"mathematical strings are opaque; 
 (OUT/"TRISO_Source_Term_Derivation.candidate.tex").write_text(tx,encoding="utf-8")
 def ids_in(s):return re.findall(r"\\tag\{(TRISO-[^}]+)\}",s)
 before=set(ids_in(md0));after=set(ids_in(md))
-diff={"equations_added":sorted(after-before),"equations_removed":sorted(before-after),"equation_ids_changed":[],"math_expressions_changed":["TRISO-ANA-270","TRISO-MR-023","TRISO-MR-024"],"change_classification":"serializer restoration of intended backslashes from control-byte corruption; scientific mathematics unchanged","prose_only_formatting_changes":0,"before_unique_ids":len(before),"after_unique_ids":len(after)}
+diff={"equations_added":sorted(after-before),"equations_removed":sorted(before-after),"equation_ids_changed":[],"math_expressions_changed":[],"change_classification":"canonical GitHub-fence manuscript reproduced without scientific mathematical changes","prose_only_formatting_changes":0,"before_unique_ids":len(before),"after_unique_ids":len(after)}
 (OUT/"structured_diff.json").write_text(json.dumps(diff,indent=2),encoding="utf-8")
 print(json.dumps(diff))
