@@ -1,0 +1,24 @@
+{
+  "baseline_commit": "659cb91171743af8a16c1cd6169fd445bd4a0726",
+  "total_math_fences": 1498,
+  "fences_containing_dollars": 0,
+  "fences_containing_triso_tag": 0,
+  "fences_containing_nested_fence": 0,
+  "malformed_unclosed_math_fences": 0,
+  "stable_ids": 1481,
+  "unique_stable_ids": 1481,
+  "affected_equation_ids": [],
+  "regression_examples": [
+    "TRISO-GOV-020",
+    "TRISO-GOV-101",
+    "TRISO-GOV-102",
+    "TRISO-ANA-103",
+    "TRISO-ANA-104",
+    "TRISO-ANA-105",
+    "TRISO-ML-460",
+    "TRISO-ML-464",
+    "TRISO-ML-465",
+    "TRISO-ML-493"
+  ],
+  "scientific_equations_changed": false
+}
