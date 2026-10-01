@@ -48,7 +48,7 @@ The notation is grouped here for reference; important symbols are also defined l
 [EXACT] Begin with the amount of the conserved species inside an arbitrary fixed control volume V.
 
 $$
-N_V\(t\)=\int_V c\(\mathbf{x},t\)\,dV.
+N_V(t)=\int_V c(\mathbf{x},t)\,dV.
 \tag{TRISO-GOV-020}
 $$
 
@@ -132,7 +132,7 @@ $$
 Move the flux and source terms into one integrand:
 
 $$
-\int_V\left\(\frac{\partial c}{\partial t}+\nabla\cdot\mathbf J-S\right\)dV=0.
+\int_V\left(\frac{\partial c}{\partial t}+\nabla\cdot\mathbf J-S\right)dV=0.
 \tag{TRISO-GOV-032}
 $$
 
@@ -178,21 +178,21 @@ which matches the flux units.
 [EXACT] Substitute Fick's law into conservation:
 
 $$
-\frac{\partial c}{\partial t}+\nabla\cdot\(-D\nabla c\)=S.
+\frac{\partial c}{\partial t}+\nabla\cdot(-D\nabla c)=S.
 \tag{TRISO-GOV-038}
 $$
 
 [EXACT] Pull the minus sign through the divergence:
 
 $$
-\frac{\partial c}{\partial t}-\nabla\cdot\(D\nabla c\)=S.
+\frac{\partial c}{\partial t}-\nabla\cdot(D\nabla c)=S.
 \tag{TRISO-GOV-039}
 $$
 
 [EXACT] Rearrange:
 
 $$
-\boxed{\frac{\partial c}{\partial t}=\nabla\cdot\(D\nabla c\)+S.}
+\boxed{\frac{\partial c}{\partial t}=\nabla\cdot(D\nabla c)+S.}
 \tag{TRISO-GOV-040}
 $$
 
@@ -213,7 +213,7 @@ $$
 [EXACT] Its spherical divergence is
 
 $$
-\nabla\cdot\mathbf J=\frac1{r^2}\frac{\partial}{\partial r}\(r^2J_r\)+\frac1{r\sin\theta}\frac{\partial}{\partial\theta}\(\sin\theta J_\theta\)+\frac1{r\sin\theta}\frac{\partial J_\varphi}{\partial\varphi}.
+\nabla\cdot\mathbf J=\frac1{r^2}\frac{\partial}{\partial r}(r^2J_r)+\frac1{r\sin\theta}\frac{\partial}{\partial\theta}(\sin\theta J_\theta)+\frac1{r\sin\theta}\frac{\partial J_\varphi}{\partial\varphi}.
 \tag{TRISO-SPH-021}
 $$
 
@@ -269,7 +269,7 @@ $$
 [EXACT] Insert the zero angular fluxes into the divergence:
 
 $$
-\nabla\cdot\mathbf J=\frac1{r^2}\frac{\partial}{\partial r}\(r^2J_r\).
+\nabla\cdot\mathbf J=\frac1{r^2}\frac{\partial}{\partial r}(r^2J_r).
 \tag{TRISO-SPH-029}
 $$
 
@@ -314,21 +314,21 @@ $$
 [EXACT] Substitute \(D_i\) into the conservative equation:
 
 $$
-\frac{\partial c_i}{\partial t}=\frac1{r^2}\frac{\partial}{\partial r}\left\(r^2D_i\frac{\partial c_i}{\partial r}\right\)+S_i.
+\frac{\partial c_i}{\partial t}=\frac1{r^2}\frac{\partial}{\partial r}\left(r^2D_i\frac{\partial c_i}{\partial r}\right)+S_i.
 \tag{TRISO-SPH-035}
 $$
 
 [EXACT] Because \(D_i\) is constant with respect to \(r\), take it outside the derivative:
 
 $$
-\frac{\partial c_i}{\partial t}=\frac{D_i}{r^2}\frac{\partial}{\partial r}\left\(r^2\frac{\partial c_i}{\partial r}\right\)+S_i.
+\frac{\partial c_i}{\partial t}=\frac{D_i}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial c_i}{\partial r}\right)+S_i.
 \tag{TRISO-SPH-036}
 $$
 
 [EXACT] Apply the product rule:
 
 $$
-\frac{\partial}{\partial r}\left\(r^2\frac{\partial c_i}{\partial r}\right\)=\frac{\partial r^2}{\partial r}\frac{\partial c_i}{\partial r}+r^2\frac{\partial^2c_i}{\partial r^2}.
+\frac{\partial}{\partial r}\left(r^2\frac{\partial c_i}{\partial r}\right)=\frac{\partial r^2}{\partial r}\frac{\partial c_i}{\partial r}+r^2\frac{\partial^2c_i}{\partial r^2}.
 \tag{TRISO-SPH-037}
 $$
 
@@ -342,21 +342,21 @@ $$
 Substitute:
 
 $$
-\frac{\partial}{\partial r}\left\(r^2\frac{\partial c_i}{\partial r}\right\)=2r\frac{\partial c_i}{\partial r}+r^2\frac{\partial^2c_i}{\partial r^2}.
+\frac{\partial}{\partial r}\left(r^2\frac{\partial c_i}{\partial r}\right)=2r\frac{\partial c_i}{\partial r}+r^2\frac{\partial^2c_i}{\partial r^2}.
 \tag{TRISO-SPH-039}
 $$
 
 Divide by \(r^2\):
 
 $$
-\frac1{r^2}\frac{\partial}{\partial r}\left\(r^2\frac{\partial c_i}{\partial r}\right\)=\frac2r\frac{\partial c_i}{\partial r}+\frac{\partial^2c_i}{\partial r^2}.
+\frac1{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial c_i}{\partial r}\right)=\frac2r\frac{\partial c_i}{\partial r}+\frac{\partial^2c_i}{\partial r^2}.
 \tag{TRISO-SPH-040}
 $$
 
 Therefore:
 
 $$
-\boxed{\frac{\partial c_i}{\partial t}=D_i\left\(\frac{\partial^2c_i}{\partial r^2}+\frac2r\frac{\partial c_i}{\partial r}\right\)+S_i.}
+\boxed{\frac{\partial c_i}{\partial t}=D_i\left(\frac{\partial^2c_i}{\partial r^2}+\frac2r\frac{\partial c_i}{\partial r}\right)+S_i.}
 \tag{TRISO-SPH-041}
 $$
 
@@ -422,7 +422,7 @@ A microscopic fission-based expression such as a fission rate multiplied by a pr
 
 Suppose the tracked atoms disappear by radioactive decay independently with a constant decay probability per unit time.
 
-Let \(lambda_d\) be the decay constant:
+Let (lambda_d) be the decay constant:
 
 $$
 [\lambda_d]=\mathrm{s^{-1}}.
@@ -462,7 +462,7 @@ $$
 For a fixed volume element, \(N=c\,dV\). Therefore
 
 $$
-\frac{d\(c\,dV\)}{dt}=-\lambda_dc\,dV.
+\frac{d(c\,dV)}{dt}=-\lambda_dc\,dV.
 \tag{TRISO-GOV-109}
 $$
 
@@ -495,7 +495,7 @@ $$
 \tag{TRISO-GOV-112}
 $$
 
-[CONSTITUTIVE] The first-order decay assumption is the mathematical statement that each tracked atom has the same constant decay hazard \(lambda_d\), independent of concentration.
+[CONSTITUTIVE] The first-order decay assumption is the mathematical statement that each tracked atom has the same constant decay hazard (lambda_d), independent of concentration.
 
 [ASSUMPTION] The current base benchmark sets this decay contribution to zero:
 
@@ -738,7 +738,7 @@ This is the continuum origin of the factor 3 that later becomes the factor 6 in 
 
 Consider an infinitesimally thin spherical control volume surrounding interface \(r=r_k\).
 
-Let its inner radius be \(r_k-\varepsilon\) and its outer radius be \(r_k+\varepsilon\).
+Let its inner radius be (r_k-\varepsilon) and its outer radius be (r_k+\varepsilon).
 
 The volume is
 
@@ -747,7 +747,7 @@ V_\varepsilon
 =
 \frac{4\pi}{3}
 \left[
-\(r_k+\varepsilon\)^3-\(r_k-\varepsilon\)^3
+(r_k+\varepsilon)^3-(r_k-\varepsilon)^3
 \right].
 \tag{TRISO-INT-100}
 $$
@@ -762,18 +762,18 @@ $$
 The inward diffusive amount rate crossing the inner surface is
 
 $$
-4\pi\(r_k-\varepsilon\)^2J_{r,k}^{-}.
+4\pi(r_k-\varepsilon)^2J_{r,k}^{-}.
 \tag{TRISO-INT-102}
 $$
 
 The outward diffusive amount rate crossing the outer surface is
 
 $$
-4\pi\(r_k+\varepsilon\)^2J_{r,k}^{+}.
+4\pi(r_k+\varepsilon)^2J_{r,k}^{+}.
 \tag{TRISO-INT-103}
 $$
 
-Let \(\Gamma_k\) be any explicitly modelled interfacial inventory per unit area, and let \(g_k\) be any explicitly modelled interfacial production rate per unit area.
+Let (\Gamma_k) be any explicitly modelled interfacial inventory per unit area, and let \(g_k\) be any explicitly modelled interfacial production rate per unit area.
 
 Their units are
 
@@ -792,9 +792,9 @@ $$
 4\pi r_k^2\Gamma_k
 \right)
 =
-4\pi\(r_k-\varepsilon\)^2J_{r,k}^{-}
+4\pi(r_k-\varepsilon)^2J_{r,k}^{-}
 -
-4\pi\(r_k+\varepsilon\)^2J_{r,k}^{+}
+4\pi(r_k+\varepsilon)^2J_{r,k}^{+}
 +
 4\pi r_k^2g_k
 +
@@ -925,7 +925,7 @@ For an ideal perfectly equilibrated interface, one may impose concentration cont
 
 $$
 \boxed{
-c_k\(r_k,t\)=c_{k+1}\(r_k,t\).
+c_k(r_k,t)=c_{k+1}(r_k,t).
 }
 \tag{TRISO-INT-115}
 $$
@@ -936,14 +936,14 @@ A species-specific partition coefficient \(K_k\) instead gives a different relat
 
 $$
 \boxed{
-c_{k+1}\(r_k,t\)=K_kc_k\(r_k,t\).
+c_{k+1}(r_k,t)=K_kc_k(r_k,t).
 }
 \tag{TRISO-INT-116}
 $$
 
 The value and definition of \(K_k\) depend on the species and the two materials.
 
-[SOURCE NEEDED] Species-specific partition/solubility data if \(K_k\ne1\) is required physically.
+[SOURCE NEEDED] Species-specific partition/solubility data if (K_k\ne1) is required physically.
 
 ### 6.5 Interfacial resistance is a third, distinct model
 
@@ -972,7 +972,7 @@ This relation introduces a finite concentration jump for finite resistance.
 
 [SOURCE NEEDED] The physical interfacial-resistance law and coefficient, if such resistance is required.
 
-[ASSUMPTION] The frozen numerical benchmark uses \(K_k=1\) and no explicit interfacial resistance, so (TRISO-INT-115) and (TRISO-INT-117) are not simultaneously imposed.
+[ASSUMPTION] The frozen numerical benchmark uses (K_k=1) and no explicit interfacial resistance, so (TRISO-INT-115) and (TRISO-INT-117) are not simultaneously imposed.
 
 ### 6.6 Outer boundary conditions
 
@@ -1005,14 +1005,14 @@ c_5(R,t)=0.
 \tag{TRISO-BC-112}
 $$
 
-More generally, a prescribed surface concentration (c_b\(t\)) is
+More generally, a prescribed surface concentration (c_b(t)) is
 
 $$
-c_5(R,t)=c_b\(t\).
+c_5(R,t)=c_b(t).
 \tag{TRISO-BC-113}
 $$
 
-The absorbing case is \(c_b=0\).
+The absorbing case is (c_b=0).
 
 [ASSUMPTION] The production WOS verification benchmark uses the absorbing case.
 
@@ -1022,7 +1022,7 @@ A prescribed outward flux is written
 
 $$
 \boxed{
-J_R=J_b\(t\).
+J_R=J_b(t).
 }
 \tag{TRISO-BC-114}
 $$
@@ -1034,7 +1034,7 @@ $$
 \frac{\partial c_5}{\partial r}
 \bigg|_R
 =
-J_b\(t\).
+J_b(t).
 \tag{TRISO-BC-115}
 $$
 
@@ -1047,7 +1047,7 @@ $$
 
 #### Robin: finite external mass transfer
 
-Let the external coolant concentration be (c_\infty\(t\)).
+Let the external coolant concentration be (c_\infty(t)).
 
 [CONSTITUTIVE] A linear external mass-transfer law is
 
@@ -1056,7 +1056,7 @@ J_R
 =
 h
 \left[
-c_5(R,t)-c_\infty\(t\)
+c_5(R,t)-c_\infty(t)
 \right].
 \tag{TRISO-BC-117}
 $$
@@ -1077,7 +1077,7 @@ $$
 =
 h
 \left[
-c_5(R,t)-c_\infty\(t\)
+c_5(R,t)-c_\infty(t)
 \right].
 \tag{TRISO-BC-119}
 $$
@@ -1106,14 +1106,14 @@ $$
 For very large \(h\), a finite flux requires
 
 $$
-c_5(R,t)-c_\infty\(t\)\to0.
+c_5(R,t)-c_\infty(t)\to0.
 \tag{TRISO-BC-123}
 $$
 
 Thus the Robin condition approaches the Dirichlet condition
 
 $$
-c_5(R,t)=c_\infty\(t\).
+c_5(R,t)=c_\infty(t).
 \tag{TRISO-BC-124}
 $$
 
@@ -1243,7 +1243,7 @@ w''
 \tag{TRISO-ANA-104}
 $$
 
-Multiply by \(r^2\):
+Multiply by (r^2):
 
 $$
 r^2w''
@@ -1257,7 +1257,7 @@ $$
 Recognise the product derivative on the left. Verify it explicitly using the product rule:
 
 $$
-\frac{d}{dr}\(r^2w'\)
+\frac{d}{dr}(r^2w')
 =
 \frac{d r^2}{dr}w'
 +
@@ -1265,7 +1265,7 @@ r^2w''.
 \tag{TRISO-ANA-106}
 $$
 
-Differentiate \(r^2\):
+Differentiate (r^2):
 
 $$
 \frac{d r^2}{dr}=2r.
@@ -1275,7 +1275,7 @@ $$
 Therefore
 
 $$
-\frac{d}{dr}\(r^2w'\)
+\frac{d}{dr}(r^2w')
 =
 2rw'+r^2w''.
 \tag{TRISO-ANA-108}
@@ -1284,7 +1284,7 @@ $$
 Hence the steady equation becomes
 
 $$
-\frac{d}{dr}\(r^2w'\)
+\frac{d}{dr}(r^2w')
 =
 -\frac{S_0}{D}r^2.
 \tag{TRISO-ANA-109}
@@ -1294,7 +1294,7 @@ Integrate both sides with respect to \(r\):
 
 $$
 \int
-\frac{d}{dr}\(r^2w'\)\,dr
+\frac{d}{dr}(r^2w')\,dr
 =
 -\frac{S_0}{D}
 \int r^2\,dr.
@@ -1328,7 +1328,7 @@ $$
 
 At the centre, regularity requires (w'(0)) to remain finite.
 
-If \(A\ne0\), then division by \(r^2\) gives a term proportional to \(1/r^2\), which diverges.
+If (A\ne0), then division by (r^2) gives a term proportional to (1/r^2), which diverges.
 
 Therefore
 
@@ -1346,7 +1346,7 @@ r^2w'
 \tag{TRISO-ANA-115}
 $$
 
-For \(r>0\), divide by \(r^2\):
+For \(r>0\), divide by (r^2):
 
 $$
 w'
@@ -1392,7 +1392,7 @@ $$
 Now apply the Robin boundary condition at \(r=R\):
 
 $$
--Dw'\(R\)=hw\(R\)
+-Dw'(R)=hw(R)
 \tag{TRISO-ANA-121}
 $$
 
@@ -1401,7 +1401,7 @@ because \(c_\infty=0\) for this benchmark.
 Evaluate the derivative at \(R\):
 
 $$
-w'\(R\)
+w'(R)
 =
 -\frac{S_0R}{3D}.
 \tag{TRISO-ANA-122}
@@ -1410,7 +1410,7 @@ $$
 Multiply by (-D):
 
 $$
--Dw'\(R\)
+-Dw'(R)
 =
 \frac{S_0R}{3}.
 \tag{TRISO-ANA-123}
@@ -1419,7 +1419,7 @@ $$
 Evaluate the concentration at \(R\):
 
 $$
-w\(R\)
+w(R)
 =
 B
 -
@@ -1466,7 +1466,7 @@ $$
 Substitute \(B\) into the profile:
 
 $$
-w\(r\)
+w(r)
 =
 \frac{S_0R}{3h}
 +
@@ -1480,7 +1480,7 @@ Collect the two quadratic terms:
 
 $$
 \boxed{
-w\(r\)
+w(r)
 =
 \frac{S_0R}{3h}
 +
@@ -1583,7 +1583,7 @@ $$
 =
 4\pi R^2
 \left[
-h w\(R\)
+h w(R)
 \right].
 \tag{TRISO-ANA-136}
 $$
@@ -1593,7 +1593,7 @@ Set generation equal to release:
 $$
 \frac{4\pi R^3S_0}{3}
 =
-4\pi R^2h w\(R\).
+4\pi R^2h w(R).
 \tag{TRISO-ANA-137}
 $$
 
@@ -1602,32 +1602,32 @@ Cancel \(4\pi R^2\):
 $$
 \frac{S_0R}{3}
 =
-h w\(R\).
+h w(R).
 \tag{TRISO-ANA-138}
 $$
 
 Divide by \(h\):
 
 $$
-w\(R\)=\frac{S_0R}{3h}.
+w(R)=\frac{S_0R}{3h}.
 \tag{TRISO-ANA-139}
 $$
 
 Evaluate the analytical profile at \(r=R\):
 
 $$
-w\(R\)
+w(R)
 =
 \frac{S_0R}{3h}
 +
-\frac{S_0}{6D}\(R^2-R^2\).
+\frac{S_0}{6D}(R^2-R^2).
 \tag{TRISO-ANA-140}
 $$
 
 The second term is zero:
 
 $$
-w\(R\)
+w(R)
 =
 \frac{S_0R}{3h}.
 \tag{TRISO-ANA-141}
@@ -1656,21 +1656,21 @@ Keeping these benchmarks separate prevents source and boundary semantics from be
 
 The following transient benchmark belongs to Problem A: an initially empty homogeneous sphere with a continuing uniform source and a Robin outer boundary.
 
-The steady solution (w\(r\)) has already been obtained. We now remove the steady part so that the remaining transient problem has no source term.
+The steady solution (w(r)) has already been obtained. We now remove the steady part so that the remaining transient problem has no source term.
 
 ### 8.1 Define the transient deviation
 
 Define
 
 $$
-v(r,t)=c(r,t)-w\(r\).
+v(r,t)=c(r,t)-w(r).
 \tag{TRISO-ANA-200}
 $$
 
 Rearrange this definition:
 
 $$
-c(r,t)=v(r,t)+w\(r\).
+c(r,t)=v(r,t)+w(r).
 \tag{TRISO-ANA-201}
 $$
 
@@ -1893,7 +1893,7 @@ $$
 The steady solution has
 
 $$
-w'\(r\)=-\frac{S_0r}{3D}.
+w'(r)=-\frac{S_0r}{3D}.
 \tag{TRISO-ANA-217}
 $$
 
@@ -1927,12 +1927,12 @@ Substitute \(c=v+w\):
 $$
 -D
 \left[
-v_r(R,t)+w'\(R\)
+v_r(R,t)+w'(R)
 \right]
 =
 h
 \left[
-v(R,t)+w\(R\)
+v(R,t)+w(R)
 \right].
 \tag{TRISO-ANA-221}
 $$
@@ -1940,16 +1940,16 @@ $$
 Rearrange the transient and steady terms:
 
 $$
--Dv_r(R,t)-hw\(R\)
+-Dv_r(R,t)-hw(R)
 =
-hv(R,t)+Dw'\(R\).
+hv(R,t)+Dw'(R).
 \tag{TRISO-ANA-222}
 $$
 
 The steady solution satisfies
 
 $$
--Dw'\(R\)=hw\(R\).
+-Dw'(R)=hw(R).
 \tag{TRISO-ANA-223}
 $$
 
@@ -1981,7 +1981,7 @@ $$
 Apply the definition \(v=c-w\):
 
 $$
-v(r,0)=c(r,0)-w\(r\).
+v(r,0)=c(r,0)-w(r).
 \tag{TRISO-ANA-227}
 $$
 
@@ -1989,7 +1989,7 @@ Substitute (c(r,0)=0):
 
 $$
 \boxed{
-v(r,0)=-w\(r\).
+v(r,0)=-w(r).
 }
 \tag{TRISO-ANA-228}
 $$
@@ -2018,7 +2018,7 @@ $$
 and
 
 $$
-v(r,0)=-w\(r\).
+v(r,0)=-w(r).
 $$
 
 ## 9. Separation of variables
@@ -2028,28 +2028,28 @@ $$
 Seek a non-zero transient mode in the form
 
 $$
-v(r,t)=\phi\(r\)T\(t\).
+v(r,t)=\phi(r)T(t).
 \tag{TRISO-ANA-229}
 $$
 
 Differentiate with respect to time:
 
 $$
-v_t=\phi\(r\)T'\(t\).
+v_t=\phi(r)T'(t).
 \tag{TRISO-ANA-230}
 $$
 
 Differentiate with respect to radius:
 
 $$
-v_r=\phi'\(r\)T\(t\).
+v_r=\phi'(r)T(t).
 \tag{TRISO-ANA-231}
 $$
 
 Differentiate once more:
 
 $$
-v_{rr}=\phi''\(r\)T\(t\).
+v_{rr}=\phi''(r)T(t).
 \tag{TRISO-ANA-232}
 $$
 
@@ -2092,7 +2092,7 @@ The left side depends only on \(t\), while the right side depends only on \(r\).
 
 For one separated mode to satisfy the equation for every \(r\) and \(t\), both sides must equal the same constant.
 
-Choose the separation constant as \(-k^2\):
+Choose the separation constant as (-k^2):
 
 $$
 \frac{T'}{DT}=-k^2.
@@ -2225,7 +2225,7 @@ $$
 Absorb the constant into an arbitrary amplitude \(C_T\):
 
 $$
-T\(t\)=C_Te^{-\Lambda t}.
+T(t)=C_Te^{-\Lambda t}.
 \tag{TRISO-ANA-250}
 $$
 
@@ -2233,7 +2233,7 @@ The constant \(C_T\) can be absorbed into the spatial amplitude, so take
 
 $$
 \boxed{
-T\(t\)=e^{-\Lambda t}.
+T(t)=e^{-\Lambda t}.
 }
 \tag{TRISO-ANA-251}
 $$
@@ -2241,7 +2241,7 @@ $$
 Therefore each separated mode has the form
 
 $$
-v(r,t)=\phi\(r\)e^{-\Lambda t}.
+v(r,t)=\phi(r)e^{-\Lambda t}.
 \tag{TRISO-ANA-252}
 $$
 
@@ -2265,14 +2265,14 @@ $$
 Introduce
 
 $$
-u\(r\)=r\phi\(r\).
+u(r)=r\phi(r).
 \tag{TRISO-ANA-254}
 $$
 
 Solve the definition for (phi):
 
 $$
-\phi\(r\)=\frac{u\(r\)}{r}.
+\phi(r)=\frac{u(r)}{r}.
 \tag{TRISO-ANA-255}
 $$
 
@@ -2299,7 +2299,7 @@ n'=ru''.
 \tag{TRISO-ANA-258}
 $$
 
-Apply the quotient rule to \(n/r^2\):
+Apply the quotient rule to (n/r^2):
 
 $$
 \phi''
@@ -2308,7 +2308,7 @@ $$
 \tag{TRISO-ANA-259}
 $$
 
-Substitute \(n'=ru''\) and \(n=ru'-u\):
+Substitute (n'=ru'') and \(n=ru'-u\):
 
 $$
 \phi''
@@ -2326,7 +2326,7 @@ $$
 \tag{TRISO-ANA-261}
 $$
 
-Divide each term by \(r^4\):
+Divide each term by (r^4):
 
 $$
 \phi''
@@ -2420,15 +2420,15 @@ Therefore the real-valued solution is
 
 $$
 \boxed{
-u\(r\)=A\sin(kr)+B\cos(kr).
+u(r)=A\sin(kr)+B\cos(kr).
 }
 \tag{TRISO-ANA-269}
 $$
 
-Substitute into \(phi=u/r\):
+Substitute into (phi=u/r):
 
 $$
-\phi\(r\)
+\phi(r)
 =
 \frac{A\sin(kr)+B\cos(kr)}{r}.
 \tag{TRISO-ANA-270}
@@ -2454,7 +2454,7 @@ $$
 \tag{TRISO-ANA-272}
 $$
 
-For \(B\ne0\), this diverges.
+For (B\ne0), this diverges.
 
 A physical concentration perturbation must remain finite at the particle centre.
 
@@ -2468,16 +2468,16 @@ $$
 The eigenfunction becomes
 
 $$
-\phi\(r\)=A\frac{\sin(kr)}{r}.
+\phi(r)=A\frac{\sin(kr)}{r}.
 \tag{TRISO-ANA-274}
 $$
 
 For the sine term, use
 
 $$
-\sin(kr)=kr+O\(r^3\)
+\sin(kr)=kr+O(r^3)
 \qquad
-\(r\to0\).
+(r\to0).
 \tag{TRISO-ANA-275}
 $$
 
@@ -2486,7 +2486,7 @@ Divide by \(r\):
 $$
 \frac{\sin(kr)}{r}
 =
-k+O\(r^2\).
+k+O(r^2).
 \tag{TRISO-ANA-276}
 $$
 
@@ -2494,7 +2494,7 @@ Therefore
 
 $$
 \boxed{
-\lim_{r\to0}\phi\(r\)=Ak.
+\lim_{r\to0}\phi(r)=Ak.
 }
 \tag{TRISO-ANA-277}
 $$
@@ -2511,7 +2511,7 @@ $$
 Then the same mode may be written as
 
 $$
-\phi\(r\)=C\frac{\sin(kr)}{kr}.
+\phi(r)=C\frac{\sin(kr)}{kr}.
 \tag{TRISO-ANA-279}
 $$
 
@@ -2522,14 +2522,14 @@ The normalization is arbitrary; only the relative spatial shape matters for the 
 Start from the normalized form
 
 $$
-\phi\(r\)=C\frac{\sin(kr)}{kr}.
+\phi(r)=C\frac{\sin(kr)}{kr}.
 \tag{TRISO-ANA-280}
 $$
 
 The derivative is easier to obtain by treating (C/k) as a constant:
 
 $$
-\phi\(r\)=\frac{C}{k}\frac{\sin(kr)}{r}.
+\phi(r)=\frac{C}{k}\frac{\sin(kr)}{r}.
 \tag{TRISO-ANA-281}
 $$
 
@@ -2553,7 +2553,7 @@ Therefore
 
 $$
 \boxed{
-\phi'\(r\)
+\phi'(r)
 =
 \frac{C}{k}
 \frac{
@@ -2568,11 +2568,11 @@ $$
 At the outer boundary,
 
 $$
--D\phi'\(R\)=h\phi\(R\).
+-D\phi'(R)=h\phi(R).
 \tag{TRISO-ANA-284}
 $$
 
-Substitute (phi'\(R\)):
+Substitute (phi'(R)):
 
 $$
 -D
@@ -2583,11 +2583,11 @@ kR\cos(kR)-\sin(kR)
 R^2
 }
 =
-h\phi\(R\).
+h\phi(R).
 \tag{TRISO-ANA-285}
 $$
 
-Substitute (phi\(R\)=C\sin(kR)/(kR)):
+Substitute (phi(R)=C\sin(kR)/(kR)):
 
 $$
 -D
@@ -2604,7 +2604,7 @@ h
 \tag{TRISO-ANA-286}
 $$
 
-Multiply both sides by \(kR^2/C\), assuming \(C\ne0\):
+Multiply both sides by (kR^2/C), assuming (C\ne0):
 
 $$
 -D
@@ -2678,7 +2678,7 @@ $$
 Rearrange:
 
 $$
-\(1-\mathrm{Bi}\)\sin\mu
+(1-\mathrm{Bi})\sin\mu
 =
 \mu\cos\mu.
 \tag{TRISO-ANA-294}
@@ -2718,14 +2718,14 @@ Then \(mu=n\pi\) for integer \(n\).
 Substitute into (TRISO-ANA-293):
 
 $$
-0-n\pi\cos\(n\pi\)=0.
+0-n\pi\cos(n\pi)=0.
 \tag{TRISO-ANA-298}
 $$
 
 Because
 
 $$
-\cos\(n\pi\)=(-1)^n,
+\cos(n\pi)=(-1)^n,
 \tag{TRISO-ANA-299}
 $$
 
@@ -2740,11 +2740,11 @@ For positive \(n\), this is not zero.
 
 Therefore no positive eigenvalue is lost when dividing by (sinmu).
 
-The only simultaneous zero is \(mu=0\), which does not satisfy the positive transient-mode condition for the Robin problem with \(h>0\).
+The only simultaneous zero is (mu=0), which does not satisfy the positive transient-mode condition for the Robin problem with \(h>0\).
 
 ### 10.6 Eigenvalue definitions
 
-Let \(mu_n\) denote the positive roots of (TRISO-ANA-293).
+Let (mu_n) denote the positive roots of (TRISO-ANA-293).
 
 Then
 
@@ -2808,7 +2808,7 @@ $$
 The separated transient mode is therefore
 
 $$
-v_n(r,t)=\phi_n\(r\)e^{-\Lambda_nt}.
+v_n(r,t)=\phi_n(r)e^{-\Lambda_nt}.
 \tag{TRISO-ANA-307}
 $$
 
@@ -2827,7 +2827,7 @@ k_n^2\phi_n
 \tag{TRISO-SL-200}
 $$
 
-Multiply by \(r^2\):
+Multiply by (r^2):
 
 $$
 r^2\phi_n''
@@ -2843,7 +2843,7 @@ $$
 The first two terms are a product derivative because
 
 $$
-\frac{d}{dr}\(r^2\phi_n'\)
+\frac{d}{dr}(r^2\phi_n')
 =
 2r\phi_n'
 +
@@ -2854,7 +2854,7 @@ $$
 Therefore
 
 $$
-\frac{d}{dr}\(r^2\phi_n'\)
+\frac{d}{dr}(r^2\phi_n')
 +
 k_n^2r^2\phi_n
 =
@@ -2865,7 +2865,7 @@ $$
 Move the eigenvalue term to the other side:
 
 $$
--\frac{d}{dr}\(r^2\phi_n'\)
+-\frac{d}{dr}(r^2\phi_n')
 =
 k_n^2r^2\phi_n.
 \tag{TRISO-SL-204}
@@ -2876,28 +2876,28 @@ This is the self-adjoint Sturm–Liouville form
 $$
 -\frac{d}{dr}
 \left(
-p\(r\)\frac{d\phi_n}{dr}
+p(r)\frac{d\phi_n}{dr}
 \right)
 +
-q\(r\)\phi_n
+q(r)\phi_n
 =
-\lambda_n w\(r\)\phi_n
+\lambda_n w(r)\phi_n
 $$
 
 with the identifications
 
 $$
-p\(r\)=r^2,
+p(r)=r^2,
 \tag{TRISO-SL-205}
 $$
 
 $$
-q\(r\)=0,
+q(r)=0,
 \tag{TRISO-SL-206}
 $$
 
 $$
-w\(r\)=r^2,
+w(r)=r^2,
 \tag{TRISO-SL-207}
 $$
 
@@ -2908,16 +2908,16 @@ $$
 \tag{TRISO-SL-208}
 $$
 
-The eigenvalue in this Sturm–Liouville problem is therefore \(k_n^2\), with units \(mathrm{m^{-2}}\), not the temporal decay rate \(Lambda_n\).
+The eigenvalue in this Sturm–Liouville problem is therefore (k_n^2), with units (mathrm{m^{-2}}), not the temporal decay rate (Lambda_n).
 
-The interval is \(0<r<R\).
+The interval is (0<r<R).
 
-The centre condition is regularity of \(phi_n\), equivalent for these modes to a finite (phi_n(0)) and zero radial derivative at the centre.
+The centre condition is regularity of (phi_n), equivalent for these modes to a finite (phi_n(0)) and zero radial derivative at the centre.
 
 The outer boundary is the homogeneous Robin condition
 
 $$
--D\phi_n'\(R\)=h\phi_n\(R\).
+-D\phi_n'(R)=h\phi_n(R).
 \tag{TRISO-SL-209}
 $$
 
@@ -2927,11 +2927,11 @@ Because the centre endpoint has (p(0)=0), it is more precise to call this a radi
 
 ### 10.8 Derive orthogonality directly
 
-Take two distinct eigenfunctions \(phi_m\) and \(phi_n\) with eigenvalues \(k_m^2\) and \(k_n^2\):
+Take two distinct eigenfunctions (phi_m) and (phi_n) with eigenvalues (k_m^2) and (k_n^2):
 
 $$
 -\frac{d}{dr}
-\(r^2\phi_m'\)
+(r^2\phi_m')
 =
 k_m^2r^2\phi_m,
 \tag{TRISO-SL-210}
@@ -2941,25 +2941,25 @@ and
 
 $$
 -\frac{d}{dr}
-\(r^2\phi_n'\)
+(r^2\phi_n')
 =
 k_n^2r^2\phi_n.
 \tag{TRISO-SL-211}
 $$
 
-Multiply the first equation by \(phi_n\):
+Multiply the first equation by (phi_n):
 
 $$
--\phi_n\frac{d}{dr}\(r^2\phi_m'\)
+-\phi_n\frac{d}{dr}(r^2\phi_m')
 =
 k_m^2r^2\phi_m\phi_n.
 \tag{TRISO-SL-212}
 $$
 
-Multiply the second equation by \(phi_m\):
+Multiply the second equation by (phi_m):
 
 $$
--\phi_m\frac{d}{dr}\(r^2\phi_n'\)
+-\phi_m\frac{d}{dr}(r^2\phi_n')
 =
 k_n^2r^2\phi_m\phi_n.
 \tag{TRISO-SL-213}
@@ -2968,11 +2968,11 @@ $$
 Subtract the second equation from the first:
 
 $$
--\phi_n\frac{d}{dr}\(r^2\phi_m'\)
+-\phi_n\frac{d}{dr}(r^2\phi_m')
 +
-\phi_m\frac{d}{dr}\(r^2\phi_n'\)
+\phi_m\frac{d}{dr}(r^2\phi_n')
 =
-\(k_m^2-k_n^2\)r^2\phi_m\phi_n.
+(k_m^2-k_n^2)r^2\phi_m\phi_n.
 \tag{TRISO-SL-214}
 $$
 
@@ -2989,7 +2989,7 @@ r^2
 )
 \right]
 =
-\(k_n^2-k_m^2\)r^2\phi_m\phi_n.
+(k_n^2-k_m^2)r^2\phi_m\phi_n.
 \tag{TRISO-SL-215}
 $$
 
@@ -3007,7 +3007,7 @@ r^2
 )
 \right]dr
 =
-\(k_n^2-k_m^2\)
+(k_n^2-k_m^2)
 \int_0^R
 r^2\phi_m\phi_n\,dr.
 \tag{TRISO-SL-216}
@@ -3025,7 +3025,7 @@ r^2
 )
 \right]_0^R
 =
-\(k_n^2-k_m^2\)
+(k_n^2-k_m^2)
 \int_0^R
 r^2\phi_m\phi_n\,dr.
 \tag{TRISO-SL-217}
@@ -3034,14 +3034,14 @@ $$
 At \(r=R\), both eigenfunctions satisfy the same Robin condition:
 
 $$
-\phi_m'\(R\)=-\frac{h}{D}\phi_m\(R\),
+\phi_m'(R)=-\frac{h}{D}\phi_m(R),
 \tag{TRISO-SL-218}
 $$
 
 and
 
 $$
-\phi_n'\(R\)=-\frac{h}{D}\phi_n\(R\).
+\phi_n'(R)=-\frac{h}{D}\phi_n(R).
 \tag{TRISO-SL-219}
 $$
 
@@ -3050,9 +3050,9 @@ Therefore the outer boundary term is zero:
 $$
 R^2
 [
-\phi_m\(R\)\phi_n'\(R\)
+\phi_m(R)\phi_n'(R)
 -
-\phi_n\(R\)\phi_m'\(R\)
+\phi_n(R)\phi_m'(R)
 ]
 =0.
 \tag{TRISO-SL-220}
@@ -3077,7 +3077,7 @@ $$
 Therefore the complete boundary term is zero:
 
 $$
-\(k_n^2-k_m^2\)
+(k_n^2-k_m^2)
 \int_0^R
 r^2\phi_m\phi_n\,dr
 =
@@ -3097,7 +3097,7 @@ so
 $$
 \boxed{
 \int_0^R
-r^2\phi_m\(r\)\phi_n\(r\)\,dr
+r^2\phi_m(r)\phi_n(r)\,dr
 =
 0,
 \qquad m\ne n.
@@ -3109,39 +3109,39 @@ The weight is therefore
 
 $$
 \boxed{
-w\(r\)=r^2.
+w(r)=r^2.
 }
 \tag{TRISO-SL-225}
 $$
 
-The same \(r^2\) weight also follows directly from spherical volume \(dV=4\pi r^2dr\).
+The same (r^2) weight also follows directly from spherical volume \(dV=4\pi r^2dr\).
 
 ### 10.9 Modal coefficient projection
 
 At \(t=0\), (TRISO-ANA-228) gives
 
 $$
-v(r,0)=-w\(r\).
+v(r,0)=-w(r).
 \tag{TRISO-SL-226}
 $$
 
 Represent the initial transient as an eigenfunction series:
 
 $$
--w\(r\)
+-w(r)
 =
 \sum_{n=1}^{\infty}
-A_n\phi_n\(r\).
+A_n\phi_n(r).
 \tag{TRISO-SL-227}
 $$
 
-Multiply both sides by (r^2\phi_m\(r\)):
+Multiply both sides by (r^2\phi_m(r)):
 
 $$
--r^2w\(r\)\phi_m\(r\)
+-r^2w(r)\phi_m(r)
 =
 \sum_{n=1}^{\infty}
-A_n r^2\phi_n\(r\)\phi_m\(r\).
+A_n r^2\phi_n(r)\phi_m(r).
 \tag{TRISO-SL-228}
 $$
 
@@ -3149,16 +3149,16 @@ Integrate from (0) to \(R\):
 
 $$
 -\int_0^R
-r^2w\(r\)\phi_m\(r\)\,dr
+r^2w(r)\phi_m(r)\,dr
 =
 \sum_{n=1}^{\infty}
 A_n
 \int_0^R
-r^2\phi_n\(r\)\phi_m\(r\)\,dr.
+r^2\phi_n(r)\phi_m(r)\,dr.
 \tag{TRISO-SL-229}
 $$
 
-For \(n\ne m\), orthogonality makes the corresponding integrals zero:
+For (n\ne m), orthogonality makes the corresponding integrals zero:
 
 $$
 \int_0^R
@@ -3172,11 +3172,11 @@ The remaining \(n=m\) term is
 
 $$
 -\int_0^R
-r^2w\(r\)\phi_m\(r\)\,dr
+r^2w(r)\phi_m(r)\,dr
 =
 A_m
 \int_0^R
-r^2\phi_m\(r\)^2\,dr.
+r^2\phi_m(r)^2\,dr.
 \tag{TRISO-SL-231}
 $$
 
@@ -3189,10 +3189,10 @@ A_m
 -
 \frac{
 \int_0^R
-r^2w\(r\)\phi_m\(r\)\,dr
+r^2w(r)\phi_m(r)\,dr
 }{
 \int_0^R
-r^2\phi_m\(r\)^2\,dr
+r^2\phi_m(r)^2\,dr
 }.
 }
 \tag{TRISO-SL-232}
@@ -3207,22 +3207,22 @@ A_n
 -
 \frac{
 \int_0^R
-r^2w\(r\)\phi_n\(r\)\,dr
+r^2w(r)\phi_n(r)\,dr
 }{
 \int_0^R
-r^2\phi_n\(r\)^2\,dr
+r^2\phi_n(r)^2\,dr
 }.
 }
 \tag{TRISO-SL-233}
 $$
 
-Each mode evolves with \(e^{-\Lambda_nt}\), so
+Each mode evolves with (e^{-\Lambda_nt}), so
 
 $$
 v(r,t)
 =
 \sum_{n=1}^{\infty}
-A_n\phi_n\(r\)e^{-\Lambda_nt}.
+A_n\phi_n(r)e^{-\Lambda_nt}.
 \tag{TRISO-SL-234}
 $$
 
@@ -3232,10 +3232,10 @@ $$
 \boxed{
 c(r,t)
 =
-w\(r\)
+w(r)
 +
 \sum_{n=1}^{\infty}
-A_n\phi_n\(r\)e^{-\Lambda_nt}.
+A_n\phi_n(r)e^{-\Lambda_nt}.
 }
 \tag{TRISO-SL-235}
 $$
@@ -3261,18 +3261,18 @@ Therefore
 $$
 c(r,0)
 =
-w\(r\)
+w(r)
 +
-\sum_{n=1}^{\infty}A_n\phi_n\(r\).
+\sum_{n=1}^{\infty}A_n\phi_n(r).
 \tag{TRISO-SL-238}
 $$
 
 Using the defining expansion (TRISO-SL-227),
 
 $$
-\sum_{n=1}^{\infty}A_n\phi_n\(r\)
+\sum_{n=1}^{\infty}A_n\phi_n(r)
 =
--w\(r\).
+-w(r).
 \tag{TRISO-SL-239}
 $$
 
@@ -3285,7 +3285,7 @@ c(r,0)=0.
 \tag{TRISO-SL-240}
 $$
 
-As \(t\to\infty\), every mode with \(Lambda_n>0\) satisfies
+As \(t\to\infty\), every mode with (Lambda_n>0) satisfies
 
 $$
 e^{-\Lambda_nt}\to0.
@@ -3296,7 +3296,7 @@ Therefore, provided the modal expansion has the required convergence,
 
 $$
 \boxed{
-c(r,t)\to w\(r\).
+c(r,t)\to w(r).
 }
 \tag{TRISO-SL-242}
 $$
@@ -3317,25 +3317,25 @@ $$
 The five material regions are
 
 $$
-\Omega_1=\(r_0,r_1\)
+\Omega_1=(r_0,r_1)
 \quad\text{fuel kernel},
 \tag{TRISO-ML-301}
 $$
 
 $$
-\Omega_2=\(r_1,r_2\)
+\Omega_2=(r_1,r_2)
 \quad\text{buffer},
 \tag{TRISO-ML-302}
 $$
 
 $$
-\Omega_3=\(r_2,r_3\)
+\Omega_3=(r_2,r_3)
 \quad\text{IPyC},
 \tag{TRISO-ML-303}
 $$
 
 $$
-\Omega_4=\(r_3,r_4\)
+\Omega_4=(r_3,r_4)
 \quad\text{SiC},
 \tag{TRISO-ML-304}
 $$
@@ -3343,7 +3343,7 @@ $$
 and
 
 $$
-\Omega_5=\(r_4,r_5\)
+\Omega_5=(r_4,r_5)
 \quad\text{OPyC}.
 \tag{TRISO-ML-305}
 $$
@@ -3500,7 +3500,7 @@ $$
 Integrate again:
 
 $$
-c_1\(r\)
+c_1(r)
 =
 -\frac{S_0r^2}{6D_1}
 +A_1.
@@ -3511,7 +3511,7 @@ Hence the regular kernel profile is
 
 $$
 \boxed{
-c_1\(r\)
+c_1(r)
 =
 A_1-\frac{S_0r^2}{6D_1}.
 }
@@ -3587,7 +3587,7 @@ $$
 Integrate:
 
 $$
-c_i\(r\)=C_i\int r^{-2}dr+A_i.
+c_i(r)=C_i\int r^{-2}dr+A_i.
 \tag{TRISO-ML-330}
 $$
 
@@ -3601,7 +3601,7 @@ $$
 we obtain
 
 $$
-c_i\(r\)=A_i-\frac{C_i}{r}.
+c_i(r)=A_i-\frac{C_i}{r}.
 \tag{TRISO-ML-332}
 $$
 
@@ -3609,7 +3609,7 @@ Define \(B_i=-C_i\). Then
 
 $$
 \boxed{
-c_i\(r\)=A_i+\frac{B_i}{r},
+c_i(r)=A_i+\frac{B_i}{r},
 \qquad i=2,3,4,5.
 }
 \tag{TRISO-ML-333}
@@ -3672,7 +3672,7 @@ $$
 At steady state, with no coating source, reaction, or storage, the same total amount rate crosses every sphere outside the kernel:
 
 $$
-4\pi r^2J_r\(r\)
+4\pi r^2J_r(r)
 =
 \dot N_{\mathrm{gen}},
 \qquad r>r_1.
@@ -3682,7 +3682,7 @@ $$
 Substitute (TRISO-ML-338):
 
 $$
-4\pi r^2J_r\(r\)
+4\pi r^2J_r(r)
 =
 \frac{4\pi S_0r_1^3}{3}.
 \tag{TRISO-ML-340}
@@ -3691,7 +3691,7 @@ $$
 Cancel \(4\pi\):
 
 $$
-r^2J_r\(r\)=\frac{S_0r_1^3}{3}.
+r^2J_r(r)=\frac{S_0r_1^3}{3}.
 \tag{TRISO-ML-341}
 $$
 
@@ -3699,7 +3699,7 @@ Divide by \(r^2\):
 
 $$
 \boxed{
-J_r\(r\)=\frac{S_0r_1^3}{3r^2}.
+J_r(r)=\frac{S_0r_1^3}{3r^2}.
 }
 \tag{TRISO-ML-342}
 $$
@@ -3738,7 +3738,7 @@ $$
 Integrate from \(r\) to the outer radius \(r_i\) of that shell:
 
 $$
-\int_{c_i\(r\)}^{c_i\(r_i\)}dc_i
+\int_{c_i(r)}^{c_i(r_i)}dc_i
 =
 -\frac{S_0r_1^3}{3D_i}
 \int_r^{r_i}\rho^{-2}d\rho.
@@ -3757,7 +3757,7 @@ $$
 Therefore
 
 $$
-c_i\(r_i\)-c_i\(r\)
+c_i(r_i)-c_i(r)
 =
 -\frac{S_0r_1^3}{3D_i}
 \left(
@@ -3770,7 +3770,7 @@ Multiply by \(-1\):
 
 $$
 \boxed{
-c_i\(r\)-c_i\(r_i\)
+c_i(r)-c_i(r_i)
 =
 \frac{S_0r_1^3}{3D_i}
 \left(
@@ -3812,64 +3812,64 @@ This independently agrees with the direct shell ODE solution.
 At \(r=r_1\), flux continuity is
 
 $$
--D_1c_1'\(r_1\)
+-D_1c_1'(r_1)
 =
--D_2c_2'\(r_1\),
+-D_2c_2'(r_1),
 \tag{TRISO-ML-353}
 $$
 
 and ideal concentration continuity is
 
 $$
-c_1\(r_1\)=c_2\(r_1\).
+c_1(r_1)=c_2(r_1).
 \tag{TRISO-ML-354}
 $$
 
 At \(r=r_2\),
 
 $$
--D_2c_2'\(r_2\)
+-D_2c_2'(r_2)
 =
--D_3c_3'\(r_2\),
+-D_3c_3'(r_2),
 \tag{TRISO-ML-355}
 $$
 
 and
 
 $$
-c_2\(r_2\)=c_3\(r_2\).
+c_2(r_2)=c_3(r_2).
 \tag{TRISO-ML-356}
 $$
 
 At \(r=r_3\),
 
 $$
--D_3c_3'\(r_3\)
+-D_3c_3'(r_3)
 =
--D_4c_4'\(r_3\),
+-D_4c_4'(r_3),
 \tag{TRISO-ML-357}
 $$
 
 and
 
 $$
-c_3\(r_3\)=c_4\(r_3\).
+c_3(r_3)=c_4(r_3).
 \tag{TRISO-ML-358}
 $$
 
 At \(r=r_4\),
 
 $$
--D_4c_4'\(r_4\)
+-D_4c_4'(r_4)
 =
--D_5c_5'\(r_4\),
+-D_5c_5'(r_4),
 \tag{TRISO-ML-359}
 $$
 
 and
 
 $$
-c_4\(r_4\)=c_5\(r_4\).
+c_4(r_4)=c_5(r_4).
 \tag{TRISO-ML-360}
 $$
 
@@ -3878,7 +3878,7 @@ The flux equations are already satisfied by the common steady amount rate. The c
 Across shell \(i\),
 
 $$
-c_i\(r_{i-1}\)-c_i\(r_i\)
+c_i(r_{i-1})-c_i(r_i)
 =
 \frac{S_0r_1^3}{3D_i}
 \left(
@@ -3895,9 +3895,9 @@ Thus each inner interface concentration is obtained from the next outer interfac
 At \(R=r_5\),
 
 $$
--D_5c_5'\(R\)
+-D_5c_5'(R)
 =
-h[c_5\(R\)-c_\infty].
+h[c_5(R)-c_\infty].
 \tag{TRISO-ML-362}
 $$
 
@@ -3911,14 +3911,14 @@ $$
 Therefore
 
 $$
--D_5c_5'\(R\)=hc_5\(R\).
+-D_5c_5'(R)=hc_5(R).
 \tag{TRISO-ML-364}
 $$
 
 The common flux gives
 
 $$
--D_5c_5'\(R\)
+-D_5c_5'(R)
 =
 \frac{S_0r_1^3}{3R^2}.
 \tag{TRISO-ML-365}
@@ -3927,7 +3927,7 @@ $$
 Equate the two expressions:
 
 $$
-hc_5\(R\)
+hc_5(R)
 =
 \frac{S_0r_1^3}{3R^2}.
 \tag{TRISO-ML-366}
@@ -3937,7 +3937,7 @@ Divide by \(h\):
 
 $$
 \boxed{
-c_5\(R\)
+c_5(R)
 =
 \frac{S_0r_1^3}{3hR^2}.
 }
@@ -3947,9 +3947,9 @@ $$
 Move inward through OPyC:
 
 $$
-c_5\(r_4\)
+c_5(r_4)
 =
-c_5\(R\)
+c_5(R)
 +
 \frac{S_0r_1^3}{3D_5}
 \left(
@@ -3961,16 +3961,16 @@ $$
 Apply continuity:
 
 $$
-c_4\(r_4\)=c_5\(r_4\).
+c_4(r_4)=c_5(r_4).
 \tag{TRISO-ML-369}
 $$
 
 Move inward through SiC:
 
 $$
-c_4\(r_3\)
+c_4(r_3)
 =
-c_4\(r_4\)
+c_4(r_4)
 +
 \frac{S_0r_1^3}{3D_4}
 \left(
@@ -3982,16 +3982,16 @@ $$
 Apply continuity:
 
 $$
-c_3\(r_3\)=c_4\(r_3\).
+c_3(r_3)=c_4(r_3).
 \tag{TRISO-ML-371}
 $$
 
 Move inward through IPyC:
 
 $$
-c_3\(r_2\)
+c_3(r_2)
 =
-c_3\(r_3\)
+c_3(r_3)
 +
 \frac{S_0r_1^3}{3D_3}
 \left(
@@ -4003,16 +4003,16 @@ $$
 Apply continuity:
 
 $$
-c_2\(r_2\)=c_3\(r_2\).
+c_2(r_2)=c_3(r_2).
 \tag{TRISO-ML-373}
 $$
 
 Move inward through the buffer:
 
 $$
-c_2\(r_1\)
+c_2(r_1)
 =
-c_2\(r_2\)
+c_2(r_2)
 +
 \frac{S_0r_1^3}{3D_2}
 \left(
@@ -4024,16 +4024,16 @@ $$
 Apply continuity:
 
 $$
-c_1\(r_1\)=c_2\(r_1\).
+c_1(r_1)=c_2(r_1).
 \tag{TRISO-ML-375}
 $$
 
 From the kernel profile,
 
 $$
-c_1\(r\)-c_1\(r_1\)
+c_1(r)-c_1(r_1)
 =
-\frac{S_0}{6D_1}\(r_1^2-r^2\).
+\frac{S_0}{6D_1}(r_1^2-r^2).
 \tag{TRISO-ML-376}
 $$
 
@@ -4041,11 +4041,11 @@ Hence
 
 $$
 \boxed{
-c_1\(r\)
+c_1(r)
 =
-c_2\(r_1\)
+c_2(r_1)
 +
-\frac{S_0}{6D_1}\(r_1^2-r^2\).
+\frac{S_0}{6D_1}(r_1^2-r^2).
 }
 \tag{TRISO-ML-377}
 $$
@@ -4082,7 +4082,7 @@ $$
 Integrate from \(r_{i-1}\) to \(r_i\):
 
 $$
-c_i\(r_i\)-c_i\(r_{i-1}\)
+c_i(r_i)-c_i(r_{i-1})
 =
 -\frac{\dot N}{4\pi D_i}
 \int_{r_{i-1}}^{r_i}r^{-2}dr.
@@ -4101,7 +4101,7 @@ $$
 Therefore
 
 $$
-c_i\(r_{i-1}\)-c_i\(r_i\)
+c_i(r_{i-1})-c_i(r_i)
 =
 \dot N
 \frac1{4\pi D_i}
@@ -4129,7 +4129,7 @@ $$
 Then
 
 $$
-c_i\(r_{i-1}\)-c_i\(r_i\)=\dot N\mathcal R_i.
+c_i(r_{i-1})-c_i(r_i)=\dot N\mathcal R_i.
 \tag{TRISO-ML-385}
 $$
 
@@ -4147,14 +4147,14 @@ For external transfer,
 $$
 \dot N
 =
-4\pi R^2h[c_5\(R\)-c_\infty].
+4\pi R^2h[c_5(R)-c_\infty].
 \tag{TRISO-ML-387}
 $$
 
 Rearrange:
 
 $$
-c_5\(R\)-c_\infty
+c_5(R)-c_\infty
 =
 \dot N
 \frac1{4\pi R^2h}.
@@ -4182,7 +4182,7 @@ $$
 Because the same \(\dot N\) passes through every coating and the external film, the concentration drops add:
 
 $$
-c_2\(r_1\)-c_\infty
+c_2(r_1)-c_\infty
 =
 \dot N
 \left(
@@ -4195,7 +4195,7 @@ Thus
 
 $$
 \boxed{
-c_2\(r_1\)
+c_2(r_1)
 =
 c_\infty
 +
@@ -4219,7 +4219,7 @@ Substituting (TRISO-ML-384), (TRISO-ML-389), and (TRISO-ML-393) into (TRISO-ML-3
 The kernel itself is source-containing, so it is not represented by the same source-free shell resistance. Its centre-to-interface concentration rise is instead
 
 $$
-c_1(0)-c_1\(r_1\)
+c_1(0)-c_1(r_1)
 =
 \frac{S_0r_1^2}{6D_1}.
 \tag{TRISO-ML-394}
@@ -4234,7 +4234,7 @@ This distinction prevents a source-containing kernel from being incorrectly trea
 Let
 
 $$
-c_{i,\mathrm{ss}}\(r\)
+c_{i,\mathrm{ss}}(r)
 \tag{TRISO-ML-400}
 $$
 
@@ -4246,7 +4246,7 @@ $$
 \boxed{
 v_i(r,t)
 =
-c_i(r,t)-c_{i,\mathrm{ss}}\(r\).
+c_i(r,t)-c_{i,\mathrm{ss}}(r).
 }
 \tag{TRISO-ML-401}
 $$
@@ -4256,7 +4256,7 @@ Rearrange:
 $$
 c_i(r,t)
 =
-v_i(r,t)+c_{i,\mathrm{ss}}\(r\).
+v_i(r,t)+c_{i,\mathrm{ss}}(r).
 \tag{TRISO-ML-402}
 $$
 
@@ -4402,7 +4402,7 @@ At interface \(r=r_i\), both the full and steady solutions satisfy concentration
 
 $$
 \boxed{
-v_i\(r_i,t\)=v_{i+1}\(r_i,t\).
+v_i(r_i,t)=v_{i+1}(r_i,t).
 }
 \tag{TRISO-ML-413}
 $$
@@ -4411,9 +4411,9 @@ Both the full and steady solutions also satisfy flux continuity. Subtraction giv
 
 $$
 \boxed{
--D_iv_i'\(r_i,t\)
+-D_iv_i'(r_i,t)
 =
--D_{i+1}v_{i+1}'\(r_i,t\).
+-D_{i+1}v_{i+1}'(r_i,t).
 }
 \tag{TRISO-ML-414}
 $$
@@ -4428,9 +4428,9 @@ $$
 The steady solution satisfies
 
 $$
--D_5c_{5,\mathrm{ss}}'\(R\)
+-D_5c_{5,\mathrm{ss}}'(R)
 =
-h[c_{5,\mathrm{ss}}\(R\)-c_\infty].
+h[c_{5,\mathrm{ss}}(R)-c_\infty].
 \tag{TRISO-ML-416}
 $$
 
@@ -4456,7 +4456,7 @@ $$
 \boxed{
 v_i(r,0)
 =
--c_{i,\mathrm{ss}}\(r\).
+-c_{i,\mathrm{ss}}(r).
 }
 \tag{TRISO-ML-419}
 $$
@@ -4468,7 +4468,7 @@ For one global transient mode, assume
 $$
 v_i(r,t)
 =
-\phi_i\(r\)e^{-\Lambda t}.
+\phi_i(r)e^{-\Lambda t}.
 \tag{TRISO-ML-420}
 $$
 
@@ -4604,9 +4604,9 @@ Therefore
 
 $$
 \boxed{
-u_i\(r\)
+u_i(r)
 =
-A_i\sin\(k_ir\)+B_i\cos\(k_ir\).
+A_i\sin(k_ir)+B_i\cos(k_ir).
 }
 \tag{TRISO-ML-433}
 $$
@@ -4614,11 +4614,11 @@ $$
 In the kernel,
 
 $$
-\phi_1\(r\)=\frac{u_1\(r\)}{r}.
+\phi_1(r)=\frac{u_1(r)}{r}.
 \tag{TRISO-ML-434}
 $$
 
-The cosine contribution \(B_1\cos\(k_1r\)/r\) diverges as \(r\to0\), exactly as proved in Section 10.
+The cosine contribution \(B_1\cos(k_1r)/r\) diverges as \(r\to0\), exactly as proved in Section 10.
 
 Therefore
 
@@ -4632,7 +4632,7 @@ $$
 Thus
 
 $$
-u_1\(r\)=A_1\sin\(k_1r\).
+u_1(r)=A_1\sin(k_1r).
 \tag{TRISO-ML-436}
 $$
 
@@ -4643,16 +4643,16 @@ No coating layer contains the origin, so \(B_i\) is not forced to zero for \(i=2
 At interface \(r=r_i\),
 
 $$
-\phi_i\(r_i\)=\phi_{i+1}\(r_i\).
+\phi_i(r_i)=\phi_{i+1}(r_i).
 \tag{TRISO-ML-437}
 $$
 
 Use \(\phi_i=u_i/r\):
 
 $$
-\frac{u_i\(r_i\)}{r_i}
+\frac{u_i(r_i)}{r_i}
 =
-\frac{u_{i+1}\(r_i\)}{r_i}.
+\frac{u_{i+1}(r_i)}{r_i}.
 \tag{TRISO-ML-438}
 $$
 
@@ -4660,7 +4660,7 @@ Multiply by the common non-zero radius \(r_i\):
 
 $$
 \boxed{
-u_i\(r_i\)=u_{i+1}\(r_i\).
+u_i(r_i)=u_{i+1}(r_i).
 }
 \tag{TRISO-ML-439}
 $$
@@ -4670,16 +4670,16 @@ $$
 Start from
 
 $$
-\phi_i\(r\)=\frac{u_i\(r\)}{r}.
+\phi_i(r)=\frac{u_i(r)}{r}.
 \tag{TRISO-ML-440}
 $$
 
 Differentiate using the quotient rule:
 
 $$
-\phi_i'\(r\)
+\phi_i'(r)
 =
-\frac{ru_i'\(r\)-u_i\(r\)}{r^2}.
+\frac{ru_i'(r)-u_i(r)}{r^2}.
 \tag{TRISO-ML-441}
 $$
 
@@ -4687,11 +4687,11 @@ Separate the two terms:
 
 $$
 \boxed{
-\phi_i'\(r\)
+\phi_i'(r)
 =
-\frac{u_i'\(r\)}{r}
+\frac{u_i'(r)}{r}
 -
-\frac{u_i\(r\)}{r^2}.
+\frac{u_i(r)}{r^2}.
 }
 \tag{TRISO-ML-442}
 $$
@@ -4699,18 +4699,18 @@ $$
 Flux continuity at \(r=r_i\) is
 
 $$
--D_i\phi_i'\(r_i\)
+-D_i\phi_i'(r_i)
 =
--D_{i+1}\phi_{i+1}'\(r_i\).
+-D_{i+1}\phi_{i+1}'(r_i).
 \tag{TRISO-ML-443}
 $$
 
 Cancel the common minus sign:
 
 $$
-D_i\phi_i'\(r_i\)
+D_i\phi_i'(r_i)
 =
-D_{i+1}\phi_{i+1}'\(r_i\).
+D_{i+1}\phi_{i+1}'(r_i).
 \tag{TRISO-ML-444}
 $$
 
@@ -4719,16 +4719,16 @@ Substitute (TRISO-ML-442) on both sides:
 $$
 D_i
 \left[
-\frac{u_i'\(r_i\)}{r_i}
+\frac{u_i'(r_i)}{r_i}
 -
-\frac{u_i\(r_i\)}{r_i^2}
+\frac{u_i(r_i)}{r_i^2}
 \right]
 =
 D_{i+1}
 \left[
-\frac{u_{i+1}'\(r_i\)}{r_i}
+\frac{u_{i+1}'(r_i)}{r_i}
 -
-\frac{u_{i+1}\(r_i\)}{r_i^2}
+\frac{u_{i+1}(r_i)}{r_i^2}
 \right].
 \tag{TRISO-ML-445}
 $$
@@ -4739,12 +4739,12 @@ $$
 \boxed{
 D_i
 \left[
-u_i'\(r_i\)-\frac{u_i\(r_i\)}{r_i}
+u_i'(r_i)-\frac{u_i(r_i)}{r_i}
 \right]
 =
 D_{i+1}
 \left[
-u_{i+1}'\(r_i\)-\frac{u_{i+1}\(r_i\)}{r_i}
+u_{i+1}'(r_i)-\frac{u_{i+1}(r_i)}{r_i}
 \right].
 }
 \tag{TRISO-ML-446}
@@ -4757,25 +4757,25 @@ This is the transformed ideal flux-continuity condition.
 The transient Robin condition is
 
 $$
--D_5\phi_5'\(R\)=h\phi_5\(R\).
+-D_5\phi_5'(R)=h\phi_5(R).
 \tag{TRISO-ML-447}
 $$
 
 Use
 
 $$
-\phi_5'\(R\)
+\phi_5'(R)
 =
-\frac{u_5'\(R\)}{R}
+\frac{u_5'(R)}{R}
 -
-\frac{u_5\(R\)}{R^2},
+\frac{u_5(R)}{R^2},
 \tag{TRISO-ML-448}
 $$
 
 and
 
 $$
-\phi_5\(R\)=\frac{u_5\(R\)}{R}.
+\phi_5(R)=\frac{u_5(R)}{R}.
 \tag{TRISO-ML-449}
 $$
 
@@ -4784,12 +4784,12 @@ Substitute both:
 $$
 -D_5
 \left[
-\frac{u_5'\(R\)}{R}
+\frac{u_5'(R)}{R}
 -
-\frac{u_5\(R\)}{R^2}
+\frac{u_5(R)}{R^2}
 \right]
 =
-h\frac{u_5\(R\)}{R}.
+h\frac{u_5(R)}{R}.
 \tag{TRISO-ML-450}
 $$
 
@@ -4799,10 +4799,10 @@ $$
 \boxed{
 -D_5
 \left[
-u_5'\(R\)-\frac{u_5\(R\)}{R}
+u_5'(R)-\frac{u_5(R)}{R}
 \right]
 =
-hu_5\(R\).
+hu_5(R).
 }
 \tag{TRISO-ML-451}
 $$
@@ -4810,11 +4810,11 @@ $$
 Equivalently,
 
 $$
-D_5u_5'\(R\)
+D_5u_5'(R)
 +
 \left(
 h-\frac{D_5}{R}
-\right)u_5\(R\)
+\right)u_5(R)
 =
 0.
 \tag{TRISO-ML-452}
@@ -4825,7 +4825,7 @@ $$
 Before centre regularity, five layers would provide ten coefficients:
 
 $$
-\(A_1,B_1,A_2,B_2,A_3,B_3,A_4,B_4,A_5,B_5\).
+(A_1,B_1,A_2,B_2,A_3,B_3,A_4,B_4,A_5,B_5).
 \tag{TRISO-ML-453}
 $$
 
@@ -4844,7 +4844,7 @@ $$
 \boxed{
 \mathbf a
 =
-\(A_1,A_2,B_2,A_3,B_3,A_4,B_4,A_5,B_5\)^T.
+(A_1,A_2,B_2,A_3,B_3,A_4,B_4,A_5,B_5)^T.
 }
 \tag{TRISO-ML-455}
 $$
@@ -4863,30 +4863,30 @@ for real \(\Lambda>0\).
 For compact matrix notation, define at interface \(r=r_j\)
 
 $$
-s_{ij}=\sin\(k_ir_j\),
+s_{ij}=\sin(k_ir_j),
 \qquad
-c_{ij}=\cos\(k_ir_j\).
+c_{ij}=\cos(k_ir_j).
 \tag{TRISO-ML-457}
 $$
 
 For a sine basis term,
 
 $$
-u_i=A_i\sin\(k_ir\),
+u_i=A_i\sin(k_ir),
 \tag{TRISO-ML-458}
 $$
 
 and
 
 $$
-u_i'=A_ik_i\cos\(k_ir\).
+u_i'=A_ik_i\cos(k_ir).
 \tag{TRISO-ML-459}
 $$
 
 Therefore the transformed flux factor for the sine basis at \(r_j\) is
 
 $$
-F^{\(s\)}_{ij}
+F^{(s)}_{ij}
 =
 D_i
 \left(
@@ -4898,21 +4898,21 @@ $$
 For a cosine basis term,
 
 $$
-u_i=B_i\cos\(k_ir\),
+u_i=B_i\cos(k_ir),
 \tag{TRISO-ML-461}
 $$
 
 and
 
 $$
-u_i'=-B_ik_i\sin\(k_ir\).
+u_i'=-B_ik_i\sin(k_ir).
 \tag{TRISO-ML-462}
 $$
 
 Therefore its transformed flux factor is
 
 $$
-F^{\(c\)}_{ij}
+F^{(c)}_{ij}
 =
 D_i
 \left(
@@ -4952,7 +4952,7 @@ Write
 
 $$
 \boxed{
-\mathbf M\(\Lambda\)\mathbf a=\mathbf0.
+\mathbf M(\Lambda)\mathbf a=\mathbf0.
 }
 \tag{TRISO-ML-466}
 $$
@@ -4961,7 +4961,7 @@ The matrix dimensions are
 
 $$
 \boxed{
-\mathbf M\(\Lambda\)\in\mathbb R^{9\times9}.
+\mathbf M(\Lambda)\in\mathbb R^{9\times9}.
 }
 \tag{TRISO-ML-467}
 $$
@@ -4971,16 +4971,16 @@ Using the coefficient order in (TRISO-ML-455), rows 1–2 correspond to \(r_1\),
 The explicit matrix is
 
 $$
-\mathbf M\(\Lambda\)=
+\mathbf M(\Lambda)=
 \begin{pmatrix}
 s_{11} & -s_{21} & -c_{21} & 0 & 0 & 0 & 0 & 0 & 0\\
-F^{\(s\)}_{11} & -F^{\(s\)}_{21} & -F^{\(c\)}_{21} & 0 & 0 & 0 & 0 & 0 & 0\\
+F^{(s)}_{11} & -F^{(s)}_{21} & -F^{(c)}_{21} & 0 & 0 & 0 & 0 & 0 & 0\\
 0 & s_{22} & c_{22} & -s_{32} & -c_{32} & 0 & 0 & 0 & 0\\
-0 & F^{\(s\)}_{22} & F^{\(c\)}_{22} & -F^{\(s\)}_{32} & -F^{\(c\)}_{32} & 0 & 0 & 0 & 0\\
+0 & F^{(s)}_{22} & F^{(c)}_{22} & -F^{(s)}_{32} & -F^{(c)}_{32} & 0 & 0 & 0 & 0\\
 0 & 0 & 0 & s_{33} & c_{33} & -s_{43} & -c_{43} & 0 & 0\\
-0 & 0 & 0 & F^{\(s\)}_{33} & F^{\(c\)}_{33} & -F^{\(s\)}_{43} & -F^{\(c\)}_{43} & 0 & 0\\
+0 & 0 & 0 & F^{(s)}_{33} & F^{(c)}_{33} & -F^{(s)}_{43} & -F^{(c)}_{43} & 0 & 0\\
 0 & 0 & 0 & 0 & 0 & s_{44} & c_{44} & -s_{54} & -c_{54}\\
-0 & 0 & 0 & 0 & 0 & F^{\(s\)}_{44} & F^{\(c\)}_{44} & -F^{\(s\)}_{54} & -F^{\(c\)}_{54}\\
+0 & 0 & 0 & 0 & 0 & F^{(s)}_{44} & F^{(c)}_{44} & -F^{(s)}_{54} & -F^{(c)}_{54}\\
 0 & 0 & 0 & 0 & 0 & 0 & 0 & G_s & G_c
 \end{pmatrix}.
 \tag{TRISO-ML-468}
@@ -4993,12 +4993,12 @@ For the sine basis,
 $$
 G_s
 =
-D_5k_5\cos\(k_5R\)
+D_5k_5\cos(k_5R)
 +
 \left(
 h-\frac{D_5}{R}
 \right)
-\sin\(k_5R\).
+\sin(k_5R).
 \tag{TRISO-ML-469}
 $$
 
@@ -5007,12 +5007,12 @@ For the cosine basis,
 $$
 G_c
 =
--D_5k_5\sin\(k_5R\)
+-D_5k_5\sin(k_5R)
 +
 \left(
 h-\frac{D_5}{R}
 \right)
-\cos\(k_5R\).
+\cos(k_5R).
 \tag{TRISO-ML-470}
 $$
 
@@ -5023,7 +5023,7 @@ Centre regularity does not appear as a matrix row because it has already been us
 For a generic value of \(\Lambda\), the homogeneous system
 
 $$
-\mathbf M\(\Lambda\)\mathbf a=\mathbf0
+\mathbf M(\Lambda)\mathbf a=\mathbf0
 \tag{TRISO-ML-471}
 $$
 
@@ -5049,7 +5049,7 @@ Therefore
 
 $$
 \boxed{
-\det\mathbf M\(\Lambda\)=0.
+\det\mathbf M(\Lambda)=0.
 }
 \tag{TRISO-ML-474}
 $$
@@ -5058,7 +5058,7 @@ Define
 
 $$
 \boxed{
-F\(\Lambda\)=\det\mathbf M\(\Lambda\).
+F(\Lambda)=\det\mathbf M(\Lambda).
 }
 \tag{TRISO-ML-475}
 $$
@@ -5066,7 +5066,7 @@ $$
 The global modal decay rates are the positive roots
 
 $$
-F\(\Lambda_n\)=0.
+F(\Lambda_n)=0.
 \tag{TRISO-ML-476}
 $$
 
@@ -5163,7 +5163,7 @@ This is the conservative eigen-equation in layer \(i\).
 Define the piecewise diffusivity
 
 $$
-D\(r\)=D_i,
+D(r)=D_i,
 \qquad
 r_{i-1}<r<r_i.
 \tag{TRISO-ML-483}
@@ -5173,7 +5173,7 @@ Then the piecewise Sturm–Liouville coefficient is
 
 $$
 \boxed{
-p\(r\)=r^2D\(r\).
+p(r)=r^2D(r).
 }
 \tag{TRISO-ML-484}
 $$
@@ -5182,7 +5182,7 @@ There is no zeroth-order potential term:
 
 $$
 \boxed{
-q\(r\)=0.
+q(r)=0.
 }
 \tag{TRISO-ML-485}
 $$
@@ -5192,12 +5192,12 @@ Comparing
 $$
 -\frac{d}{dr}
 \left(
-p\(r\)\phi'
+p(r)\phi'
 \right)
 +
-q\(r\)\phi
+q(r)\phi
 =
-\Lambda w\(r\)\phi
+\Lambda w(r)\phi
 \tag{TRISO-ML-486}
 $$
 
@@ -5205,7 +5205,7 @@ with (TRISO-ML-482) shows that the weight is
 
 $$
 \boxed{
-w\(r\)=r^2.
+w(r)=r^2.
 }
 \tag{TRISO-ML-487}
 $$
@@ -5214,17 +5214,17 @@ Thus the weight \(r^2\) follows from the physical conservative eigen-equation; i
 
 ### 12.13 Layerwise Lagrange identity for two global modes
 
-Let global mode \(m\) have eigenvalue \(\Lambda_m\) and layer functions \(\phi_i^{\(m\)}\).
+Let global mode \(m\) have eigenvalue \(\Lambda_m\) and layer functions \(\phi_i^{(m)}\).
 
 In layer \(i\),
 
 $$
 -\frac{d}{dr}
 \left(
-r^2D_i\frac{d\phi_i^{\(m\)}}{dr}
+r^2D_i\frac{d\phi_i^{(m)}}{dr}
 \right)
 =
-\Lambda_m r^2\phi_i^{\(m\)}.
+\Lambda_m r^2\phi_i^{(m)}.
 \tag{TRISO-ML-488}
 $$
 
@@ -5233,67 +5233,67 @@ Let global mode \(n\) have eigenvalue \(\Lambda_n\):
 $$
 -\frac{d}{dr}
 \left(
-r^2D_i\frac{d\phi_i^{\(n\)}}{dr}
+r^2D_i\frac{d\phi_i^{(n)}}{dr}
 \right)
 =
-\Lambda_n r^2\phi_i^{\(n\)}.
+\Lambda_n r^2\phi_i^{(n)}.
 \tag{TRISO-ML-489}
 $$
 
-Multiply the \(m\)-equation by \(\phi_i^{\(n\)}\):
+Multiply the \(m\)-equation by \(\phi_i^{(n)}\):
 
 $$
--\phi_i^{\(n\)}
+-\phi_i^{(n)}
 \frac{d}{dr}
 \left(
-r^2D_i\phi_i^{\(m\)\prime}
+r^2D_i\phi_i^{(m)\prime}
 \right)
 =
 \Lambda_m r^2
-\phi_i^{\(m\)}
-\phi_i^{\(n\)}.
+\phi_i^{(m)}
+\phi_i^{(n)}.
 \tag{TRISO-ML-490}
 $$
 
-Multiply the \(n\)-equation by \(\phi_i^{\(m\)}\):
+Multiply the \(n\)-equation by \(\phi_i^{(m)}\):
 
 $$
--\phi_i^{\(m\)}
+-\phi_i^{(m)}
 \frac{d}{dr}
 \left(
-r^2D_i\phi_i^{\(n\)\prime}
+r^2D_i\phi_i^{(n)\prime}
 \right)
 =
 \Lambda_n r^2
-\phi_i^{\(m\)}
-\phi_i^{\(n\)}.
+\phi_i^{(m)}
+\phi_i^{(n)}.
 \tag{TRISO-ML-491}
 $$
 
 Subtract (TRISO-ML-491) from (TRISO-ML-490):
 
 $$
--\phi_i^{\(n\)}
+-\phi_i^{(n)}
 \frac{d}{dr}
 \left(
-r^2D_i\phi_i^{\(m\)\prime}
+r^2D_i\phi_i^{(m)\prime}
 \right)
 +
-\phi_i^{\(m\)}
+\phi_i^{(m)}
 \frac{d}{dr}
 \left(
-r^2D_i\phi_i^{\(n\)\prime}
+r^2D_i\phi_i^{(n)\prime}
 \right)
 =
-\(\Lambda_m-\Lambda_n\)
-r^2\phi_i^{\(m\)}\phi_i^{\(n\)}.
+(\Lambda_m-\Lambda_n)
+r^2\phi_i^{(m)}\phi_i^{(n)}.
 \tag{TRISO-ML-492}
 $$
 
 Define
 
 $$
-P_i\(r\)=r^2D_i.
+P_i(r)=r^2D_i.
 \tag{TRISO-ML-493}
 $$
 
@@ -5304,25 +5304,25 @@ $$
 \left[
 P_i
 \left(
-\phi_i^{\(m\)}\phi_i^{\(n\)\prime}
+\phi_i^{(m)}\phi_i^{(n)\prime}
 -
-\phi_i^{\(n\)}\phi_i^{\(m\)\prime}
+\phi_i^{(n)}\phi_i^{(m)\prime}
 \right)
 \right]
 $$
 
 $$
 =
-\phi_i^{\(m\)}
+\phi_i^{(m)}
 \frac{d}{dr}
 \left(
-P_i\phi_i^{\(n\)\prime}
+P_i\phi_i^{(n)\prime}
 \right)
 -
-\phi_i^{\(n\)}
+\phi_i^{(n)}
 \frac{d}{dr}
 \left(
-P_i\phi_i^{\(m\)\prime}
+P_i\phi_i^{(m)\prime}
 \right).
 \tag{TRISO-ML-494}
 $$
@@ -5334,14 +5334,14 @@ $$
 \left[
 r^2D_i
 \left(
-\phi_i^{\(m\)}\phi_i^{\(n\)\prime}
+\phi_i^{(m)}\phi_i^{(n)\prime}
 -
-\phi_i^{\(n\)}\phi_i^{\(m\)\prime}
+\phi_i^{(n)}\phi_i^{(m)\prime}
 \right)
 \right]
 =
-\(\Lambda_m-\Lambda_n\)
-r^2\phi_i^{\(m\)}\phi_i^{\(n\)}.
+(\Lambda_m-\Lambda_n)
+r^2\phi_i^{(m)}\phi_i^{(n)}.
 \tag{TRISO-ML-495}
 $$
 
@@ -5353,18 +5353,18 @@ $$
 \left[
 r^2D_i
 \left(
-\phi_i^{\(m\)}\phi_i^{\(n\)\prime}
+\phi_i^{(m)}\phi_i^{(n)\prime}
 -
-\phi_i^{\(n\)}\phi_i^{\(m\)\prime}
+\phi_i^{(n)}\phi_i^{(m)\prime}
 \right)
 \right]dr
 $$
 
 $$
 =
-\(\Lambda_m-\Lambda_n\)
+(\Lambda_m-\Lambda_n)
 \int_{r_{i-1}}^{r_i}
-r^2\phi_i^{\(m\)}\phi_i^{\(n\)}\,dr.
+r^2\phi_i^{(m)}\phi_i^{(n)}\,dr.
 \tag{TRISO-ML-496}
 $$
 
@@ -5374,18 +5374,18 @@ $$
 \left[
 r^2D_i
 \left(
-\phi_i^{\(m\)}\phi_i^{\(n\)\prime}
+\phi_i^{(m)}\phi_i^{(n)\prime}
 -
-\phi_i^{\(n\)}\phi_i^{\(m\)\prime}
+\phi_i^{(n)}\phi_i^{(m)\prime}
 \right)
 \right]_{r_{i-1}}^{r_i}
 $$
 
 $$
 =
-\(\Lambda_m-\Lambda_n\)
+(\Lambda_m-\Lambda_n)
 \int_{r_{i-1}}^{r_i}
-r^2\phi_i^{\(m\)}\phi_i^{\(n\)}\,dr.
+r^2\phi_i^{(m)}\phi_i^{(n)}\,dr.
 \tag{TRISO-ML-497}
 $$
 
@@ -5394,13 +5394,13 @@ $$
 Define the layer boundary expression
 
 $$
-\mathcal B_i\(r\)
+\mathcal B_i(r)
 =
 r^2D_i
 \left(
-\phi_i^{\(m\)}\phi_i^{\(n\)\prime}
+\phi_i^{(m)}\phi_i^{(n)\prime}
 -
-\phi_i^{\(n\)}\phi_i^{\(m\)\prime}
+\phi_i^{(n)}\phi_i^{(m)\prime}
 \right).
 \tag{TRISO-ML-498}
 $$
@@ -5408,13 +5408,13 @@ $$
 Equation (TRISO-ML-497) is
 
 $$
-\mathcal B_i\(r_i\)
+\mathcal B_i(r_i)
 -
-\mathcal B_i\(r_{i-1}\)
+\mathcal B_i(r_{i-1})
 =
-\(\Lambda_m-\Lambda_n\)
+(\Lambda_m-\Lambda_n)
 \int_{r_{i-1}}^{r_i}
-r^2\phi_i^{\(m\)}\phi_i^{\(n\)}\,dr.
+r^2\phi_i^{(m)}\phi_i^{(n)}\,dr.
 \tag{TRISO-ML-499}
 $$
 
@@ -5423,36 +5423,36 @@ Sum from \(i=1\) to \(5\):
 $$
 \sum_{i=1}^{5}
 \left[
-\mathcal B_i\(r_i\)
+\mathcal B_i(r_i)
 -
-\mathcal B_i\(r_{i-1}\)
+\mathcal B_i(r_{i-1})
 \right]
 $$
 
 $$
 =
-\(\Lambda_m-\Lambda_n\)
+(\Lambda_m-\Lambda_n)
 \sum_{i=1}^{5}
 \int_{r_{i-1}}^{r_i}
-r^2\phi_i^{\(m\)}\phi_i^{\(n\)}\,dr.
+r^2\phi_i^{(m)}\phi_i^{(n)}\,dr.
 \tag{TRISO-ML-500}
 $$
 
 Write the left side explicitly:
 
 $$
-\mathcal B_1\(r_1\)-\mathcal B_1(0)
+\mathcal B_1(r_1)-\mathcal B_1(0)
 +
-\mathcal B_2\(r_2\)-\mathcal B_2\(r_1\)
+\mathcal B_2(r_2)-\mathcal B_2(r_1)
 $$
 
 $$
 +
-\mathcal B_3\(r_3\)-\mathcal B_3\(r_2\)
+\mathcal B_3(r_3)-\mathcal B_3(r_2)
 +
-\mathcal B_4\(r_4\)-\mathcal B_4\(r_3\)
+\mathcal B_4(r_4)-\mathcal B_4(r_3)
 +
-\mathcal B_5\(R\)-\mathcal B_5\(r_4\).
+\mathcal B_5(R)-\mathcal B_5(r_4).
 \tag{TRISO-ML-501}
 $$
 
@@ -5462,25 +5462,25 @@ $$
 -\mathcal B_1(0)
 +
 \left[
-\mathcal B_1\(r_1\)-\mathcal B_2\(r_1\)
+\mathcal B_1(r_1)-\mathcal B_2(r_1)
 \right]
 +
 \left[
-\mathcal B_2\(r_2\)-\mathcal B_3\(r_2\)
+\mathcal B_2(r_2)-\mathcal B_3(r_2)
 \right]
 $$
 
 $$
 +
 \left[
-\mathcal B_3\(r_3\)-\mathcal B_4\(r_3\)
+\mathcal B_3(r_3)-\mathcal B_4(r_3)
 \right]
 +
 \left[
-\mathcal B_4\(r_4\)-\mathcal B_5\(r_4\)
+\mathcal B_4(r_4)-\mathcal B_5(r_4)
 \right]
 +
-\mathcal B_5\(R\).
+\mathcal B_5(R).
 \tag{TRISO-ML-502}
 $$
 
@@ -5491,13 +5491,13 @@ Consider interface \(r=r_j\) between layers \(j\) and \(j+1\).
 The contribution from the left layer is
 
 $$
-\mathcal B_j\(r_j\)
+\mathcal B_j(r_j)
 =
 r_j^2D_j
 \left[
-\phi_j^{\(m\)}\phi_j^{\(n\)\prime}
+\phi_j^{(m)}\phi_j^{(n)\prime}
 -
-\phi_j^{\(n\)}\phi_j^{\(m\)\prime}
+\phi_j^{(n)}\phi_j^{(m)\prime}
 \right]_{r_j}.
 \tag{TRISO-ML-503}
 $$
@@ -5505,13 +5505,13 @@ $$
 The contribution from the right layer enters with a minus sign:
 
 $$
--\mathcal B_{j+1}\(r_j\)
+-\mathcal B_{j+1}(r_j)
 =
 -r_j^2D_{j+1}
 \left[
-\phi_{j+1}^{\(m\)}\phi_{j+1}^{\(n\)\prime}
+\phi_{j+1}^{(m)}\phi_{j+1}^{(n)\prime}
 -
-\phi_{j+1}^{\(n\)}\phi_{j+1}^{\(m\)\prime}
+\phi_{j+1}^{(n)}\phi_{j+1}^{(m)\prime}
 \right]_{r_j}.
 \tag{TRISO-ML-504}
 $$
@@ -5519,36 +5519,36 @@ $$
 For ideal concentration continuity,
 
 $$
-\phi_j^{\(m\)}\(r_j\)
+\phi_j^{(m)}(r_j)
 =
-\phi_{j+1}^{\(m\)}\(r_j\),
+\phi_{j+1}^{(m)}(r_j),
 \tag{TRISO-ML-505}
 $$
 
 and
 
 $$
-\phi_j^{\(n\)}\(r_j\)
+\phi_j^{(n)}(r_j)
 =
-\phi_{j+1}^{\(n\)}\(r_j\).
+\phi_{j+1}^{(n)}(r_j).
 \tag{TRISO-ML-506}
 $$
 
 For ideal flux continuity,
 
 $$
-D_j\phi_j^{\(m\)\prime}\(r_j\)
+D_j\phi_j^{(m)\prime}(r_j)
 =
-D_{j+1}\phi_{j+1}^{\(m\)\prime}\(r_j\),
+D_{j+1}\phi_{j+1}^{(m)\prime}(r_j),
 \tag{TRISO-ML-507}
 $$
 
 and
 
 $$
-D_j\phi_j^{\(n\)\prime}\(r_j\)
+D_j\phi_j^{(n)\prime}(r_j)
 =
-D_{j+1}\phi_{j+1}^{\(n\)\prime}\(r_j\).
+D_{j+1}\phi_{j+1}^{(n)\prime}(r_j).
 \tag{TRISO-ML-508}
 $$
 
@@ -5556,11 +5556,11 @@ Use (TRISO-ML-505) and (TRISO-ML-508) in the first product of (TRISO-ML-503):
 
 $$
 D_j
-\phi_j^{\(m\)}
-\phi_j^{\(n\)\prime}
+\phi_j^{(m)}
+\phi_j^{(n)\prime}
 =
-\phi_{j+1}^{\(m\)}
-D_{j+1}\phi_{j+1}^{\(n\)\prime}.
+\phi_{j+1}^{(m)}
+D_{j+1}\phi_{j+1}^{(n)\prime}.
 \tag{TRISO-ML-509}
 $$
 
@@ -5568,26 +5568,26 @@ Use (TRISO-ML-506) and (TRISO-ML-507) in the second product:
 
 $$
 D_j
-\phi_j^{\(n\)}
-\phi_j^{\(m\)\prime}
+\phi_j^{(n)}
+\phi_j^{(m)\prime}
 =
-\phi_{j+1}^{\(n\)}
-D_{j+1}\phi_{j+1}^{\(m\)\prime}.
+\phi_{j+1}^{(n)}
+D_{j+1}\phi_{j+1}^{(m)\prime}.
 \tag{TRISO-ML-510}
 $$
 
 Therefore
 
 $$
-\mathcal B_j\(r_j\)
+\mathcal B_j(r_j)
 =
 r_j^2D_{j+1}
 \left[
-\phi_{j+1}^{\(m\)}
-\phi_{j+1}^{\(n\)\prime}
+\phi_{j+1}^{(m)}
+\phi_{j+1}^{(n)\prime}
 -
-\phi_{j+1}^{\(n\)}
-\phi_{j+1}^{\(m\)\prime}
+\phi_{j+1}^{(n)}
+\phi_{j+1}^{(m)\prime}
 \right].
 \tag{TRISO-ML-511}
 $$
@@ -5595,7 +5595,7 @@ $$
 The right side of (TRISO-ML-511) is exactly
 
 $$
-\mathcal B_{j+1}\(r_j\).
+\mathcal B_{j+1}(r_j).
 \tag{TRISO-ML-512}
 $$
 
@@ -5603,7 +5603,7 @@ Hence
 
 $$
 \boxed{
-\mathcal B_j\(r_j\)-\mathcal B_{j+1}\(r_j\)=0.
+\mathcal B_j(r_j)-\mathcal B_{j+1}(r_j)=0.
 }
 \tag{TRISO-ML-513}
 $$
@@ -5622,9 +5622,9 @@ $$
 \lim_{r\to0}
 r^2D_1
 \left(
-\phi_1^{\(m\)}\phi_1^{\(n\)\prime}
+\phi_1^{(m)}\phi_1^{(n)\prime}
 -
-\phi_1^{\(n\)}\phi_1^{\(m\)\prime}
+\phi_1^{(n)}\phi_1^{(m)\prime}
 \right).
 \tag{TRISO-ML-514}
 $$
@@ -5632,18 +5632,18 @@ $$
 Regularity gives finite centre values for both eigenfunctions:
 
 $$
-|\phi_1^{\(m\)}(0)|<\infty,
+|\phi_1^{(m)}(0)|<\infty,
 \qquad
-|\phi_1^{\(n\)}(0)|<\infty.
+|\phi_1^{(n)}(0)|<\infty.
 \tag{TRISO-ML-515}
 $$
 
 Spherical symmetry gives
 
 $$
-\phi_1^{\(m\)\prime}(0)=0,
+\phi_1^{(m)\prime}(0)=0,
 \qquad
-\phi_1^{\(n\)\prime}(0)=0.
+\phi_1^{(n)\prime}(0)=0.
 \tag{TRISO-ML-516}
 $$
 
@@ -5654,7 +5654,7 @@ Since
 $$
 r^2D_1\to0
 \qquad
-\(r\to0\),
+(r\to0),
 \tag{TRISO-ML-517}
 $$
 
@@ -5672,13 +5672,13 @@ $$
 At \(r=R\),
 
 $$
-\mathcal B_5\(R\)
+\mathcal B_5(R)
 =
 R^2D_5
 \left[
-\phi_5^{\(m\)}\(R\)\phi_5^{\(n\)\prime}\(R\)
+\phi_5^{(m)}(R)\phi_5^{(n)\prime}(R)
 -
-\phi_5^{\(n\)}\(R\)\phi_5^{\(m\)\prime}\(R\)
+\phi_5^{(n)}(R)\phi_5^{(m)\prime}(R)
 \right].
 \tag{TRISO-ML-519}
 $$
@@ -5686,49 +5686,49 @@ $$
 Both modes satisfy the same homogeneous Robin condition:
 
 $$
--D_5\phi_5^{\(m\)\prime}\(R\)
+-D_5\phi_5^{(m)\prime}(R)
 =
-h\phi_5^{\(m\)}\(R\),
+h\phi_5^{(m)}(R),
 \tag{TRISO-ML-520}
 $$
 
 and
 
 $$
--D_5\phi_5^{\(n\)\prime}\(R\)
+-D_5\phi_5^{(n)\prime}(R)
 =
-h\phi_5^{\(n\)}\(R\).
+h\phi_5^{(n)}(R).
 \tag{TRISO-ML-521}
 $$
 
 Solve the first condition for the derivative:
 
 $$
-D_5\phi_5^{\(m\)\prime}\(R\)
+D_5\phi_5^{(m)\prime}(R)
 =
--h\phi_5^{\(m\)}\(R\).
+-h\phi_5^{(m)}(R).
 \tag{TRISO-ML-522}
 $$
 
 Similarly,
 
 $$
-D_5\phi_5^{\(n\)\prime}\(R\)
+D_5\phi_5^{(n)\prime}(R)
 =
--h\phi_5^{\(n\)}\(R\).
+-h\phi_5^{(n)}(R).
 \tag{TRISO-ML-523}
 $$
 
 Substitute into (TRISO-ML-519):
 
 $$
-\mathcal B_5\(R\)
+\mathcal B_5(R)
 =
 R^2
 \left[
--h\phi_5^{\(m\)}\(R\)\phi_5^{\(n\)}\(R\)
+-h\phi_5^{(m)}(R)\phi_5^{(n)}(R)
 +
-h\phi_5^{\(n\)}\(R\)\phi_5^{\(m\)}\(R\)
+h\phi_5^{(n)}(R)\phi_5^{(m)}(R)
 \right].
 \tag{TRISO-ML-524}
 $$
@@ -5737,7 +5737,7 @@ The two products are identical and have opposite signs:
 
 $$
 \boxed{
-\mathcal B_5\(R\)=0.
+\mathcal B_5(R)=0.
 }
 \tag{TRISO-ML-525}
 $$
@@ -5755,12 +5755,12 @@ Therefore
 $$
 0
 =
-\(\Lambda_m-\Lambda_n\)
+(\Lambda_m-\Lambda_n)
 \sum_{i=1}^{5}
 \int_{r_{i-1}}^{r_i}
 r^2
-\phi_i^{\(m\)}\(r\)
-\phi_i^{\(n\)}\(r\)
+\phi_i^{(m)}(r)
+\phi_i^{(n)}(r)
 \,dr.
 \tag{TRISO-ML-526}
 $$
@@ -5779,8 +5779,8 @@ $$
 \sum_{i=1}^{5}
 \int_{r_{i-1}}^{r_i}
 r^2
-\phi_i^{\(m\)}\(r\)
-\phi_i^{\(n\)}\(r\)
+\phi_i^{(m)}(r)
+\phi_i^{(n)}(r)
 \,dr
 =
 0,
@@ -5794,7 +5794,7 @@ Thus the correct global weight is
 
 $$
 \boxed{
-w\(r\)=r^2.
+w(r)=r^2.
 }
 \tag{TRISO-ML-529}
 $$
@@ -5802,9 +5802,9 @@ $$
 Define the global piecewise eigenfunction
 
 $$
-\Phi_n\(r\)
+\Phi_n(r)
 =
-\phi_i^{\(n\)}\(r\),
+\phi_i^{(n)}(r),
 \qquad
 r_{i-1}<r<r_i.
 \tag{TRISO-ML-530}
@@ -5818,7 +5818,7 @@ $$
 =
 \sum_{i=1}^{5}
 \int_{r_{i-1}}^{r_i}
-r^2f_i\(r\)g_i\(r\)\,dr.
+r^2f_i(r)g_i(r)\,dr.
 }
 \tag{TRISO-ML-531}
 $$
@@ -5848,7 +5848,7 @@ N_n
 \int_{r_{i-1}}^{r_i}
 r^2
 \left[
-\phi_i^{\(n\)}\(r\)
+\phi_i^{(n)}(r)
 \right]^2
 dr.
 }
@@ -5920,7 +5920,7 @@ For the source-driven benchmark,
 $$
 v_i(r,0)
 =
--c_{i,\mathrm{ss}}\(r\).
+-c_{i,\mathrm{ss}}(r).
 \tag{TRISO-ML-541}
 $$
 
@@ -5931,7 +5931,7 @@ v_i(r,t)
 =
 \sum_{n=1}^{\infty}
 A_n
-\phi_i^{\(n\)}\(r\)
+\phi_i^{(n)}(r)
 e^{-\Lambda_nt}.
 \tag{TRISO-ML-542}
 $$
@@ -5946,10 +5946,10 @@ $$
 Therefore
 
 $$
--c_{i,\mathrm{ss}}\(r\)
+-c_{i,\mathrm{ss}}(r)
 =
 \sum_{n=1}^{\infty}
-A_n\phi_i^{\(n\)}\(r\),
+A_n\phi_i^{(n)}(r),
 \qquad
 r_{i-1}<r<r_i.
 \tag{TRISO-ML-544}
@@ -5958,7 +5958,7 @@ $$
 Multiply the equation in layer \(i\) by
 
 $$
-r^2\phi_i^{\(m\)}\(r\).
+r^2\phi_i^{(m)}(r).
 \tag{TRISO-ML-545}
 $$
 
@@ -5966,14 +5966,14 @@ This gives
 
 $$
 -r^2
-c_{i,\mathrm{ss}}\(r\)
-\phi_i^{\(m\)}\(r\)
+c_{i,\mathrm{ss}}(r)
+\phi_i^{(m)}(r)
 =
 \sum_{n=1}^{\infty}
 A_n
 r^2
-\phi_i^{\(n\)}\(r\)
-\phi_i^{\(m\)}\(r\).
+\phi_i^{(n)}(r)
+\phi_i^{(m)}(r).
 \tag{TRISO-ML-546}
 $$
 
@@ -5983,15 +5983,15 @@ $$
 -\int_{r_{i-1}}^{r_i}
 r^2
 c_{i,\mathrm{ss}}
-\phi_i^{\(m\)}
+\phi_i^{(m)}
 \,dr
 =
 \sum_{n=1}^{\infty}
 A_n
 \int_{r_{i-1}}^{r_i}
 r^2
-\phi_i^{\(n\)}
-\phi_i^{\(m\)}
+\phi_i^{(n)}
+\phi_i^{(m)}
 \,dr.
 \tag{TRISO-ML-547}
 $$
@@ -6003,7 +6003,7 @@ $$
 \int_{r_{i-1}}^{r_i}
 r^2
 c_{i,\mathrm{ss}}
-\phi_i^{\(m\)}
+\phi_i^{(m)}
 \,dr
 $$
 
@@ -6014,8 +6014,8 @@ A_n
 \sum_{i=1}^{5}
 \int_{r_{i-1}}^{r_i}
 r^2
-\phi_i^{\(n\)}
-\phi_i^{\(m\)}
+\phi_i^{(n)}
+\phi_i^{(m)}
 \,dr.
 \tag{TRISO-ML-548}
 $$
@@ -6026,8 +6026,8 @@ $$
 \sum_{i=1}^{5}
 \int_{r_{i-1}}^{r_i}
 r^2
-\phi_i^{\(n\)}
-\phi_i^{\(m\)}
+\phi_i^{(n)}
+\phi_i^{(m)}
 \,dr
 =
 0.
@@ -6041,7 +6041,7 @@ $$
 \int_{r_{i-1}}^{r_i}
 r^2
 c_{i,\mathrm{ss}}
-\phi_i^{\(m\)}
+\phi_i^{(m)}
 \,dr
 =
 A_m
@@ -6049,7 +6049,7 @@ A_m
 \int_{r_{i-1}}^{r_i}
 r^2
 \left[
-\phi_i^{\(m\)}
+\phi_i^{(m)}
 \right]^2
 dr.
 \tag{TRISO-ML-550}
@@ -6062,7 +6062,7 @@ $$
 \int_{r_{i-1}}^{r_i}
 r^2
 c_{i,\mathrm{ss}}
-\phi_i^{\(m\)}
+\phi_i^{(m)}
 \,dr
 =
 A_mN_m.
@@ -6081,8 +6081,8 @@ A_m
 \sum_{i=1}^{5}
 \int_{r_{i-1}}^{r_i}
 r^2
-c_{i,\mathrm{ss}}\(r\)
-\phi_i^{\(m\)}\(r\)
+c_{i,\mathrm{ss}}(r)
+\phi_i^{(m)}(r)
 \,dr
 }{
 \displaystyle
@@ -6090,7 +6090,7 @@ c_{i,\mathrm{ss}}\(r\)
 \int_{r_{i-1}}^{r_i}
 r^2
 \left[
-\phi_i^{\(m\)}\(r\)
+\phi_i^{(m)}(r)
 \right]^2
 dr
 }.
@@ -6115,11 +6115,11 @@ $$
 \boxed{
 c_i(r,t)
 =
-c_{i,\mathrm{ss}}\(r\)
+c_{i,\mathrm{ss}}(r)
 +
 \sum_{n=1}^{\infty}
 A_n
-\phi_i^{\(n\)}\(r\)
+\phi_i^{(n)}(r)
 e^{-\Lambda_nt},
 \qquad
 r_{i-1}<r<r_i.
@@ -6134,10 +6134,10 @@ At \(t=0\),
 $$
 c_i(r,0)
 =
-c_{i,\mathrm{ss}}\(r\)
+c_{i,\mathrm{ss}}(r)
 +
 \sum_{n=1}^{\infty}
-A_n\phi_i^{\(n\)}\(r\).
+A_n\phi_i^{(n)}(r).
 \tag{TRISO-ML-555}
 $$
 
@@ -6145,9 +6145,9 @@ If the eigenfunction expansion represents the initial transient,
 
 $$
 \sum_{n=1}^{\infty}
-A_n\phi_i^{\(n\)}\(r\)
+A_n\phi_i^{(n)}(r)
 =
--c_{i,\mathrm{ss}}\(r\).
+-c_{i,\mathrm{ss}}(r).
 \tag{TRISO-ML-556}
 $$
 
@@ -6174,7 +6174,7 @@ so
 $$
 e^{-\Lambda_nt}\to0
 \qquad
-\(t\to\infty\).
+(t\to\infty).
 \tag{TRISO-ML-559}
 $$
 
@@ -6182,9 +6182,9 @@ Formally,
 
 $$
 \boxed{
-c_i(r,t)\to c_{i,\mathrm{ss}}\(r\)
+c_i(r,t)\to c_{i,\mathrm{ss}}(r)
 \qquad
-\(t\to\infty\).
+(t\to\infty).
 }
 \tag{TRISO-ML-560}
 $$
@@ -6194,18 +6194,18 @@ $$
 Every global eigenmode separately satisfies
 
 $$
-\phi_i^{\(n\)}\(r_i\)
+\phi_i^{(n)}(r_i)
 =
-\phi_{i+1}^{\(n\)}\(r_i\),
+\phi_{i+1}^{(n)}(r_i),
 \tag{TRISO-ML-561}
 $$
 
 and
 
 $$
-D_i\phi_i^{\(n\)\prime}\(r_i\)
+D_i\phi_i^{(n)\prime}(r_i)
 =
-D_{i+1}\phi_{i+1}^{\(n\)\prime}\(r_i\).
+D_{i+1}\phi_{i+1}^{(n)\prime}(r_i).
 \tag{TRISO-ML-562}
 $$
 
@@ -6224,9 +6224,9 @@ Therefore each transient mode is finite at the centre and satisfies the centre s
 Every mode satisfies
 
 $$
--D_5\phi_5^{\(n\)\prime}\(R\)
+-D_5\phi_5^{(n)\prime}(R)
 =
-h\phi_5^{\(n\)}\(R\).
+h\phi_5^{(n)}(R).
 \tag{TRISO-ML-563}
 $$
 
@@ -6242,7 +6242,7 @@ The orthogonality result (TRISO-ML-528) was derived directly from the conservati
 
 It does not require a completeness theorem.
 
-[VERIFIED] Distinct global eigenmodes are orthogonal in the weighted inner product with \(w\(r\)=r^2\).
+[VERIFIED] Distinct global eigenmodes are orthogonal in the weighted inner product with \(w(r)=r^2\).
 
 The projection algebra leading to (TRISO-ML-552) is also valid once an expansion in the eigenfunctions is admitted.
 
@@ -6252,8 +6252,8 @@ Completeness is a separate spectral statement.
 
 Standard regular Sturm–Liouville completeness theorems provide completeness in an appropriate weighted \(L^2\) space for regular self-adjoint problems on finite intervals. The present TRISO problem is more delicate because:
 
-1. \(p\(r\)=r^2D\(r\)\) vanishes at \(r=0\), so the centre is a singular endpoint;
-2. \(D\(r\)\) is piecewise constant and discontinuous at four internal interfaces;
+1. \(p(r)=r^2D(r)\) vanishes at \(r=0\), so the centre is a singular endpoint;
+2. \(D(r)\) is piecewise constant and discontinuous at four internal interfaces;
 3. the operator domain includes transmission conditions enforcing continuity of concentration and flux.
 
 The current derivation has explicitly demonstrated the self-adjoint boundary/interface cancellation needed for symmetry of the operator.
@@ -6283,7 +6283,7 @@ $$
 Then
 
 $$
-p\(r\)=r^2D
+p(r)=r^2D
 \tag{TRISO-ML-565}
 $$
 
@@ -6292,21 +6292,21 @@ throughout the sphere.
 Flux continuity becomes
 
 $$
-D\phi_i'\(r_i\)=D\phi_{i+1}'\(r_i\).
+D\phi_i'(r_i)=D\phi_{i+1}'(r_i).
 \tag{TRISO-ML-566}
 $$
 
 Cancel \(D>0\):
 
 $$
-\phi_i'\(r_i\)=\phi_{i+1}'\(r_i\).
+\phi_i'(r_i)=\phi_{i+1}'(r_i).
 \tag{TRISO-ML-567}
 $$
 
 Together with concentration continuity,
 
 $$
-\phi_i\(r_i\)=\phi_{i+1}\(r_i\),
+\phi_i(r_i)=\phi_{i+1}(r_i),
 \tag{TRISO-ML-568}
 $$
 
@@ -6338,7 +6338,7 @@ Therefore the multilayer orthogonality relation reduces to
 $$
 \boxed{
 \int_0^R
-r^2\phi_m\(r\)\phi_n\(r\)\,dr
+r^2\phi_m(r)\phi_n(r)\,dr
 =
 0,
 \qquad
@@ -6369,7 +6369,7 @@ $$
 
 Therefore unequal adjacent diffusivities remain fully compatible with the global orthogonality proof.
 
-The diffusivity discontinuity is carried by \(p\(r\)=r^2D\(r\)\), while the weight remains \(r^2\).
+The diffusivity discontinuity is carried by \(p(r)=r^2D(r)\), while the weight remains \(r^2\).
 
 ### 12.25 Updated analytical status
 
@@ -6492,14 +6492,14 @@ $$
 denote the numerical approximation to
 
 $$
-c\(r_i,t_j\).
+c(r_i,t_j).
 \tag{TRISO-DIS-109}
 $$
 
 Thus
 
 $$
-C_i^j\approx c\(r_i,t_j\).
+C_i^j\approx c(r_i,t_j).
 \tag{TRISO-DIS-110}
 $$
 
@@ -6515,26 +6515,26 @@ $$
 At fixed radius \(r_i\), Taylor-expand the exact solution from \(t_j\) to \(t_j+\Delta t\):
 
 $$
-c\(r_i,t_j+\Delta t\)
+c(r_i,t_j+\Delta t)
 =
-c\(r_i,t_j\)
+c(r_i,t_j)
 +
 \Delta t
-\frac{\partial c}{\partial t}\(r_i,t_j\)
+\frac{\partial c}{\partial t}(r_i,t_j)
 +
-O\(\Delta t^2\).
+O(\Delta t^2).
 \tag{TRISO-DIS-112}
 $$
 
-Subtract \(c\(r_i,t_j\)\) from both sides:
+Subtract \(c(r_i,t_j)\) from both sides:
 
 $$
-c\(r_i,t_j+\Delta t\)-c\(r_i,t_j\)
+c(r_i,t_j+\Delta t)-c(r_i,t_j)
 =
 \Delta t
-\frac{\partial c}{\partial t}\(r_i,t_j\)
+\frac{\partial c}{\partial t}(r_i,t_j)
 +
-O\(\Delta t^2\).
+O(\Delta t^2).
 \tag{TRISO-DIS-113}
 $$
 
@@ -6542,29 +6542,29 @@ Divide by \(\Delta t\):
 
 $$
 \frac{
-c\(r_i,t_j+\Delta t\)-c\(r_i,t_j\)
+c(r_i,t_j+\Delta t)-c(r_i,t_j)
 }{
 \Delta t
 }
 =
-\frac{\partial c}{\partial t}\(r_i,t_j\)
+\frac{\partial c}{\partial t}(r_i,t_j)
 +
-O\(\Delta t\).
+O(\Delta t).
 \tag{TRISO-DIS-114}
 $$
 
 Rearrange:
 
 $$
-\frac{\partial c}{\partial t}\(r_i,t_j\)
+\frac{\partial c}{\partial t}(r_i,t_j)
 =
 \frac{
-c\(r_i,t_j+\Delta t\)-c\(r_i,t_j\)
+c(r_i,t_j+\Delta t)-c(r_i,t_j)
 }{
 \Delta t
 }
 +
-O\(\Delta t\).
+O(\Delta t).
 \tag{TRISO-DIS-115}
 $$
 
@@ -6572,7 +6572,7 @@ Replace the exact nodal values by the numerical unknowns:
 
 $$
 \boxed{
-\frac{\partial c}{\partial t}\(r_i,t_j\)
+\frac{\partial c}{\partial t}(r_i,t_j)
 \approx
 \frac{C_i^{j+1}-C_i^j}{\Delta t}.
 }
@@ -6586,7 +6586,7 @@ The forward-time approximation is first-order accurate in time.
 At fixed \(t_j\), Taylor-expand about \(r_i\) toward \(r_i+\Delta r\):
 
 $$
-c\(r_i+\Delta r,t_j\)
+c(r_i+\Delta r,t_j)
 =
 c_i
 +
@@ -6596,14 +6596,14 @@ c_i
 +
 \frac{\Delta r^3}{6}c_{rrr,i}
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-117}
 $$
 
 Taylor-expand toward \(r_i-\Delta r\):
 
 $$
-c\(r_i-\Delta r,t_j\)
+c(r_i-\Delta r,t_j)
 =
 c_i
 -
@@ -6613,22 +6613,22 @@ c_i
 -
 \frac{\Delta r^3}{6}c_{rrr,i}
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-118}
 $$
 
 Subtract the backward expansion from the forward expansion:
 
 $$
-c\(r_i+\Delta r,t_j\)
+c(r_i+\Delta r,t_j)
 -
-c\(r_i-\Delta r,t_j\)
+c(r_i-\Delta r,t_j)
 =
 2\Delta r\,c_{r,i}
 +
 \frac{\Delta r^3}{3}c_{rrr,i}
 +
-O\(\Delta r^5\).
+O(\Delta r^5).
 \tag{TRISO-DIS-119}
 $$
 
@@ -6636,14 +6636,14 @@ Divide by \(2\Delta r\):
 
 $$
 \frac{
-c\(r_i+\Delta r,t_j\)-c\(r_i-\Delta r,t_j\)
+c(r_i+\Delta r,t_j)-c(r_i-\Delta r,t_j)
 }{
 2\Delta r
 }
 =
 c_{r,i}
 +
-O\(\Delta r^2\).
+O(\Delta r^2).
 \tag{TRISO-DIS-120}
 $$
 
@@ -6651,7 +6651,7 @@ Therefore
 
 $$
 \boxed{
-\frac{\partial c}{\partial r}\(r_i,t_j\)
+\frac{\partial c}{\partial r}(r_i,t_j)
 \approx
 \frac{
 C_{i+1}^j-C_{i-1}^j
@@ -6667,30 +6667,30 @@ $$
 Add the two Taylor expansions (TRISO-DIS-117) and (TRISO-DIS-118):
 
 $$
-c\(r_i+\Delta r,t_j\)
+c(r_i+\Delta r,t_j)
 +
-c\(r_i-\Delta r,t_j\)
+c(r_i-\Delta r,t_j)
 =
 2c_i
 +
 \Delta r^2c_{rr,i}
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-122}
 $$
 
 Subtract \(2c_i\):
 
 $$
-c\(r_i+\Delta r,t_j\)
+c(r_i+\Delta r,t_j)
 -
 2c_i
 +
-c\(r_i-\Delta r,t_j\)
+c(r_i-\Delta r,t_j)
 =
 \Delta r^2c_{rr,i}
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-123}
 $$
 
@@ -6698,14 +6698,14 @@ Divide by \(\Delta r^2\):
 
 $$
 \frac{
-c\(r_i+\Delta r,t_j\)-2c_i+c\(r_i-\Delta r,t_j\)
+c(r_i+\Delta r,t_j)-2c_i+c(r_i-\Delta r,t_j)
 }{
 \Delta r^2
 }
 =
 c_{rr,i}
 +
-O\(\Delta r^2\).
+O(\Delta r^2).
 \tag{TRISO-DIS-124}
 $$
 
@@ -6713,7 +6713,7 @@ Therefore
 
 $$
 \boxed{
-\frac{\partial^2c}{\partial r^2}\(r_i,t_j\)
+\frac{\partial^2c}{\partial r^2}(r_i,t_j)
 \approx
 \frac{
 C_{i-1}^j-2C_i^j+C_{i+1}^j
@@ -6726,7 +6726,7 @@ $$
 
 ### 13.7 Substitute the discrete derivatives into the PDE
 
-Evaluate the continuous equation at \(\(r_i,t_j\)\):
+Evaluate the continuous equation at \((r_i,t_j)\):
 
 $$
 c_{t,i}^j
@@ -7096,7 +7096,7 @@ Collect the central coefficient:
 $$
 C_i^j-2\mathrm{Fo}C_i^j
 =
-\(1-2\mathrm{Fo}\)C_i^j.
+(1-2\mathrm{Fo})C_i^j.
 \tag{TRISO-DIS-144}
 $$
 
@@ -7111,7 +7111,7 @@ C_i^{j+1}
 1-\frac1i
 \right)C_{i-1}^j
 +
-\(1-2\mathrm{Fo}\)C_i^j
+(1-2\mathrm{Fo})C_i^j
 +
 \mathrm{Fo}
 \left(
@@ -7161,21 +7161,21 @@ which matches the concentration units of every other term in (TRISO-DIS-145).
 The forward-time derivative has truncation error
 
 $$
-O\(\Delta t\).
+O(\Delta t).
 \tag{TRISO-DIS-149}
 $$
 
 The centred first derivative has truncation error
 
 $$
-O\(\Delta r^2\).
+O(\Delta r^2).
 \tag{TRISO-DIS-150}
 $$
 
 The centred second derivative has truncation error
 
 $$
-O\(\Delta r^2\).
+O(\Delta r^2).
 \tag{TRISO-DIS-151}
 $$
 
@@ -7183,7 +7183,7 @@ Therefore, away from \(r=0\), material interfaces, and the outer boundary, the l
 
 $$
 \boxed{
-O\(\Delta t\)+O\(\Delta r^2\).
+O(\Delta t)+O(\Delta r^2).
 }
 \tag{TRISO-DIS-152}
 $$
@@ -7341,7 +7341,7 @@ $$
 Evaluate this at \(r=\Delta r\):
 
 $$
-c\(-\Delta r,t\)=c\(\Delta r,t\).
+c(-\Delta r,t)=c(\Delta r,t).
 \tag{TRISO-DIS-211}
 $$
 
@@ -7361,7 +7361,7 @@ The ghost point is a mathematical device. It does not represent a physical negat
 Use the centred second-derivative formula at \(i=0\):
 
 $$
-\frac{\partial^2c}{\partial r^2}\(0,t_j\)
+\frac{\partial^2c}{\partial r^2}(0,t_j)
 \approx
 \frac{
 C_{-1}^j-2C_0^j+C_1^j
@@ -7374,7 +7374,7 @@ $$
 Substitute the symmetry relation \(C_{-1}^j=C_1^j\):
 
 $$
-\frac{\partial^2c}{\partial r^2}\(0,t_j\)
+\frac{\partial^2c}{\partial r^2}(0,t_j)
 \approx
 \frac{
 C_1^j-2C_0^j+C_1^j
@@ -7388,10 +7388,10 @@ Add the two \(C_1^j\) terms:
 
 $$
 \boxed{
-\frac{\partial^2c}{\partial r^2}\(0,t_j\)
+\frac{\partial^2c}{\partial r^2}(0,t_j)
 \approx
 \frac{
-2\(C_1^j-C_0^j\)
+2(C_1^j-C_0^j)
 }{
 \Delta r^2
 }.
@@ -7413,11 +7413,11 @@ $$
 Substitute the discrete second derivative (TRISO-DIS-215):
 
 $$
-\mathcal L[c]\(0,t_j\)
+\mathcal L[c](0,t_j)
 \approx
 3
 \frac{
-2\(C_1^j-C_0^j\)
+2(C_1^j-C_0^j)
 }{
 \Delta r^2
 }.
@@ -7428,10 +7428,10 @@ Multiply the factors \(3\) and \(2\):
 
 $$
 \boxed{
-\mathcal L[c]\(0,t_j\)
+\mathcal L[c](0,t_j)
 \approx
 \frac{
-6\(C_1^j-C_0^j\)
+6(C_1^j-C_0^j)
 }{
 \Delta r^2
 }.
@@ -7463,7 +7463,7 @@ C_0^{j+1}-C_0^j
 \Delta t
 }
 =
-D_1\mathcal L[c]\(0,t_j\)
+D_1\mathcal L[c](0,t_j)
 +
 S_0.
 \tag{TRISO-DIS-220}
@@ -7480,7 +7480,7 @@ C_0^{j+1}-C_0^j
 =
 D_1
 \frac{
-6\(C_1^j-C_0^j\)
+6(C_1^j-C_0^j)
 }{
 \Delta r^2
 }
@@ -7499,7 +7499,7 @@ C_0^{j+1}-C_0^j
 }{
 \Delta r^2
 }
-\(C_1^j-C_0^j\)
+(C_1^j-C_0^j)
 +
 S_0\Delta t.
 \tag{TRISO-DIS-222}
@@ -7522,7 +7522,7 @@ $$
 C_0^{j+1}-C_0^j
 =
 6\mathrm{Fo}_1
-\(C_1^j-C_0^j\)
+(C_1^j-C_0^j)
 +
 S_0\Delta t.
 \tag{TRISO-DIS-224}
@@ -7537,7 +7537,7 @@ C_0^{j+1}
 C_0^j
 +
 6\mathrm{Fo}_1
-\(C_1^j-C_0^j\)
+(C_1^j-C_0^j)
 +
 S_0\Delta t.
 }
@@ -7565,7 +7565,7 @@ $$
 \boxed{
 C_0^{j+1}
 =
-\(1-6\mathrm{Fo}_1\)C_0^j
+(1-6\mathrm{Fo}_1)C_0^j
 +
 6\mathrm{Fo}_1C_1^j
 +
@@ -7579,7 +7579,7 @@ $$
 For a smooth even radial field, expand about \(r=0\):
 
 $$
-c\(\Delta r,t\)
+c(\Delta r,t)
 =
 c(0,t)
 +
@@ -7587,20 +7587,20 @@ c(0,t)
 +
 \frac{\Delta r^4}{24}c_{rrrr}(0,t)
 +
-O\(\Delta r^6\).
+O(\Delta r^6).
 \tag{TRISO-DIS-228}
 $$
 
 Subtract \(c(0,t)\):
 
 $$
-c\(\Delta r,t\)-c(0,t)
+c(\Delta r,t)-c(0,t)
 =
 \frac{\Delta r^2}{2}c_{rr}(0,t)
 +
 \frac{\Delta r^4}{24}c_{rrrr}(0,t)
 +
-O\(\Delta r^6\).
+O(\Delta r^6).
 \tag{TRISO-DIS-229}
 $$
 
@@ -7608,7 +7608,7 @@ Multiply by \(2/\Delta r^2\):
 
 $$
 \frac{
-2[c\(\Delta r,t\)-c(0,t)]
+2[c(\Delta r,t)-c(0,t)]
 }{
 \Delta r^2
 }
@@ -7617,7 +7617,7 @@ c_{rr}(0,t)
 +
 \frac{\Delta r^2}{12}c_{rrrr}(0,t)
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-230}
 $$
 
@@ -7627,12 +7627,12 @@ $$
 c_{rr}(0,t)
 =
 \frac{
-2\(C_1-C_0\)
+2(C_1-C_0)
 }{
 \Delta r^2
 }
 +
-O\(\Delta r^2\).
+O(\Delta r^2).
 \tag{TRISO-DIS-231}
 $$
 
@@ -7642,12 +7642,12 @@ $$
 \mathcal L[c](0,t)
 =
 \frac{
-6\(C_1-C_0\)
+6(C_1-C_0)
 }{
 \Delta r^2
 }
 +
-O\(\Delta r^2\).
+O(\Delta r^2).
 \tag{TRISO-DIS-232}
 $$
 
@@ -7655,7 +7655,7 @@ Combined with forward Euler time stepping, the centre equation is locally
 
 $$
 \boxed{
-O\(\Delta t\)+O\(\Delta r^2\).
+O(\Delta t)+O(\Delta r^2).
 }
 \tag{TRISO-DIS-233}
 $$
@@ -7740,21 +7740,21 @@ $$
 For the ideal \(K=1\) interface, the continuous condition is
 
 $$
-c^-\(r_I,t\)=c^+\(r_I,t\).
+c^-(r_I,t)=c^+(r_I,t).
 \tag{TRISO-DIS-307}
 $$
 
 Represent both limiting concentrations by the same interface unknown:
 
 $$
-c^-\(r_I,t_j\)\approx C_I^j,
+c^-(r_I,t_j)\approx C_I^j,
 \tag{TRISO-DIS-308}
 $$
 
 and
 
 $$
-c^+\(r_I,t_j\)\approx C_I^j.
+c^+(r_I,t_j)\approx C_I^j.
 \tag{TRISO-DIS-309}
 $$
 
@@ -7912,7 +7912,7 @@ $$
 Add \(D^+C_I^j\) to both sides:
 
 $$
-\(D^-+D^+\)C_I^j-D^-C_{i-1}^j
+(D^-+D^+)C_I^j-D^-C_{i-1}^j
 =
 D^+C_{i+1}^j.
 \tag{TRISO-DIS-321}
@@ -7921,7 +7921,7 @@ $$
 Add \(D^-C_{i-1}^j\) to both sides:
 
 $$
-\(D^-+D^+\)C_I^j
+(D^-+D^+)C_I^j
 =
 D^-C_{i-1}^j
 +
@@ -7998,10 +7998,10 @@ Flux continuity gives
 
 $$
 \frac{D^-}{\Delta r^-}
-\(C_I-C_{i-1}\)
+(C_I-C_{i-1})
 =
 \frac{D^+}{\Delta r^+}
-\(C_{i+1}-C_I\).
+(C_{i+1}-C_I).
 \tag{TRISO-DIS-328}
 $$
 
@@ -8367,7 +8367,7 @@ The ghost value is not an external physical concentration. It is an algebraic de
 At time \(t_j\), approximate the radial derivative by
 
 $$
-\frac{\partial c}{\partial r}\(R,t_j\)
+\frac{\partial c}{\partial r}(R,t_j)
 \approx
 \frac{
 C_{N+1}^j-C_{N-1}^j
@@ -8467,7 +8467,7 @@ $$
 Use the centred second derivative at node \(N\):
 
 $$
-\frac{\partial^2c}{\partial r^2}\(R,t_j\)
+\frac{\partial^2c}{\partial r^2}(R,t_j)
 \approx
 \frac{
 C_{N-1}^j
@@ -8484,7 +8484,7 @@ $$
 Substitute the ghost relation (TRISO-DIS-414):
 
 $$
-\frac{\partial^2c}{\partial r^2}\(R,t_j\)
+\frac{\partial^2c}{\partial r^2}(R,t_j)
 \approx
 \frac{
 C_{N-1}^j
@@ -8514,7 +8514,7 @@ Collect the two surface terms:
 $$
 -2C_N^j-2\kappa C_N^j
 =
--2\(1+\kappa\)C_N^j.
+-2(1+\kappa)C_N^j.
 \tag{TRISO-DIS-418}
 $$
 
@@ -8522,12 +8522,12 @@ Therefore
 
 $$
 \boxed{
-\frac{\partial^2c}{\partial r^2}\(R,t_j\)
+\frac{\partial^2c}{\partial r^2}(R,t_j)
 \approx
 \frac{
 2C_{N-1}^j
 -
-2\(1+\kappa\)C_N^j
+2(1+\kappa)C_N^j
 }{
 \Delta r^2
 }.
@@ -8540,7 +8540,7 @@ $$
 The centred derivative is
 
 $$
-\frac{\partial c}{\partial r}\(R,t_j\)
+\frac{\partial c}{\partial r}(R,t_j)
 \approx
 \frac{
 C_{N+1}^j-C_{N-1}^j
@@ -8553,7 +8553,7 @@ $$
 Substitute (TRISO-DIS-414):
 
 $$
-\frac{\partial c}{\partial r}\(R,t_j\)
+\frac{\partial c}{\partial r}(R,t_j)
 \approx
 \frac{
 C_{N-1}^j
@@ -8570,7 +8570,7 @@ $$
 Cancel the two \(C_{N-1}^j\) terms:
 
 $$
-\frac{\partial c}{\partial r}\(R,t_j\)
+\frac{\partial c}{\partial r}(R,t_j)
 \approx
 -\frac{
 2\kappa C_N^j
@@ -8584,7 +8584,7 @@ Cancel the factor \(2\):
 
 $$
 \boxed{
-\frac{\partial c}{\partial r}\(R,t_j\)
+\frac{\partial c}{\partial r}(R,t_j)
 \approx
 -\frac{\kappa}{\Delta r}C_N^j.
 }
@@ -8618,29 +8618,29 @@ $$
 Substitute the discrete second derivative (TRISO-DIS-419):
 
 $$
-\mathcal L[c]\(R,t_j\)
+\mathcal L[c](R,t_j)
 \approx
 \frac{
 2C_{N-1}^j
 -
-2\(1+\kappa\)C_N^j
+2(1+\kappa)C_N^j
 }{
 \Delta r^2
 }
 +
-\frac2R c_r\(R,t_j\).
+\frac2R c_r(R,t_j).
 \tag{TRISO-DIS-426}
 $$
 
 Substitute the discrete first derivative (TRISO-DIS-423):
 
 $$
-\mathcal L[c]\(R,t_j\)
+\mathcal L[c](R,t_j)
 \approx
 \frac{
 2C_{N-1}^j
 -
-2\(1+\kappa\)C_N^j
+2(1+\kappa)C_N^j
 }{
 \Delta r^2
 }
@@ -8677,12 +8677,12 @@ $$
 Substitute:
 
 $$
-\mathcal L[c]\(R,t_j\)
+\mathcal L[c](R,t_j)
 \approx
 \frac{
 2C_{N-1}^j
 -
-2\(1+\kappa\)C_N^j
+2(1+\kappa)C_N^j
 }{
 \Delta r^2
 }
@@ -8698,13 +8698,13 @@ $$
 Put the terms over the common denominator:
 
 $$
-\mathcal L[c]\(R,t_j\)
+\mathcal L[c](R,t_j)
 \approx
 \frac2{\Delta r^2}
 \left[
 C_{N-1}^j
 -
-\(1+\kappa\)C_N^j
+(1+\kappa)C_N^j
 -
 \frac{\kappa}{N}C_N^j
 \right].
@@ -8714,7 +8714,7 @@ $$
 Collect the surface coefficient:
 
 $$
-\(1+\kappa\)
+(1+\kappa)
 +
 \frac{\kappa}{N}
 =
@@ -8729,14 +8729,14 @@ Therefore
 
 $$
 \boxed{
-\mathcal L[c]\(R,t_j\)
+\mathcal L[c](R,t_j)
 \approx
 \frac2{\Delta r^2}
 \left[
 C_{N-1}^j
 -
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right)
 C_N^j
 \right].
@@ -8775,7 +8775,7 @@ C_N^{j+1}-C_N^j
 \Delta t
 }
 =
-D\mathcal L[c]\(R,t_j\)
+D\mathcal L[c](R,t_j)
 +
 S_R^j.
 \tag{TRISO-DIS-437}
@@ -8795,7 +8795,7 @@ C_N^{j+1}-C_N^j
 C_{N-1}^j
 -
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right)
 C_N^j
 \right]
@@ -8814,7 +8814,7 @@ C_N^{j+1}-C_N^j
 C_{N-1}^j
 -
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right)
 C_N^j
 \right]
@@ -8842,7 +8842,7 @@ C_N^{j+1}-C_N^j
 C_{N-1}^j
 -
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right)
 C_N^j
 \right]
@@ -8862,7 +8862,7 @@ C_N^j
 -
 2\mathrm{Fo}
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right)
 C_N^j
 +
@@ -8883,7 +8883,7 @@ C_N^{j+1}
 -
 2\mathrm{Fo}
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right)
 \right]
 C_N^j
@@ -8956,7 +8956,7 @@ C_N^{j+1}
 =
 2\mathrm{Fo}C_{N-1}^j
 +
-\(1-2\mathrm{Fo}\)C_N^j
+(1-2\mathrm{Fo})C_N^j
 +
 S_R^j\Delta t.
 \tag{TRISO-DIS-450}
@@ -8993,114 +8993,114 @@ $$
 The exact Robin condition gives
 
 $$
-c_r\(R\)=-\beta c\(R\).
+c_r(R)=-\beta c(R).
 \tag{TRISO-DIS-453}
 $$
 
 The ghost construction is
 
 $$
-c_g\(R+\Delta r\)
+c_g(R+\Delta r)
 =
-c\(R-\Delta r\)
+c(R-\Delta r)
 -
-2\beta\Delta r\,c\(R\).
+2\beta\Delta r\,c(R).
 \tag{TRISO-DIS-454}
 $$
 
 Taylor-expand the exact interior value:
 
 $$
-c\(R-\Delta r\)
+c(R-\Delta r)
 =
-c\(R\)
+c(R)
 -
-\Delta r\,c_r\(R\)
+\Delta r\,c_r(R)
 +
-\frac{\Delta r^2}{2}c_{rr}\(R\)
+\frac{\Delta r^2}{2}c_{rr}(R)
 -
-\frac{\Delta r^3}{6}c_{rrr}\(R\)
+\frac{\Delta r^3}{6}c_{rrr}(R)
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-455}
 $$
 
-Substitute the Robin derivative \(c_r\(R\)=-\beta c\(R\)\):
+Substitute the Robin derivative \(c_r(R)=-\beta c(R)\):
 
 $$
-c\(R-\Delta r\)
+c(R-\Delta r)
 =
-c\(R\)
+c(R)
 +
-\beta\Delta r\,c\(R\)
+\beta\Delta r\,c(R)
 +
-\frac{\Delta r^2}{2}c_{rr}\(R\)
+\frac{\Delta r^2}{2}c_{rr}(R)
 -
-\frac{\Delta r^3}{6}c_{rrr}\(R\)
+\frac{\Delta r^3}{6}c_{rrr}(R)
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-456}
 $$
 
 Substitute this expansion into the ghost construction:
 
 $$
-c_g\(R+\Delta r\)
+c_g(R+\Delta r)
 =
-c\(R\)
+c(R)
 -
-\beta\Delta r\,c\(R\)
+\beta\Delta r\,c(R)
 +
-\frac{\Delta r^2}{2}c_{rr}\(R\)
+\frac{\Delta r^2}{2}c_{rr}(R)
 -
-\frac{\Delta r^3}{6}c_{rrr}\(R\)
+\frac{\Delta r^3}{6}c_{rrr}(R)
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-457}
 $$
 
 The exact smooth continuation would be
 
 $$
-c\(R+\Delta r\)
+c(R+\Delta r)
 =
-c\(R\)
+c(R)
 +
-\Delta r\,c_r\(R\)
+\Delta r\,c_r(R)
 +
-\frac{\Delta r^2}{2}c_{rr}\(R\)
+\frac{\Delta r^2}{2}c_{rr}(R)
 +
-\frac{\Delta r^3}{6}c_{rrr}\(R\)
+\frac{\Delta r^3}{6}c_{rrr}(R)
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-458}
 $$
 
-Apply \(c_r\(R\)=-\beta c\(R\)\):
+Apply \(c_r(R)=-\beta c(R)\):
 
 $$
-c\(R+\Delta r\)
+c(R+\Delta r)
 =
-c\(R\)
+c(R)
 -
-\beta\Delta r\,c\(R\)
+\beta\Delta r\,c(R)
 +
-\frac{\Delta r^2}{2}c_{rr}\(R\)
+\frac{\Delta r^2}{2}c_{rr}(R)
 +
-\frac{\Delta r^3}{6}c_{rrr}\(R\)
+\frac{\Delta r^3}{6}c_{rrr}(R)
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-459}
 $$
 
 Subtract the exact continuation from the ghost continuation:
 
 $$
-c_g\(R+\Delta r\)-c\(R+\Delta r\)
+c_g(R+\Delta r)-c(R+\Delta r)
 =
--\frac{\Delta r^3}{3}c_{rrr}\(R\)
+-\frac{\Delta r^3}{3}c_{rrr}(R)
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-460}
 $$
 
@@ -9110,7 +9110,7 @@ $$
 \boxed{
 c_g-c_{\mathrm{exact}}
 =
-O\(\Delta r^3\).
+O(\Delta r^3).
 }
 \tag{TRISO-DIS-461}
 $$
@@ -9118,10 +9118,10 @@ $$
 The ghost value enters the centred second derivative divided by \(\Delta r^2\):
 
 $$
-c_{rr}^{\,g}\(R\)
+c_{rr}^{\,g}(R)
 =
 \frac{
-c\(R-\Delta r\)-2c\(R\)+c_g\(R+\Delta r\)
+c(R-\Delta r)-2c(R)+c_g(R+\Delta r)
 }{
 \Delta r^2
 }.
@@ -9131,9 +9131,9 @@ $$
 Write the ghost value as
 
 $$
-c_g\(R+\Delta r\)
+c_g(R+\Delta r)
 =
-c\(R+\Delta r\)
+c(R+\Delta r)
 +
 \varepsilon_g,
 \tag{TRISO-DIS-463}
@@ -9144,19 +9144,19 @@ where
 $$
 \varepsilon_g
 =
--\frac{\Delta r^3}{3}c_{rrr}\(R\)
+-\frac{\Delta r^3}{3}c_{rrr}(R)
 +
-O\(\Delta r^4\).
+O(\Delta r^4).
 \tag{TRISO-DIS-464}
 $$
 
 Substitute:
 
 $$
-c_{rr}^{\,g}\(R\)
+c_{rr}^{\,g}(R)
 =
 \frac{
-c\(R-\Delta r\)-2c\(R\)+c\(R+\Delta r\)
+c(R-\Delta r)-2c(R)+c(R+\Delta r)
 }{
 \Delta r^2
 }
@@ -9168,7 +9168,7 @@ $$
 The ordinary centred second derivative contributes
 
 $$
-c_{rr}\(R\)+O\(\Delta r^2\).
+c_{rr}(R)+O(\Delta r^2).
 \tag{TRISO-DIS-466}
 $$
 
@@ -9177,9 +9177,9 @@ The ghost-error contribution is
 $$
 \frac{\varepsilon_g}{\Delta r^2}
 =
--\frac{\Delta r}{3}c_{rrr}\(R\)
+-\frac{\Delta r}{3}c_{rrr}(R)
 +
-O\(\Delta r^2\).
+O(\Delta r^2).
 \tag{TRISO-DIS-467}
 $$
 
@@ -9187,13 +9187,13 @@ Therefore
 
 $$
 \boxed{
-c_{rr}^{\,g}\(R\)
+c_{rr}^{\,g}(R)
 =
-c_{rr}\(R\)
+c_{rr}(R)
 -
-\frac{\Delta r}{3}c_{rrr}\(R\)
+\frac{\Delta r}{3}c_{rrr}(R)
 +
-O\(\Delta r^2\).
+O(\Delta r^2).
 }
 \tag{TRISO-DIS-468}
 $$
@@ -9204,11 +9204,11 @@ Hence the complete spherical surface operator has generic local spatial truncati
 
 $$
 \boxed{
-\mathcal L_h[c]\(R\)
+\mathcal L_h[c](R)
 =
-\mathcal L[c]\(R\)
+\mathcal L[c](R)
 +
-O\(\Delta r\).
+O(\Delta r).
 }
 \tag{TRISO-DIS-469}
 $$
@@ -9217,14 +9217,14 @@ With forward Euler time stepping, the boundary local consistency is therefore ge
 
 $$
 \boxed{
-O\(\Delta t\)+O\(\Delta r\),
+O(\Delta t)+O(\Delta r),
 }
 \tag{TRISO-DIS-470}
 $$
 
 unless additional cancellation or superconvergence is demonstrated.
 
-[CORRECTION] The previous claim of \(O\(\Delta t\)+O\(\Delta r^2\)\) for the complete Robin surface update was overstated. Only the centred first-derivative approximation was second-order.
+[CORRECTION] The previous claim of \(O(\Delta t)+O(\Delta r^2)\) for the complete Robin surface update was overstated. Only the centred first-derivative approximation was second-order.
 
 [OPEN REVIEW FINDING R2-D01] The analytical overclaim is corrected, but the independent reviewer requires an actual grid-refinement study before this finding is closed. No global FTCS convergence order is claimed here.
 
@@ -9289,7 +9289,7 @@ E_i^{j+1}
 \right)
 E_{i-1}^j
 +
-\(1-2\mathrm{Fo}\)E_i^j
+(1-2\mathrm{Fo})E_i^j
 +
 \mathrm{Fo}
 \left(
@@ -9386,11 +9386,11 @@ Now add the three interior coefficients:
 $$
 a_i+b_i+d_i
 =
-\mathrm{Fo}\left\(1-\frac1i\right\)
+\mathrm{Fo}\left(1-\frac1i\right)
 +
 1-2\mathrm{Fo}
 +
-\mathrm{Fo}\left\(1+\frac1i\right\).
+\mathrm{Fo}\left(1+\frac1i\right).
 \tag{TRISO-DIS-513}
 $$
 
@@ -9448,7 +9448,7 @@ Section 14 gives the homogeneous centre error update
 $$
 E_0^{j+1}
 =
-\(1-6\mathrm{Fo}\)E_0^j
+(1-6\mathrm{Fo})E_0^j
 +
 6\mathrm{Fo}E_1^j.
 \tag{TRISO-DIS-518}
@@ -9487,7 +9487,7 @@ $$
 The centre-row sum is
 
 $$
-\(1-6\mathrm{Fo}\)+6\mathrm{Fo}.
+(1-6\mathrm{Fo})+6\mathrm{Fo}.
 \tag{TRISO-DIS-523}
 $$
 
@@ -9495,7 +9495,7 @@ Therefore
 
 $$
 \boxed{
-\(1-6\mathrm{Fo}\)+6\mathrm{Fo}=1.
+(1-6\mathrm{Fo})+6\mathrm{Fo}=1.
 }
 \tag{TRISO-DIS-524}
 $$
@@ -9516,7 +9516,7 @@ E_N^{j+1}
 -
 2\mathrm{Fo}
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right)
 \right]
 E_N^j.
@@ -9537,7 +9537,7 @@ $$
 -
 2\mathrm{Fo}
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right)
 \ge0.
 \tag{TRISO-DIS-527}
@@ -9550,7 +9550,7 @@ $$
 \ge
 2\mathrm{Fo}
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right).
 \tag{TRISO-DIS-528}
 $$
@@ -9574,7 +9574,7 @@ $$
 1
 }{
 2\left[
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right]
 }.
 }
@@ -9590,7 +9590,7 @@ $$
 -
 2\mathrm{Fo}
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right).
 \tag{TRISO-DIS-531}
 $$
@@ -9670,7 +9670,7 @@ $$
 1
 }{
 2\left[
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right]
 }
 \tag{TRISO-DIS-538}
@@ -9701,7 +9701,7 @@ $$
 1
 }{
 2\left[
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right]
 }
 \right\}.
@@ -9718,7 +9718,7 @@ Collect the nodal errors into
 $$
 \mathbf E^j
 =
-\(E_0^j,E_1^j,\ldots,E_N^j\)^T.
+(E_0^j,E_1^j,\ldots,E_N^j)^T.
 \tag{TRISO-DIS-541}
 $$
 
@@ -9801,7 +9801,7 @@ A_{N,N}
 -
 2\mathrm{Fo}
 \left(
-1+\kappa\left\(1+\frac1N\right\)
+1+\kappa\left(1+\frac1N\right)
 \right).
 \tag{TRISO-DIS-550}
 $$
@@ -9931,7 +9931,7 @@ This is the precise monotonicity/maximum-principle content of the notebook's coe
 For every square matrix,
 
 $$
-\rho\(\mathbf A\)
+\rho(\mathbf A)
 \le
 \|\mathbf A\|
 \tag{TRISO-DIS-562}
@@ -9942,7 +9942,7 @@ for any induced matrix norm.
 Using the infinity norm,
 
 $$
-\rho\(\mathbf A\)
+\rho(\mathbf A)
 \le
 \|\mathbf A\|_\infty.
 \tag{TRISO-DIS-563}
@@ -9959,7 +9959,7 @@ Therefore
 
 $$
 \boxed{
-\rho\(\mathbf A\)\le1.
+\rho(\mathbf A)\le1.
 }
 \tag{TRISO-DIS-565}
 $$
@@ -9971,7 +9971,7 @@ This does **not** prove that (TRISO-DIS-540) is necessary for spectral stability
 There may be parameter values with some negative coefficients for which
 
 $$
-\rho\(\mathbf A\)\le1.
+\rho(\mathbf A)\le1.
 \tag{TRISO-DIS-566}
 $$
 
@@ -10154,7 +10154,7 @@ $$
 and consequently
 
 $$
-\rho\(\mathbf A\)\le1.
+\rho(\mathbf A)\le1.
 \tag{TRISO-DIS-582}
 $$
 
@@ -10468,7 +10468,7 @@ Define the volume-averaged concentration
 
 $$
 \boxed{
-C_P\(t\)
+C_P(t)
 =
 \frac1{V_P}
 \int_{r_w}^{r_e}
@@ -10718,7 +10718,7 @@ Then
 
 $$
 \boxed{
-J_e=g_e\(C_P-C_E\).
+J_e=g_e(C_P-C_E).
 }
 \tag{TRISO-FV-140}
 $$
@@ -10828,7 +10828,7 @@ Using (TRISO-FV-127) and (TRISO-FV-128),
 $$
 A_wJ_w
 =
-G_w\(C_W-C_P\),
+G_w(C_W-C_P),
 \tag{TRISO-FV-150}
 $$
 
@@ -10837,7 +10837,7 @@ and
 $$
 A_eJ_e
 =
-G_e\(C_P-C_E\).
+G_e(C_P-C_E).
 \tag{TRISO-FV-151}
 $$
 
@@ -10846,9 +10846,9 @@ Substitute these into (TRISO-FV-123):
 $$
 V_P\frac{dC_P}{dt}
 =
-G_w\(C_W-C_P\)
+G_w(C_W-C_P)
 -
-G_e\(C_P-C_E\)
+G_e(C_P-C_E)
 +
 S_PV_P.
 \tag{TRISO-FV-152}
@@ -10879,7 +10879,7 @@ V_P\frac{dC_P}{dt}
 =
 G_wC_W
 -
-\(G_w+G_e\)C_P
+(G_w+G_e)C_P
 +
 G_eC_E
 +
@@ -10935,7 +10935,7 @@ C_P^{j+1}-C_P^j
 =
 \frac{\Delta t\,G_w}{V_P}C_W^j
 -
-\frac{\Delta t\(G_w+G_e\)}{V_P}C_P^j
+\frac{\Delta t(G_w+G_e)}{V_P}C_P^j
 +
 \frac{\Delta t\,G_e}{V_P}C_E^j
 +
@@ -10953,7 +10953,7 @@ C_P^{j+1}
 +
 \left[
 1-
-\frac{\Delta t\(G_w+G_e\)}{V_P}
+\frac{\Delta t(G_w+G_e)}{V_P}
 \right]C_P^j
 +
 \frac{\Delta t\,G_e}{V_P}C_E^j
@@ -10974,7 +10974,7 @@ $$
 V_P\frac{dC_P}{dt}
 =
 \sum_{P=1}^{M}
-\(A_wJ_w-A_eJ_e\)
+(A_wJ_w-A_eJ_e)
 +
 \sum_{P=1}^{M}S_PV_P.
 \tag{TRISO-FV-159}
@@ -11074,11 +11074,11 @@ Using the outward face-flux convention,
 $$
 J_e
 =
-G_e^{\(A=1\)}\(C_0-C_1\),
+G_e^{(A=1)}(C_0-C_1),
 \tag{TRISO-FV-168}
 $$
 
-where \(G_e^{\(A=1\)}\) denotes the conductance per unit area.
+where \(G_e^{(A=1)}\) denotes the conductance per unit area.
 
 Equivalently, using total conductance \(G_e\),
 
@@ -11086,7 +11086,7 @@ $$
 \boxed{
 V_0\frac{dC_0}{dt}
 =
-G_e\(C_1-C_0\)
+G_e(C_1-C_0)
 +
 S_0V_0.
 }
@@ -11256,7 +11256,7 @@ $$
 \boxed{
 J_R
 =
-h\(C_R-c_\infty\).
+h(C_R-c_\infty).
 }
 \tag{TRISO-FV-186}
 $$
@@ -11284,9 +11284,9 @@ Write the total cell-centre-to-bulk concentration difference as
 $$
 C_P-c_\infty
 =
-\(C_P-C_R\)
+(C_P-C_R)
 +
-\(C_R-c_\infty\).
+(C_R-c_\infty).
 \tag{TRISO-FV-189}
 $$
 
@@ -11297,7 +11297,7 @@ C_P-c_\infty
 =
 J_R\frac{\delta r_R}{D_5}
 +
-\(C_R-c_\infty\).
+(C_R-c_\infty).
 \tag{TRISO-FV-190}
 $$
 
@@ -11369,7 +11369,7 @@ $$
 J_R
 =
 h_{\mathrm{eff}}
-\(C_P-c_\infty\).
+(C_P-c_\infty).
 }
 \tag{TRISO-FV-195}
 $$
@@ -11569,7 +11569,7 @@ $$
 J_R
 \to
 \frac{D_5}{\delta r_R}
-\(C_P-c_\infty\).
+(C_P-c_\infty).
 \tag{TRISO-FV-214}
 $$
 
@@ -11615,7 +11615,7 @@ The outward amount rate is
 $$
 A_RJ_R
 =
-G_R\(C_P-c_\infty\).
+G_R(C_P-c_\infty).
 \tag{TRISO-FV-218}
 $$
 
@@ -11639,7 +11639,7 @@ The west-face amount rate is
 $$
 A_wJ_w
 =
-G_w\(C_W-C_P\).
+G_w(C_W-C_P).
 \tag{TRISO-FV-220}
 $$
 
@@ -11648,7 +11648,7 @@ The outer amount rate is
 $$
 A_RJ_R
 =
-G_R\(C_P-c_\infty\).
+G_R(C_P-c_\infty).
 \tag{TRISO-FV-221}
 $$
 
@@ -11657,9 +11657,9 @@ Substitute both:
 $$
 V_P\frac{dC_P}{dt}
 =
-G_w\(C_W-C_P\)
+G_w(C_W-C_P)
 -
-G_R\(C_P-c_\infty\)
+G_R(C_P-c_\infty)
 +
 S_PV_P.
 \tag{TRISO-FV-222}
@@ -11674,7 +11674,7 @@ G_wC_W
 -
 G_wC_P
 -
-G_R\(C_P-c_\infty\)
+G_R(C_P-c_\infty)
 +
 S_PV_P.
 \tag{TRISO-FV-223}
@@ -11705,7 +11705,7 @@ V_P\frac{dC_P}{dt}
 =
 G_wC_W
 -
-\(G_w+G_R\)C_P
+(G_w+G_R)C_P
 +
 G_Rc_\infty
 +
@@ -11788,7 +11788,7 @@ C_P^{j+1}-C_P^j
 =
 \frac{\Delta tG_w}{V_P}C_W^j
 -
-\frac{\Delta t\(G_w+G_R\)}{V_P}C_P^j
+\frac{\Delta t(G_w+G_R)}{V_P}C_P^j
 +
 \frac{\Delta tG_R}{V_P}c_\infty^j
 +
@@ -11805,7 +11805,7 @@ C_P^{j+1}
 \frac{\Delta tG_w}{V_P}C_W^j
 +
 \left[
-1-\frac{\Delta t\(G_w+G_R\)}{V_P}
+1-\frac{\Delta t(G_w+G_R)}{V_P}
 \right]C_P^j
 +
 \frac{\Delta tG_R}{V_P}c_\infty^j
@@ -11837,7 +11837,7 @@ The central coefficient is non-negative when
 
 $$
 1-
-\frac{\Delta t\(G_w+G_e\)}{V_P}
+\frac{\Delta t(G_w+G_e)}{V_P}
 \ge0.
 \tag{TRISO-FV-602}
 $$
@@ -11845,7 +11845,7 @@ $$
 Rearrange:
 
 $$
-\Delta t\(G_w+G_e\)
+\Delta t(G_w+G_e)
 \le
 V_P.
 \tag{TRISO-FV-603}
@@ -11885,9 +11885,9 @@ Let the finite-volume mesh contain \(M\) spherical cells.
 Index the cell-average concentrations by
 
 $$
-\mathbf C\(t\)
+\mathbf C(t)
 =
-\(C_0,C_1,\ldots,C_{M-1}\)^T.
+(C_0,C_1,\ldots,C_{M-1})^T.
 \tag{TRISO-FV-233}
 $$
 
@@ -11898,7 +11898,7 @@ $$
 \mathbf V
 =
 \operatorname{diag}
-\(V_0,V_1,\ldots,V_{M-1}\).
+(V_0,V_1,\ldots,V_{M-1}).
 }
 \tag{TRISO-FV-234}
 $$
@@ -11950,7 +11950,7 @@ The central-cell balance is
 $$
 V_0\frac{dC_0}{dt}
 =
-G_{\frac12}\(C_1-C_0\)
+G_{\frac12}(C_1-C_0)
 +
 S_0V_0.
 \tag{TRISO-FV-238}
@@ -12001,9 +12001,9 @@ the conservative balance is
 $$
 V_P\frac{dC_P}{dt}
 =
-G_{P-\frac12}\(C_{P-1}-C_P\)
+G_{P-\frac12}(C_{P-1}-C_P)
 +
-G_{P+\frac12}\(C_{P+1}-C_P\)
+G_{P+\frac12}(C_{P+1}-C_P)
 +
 S_PV_P.
 \tag{TRISO-FV-243}
@@ -12012,7 +12012,7 @@ $$
 Expand the west-face term:
 
 $$
-G_{P-\frac12}\(C_{P-1}-C_P\)
+G_{P-\frac12}(C_{P-1}-C_P)
 =
 G_{P-\frac12}C_{P-1}
 -
@@ -12023,7 +12023,7 @@ $$
 Expand the east-face term:
 
 $$
-G_{P+\frac12}\(C_{P+1}-C_P\)
+G_{P+\frac12}(C_{P+1}-C_P)
 =
 G_{P+\frac12}C_{P+1}
 -
@@ -12151,7 +12151,7 @@ Define the source vector
 $$
 \mathbf S
 =
-\(S_0,S_1,\ldots,S_{M-1}\)^T.
+(S_0,S_1,\ldots,S_{M-1})^T.
 \tag{TRISO-FV-255}
 $$
 
@@ -12160,7 +12160,7 @@ Define the external-boundary forcing vector
 $$
 \mathbf b_\infty
 =
-\(0,0,\ldots,0,G_Rc_\infty\)^T.
+(0,0,\ldots,0,G_Rc_\infty)^T.
 \tag{TRISO-FV-256}
 $$
 
@@ -12198,7 +12198,7 @@ G_{\frac12}
 \\
 G_{\frac12}
 &
--\(G_{\frac12}+G_{\frac32}\)
+-(G_{\frac12}+G_{\frac32})
 &
 G_{\frac32}
 &
@@ -12210,7 +12210,7 @@ G_{\frac32}
 &
 G_{\frac32}
 &
--\(G_{\frac32}+G_{\frac52}\)
+-(G_{\frac32}+G_{\frac52})
 &
 \ddots
 &
@@ -12234,7 +12234,7 @@ G_{M-\frac32}
 &
 G_{M-\frac32}
 &
--\(G_{M-\frac32}+G_R\)
+-(G_{M-\frac32}+G_R)
 \end{pmatrix}.
 \tag{TRISO-FV-258}
 $$
@@ -12379,7 +12379,7 @@ x_P^2
 +
 x_{P+1}^2
 =
-\(x_{P+1}-x_P\)^2.
+(x_{P+1}-x_P)^2.
 \tag{TRISO-FV-271}
 $$
 
@@ -12387,7 +12387,7 @@ Therefore each internal face contributes
 
 $$
 -G_{P+\frac12}
-\(x_{P+1}-x_P\)^2.
+(x_{P+1}-x_P)^2.
 \tag{TRISO-FV-272}
 $$
 
@@ -12407,7 +12407,7 @@ $$
 -
 \sum_{P=0}^{M-2}
 G_{P+\frac12}
-\(x_{P+1}-x_P\)^2
+(x_{P+1}-x_P)^2
 -
 G_Rx_{M-1}^2.
 }
@@ -12462,7 +12462,7 @@ Define the discrete total particle inventory
 
 $$
 \boxed{
-N_h\(t\)
+N_h(t)
 =
 \mathbf 1^T\mathbf V\mathbf C
 =
@@ -12524,7 +12524,7 @@ $$
 =
 \sum_{P=0}^{M-1}S_PV_P
 -
-G_R\(C_{M-1}-c_\infty\).
+G_R(C_{M-1}-c_\infty).
 }
 \tag{TRISO-FV-285}
 $$
@@ -12559,7 +12559,7 @@ $$
 =
 \frac{4\pi S_0r_1^3}{3}
 -
-G_R\(C_{M-1}-c_\infty\).
+G_R(C_{M-1}-c_\infty).
 }
 \tag{TRISO-FV-288}
 $$
@@ -12804,7 +12804,7 @@ Consequently,
 
 $$
 \boxed{
-\rho\(\mathbf A_{\mathrm{FV}}\)\le1.
+\rho(\mathbf A_{\mathrm{FV}})\le1.
 }
 \tag{TRISO-FV-306}
 $$
@@ -12887,7 +12887,7 @@ The following statements are established:
 
 The remaining mathematical questions are narrower:
 
-[UNVERIFIED] Global spatial order of accuracy when \(D\(r\)\) is discontinuous.
+[UNVERIFIED] Global spatial order of accuracy when \(D(r)\) is discontinuous.
 
 [UNVERIFIED] Global temporal/spatial convergence rate of the fully discrete scheme.
 
@@ -12934,7 +12934,7 @@ C_P
 =
 \frac1{V_P}
 \int_{r_w}^{r_e}
-c\(r\)\,4\pi r^2\,dr.
+c(r)\,4\pi r^2\,dr.
 \tag{TRISO-ACC-100}
 $$
 
@@ -12953,7 +12953,7 @@ Subtract \(r_P\) inside the weighted first moment:
 
 $$
 \int_{r_w}^{r_e}
-\(r-r_P\)\,4\pi r^2\,dr
+(r-r_P)\,4\pi r^2\,dr
 =
 \int_{r_w}^{r_e}
 r\,4\pi r^2\,dr
@@ -12989,7 +12989,7 @@ Therefore
 $$
 \boxed{
 \int_{r_w}^{r_e}
-\(r-r_P\)\,4\pi r^2\,dr
+(r-r_P)\,4\pi r^2\,dr
 =
 0.
 }
@@ -12999,15 +12999,15 @@ $$
 Taylor-expand a smooth concentration about \(r_P\):
 
 $$
-c\(r\)
+c(r)
 =
-c\(r_P\)
+c(r_P)
 +
-c_r\(r_P\)\(r-r_P\)
+c_r(r_P)(r-r_P)
 +
-\frac12c_{rr}\(r_P\)\(r-r_P\)^2
+\frac12c_{rr}(r_P)(r-r_P)^2
 +
-O\(h_P^3\),
+O(h_P^3),
 \tag{TRISO-ACC-106}
 $$
 
@@ -13026,13 +13026,13 @@ C_P
 \frac1{V_P}
 \int_{r_w}^{r_e}
 \left[
-c\(r_P\)
+c(r_P)
 +
-c_r\(r_P\)\(r-r_P\)
+c_r(r_P)(r-r_P)
 +
-\frac12c_{rr}\(r_P\)\(r-r_P\)^2
+\frac12c_{rr}(r_P)(r-r_P)^2
 +
-O\(h_P^3\)
+O(h_P^3)
 \right]
 4\pi r^2\,dr.
 \tag{TRISO-ACC-108}
@@ -13041,19 +13041,19 @@ $$
 Separate the constant term:
 
 $$
-\frac{c\(r_P\)}{V_P}
+\frac{c(r_P)}{V_P}
 \int_{r_w}^{r_e}4\pi r^2\,dr
 =
-c\(r_P\).
+c(r_P).
 \tag{TRISO-ACC-109}
 $$
 
 The first-order term vanishes by (TRISO-ACC-105):
 
 $$
-\frac{c_r\(r_P\)}{V_P}
+\frac{c_r(r_P)}{V_P}
 \int_{r_w}^{r_e}
-\(r-r_P\)4\pi r^2\,dr
+(r-r_P)4\pi r^2\,dr
 =
 0.
 \tag{TRISO-ACC-110}
@@ -13066,14 +13066,14 @@ $$
 =
 \frac1{V_P}
 \int_{r_w}^{r_e}
-\(r-r_P\)^2\,4\pi r^2\,dr.
+(r-r_P)^2\,4\pi r^2\,dr.
 \tag{TRISO-ACC-111}
 $$
 
 For a shape-regular refining radial mesh,
 
 $$
-\mu_{2,P}=O\(h_P^2\).
+\mu_{2,P}=O(h_P^2).
 \tag{TRISO-ACC-112}
 $$
 
@@ -13083,11 +13083,11 @@ $$
 \boxed{
 C_P
 =
-c\(r_P\)
+c(r_P)
 +
-\frac12c_{rr}\(r_P\)\mu_{2,P}
+\frac12c_{rr}(r_P)\mu_{2,P}
 +
-O\(h_P^3\).
+O(h_P^3).
 }
 \tag{TRISO-ACC-113}
 $$
@@ -13096,7 +13096,7 @@ In particular,
 
 $$
 \boxed{
-C_P-c\(r_P\)=O\(h_P^2\).
+C_P-c(r_P)=O(h_P^2).
 }
 \tag{TRISO-ACC-114}
 $$
@@ -13148,7 +13148,7 @@ $$
 Taylor-expand the exact point value at \(r_P\) about the face:
 
 $$
-c\(r_P\)
+c(r_P)
 =
 c_f
 -
@@ -13158,14 +13158,14 @@ d_Pc_f'
 -
 \frac{d_P^3}{6}c_f'''
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-119}
 $$
 
 Taylor-expand the exact point value at \(r_E\):
 
 $$
-c\(r_E\)
+c(r_E)
 =
 c_f
 +
@@ -13175,53 +13175,53 @@ d_Ec_f'
 +
 \frac{d_E^3}{6}c_f'''
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-120}
 $$
 
 Subtract (TRISO-ACC-119) from (TRISO-ACC-120):
 
 $$
-c\(r_E\)-c\(r_P\)
+c(r_E)-c(r_P)
 =
-\(d_P+d_E\)c_f'
+(d_P+d_E)c_f'
 +
 \frac{d_E^2-d_P^2}{2}c_f''
 +
 \frac{d_E^3+d_P^3}{6}c_f'''
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-121}
 $$
 
 Divide by \(d_P+d_E\):
 
 $$
-\frac{c\(r_E\)-c\(r_P\)}{r_E-r_P}
+\frac{c(r_E)-c(r_P)}{r_E-r_P}
 =
 c_f'
 +
 \frac{d_E-d_P}{2}c_f''
 +
-\frac{d_E^3+d_P^3}{6\(d_P+d_E\)}c_f'''
+\frac{d_E^3+d_P^3}{6(d_P+d_E)}c_f'''
 +
-O\(h^3\).
+O(h^3).
 \tag{TRISO-ACC-122}
 $$
 
 For a locally symmetric representative geometry,
 
 $$
-d_E-d_P=O\(h^2\),
+d_E-d_P=O(h^2),
 \tag{TRISO-ACC-123}
 $$
 
 while
 
 $$
-d_P=O\(h\),
+d_P=O(h),
 \qquad
-d_E=O\(h\).
+d_E=O(h).
 \tag{TRISO-ACC-124}
 $$
 
@@ -13230,7 +13230,7 @@ Therefore
 $$
 \frac{d_E^3+d_P^3}{d_P+d_E}
 =
-O\(h^2\).
+O(h^2).
 \tag{TRISO-ACC-125}
 $$
 
@@ -13238,11 +13238,11 @@ Hence the point-value two-point gradient is
 
 $$
 \boxed{
-\frac{c\(r_E\)-c\(r_P\)}{r_E-r_P}
+\frac{c(r_E)-c(r_P)}{r_E-r_P}
 =
-c_r\(r_f\)
+c_r(r_f)
 +
-O\(h^2\)
+O(h^2)
 }
 \tag{TRISO-ACC-126}
 $$
@@ -13254,23 +13254,23 @@ under the local-symmetry condition (TRISO-ACC-123).
 Write the exact cell averages as
 
 $$
-C_P=c\(r_P\)+\eta_P,
+C_P=c(r_P)+\eta_P,
 \tag{TRISO-ACC-127}
 $$
 
 and
 
 $$
-C_E=c\(r_E\)+\eta_E,
+C_E=c(r_E)+\eta_E,
 \tag{TRISO-ACC-128}
 $$
 
 where
 
 $$
-\eta_P=O\(h^2\),
+\eta_P=O(h^2),
 \qquad
-\eta_E=O\(h^2\).
+\eta_E=O(h^2).
 \tag{TRISO-ACC-129}
 $$
 
@@ -13286,7 +13286,7 @@ Substitute (TRISO-ACC-127) and (TRISO-ACC-128):
 $$
 \frac{C_E-C_P}{r_E-r_P}
 =
-\frac{c\(r_E\)-c\(r_P\)}{r_E-r_P}
+\frac{c(r_E)-c(r_P)}{r_E-r_P}
 +
 \frac{\eta_E-\eta_P}{r_E-r_P}.
 \tag{TRISO-ACC-131}
@@ -13295,14 +13295,14 @@ $$
 For a smoothly varying family of shape-regular cells, the cell-average representation error varies smoothly between adjacent cells, so
 
 $$
-\eta_E-\eta_P=O\(h^3\).
+\eta_E-\eta_P=O(h^3).
 \tag{TRISO-ACC-132}
 $$
 
 Since
 
 $$
-r_E-r_P=O\(h\),
+r_E-r_P=O(h),
 \tag{TRISO-ACC-133}
 $$
 
@@ -13311,7 +13311,7 @@ we obtain
 $$
 \frac{\eta_E-\eta_P}{r_E-r_P}
 =
-O\(h^2\).
+O(h^2).
 \tag{TRISO-ACC-134}
 $$
 
@@ -13321,9 +13321,9 @@ $$
 \boxed{
 \frac{C_E-C_P}{r_E-r_P}
 =
-c_r\(r_f\)
+c_r(r_f)
 +
-O\(h^2\).
+O(h^2).
 }
 \tag{TRISO-ACC-135}
 $$
@@ -13335,7 +13335,7 @@ This result is conditional on smooth solution data, shape-regular refinement, an
 Inside one material,
 
 $$
-J_f=-D\,c_r\(r_f\).
+J_f=-D\,c_r(r_f).
 \tag{TRISO-ACC-136}
 $$
 
@@ -13356,7 +13356,7 @@ J_f^h
 =
 -D
 \left[
-c_r\(r_f\)+O\(h^2\)
+c_r(r_f)+O(h^2)
 \right].
 \tag{TRISO-ACC-138}
 $$
@@ -13369,7 +13369,7 @@ J_f^h
 =
 J_f
 +
-O\(h^2\).
+O(h^2).
 }
 \tag{TRISO-ACC-139}
 $$
@@ -13428,9 +13428,9 @@ $$
 \mathcal D_P^h-\mathcal D_P
 =
 \frac{
-A_w\(J_w^h-J_w\)
+A_w(J_w^h-J_w)
 -
-A_e\(J_e^h-J_e\)
+A_e(J_e^h-J_e)
 }{
 V_P
 }.
@@ -13454,23 +13454,23 @@ $$
 The face analysis alone gives
 
 $$
-\varepsilon_w=O\(h^2\),
+\varepsilon_w=O(h^2),
 \qquad
-\varepsilon_e=O\(h^2\).
+\varepsilon_e=O(h^2).
 \tag{TRISO-ACC-146}
 $$
 
 Since
 
 $$
-V_P=O\(h\)
+V_P=O(h)
 \tag{TRISO-ACC-147}
 $$
 
 for a refining shell away from pathological mesh degeneration, the estimate (TRISO-ACC-146) by itself would permit only
 
 $$
-\mathcal D_P^h-\mathcal D_P=O\(h\).
+\mathcal D_P^h-\mathcal D_P=O(h).
 \tag{TRISO-ACC-148}
 $$
 
@@ -13486,25 +13486,25 @@ $$
 \boxed{
 \varepsilon_f
 =
-h^2E\(r_f\)
+h^2E(r_f)
 +
-O\(h^3\),
+O(h^3),
 }
 \tag{TRISO-ACC-149}
 $$
 
-where \(E\(r\)\) is smooth within the material.
+where \(E(r)\) is smooth within the material.
 
-This is stronger than the statement \(\varepsilon_f=O\(h^2\)\).
+This is stronger than the statement \(\varepsilon_f=O(h^2)\).
 
 At the west face,
 
 $$
 \varepsilon_w
 =
-h^2E\(r_w\)
+h^2E(r_w)
 +
-O\(h^3\).
+O(h^3).
 \tag{TRISO-ACC-150}
 $$
 
@@ -13513,9 +13513,9 @@ At the east face,
 $$
 \varepsilon_e
 =
-h^2E\(r_e\)
+h^2E(r_e)
 +
-O\(h^3\).
+O(h^3).
 \tag{TRISO-ACC-151}
 $$
 
@@ -13526,10 +13526,10 @@ A_w\varepsilon_w-A_e\varepsilon_e
 =
 h^2
 \left[
-A_wE\(r_w\)-A_eE\(r_e\)
+A_wE(r_w)-A_eE(r_e)
 \right]
 +
-O\(h^4\),
+O(h^4),
 \tag{TRISO-ACC-152}
 $$
 
@@ -13538,61 +13538,61 @@ where the remainder scaling assumes a shape-regular cell with bounded spherical 
 Define
 
 $$
-F\(r\)=A\(r\)E\(r\),
+F(r)=A(r)E(r),
 \tag{TRISO-ACC-153}
 $$
 
 with
 
 $$
-A\(r\)=4\pi r^2.
+A(r)=4\pi r^2.
 \tag{TRISO-ACC-154}
 $$
 
 Then
 
 $$
-A_wE\(r_w\)-A_eE\(r_e\)
+A_wE(r_w)-A_eE(r_e)
 =
-F\(r_w\)-F\(r_e\).
+F(r_w)-F(r_e).
 \tag{TRISO-ACC-155}
 $$
 
-Taylor-expand \(F\(r_e\)\) about \(r_w\):
+Taylor-expand \(F(r_e)\) about \(r_w\):
 
 $$
-F\(r_e\)
+F(r_e)
 =
-F\(r_w\)
+F(r_w)
 +
-\(r_e-r_w\)F'\(r_w\)
+(r_e-r_w)F'(r_w)
 +
-O\(h^2\).
+O(h^2).
 \tag{TRISO-ACC-156}
 $$
 
 Since
 
 $$
-r_e-r_w=h_P=O\(h\),
+r_e-r_w=h_P=O(h),
 \tag{TRISO-ACC-157}
 $$
 
 subtracting gives
 
 $$
-F\(r_w\)-F\(r_e\)
+F(r_w)-F(r_e)
 =
--h_PF'\(r_w\)
+-h_PF'(r_w)
 +
-O\(h^2\).
+O(h^2).
 \tag{TRISO-ACC-158}
 $$
 
 Therefore
 
 $$
-F\(r_w\)-F\(r_e\)=O\(h\).
+F(r_w)-F(r_e)=O(h).
 \tag{TRISO-ACC-159}
 $$
 
@@ -13601,9 +13601,9 @@ Return to (TRISO-ACC-152):
 $$
 A_w\varepsilon_w-A_e\varepsilon_e
 =
-h^2O\(h\)
+h^2O(h)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-160}
 $$
 
@@ -13613,7 +13613,7 @@ $$
 \boxed{
 A_w\varepsilon_w-A_e\varepsilon_e
 =
-O\(h^3\).
+O(h^3).
 }
 \tag{TRISO-ACC-161}
 $$
@@ -13621,7 +13621,7 @@ $$
 Divide by
 
 $$
-V_P=O\(h\).
+V_P=O(h).
 \tag{TRISO-ACC-162}
 $$
 
@@ -13631,7 +13631,7 @@ $$
 \boxed{
 \mathcal D_P^h-\mathcal D_P
 =
-O\(h^2\).
+O(h^2).
 }
 \tag{TRISO-ACC-163}
 $$
@@ -13670,7 +13670,7 @@ r^2D c_r
 \right)
 \right]_{r=r_P}
 +
-O\(h^2\).
+O(h^2).
 \tag{TRISO-ACC-165}
 $$
 
@@ -13688,7 +13688,7 @@ r^2D c_r
 \right)
 \right]_{r=r_P}
 +
-O\(h^2\).
+O(h^2).
 }
 \tag{TRISO-ACC-166}
 $$
@@ -13704,19 +13704,19 @@ A_w\varepsilon_w-A_e\varepsilon_e
 \tag{TRISO-ACC-167}
 $$
 
-need not be \(O\(h^3\)\).
+need not be \(O(h^3)\).
 
 It may remain only
 
 $$
-O\(h^2\).
+O(h^2).
 \tag{TRISO-ACC-168}
 $$
 
-Division by \(V_P=O\(h\)\) would then give only
+Division by \(V_P=O(h)\) would then give only
 
 $$
-O\(h\)
+O(h)
 \tag{TRISO-ACC-169}
 $$
 
@@ -13766,7 +13766,7 @@ $$
 For the frozen ideal interface,
 
 $$
-c^-\(r_I\)=c^+\(r_I\)=c_I.
+c^-(r_I)=c^+(r_I)=c_I.
 \tag{TRISO-ACC-175}
 $$
 
@@ -13775,9 +13775,9 @@ The exact outward flux is continuous:
 $$
 J_I
 =
--D^-c_r^-\(r_I\)
+-D^-c_r^-(r_I)
 =
--D^+c_r^+\(r_I\).
+-D^+c_r^+(r_I).
 \tag{TRISO-ACC-176}
 $$
 
@@ -13786,24 +13786,24 @@ $$
 Taylor-expand the exact point value at \(r_P=r_I-d_P\) about the interface from the left:
 
 $$
-c\(r_P\)
+c(r_P)
 =
 c_I
 -
-d_Pc_r^-\(r_I\)
+d_Pc_r^-(r_I)
 +
-\frac{d_P^2}{2}c_{rr}^-\(r_I\)
+\frac{d_P^2}{2}c_{rr}^-(r_I)
 -
-\frac{d_P^3}{6}c_{rrr}^-\(r_I\)
+\frac{d_P^3}{6}c_{rrr}^-(r_I)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-177}
 $$
 
 Use
 
 $$
-c_r^-\(r_I\)
+c_r^-(r_I)
 =
 -\frac{J_I}{D^-}.
 \tag{TRISO-ACC-178}
@@ -13812,32 +13812,32 @@ $$
 Substitute:
 
 $$
-c\(r_P\)
+c(r_P)
 =
 c_I
 +
 \frac{d_P}{D^-}J_I
 +
-\frac{d_P^2}{2}c_{rr}^-\(r_I\)
+\frac{d_P^2}{2}c_{rr}^-(r_I)
 -
-\frac{d_P^3}{6}c_{rrr}^-\(r_I\)
+\frac{d_P^3}{6}c_{rrr}^-(r_I)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-179}
 $$
 
 Rearrange the interface-to-left concentration difference:
 
 $$
-c\(r_P\)-c_I
+c(r_P)-c_I
 =
 \frac{d_P}{D^-}J_I
 +
-\frac{d_P^2}{2}c_{rr}^-\(r_I\)
+\frac{d_P^2}{2}c_{rr}^-(r_I)
 -
-\frac{d_P^3}{6}c_{rrr}^-\(r_I\)
+\frac{d_P^3}{6}c_{rrr}^-(r_I)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-180}
 $$
 
@@ -13846,24 +13846,24 @@ $$
 Taylor-expand from the right:
 
 $$
-c\(r_E\)
+c(r_E)
 =
 c_I
 +
-d_Ec_r^+\(r_I\)
+d_Ec_r^+(r_I)
 +
-\frac{d_E^2}{2}c_{rr}^+\(r_I\)
+\frac{d_E^2}{2}c_{rr}^+(r_I)
 +
-\frac{d_E^3}{6}c_{rrr}^+\(r_I\)
+\frac{d_E^3}{6}c_{rrr}^+(r_I)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-181}
 $$
 
 Use
 
 $$
-c_r^+\(r_I\)
+c_r^+(r_I)
 =
 -\frac{J_I}{D^+}.
 \tag{TRISO-ACC-182}
@@ -13872,32 +13872,32 @@ $$
 Therefore
 
 $$
-c\(r_E\)
+c(r_E)
 =
 c_I
 -
 \frac{d_E}{D^+}J_I
 +
-\frac{d_E^2}{2}c_{rr}^+\(r_I\)
+\frac{d_E^2}{2}c_{rr}^+(r_I)
 +
-\frac{d_E^3}{6}c_{rrr}^+\(r_I\)
+\frac{d_E^3}{6}c_{rrr}^+(r_I)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-183}
 $$
 
 Rearrange:
 
 $$
-c_I-c\(r_E\)
+c_I-c(r_E)
 =
 \frac{d_E}{D^+}J_I
 -
-\frac{d_E^2}{2}c_{rr}^+\(r_I\)
+\frac{d_E^2}{2}c_{rr}^+(r_I)
 -
-\frac{d_E^3}{6}c_{rrr}^+\(r_I\)
+\frac{d_E^3}{6}c_{rrr}^+(r_I)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-184}
 $$
 
@@ -13906,7 +13906,7 @@ $$
 Add (TRISO-ACC-180) and (TRISO-ACC-184):
 
 $$
-c\(r_P\)-c\(r_E\)
+c(r_P)-c(r_E)
 =
 J_I
 \left(
@@ -13918,15 +13918,15 @@ $$
 
 $$
 +
-\frac{d_P^2}{2}c_{rr}^-\(r_I\)
+\frac{d_P^2}{2}c_{rr}^-(r_I)
 -
-\frac{d_E^2}{2}c_{rr}^+\(r_I\)
+\frac{d_E^2}{2}c_{rr}^+(r_I)
 -
-\frac{d_P^3}{6}c_{rrr}^-\(r_I\)
+\frac{d_P^3}{6}c_{rrr}^-(r_I)
 -
-\frac{d_E^3}{6}c_{rrr}^+\(r_I\)
+\frac{d_E^3}{6}c_{rrr}^+(r_I)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-185}
 $$
 
@@ -13946,7 +13946,7 @@ $$
 For a shape-regular mesh,
 
 $$
-R_I=O\(h\).
+R_I=O(h).
 \tag{TRISO-ACC-187}
 $$
 
@@ -13955,29 +13955,29 @@ Define the second-order remainder
 $$
 Q_I
 =
-\frac{d_P^2}{2}c_{rr}^-\(r_I\)
+\frac{d_P^2}{2}c_{rr}^-(r_I)
 -
-\frac{d_E^2}{2}c_{rr}^+\(r_I\).
+\frac{d_E^2}{2}c_{rr}^+(r_I).
 \tag{TRISO-ACC-188}
 $$
 
 Then
 
 $$
-Q_I=O\(h^2\).
+Q_I=O(h^2).
 \tag{TRISO-ACC-189}
 $$
 
 Equation (TRISO-ACC-185) becomes
 
 $$
-c\(r_P\)-c\(r_E\)
+c(r_P)-c(r_E)
 =
 J_IR_I
 +
 Q_I
 +
-O\(h^3\).
+O(h^3).
 \tag{TRISO-ACC-190}
 $$
 
@@ -13987,7 +13987,7 @@ $$
 J_I
 =
 \frac{
-c\(r_P\)-c\(r_E\)-Q_I+O\(h^3\)
+c(r_P)-c(r_E)-Q_I+O(h^3)
 }{
 R_I
 }.
@@ -14000,35 +14000,35 @@ $$
 J_I
 =
 \frac{
-c\(r_P\)-c\(r_E\)
+c(r_P)-c(r_E)
 }{
 R_I
 }
 -
 \frac{Q_I}{R_I}
 +
-O\(h^2\).
+O(h^2).
 \tag{TRISO-ACC-192}
 $$
 
 Because
 
 $$
-Q_I=O\(h^2\)
+Q_I=O(h^2)
 \tag{TRISO-ACC-193}
 $$
 
 and
 
 $$
-R_I=O\(h\),
+R_I=O(h),
 \tag{TRISO-ACC-194}
 $$
 
 we have
 
 $$
-\frac{Q_I}{R_I}=O\(h\).
+\frac{Q_I}{R_I}=O(h).
 \tag{TRISO-ACC-195}
 $$
 
@@ -14038,7 +14038,7 @@ $$
 J_I^{h,\mathrm{pt}}
 =
 \frac{
-c\(r_P\)-c\(r_E\)
+c(r_P)-c(r_E)
 }{
 R_I
 }
@@ -14053,7 +14053,7 @@ J_I^{h,\mathrm{pt}}
 =
 J_I
 +
-O\(h\).
+O(h).
 }
 \tag{TRISO-ACC-197}
 $$
@@ -14062,21 +14062,21 @@ Thus the basic two-point harmonic/resistance interface flux is generically first
 
 ### 18A.7.4 Special cancellation condition
 
-The leading \(O\(h\)\) flux error vanishes if
+The leading \(O(h)\) flux error vanishes if
 
 $$
-Q_I=O\(h^3\).
+Q_I=O(h^3).
 \tag{TRISO-ACC-198}
 $$
 
 At leading order this requires
 
 $$
-d_P^2c_{rr}^-\(r_I\)
+d_P^2c_{rr}^-(r_I)
 -
-d_E^2c_{rr}^+\(r_I\)
+d_E^2c_{rr}^+(r_I)
 =
-O\(h^3\).
+O(h^3).
 \tag{TRISO-ACC-199}
 $$
 
@@ -14090,9 +14090,9 @@ $$
 a sufficient leading-order cancellation condition is
 
 $$
-c_{rr}^-\(r_I\)
+c_{rr}^-(r_I)
 =
-c_{rr}^+\(r_I\).
+c_{rr}^+(r_I).
 \tag{TRISO-ACC-201}
 $$
 
@@ -14107,23 +14107,23 @@ The numerical scheme uses exact cell averages rather than exact point values.
 Write
 
 $$
-C_P=c\(r_P\)+\eta_P,
+C_P=c(r_P)+\eta_P,
 \tag{TRISO-ACC-202}
 $$
 
 and
 
 $$
-C_E=c\(r_E\)+\eta_E.
+C_E=c(r_E)+\eta_E.
 \tag{TRISO-ACC-203}
 $$
 
 For smooth one-sided fields within each material,
 
 $$
-\eta_P=O\(h^2\),
+\eta_P=O(h^2),
 \qquad
-\eta_E=O\(h^2\).
+\eta_E=O(h^2).
 \tag{TRISO-ACC-204}
 $$
 
@@ -14146,7 +14146,7 @@ $$
 J_I^h
 =
 \frac{
-c\(r_P\)-c\(r_E\)
+c(r_P)-c(r_E)
 }{
 R_I
 }
@@ -14159,19 +14159,19 @@ R_I
 \tag{TRISO-ACC-206}
 $$
 
-Across a material discontinuity, the leading \(O\(h^2\)\) average-representation coefficients on the two sides need not match smoothly.
+Across a material discontinuity, the leading \(O(h^2)\) average-representation coefficients on the two sides need not match smoothly.
 
 Therefore, generically,
 
 $$
-\eta_P-\eta_E=O\(h^2\).
+\eta_P-\eta_E=O(h^2).
 \tag{TRISO-ACC-207}
 $$
 
 Since
 
 $$
-R_I=O\(h\),
+R_I=O(h),
 \tag{TRISO-ACC-208}
 $$
 
@@ -14180,7 +14180,7 @@ the cell-average correction contributes
 $$
 \frac{\eta_P-\eta_E}{R_I}
 =
-O\(h\).
+O(h).
 \tag{TRISO-ACC-209}
 $$
 
@@ -14192,7 +14192,7 @@ J_I^h
 =
 J_I
 +
-O\(h\)
+O(h)
 }
 \tag{TRISO-ACC-210}
 $$
@@ -14242,7 +14242,7 @@ Conservation and formal order are separate properties.
 Let the interface face-flux error be
 
 $$
-\varepsilon_I=O\(h\).
+\varepsilon_I=O(h).
 \tag{TRISO-ACC-215}
 $$
 
@@ -14265,7 +14265,7 @@ under radial refinement of a fixed physical geometry.
 The adjacent cell volume satisfies
 
 $$
-V_P=O\(h\).
+V_P=O(h).
 \tag{TRISO-ACC-218}
 $$
 
@@ -14292,9 +14292,9 @@ A global stability-plus-consistency argument in an appropriate integrated norm, 
 
 [VERIFIED] The harmonic/resistance interface flux exactly enforces one common discrete flux and therefore exact discrete conservation.
 
-[VERIFIED] For piecewise smooth solutions satisfying ideal concentration and flux continuity, the basic two-point point-value interface flux is generically \(O\(h\)\) accurate.
+[VERIFIED] For piecewise smooth solutions satisfying ideal concentration and flux continuity, the basic two-point point-value interface flux is generically \(O(h)\) accurate.
 
-[VERIFIED] Using exact cell averages at volume centroids does not generically improve that interface order; the canonical interface flux remains \(O\(h\)\) unless additional cancellation occurs.
+[VERIFIED] Using exact cell averages at volume centroids does not generically improve that interface order; the canonical interface flux remains \(O(h)\) unless additional cancellation occurs.
 
 [NOT ESTABLISHED] A second-order interface flux for unequal diffusivities.
 
@@ -14314,14 +14314,14 @@ $$
 where
 
 $$
-d=\delta r_R=O\(h\).
+d=\delta r_R=O(h).
 \tag{TRISO-ACC-221}
 $$
 
 Let
 
 $$
-c_R=c\(R\)
+c_R=c(R)
 \tag{TRISO-ACC-222}
 $$
 
@@ -14330,14 +14330,14 @@ denote the exact physical surface concentration.
 The exact Robin condition is
 
 $$
-J_R=h\(c_R-c_\infty\).
+J_R=h(c_R-c_\infty).
 \tag{TRISO-ACC-223}
 $$
 
 The same exact outward flux also satisfies
 
 $$
-J_R=-D_5c_r\(R\).
+J_R=-D_5c_r(R).
 \tag{TRISO-ACC-224}
 $$
 
@@ -14361,24 +14361,24 @@ The objective is to compare (TRISO-ACC-225) with the exact \(J_R\).
 Taylor-expand the exact OPyC solution from \(R\) inward to \(r_P=R-d\):
 
 $$
-c\(r_P\)
+c(r_P)
 =
 c_R
 -
-dc_r\(R\)
+dc_r(R)
 +
-\frac{d^2}{2}c_{rr}\(R\)
+\frac{d^2}{2}c_{rr}(R)
 -
-\frac{d^3}{6}c_{rrr}\(R\)
+\frac{d^3}{6}c_{rrr}(R)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-226}
 $$
 
 Use the exact flux relation
 
 $$
-c_r\(R\)
+c_r(R)
 =
 -\frac{J_R}{D_5}.
 \tag{TRISO-ACC-227}
@@ -14387,17 +14387,17 @@ $$
 Substitute:
 
 $$
-c\(r_P\)
+c(r_P)
 =
 c_R
 +
 \frac d{D_5}J_R
 +
-\frac{d^2}{2}c_{rr}\(R\)
+\frac{d^2}{2}c_{rr}(R)
 -
-\frac{d^3}{6}c_{rrr}\(R\)
+\frac{d^3}{6}c_{rrr}(R)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-228}
 $$
 
@@ -14413,35 +14413,35 @@ $$
 Subtract \(c_\infty\) from (TRISO-ACC-228):
 
 $$
-c\(r_P\)-c_\infty
+c(r_P)-c_\infty
 =
-\(c_R-c_\infty\)
+(c_R-c_\infty)
 +
 \frac d{D_5}J_R
 +
-\frac{d^2}{2}c_{rr}\(R\)
+\frac{d^2}{2}c_{rr}(R)
 -
-\frac{d^3}{6}c_{rrr}\(R\)
+\frac{d^3}{6}c_{rrr}(R)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-230}
 $$
 
 Substitute (TRISO-ACC-229):
 
 $$
-c\(r_P\)-c_\infty
+c(r_P)-c_\infty
 =
 J_R
 \left(
 \frac1h+\frac d{D_5}
 \right)
 +
-\frac{d^2}{2}c_{rr}\(R\)
+\frac{d^2}{2}c_{rr}(R)
 -
-\frac{d^3}{6}c_{rrr}\(R\)
+\frac{d^3}{6}c_{rrr}(R)
 +
-O\(h^4\).
+O(h^4).
 \tag{TRISO-ACC-231}
 $$
 
@@ -14466,13 +14466,13 @@ as \(h\to0\) in the mesh-refinement sense \(d\to0\); here \(h\) is the physical 
 Equation (TRISO-ACC-231) becomes
 
 $$
-c\(r_P\)-c_\infty
+c(r_P)-c_\infty
 =
 J_RR_B
 +
-\frac{d^2}{2}c_{rr}\(R\)
+\frac{d^2}{2}c_{rr}(R)
 +
-O\(h^3\).
+O(h^3).
 \tag{TRISO-ACC-234}
 $$
 
@@ -14482,18 +14482,18 @@ $$
 J_R
 =
 \frac{
-c\(r_P\)-c_\infty
+c(r_P)-c_\infty
 }{
 R_B
 }
 -
 \frac{
-d^2c_{rr}\(R\)
+d^2c_{rr}(R)
 }{
 2R_B
 }
 +
-O\(h^3\).
+O(h^3).
 \tag{TRISO-ACC-235}
 $$
 
@@ -14503,7 +14503,7 @@ $$
 J_R^{h,\mathrm{pt}}
 =
 \frac{
-c\(r_P\)-c_\infty
+c(r_P)-c_\infty
 }{
 R_B
 }
@@ -14516,7 +14516,7 @@ $$
 \boxed{
 J_R^{h,\mathrm{pt}}
 =
-J_R+O\(h^2\)
+J_R+O(h^2)
 }
 \tag{TRISO-ACC-237}
 $$
@@ -14525,19 +14525,19 @@ for fixed finite \(h>0\).
 
 #### 18A.8.2 Effect of the exact cell average
 
-The numerical closure uses the exact cell average \(C_P\), not \(c\(r_P\)\).
+The numerical closure uses the exact cell average \(C_P\), not \(c(r_P)\).
 
 Write
 
 $$
-C_P=c\(r_P\)+\eta_P.
+C_P=c(r_P)+\eta_P.
 \tag{TRISO-ACC-238}
 $$
 
 From the centroid analysis,
 
 $$
-\eta_P=O\(h^2\).
+\eta_P=O(h^2).
 \tag{TRISO-ACC-239}
 $$
 
@@ -14547,7 +14547,7 @@ $$
 J_R^h
 =
 \frac{
-c\(r_P\)+\eta_P-c_\infty
+c(r_P)+\eta_P-c_\infty
 }{
 R_B
 }.
@@ -14560,7 +14560,7 @@ $$
 J_R^h
 =
 \frac{
-c\(r_P\)-c_\infty
+c(r_P)-c_\infty
 }{
 R_B
 }
@@ -14579,7 +14579,7 @@ $$
 Therefore
 
 $$
-\frac{\eta_P}{R_B}=O\(h^2\).
+\frac{\eta_P}{R_B}=O(h^2).
 \tag{TRISO-ACC-243}
 $$
 
@@ -14589,7 +14589,7 @@ $$
 \boxed{
 J_R^h
 =
-J_R+O\(h^2\)
+J_R+O(h^2)
 }
 \tag{TRISO-ACC-244}
 $$
@@ -14624,17 +14624,17 @@ Subtract:
 $$
 \dot N_R^h-\dot N_R
 =
-A_R\(J_R^h-J_R\).
+A_R(J_R^h-J_R).
 \tag{TRISO-ACC-248}
 $$
 
-Because \(A_R\) is fixed under mesh refinement and (TRISO-ACC-244) gives \(J_R^h-J_R=O\(h^2\)\),
+Because \(A_R\) is fixed under mesh refinement and (TRISO-ACC-244) gives \(J_R^h-J_R=O(h^2)\),
 
 $$
 \boxed{
 \dot N_R^h-\dot N_R
 =
-O\(h^2\).
+O(h^2).
 }
 \tag{TRISO-ACC-249}
 $$
@@ -14646,23 +14646,23 @@ Thus the total Robin release rate is second-order consistent for fixed finite \(
 The outer-cell volume satisfies
 
 $$
-V_P=O\(h\).
+V_P=O(h).
 \tag{TRISO-ACC-250}
 $$
 
 If the boundary amount-rate error is
 
 $$
-O\(h^2\),
+O(h^2),
 \tag{TRISO-ACC-251}
 $$
 
 then its contribution to the outer cell-average time-derivative residual can scale as
 
 $$
-\frac{O\(h^2\)}{O\(h\)}
+\frac{O(h^2)}{O(h)}
 =
-O\(h\).
+O(h).
 \tag{TRISO-ACC-252}
 $$
 
@@ -14723,7 +14723,7 @@ $$
 Now
 
 $$
-R_B=O\(h\)
+R_B=O(h)
 \tag{TRISO-ACC-259}
 $$
 
@@ -14734,21 +14734,21 @@ To avoid this notational collision, denote the mesh scale by \(\mathfrak h\).
 Then
 
 $$
-d=O\(\mathfrak h\),
+d=O(\mathfrak h),
 \tag{TRISO-ACC-260}
 $$
 
 and
 
 $$
-R_B=O\(\mathfrak h\).
+R_B=O(\mathfrak h).
 \tag{TRISO-ACC-261}
 $$
 
-The \(O\(\mathfrak h^2\)\) cell-average representation error divided by \(R_B=O\(\mathfrak h\)\) can contribute
+The \(O(\mathfrak h^2)\) cell-average representation error divided by \(R_B=O(\mathfrak h)\) can contribute
 
 $$
-O\(\mathfrak h\)
+O(\mathfrak h)
 \tag{TRISO-ACC-262}
 $$
 
@@ -14760,11 +14760,11 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 ### 18A.8.6 Robin boundary consistency status
 
-[VERIFIED] For fixed finite physical transfer coefficient \(0<h<\infty\), the cell-centred series-resistance Robin flux is \(O\(\mathfrak h^2\)\) consistent under smooth OPyC data and the centroid representation assumptions.
+[VERIFIED] For fixed finite physical transfer coefficient \(0<h<\infty\), the cell-centred series-resistance Robin flux is \(O(\mathfrak h^2)\) consistent under smooth OPyC data and the centroid representation assumptions.
 
-[VERIFIED] The total outer release amount rate is also \(O\(\mathfrak h^2\)\) consistent.
+[VERIFIED] The total outer release amount rate is also \(O(\mathfrak h^2)\) consistent.
 
-[VERIFIED] The outer-cell pointwise time-derivative residual may be only \(O\(\mathfrak h\)\) because the boundary amount-rate error is divided by a cell volume \(O\(\mathfrak h\)\).
+[VERIFIED] The outer-cell pointwise time-derivative residual may be only \(O(\mathfrak h)\) because the boundary amount-rate error is divided by a cell volume \(O(\mathfrak h)\).
 
 [VERIFIED] The no-flux Neumann limit is recovered.
 
@@ -14776,9 +14776,9 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 The local consistency results are not uniform over the particle:
 
-- smooth same-material cells have conditional \(O\(\mathfrak h^2\)\) divergence consistency;
+- smooth same-material cells have conditional \(O(\mathfrak h^2)\) divergence consistency;
 - a fixed number of cells adjacent to the four material interfaces can have \(O(1)\) pointwise residuals under the present two-point transmission flux;
-- the outer Robin cell can have an \(O\(\mathfrak h\)\) pointwise residual for fixed finite physical \(h\).
+- the outer Robin cell can have an \(O(\mathfrak h)\) pointwise residual for fixed finite physical \(h\).
 
 A global convergence argument must therefore use a norm that respects cell volumes rather than taking the maximum pointwise residual as the only consistency measure.
 
@@ -14810,7 +14810,7 @@ $$
 For a shape-regular radial refinement of a fixed particle,
 
 $$
-V_P=O\(\mathfrak h\)
+V_P=O(\mathfrak h)
 \tag{TRISO-ACC-265}
 $$
 
@@ -14819,24 +14819,24 @@ for cells away from the origin.
 The central cell is smaller:
 
 $$
-V_0=O\(\mathfrak h^3\),
+V_0=O(\mathfrak h^3),
 \tag{TRISO-ACC-266}
 $$
 
-because its radius is itself \(O\(\mathfrak h\)\).
+because its radius is itself \(O(\mathfrak h)\).
 
 ### 18A.9.2 Semi-discrete error equation
 
 Let
 
 $$
-\overline{\mathbf c}\(t\)
+\overline{\mathbf c}(t)
 \tag{TRISO-ACC-267}
 $$
 
 denote the vector of exact spherical cell averages of the continuum solution on the numerical mesh.
 
-Define the semi-discrete residual \(\boldsymbol\tau_h\(t\)\) by inserting these exact cell averages into the numerical operator:
+Define the semi-discrete residual \(\boldsymbol\tau_h(t)\) by inserting these exact cell averages into the numerical operator:
 
 $$
 \boxed{
@@ -15027,10 +15027,10 @@ The same inequality follows by continuity through instants at which the error no
 Integrate from \(0\) to \(t\):
 
 $$
-\|\mathbf e\(t\)\|_V-\|\mathbf e(0)\|_V
+\|\mathbf e(t)\|_V-\|\mathbf e(0)\|_V
 \le
 \int_0^t
-\|\boldsymbol\tau_h\(s\)\|_V\,ds.
+\|\boldsymbol\tau_h(s)\|_V\,ds.
 \tag{TRISO-ACC-283}
 $$
 
@@ -15038,12 +15038,12 @@ Therefore
 
 $$
 \boxed{
-\|\mathbf e\(t\)\|_V
+\|\mathbf e(t)\|_V
 \le
 \|\mathbf e(0)\|_V
 +
 \int_0^t
-\|\boldsymbol\tau_h\(s\)\|_V\,ds.
+\|\boldsymbol\tau_h(s)\|_V\,ds.
 }
 \tag{TRISO-ACC-284}
 $$
@@ -15054,10 +15054,10 @@ This proves semi-discrete energy stability and shows that convergence follows if
 
 Assume the number of material interfaces remains fixed at four as the mesh is refined.
 
-For \(O\(\mathfrak h^{-1}\)\) ordinary smooth cells,
+For \(O(\mathfrak h^{-1})\) ordinary smooth cells,
 
 $$
-\tau_P=O\(\mathfrak h^2\).
+\tau_P=O(\mathfrak h^2).
 \tag{TRISO-ACC-285}
 $$
 
@@ -15066,27 +15066,27 @@ Each such cell contributes to the squared \(V\)-norm
 $$
 V_P\tau_P^2
 =
-O\(\mathfrak h\)
-O\(\mathfrak h^4\)
+O(\mathfrak h)
+O(\mathfrak h^4)
 =
-O\(\mathfrak h^5\).
+O(\mathfrak h^5).
 \tag{TRISO-ACC-286}
 $$
 
-Summing \(O\(\mathfrak h^{-1}\)\) smooth cells gives
+Summing \(O(\mathfrak h^{-1})\) smooth cells gives
 
 $$
-O\(\mathfrak h^{-1}\)
-O\(\mathfrak h^5\)
+O(\mathfrak h^{-1})
+O(\mathfrak h^5)
 =
-O\(\mathfrak h^4\).
+O(\mathfrak h^4).
 \tag{TRISO-ACC-287}
 $$
 
 Therefore the smooth-region contribution to the residual norm is
 
 $$
-O\(\mathfrak h^2\).
+O(\mathfrak h^2).
 \tag{TRISO-ACC-288}
 $$
 
@@ -15102,7 +15102,7 @@ $$
 Each such cell has
 
 $$
-V_P=O\(\mathfrak h\).
+V_P=O(\mathfrak h).
 \tag{TRISO-ACC-290}
 $$
 
@@ -15111,14 +15111,14 @@ Therefore each contributes
 $$
 V_P\tau_P^2
 =
-O\(\mathfrak h\).
+O(\mathfrak h).
 \tag{TRISO-ACC-291}
 $$
 
 A fixed number of such cells still contributes
 
 $$
-O\(\mathfrak h\)
+O(\mathfrak h)
 \tag{TRISO-ACC-292}
 $$
 
@@ -15128,7 +15128,7 @@ Hence the interface-region contribution can be only
 
 $$
 \boxed{
-O\(\mathfrak h^{1/2}\)
+O(\mathfrak h^{1/2})
 }
 \tag{TRISO-ACC-293}
 $$
@@ -15138,14 +15138,14 @@ in the \(V\)-norm under the currently proved local bounds.
 For the single outer Robin cell,
 
 $$
-\tau_{M-1}=O\(\mathfrak h\).
+\tau_{M-1}=O(\mathfrak h).
 \tag{TRISO-ACC-294}
 $$
 
 Its volume is
 
 $$
-V_{M-1}=O\(\mathfrak h\).
+V_{M-1}=O(\mathfrak h).
 \tag{TRISO-ACC-295}
 $$
 
@@ -15154,14 +15154,14 @@ Therefore its squared contribution is
 $$
 V_{M-1}\tau_{M-1}^2
 =
-O\(\mathfrak h^3\).
+O(\mathfrak h^3).
 \tag{TRISO-ACC-296}
 $$
 
 and its contribution to the \(V\)-norm is
 
 $$
-O\(\mathfrak h^{3/2}\).
+O(\mathfrak h^{3/2}).
 \tag{TRISO-ACC-297}
 $$
 
@@ -15171,7 +15171,7 @@ $$
 \boxed{
 \|\boldsymbol\tau_h\|_V
 =
-O\(\mathfrak h^{1/2}\)
+O(\mathfrak h^{1/2})
 }
 \tag{TRISO-ACC-298}
 $$
@@ -15190,17 +15190,17 @@ $$
 Use (TRISO-ACC-284):
 
 $$
-\|\mathbf e\(t\)\|_V
+\|\mathbf e(t)\|_V
 \le
 \int_0^t
-\|\boldsymbol\tau_h\(s\)\|_V\,ds.
+\|\boldsymbol\tau_h(s)\|_V\,ds.
 \tag{TRISO-ACC-300}
 $$
 
 If the residual bound is uniform for \(0\le s\le T\),
 
 $$
-\|\boldsymbol\tau_h\(s\)\|_V
+\|\boldsymbol\tau_h(s)\|_V
 \le
 C_T\mathfrak h^{1/2},
 \tag{TRISO-ACC-301}
@@ -15209,7 +15209,7 @@ $$
 then
 
 $$
-\|\mathbf e\(t\)\|_V
+\|\mathbf e(t)\|_V
 \le
 \int_0^t
 C_T\mathfrak h^{1/2}\,ds.
@@ -15220,7 +15220,7 @@ Evaluate the integral:
 
 $$
 \boxed{
-\|\mathbf e\(t\)\|_V
+\|\mathbf e(t)\|_V
 \le
 tC_T\mathfrak h^{1/2},
 \qquad
@@ -15229,7 +15229,7 @@ tC_T\mathfrak h^{1/2},
 \tag{TRISO-ACC-303}
 $$
 
-Thus the present energy argument supports at least a **conditional \(O\(\mathfrak h^{1/2}\)\) upper-bound convergence rate in the volume-weighted norm**, given the established local residual estimates and sufficient regularity.
+Thus the present energy argument supports at least a **conditional \(O(\mathfrak h^{1/2})\) upper-bound convergence rate in the volume-weighted norm**, given the established local residual estimates and sufficient regularity.
 
 This is a conservative bound, not a prediction of the observed numerical order.
 
@@ -15240,7 +15240,7 @@ Diffusive smoothing, transmission structure, cancellation, or a sharper negative
 The explicit Euler method has local temporal truncation error
 
 $$
-O\(\Delta t^2\)
+O(\Delta t^2)
 \tag{TRISO-ACC-304}
 $$
 
@@ -15249,7 +15249,7 @@ per step.
 Over a fixed time interval, under stability, its global temporal order is
 
 $$
-O\(\Delta t\).
+O(\Delta t).
 \tag{TRISO-ACC-305}
 $$
 
@@ -15261,7 +15261,7 @@ $$
 =
 \text{spatial error}
 +
-O\(\Delta t\),
+O(\Delta t),
 }
 \tag{TRISO-ACC-306}
 $$
@@ -15273,14 +15273,14 @@ The previously derived explicit positivity/stability condition requires
 $$
 \Delta t
 \le
-\Delta t_{\max}\(h\).
+\Delta t_{\max}(h).
 \tag{TRISO-ACC-307}
 $$
 
 For diffusion on a regular mesh,
 
 $$
-\Delta t_{\max}=O\(\mathfrak h^2\)
+\Delta t_{\max}=O(\mathfrak h^2)
 \tag{TRISO-ACC-308}
 $$
 
@@ -15296,7 +15296,7 @@ $$
 therefore both respects the expected explicit-diffusion stability scaling and makes the first-order temporal error
 
 $$
-O\(\Delta t\)=O\(\mathfrak h^2\).
+O(\Delta t)=O(\mathfrak h^2).
 \tag{TRISO-ACC-310}
 $$
 
@@ -15306,7 +15306,7 @@ Under that refinement path, temporal error should not dominate a spatial rate lo
 
 The energy estimate proves stability of the semi-discrete error equation in the \(V\)-norm.
 
-It does not establish that the \(O\(\mathfrak h^{1/2}\)\) bound is sharp.
+It does not establish that the \(O(\mathfrak h^{1/2})\) bound is sharp.
 
 It does not establish an \(L^\infty\) convergence rate.
 
@@ -15365,7 +15365,7 @@ $$
 p_{\mathrm{obs}}
 =
 \frac{
-\log\(E_k/E_{k+1}\)
+\log(E_k/E_{k+1})
 }{
 \log q
 }.
@@ -15406,7 +15406,7 @@ $$
 -
 \sum_PS_PV_P
 +
-G_R\(C_{M-1}-c_\infty\).
+G_R(C_{M-1}-c_\infty).
 \tag{TRISO-ACC-317}
 $$
 
@@ -15423,14 +15423,14 @@ The persisted raw results are `verification/fv_convergence_results.txt`.
 The benchmark uses five aligned unit-thickness layers,
 
 $$
-\(r_1,r_2,r_3,r_4,R\)=(1,2,3,4,5).
+(r_1,r_2,r_3,r_4,R)=(1,2,3,4,5).
 \tag{TRISO-ACC-318}
 $$
 
 with
 
 $$
-\(D_1,D_2,D_3,D_4,D_5\)=(1,0.5,2,0.25,1.5),
+(D_1,D_2,D_3,D_4,D_5)=(1,0.5,2,0.25,1.5),
 \tag{TRISO-ACC-319}
 $$
 
@@ -15482,7 +15482,7 @@ $$
 Therefore this aligned five-layer steady benchmark exhibits asymptotic behavior consistent with
 
 $$
-\boxed{E_h=O\(\mathfrak h^2\).}
+\boxed{E_h=O(\mathfrak h^2).}
 \tag{TRISO-ACC-327}
 $$
 
@@ -15555,19 +15555,19 @@ The increase in the reported absolute residual as the time step becomes very sma
 [NOT APPLICABLE] These deterministic FV results do not validate the production WOS algorithm.
 ### 18A.12 What has and has not been proved
 
-[VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O\(h^2\)\) for a smooth field.
+[VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O(h^2)\) for a smooth field.
 
-[CONDITIONALLY VERIFIED] The two-point same-material face gradient is \(O\(h^2\)\) consistent when the refining mesh is shape regular, adjacent cell-average representation errors vary smoothly, and the face is locally centred between representative coordinates to \(O\(h^2\)\).
+[CONDITIONALLY VERIFIED] The two-point same-material face gradient is \(O(h^2)\) consistent when the refining mesh is shape regular, adjacent cell-average representation errors vary smoothly, and the face is locally centred between representative coordinates to \(O(h^2)\).
 
-[CONDITIONALLY VERIFIED] Under those same assumptions, the same-material diffusive face flux is \(O\(h^2\)\) consistent.
+[CONDITIONALLY VERIFIED] Under those same assumptions, the same-material diffusive face flux is \(O(h^2)\) consistent.
 
-[CONDITIONALLY VERIFIED] The complete smooth same-material cell divergence is O\(h^2\) consistent when the leading O\(h^2\) face-flux error has a smooth coefficient across neighbouring faces.
+[CONDITIONALLY VERIFIED] The complete smooth same-material cell divergence is O(h^2) consistent when the leading O(h^2) face-flux error has a smooth coefficient across neighbouring faces.
 
-[VERIFIED] The canonical resistance-weighted interface flux is conservative and generically O\(h\) accurate for piecewise-smooth unequal-D transmission data; second-order interface accuracy is not established.
+[VERIFIED] The canonical resistance-weighted interface flux is conservative and generically O(h) accurate for piecewise-smooth unequal-D transmission data; second-order interface accuracy is not established.
 
-[VERIFIED] For fixed finite physical h, the cell-centred Robin FV boundary flux and total release rate are O\(mesh^2\) consistent; the outer-cell pointwise residual may remain O(mesh).
+[VERIFIED] For fixed finite physical h, the cell-centred Robin FV boundary flux and total release rate are O(mesh^2) consistent; the outer-cell pointwise residual may remain O(mesh).
 
-[CONDITIONALLY ESTABLISHED] The energy argument gives a conservative O\(mesh^1/2\) bound from local residual estimates. [EXECUTED] The aligned five-layer steady benchmark instead exhibits asymptotic O\(mesh^2\) volume-weighted convergence over N=25–400; this observed rate is benchmark-specific rather than a universal theorem.
+[CONDITIONALLY ESTABLISHED] The energy argument gives a conservative O(mesh^1/2) bound from local residual estimates. [EXECUTED] The aligned five-layer steady benchmark instead exhibits asymptotic O(mesh^2) volume-weighted convergence over N=25–400; this observed rate is benchmark-specific rather than a universal theorem.
 
 The prescribed aligned five-layer spatial/temporal/conservation refinement study has now executed successfully. The next verification decision is whether to broaden the parameter/interface-alignment study or submit this deterministic accuracy/convergence milestone for independent audit; no WOS conclusion follows from these FV results.
 
@@ -15639,9 +15639,9 @@ $$
 Define
 
 $$
-u\(\mathbf x,s\)
+u(\mathbf x,s)
 =
-\mathbb E_{\mathbf x}\left[e^{-sT}g\(X_T\)\right].
+\mathbb E_{\mathbf x}\left[e^{-sT}g(X_T)\right].
 \tag{TRISO-FPT-003}
 $$
 
@@ -15666,28 +15666,28 @@ The radial Laplacian is
 $$
 \nabla^2u
 =
-\frac{1}{r^2}\frac{d}{dr}\left\(r^2\frac{du}{dr}\right\).
+\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{du}{dr}\right).
 \tag{TRISO-FPT-006}
 $$
 
 Substitute into TRISO-FPT-005:
 
 $$
-D\frac{1}{r^2}\frac{d}{dr}\(r^2u'\)=su.
+D\frac{1}{r^2}\frac{d}{dr}(r^2u')=su.
 \tag{TRISO-FPT-007}
 $$
 
 Apply the product rule:
 
 $$
-\frac{d}{dr}\(r^2u'\)=2ru'+r^2u''.
+\frac{d}{dr}(r^2u')=2ru'+r^2u''.
 \tag{TRISO-FPT-008}
 $$
 
-Divide by \(r^2\):
+Divide by (r^2):
 
 $$
-\frac{1}{r^2}\frac{d}{dr}\(r^2u'\)
+\frac{1}{r^2}\frac{d}{dr}(r^2u')
 =
 u''+\frac{2}{r}u'.
 \tag{TRISO-FPT-009}
@@ -15697,7 +15697,7 @@ Hence
 
 $$
 \boxed{
-D\left\(u''+\frac{2}{r}u'\right\)=su.
+D\left(u''+\frac{2}{r}u'\right)=su.
 }
 \tag{TRISO-FPT-010}
 $$
@@ -15715,7 +15715,7 @@ The enclosed-volume fraction at radius \(r\) is
 $$
 U
 =
-\frac{\(4\pi/3\)r^3}{\(4\pi/3\)R_1^3}.
+\frac{(4\pi/3)r^3}{(4\pi/3)R_1^3}.
 \tag{TRISO-WOS-001}
 $$
 
@@ -15726,7 +15726,7 @@ U=\frac{r^3}{R_1^3}.
 \tag{TRISO-WOS-002}
 $$
 
-Multiply by \(R_1^3\):
+Multiply by (R_1^3):
 
 $$
 r^3=R_1^3U.
@@ -15820,14 +15820,14 @@ $$
 The backward radial equation is
 
 $$
-D\left\(H''+\frac{2}{r}H'\right\)=sH.
+D\left(H''+\frac{2}{r}H'\right)=sH.
 \tag{TRISO-FPT-012}
 $$
 
 Introduce
 
 $$
-v\(r\)=rH(r,s).
+v(r)=rH(r,s).
 \tag{TRISO-FPT-013}
 $$
 
@@ -15843,7 +15843,7 @@ $$
 The general solution is
 
 $$
-v\(r\)=A\sinh\(\lambda r\)+B\cosh\(\lambda r\).
+v(r)=A\sinh(\lambda r)+B\cosh(\lambda r).
 \tag{TRISO-FPT-015}
 $$
 
@@ -15878,21 +15878,21 @@ $$
 Hence
 
 $$
-v\(b\)=b.
+v(b)=b.
 \tag{TRISO-FPT-019A}
 $$
 
-Using \(v\(b\)=A\sinh\(\lambda b\)\),
+Using \(v(b)=A\sinh(\lambda b)\),
 
 $$
-A=\frac{b}{\sinh\(\lambda b\)}.
+A=\frac{b}{\sinh(\lambda b)}.
 \tag{TRISO-FPT-019B}
 $$
 
 Therefore
 
 $$
-v\(r\)=b\frac{\sinh\(\lambda r\)}{\sinh\(\lambda b\)}.
+v(r)=b\frac{\sinh(\lambda r)}{\sinh(\lambda b)}.
 \tag{TRISO-FPT-019C}
 $$
 
@@ -15902,17 +15902,17 @@ $$
 \boxed{
 H(r,s)=
 \frac{b}{r}
-\frac{\sinh\(\lambda r\)}{\sinh\(\lambda b\)}.
+\frac{\sinh(\lambda r)}{\sinh(\lambda b)}.
 }
 \tag{TRISO-FPT-019D}
 $$
 
-At the centre, use \(\sinh\(\lambda r\)\sim\lambda r\):
+At the centre, use \(\sinh(\lambda r)\sim\lambda r\):
 
 $$
 H(0,s)
 =
-\frac{b\lambda}{\sinh\(\lambda b\)}.
+\frac{b\lambda}{\sinh(\lambda b)}.
 \tag{TRISO-FPT-019E}
 $$
 
@@ -15941,7 +15941,7 @@ $$
 TRISO-FPT-010 gives
 
 $$
-D\left\(G_b''+\frac{2}{r}G_b'\right\)=sG_b.
+D\left(G_b''+\frac{2}{r}G_b'\right)=sG_b.
 \tag{TRISO-FPT-022}
 $$
 
@@ -15960,7 +15960,7 @@ $$
 Introduce
 
 $$
-v\(r\)=rG_b(r,s).
+v(r)=rG_b(r,s).
 \tag{TRISO-FPT-025}
 $$
 
@@ -16055,7 +16055,7 @@ $$
 A convenient general solution measured from \(a\) is
 
 $$
-v\(r\)
+v(r)
 =
 A\sinh[\lambda(r-a)]
 +
@@ -16066,7 +16066,7 @@ $$
 At \(r=a\),
 
 $$
-v\(a\)=aG_b(a,s)=0.
+v(a)=aG_b(a,s)=0.
 \tag{TRISO-FPT-037}
 $$
 
@@ -16077,7 +16077,7 @@ $$
 \tag{TRISO-FPT-038}
 $$
 
-Use \(sinh0=0\) and \(cosh0=1\):
+Use (sinh0=0) and (cosh0=1):
 
 $$
 B=0.
@@ -16087,14 +16087,14 @@ $$
 Thus
 
 $$
-v\(r\)=A\sinh[\lambda(r-a)].
+v(r)=A\sinh[\lambda(r-a)].
 \tag{TRISO-FPT-040}
 $$
 
 At \(r=b\),
 
 $$
-v\(b\)=bG_b(b,s)=b.
+v(b)=bG_b(b,s)=b.
 \tag{TRISO-FPT-041}
 $$
 
@@ -16117,7 +16117,7 @@ $$
 Insert this coefficient into TRISO-FPT-040:
 
 $$
-v\(r\)
+v(r)
 =
 b
 \frac{\sinh[\lambda(r-a)]}
@@ -16125,7 +16125,7 @@ b
 \tag{TRISO-FPT-044}
 $$
 
-Use \(G_b=v/r\):
+Use (G_b=v/r):
 
 $$
 \boxed{
@@ -16171,14 +16171,14 @@ $$
 Choose a form that satisfies the zero condition at \(b\):
 
 $$
-v\(r\)=C\sinh[\lambda(b-r)].
+v(r)=C\sinh[\lambda(b-r)].
 \tag{TRISO-FPT-050}
 $$
 
 At \(r=a\),
 
 $$
-v\(a\)=aG_a(a,s)=a.
+v(a)=aG_a(a,s)=a.
 \tag{TRISO-FPT-051}
 $$
 
@@ -16201,7 +16201,7 @@ $$
 Substitute:
 
 $$
-v\(r\)
+v(r)
 =
 a
 \frac{\sinh[\lambda(b-r)]}
@@ -16228,7 +16228,7 @@ Use
 
 $$
 \sinh z\sim z
-\qquad\(z\rightarrow0\).
+\qquad(z\rightarrow0).
 \tag{TRISO-FPT-056}
 $$
 
@@ -16249,7 +16249,7 @@ Cancel (lambda):
 
 $$
 \boxed{
-P_r\(R_T=b\)
+P_r(R_T=b)
 =
 \frac{b(r-a)}{r(b-a)}.
 }
@@ -16271,7 +16271,7 @@ Cancel (lambda):
 
 $$
 \boxed{
-P_r\(R_T=a\)
+P_r(R_T=a)
 =
 \frac{a(b-r)}{r(b-a)}.
 }
@@ -16353,7 +16353,7 @@ The volume inside radius \(a-\epsilon\) is
 $$
 V_{a-\epsilon}
 =
-\frac{4\pi}{3}\(a-\epsilon\)^3.
+\frac{4\pi}{3}(a-\epsilon)^3.
 \tag{TRISO-WOS-021}
 $$
 
@@ -16380,17 +16380,17 @@ Substitute TRISO-WOS-020 through TRISO-WOS-022:
 $$
 P_{\rm cap}
 =
-\frac{a^3-\(a-\epsilon\)^3}{a^3}.
+\frac{a^3-(a-\epsilon)^3}{a^3}.
 \tag{TRISO-WOS-024}
 $$
 
-Divide by \(a^3\):
+Divide by (a^3):
 
 $$
 \boxed{
 P_{\rm cap}
 =
-1-\left\(1-\frac{\epsilon}{a}\right\)^3.
+1-\left(1-\frac{\epsilon}{a}\right)^3.
 }
 \tag{TRISO-WOS-025}
 $$
@@ -16426,7 +16426,7 @@ The executed accelerated/FV RMS CDF difference is
 
 $$
 \boxed{
-\mathrm{RMS}\(F_B-F_{FV}\)
+\mathrm{RMS}(F_B-F_{FV})
 =
 0.002895.
 }
@@ -16466,14 +16466,14 @@ $$
 
 # 24. Five-layer computational pathology
 
-[VERIFIED] Direct production WOS produced 8/8 censored histories at \(10^6\) steps per history in the targeted five-layer diagnostic.
+[VERIFIED] Direct production WOS produced 8/8 censored histories at (10^6) steps per history in the targeted five-layer diagnostic.
 
 [VERIFIED] The exact-shell accelerated five-layer diagnostic produced 0/16 releases and 16/16 capped histories at 100000 renewals per history.
 
 The renewal counts by layer were
 
 $$
-\(N_K,N_B,N_I,N_S,N_O\)
+(N_K,N_B,N_I,N_S,N_O)
 =
 (24,1599974,2,0,0).
 \tag{TRISO-WOS-030}
@@ -16581,13 +16581,13 @@ The exterior release state is absorbing.
 Define
 
 $$
-\Phi_i\(s\)
+\Phi_i(s)
 =
 \mathbb E_i[e^{-sT_{\rm rel}}].
 \tag{TRISO-MR-011}
 $$
 
-From \(S_0\), the exact centred-ball transform to the Kernel/Buffer interface is (H_K\(s\)).
+From \(S_0\), the exact centred-ball transform to the Kernel/Buffer interface is (H_K(s)).
 
 At that interface, reflection returns to \(S_0\).
 
@@ -16626,9 +16626,9 @@ All other row-0 entries are zero.
 
 ## 25.3 First-step equation from Buffer side of the inner interface
 
-From \(S_1\), the Buffer shell can first exit inward with transform \(G_B^-\).
+From \(S_1\), the Buffer shell can first exit inward with transform (G_B^-).
 
-It can first exit outward with transform \(G_B^+\).
+It can first exit outward with transform (G_B^+).
 
 If it exits inward, transmission enters Kernel state \(S_0\).
 
@@ -16645,9 +16645,9 @@ $$
 =
 G_B^-p_{B\rightarrow K}\Phi_0
 +
-G_B^-p_{B\rightarrow B}^{\(I_0\)}\Phi_1
+G_B^-p_{B\rightarrow B}^{(I_0)}\Phi_1
 +
-G_B^+p_{B\rightarrow B}^{\(I_1\)}\Phi_2
+G_B^+p_{B\rightarrow B}^{(I_1)}\Phi_2
 +
 G_B^+p_{B\rightarrow I}\Phi_3.
 \tag{TRISO-MR-015}
@@ -16667,7 +16667,7 @@ The second is
 $$
 K_{11}
 =
-G_B^-p_{B\rightarrow B}^{\(I_0\)}.
+G_B^-p_{B\rightarrow B}^{(I_0)}.
 \tag{TRISO-MR-017}
 $$
 
@@ -16676,7 +16676,7 @@ The third is
 $$
 K_{12}
 =
-G_B^+p_{B\rightarrow B}^{\(I_1\)}.
+G_B^+p_{B\rightarrow B}^{(I_1)}.
 \tag{TRISO-MR-018}
 $$
 
@@ -16694,8 +16694,8 @@ For \(S_2\), the physical destinations are identical to \(S_1\), but the shell t
 $$
 \Phi_2=
 G_{B,2}^-p_{B\rightarrow K}\Phi_0+
-G_{B,2}^-p_{B\rightarrow B}^{\(I_0\)}\Phi_1+
-G_{B,2}^+p_{B\rightarrow B}^{\(I_1\)}\Phi_2+
+G_{B,2}^-p_{B\rightarrow B}^{(I_0)}\Phi_1+
+G_{B,2}^+p_{B\rightarrow B}^{(I_1)}\Phi_2+
 G_{B,2}^+p_{B\rightarrow I}\Phi_3.
 \tag{TRISO-MR-034}
 $$
@@ -16705,14 +16705,14 @@ Hence
 $$
 K_{20}=G_{B,2}^-p_{B\rightarrow K},
 \quad
-K_{21}=G_{B,2}^-p_{B\rightarrow B}^{\(I_0\)}.
+K_{21}=G_{B,2}^-p_{B\rightarrow B}^{(I_0)}.
 \tag{TRISO-MR-035}
 $$
 
 and
 
 $$
-K_{22}=G_{B,2}^+p_{B\rightarrow B}^{\(I_1\)},
+K_{22}=G_{B,2}^+p_{B\rightarrow B}^{(I_1)},
 \quad
 K_{23}=G_{B,2}^+p_{B\rightarrow I}.
 \tag{TRISO-MR-036}
@@ -16725,8 +16725,8 @@ From \(S_3\), inward IPyC exit reaches the Buffer/IPyC interface and outward exi
 $$
 \Phi_3=
 G_{I,3}^-p_{I\rightarrow B}\Phi_2+
-G_{I,3}^-p_{I\rightarrow I}^{\(I_1\)}\Phi_3+
-G_{I,3}^+p_{I\rightarrow I}^{\(I_2\)}\Phi_4+
+G_{I,3}^-p_{I\rightarrow I}^{(I_1)}\Phi_3+
+G_{I,3}^+p_{I\rightarrow I}^{(I_2)}\Phi_4+
 G_{I,3}^+p_{I\rightarrow S}\Phi_5.
 \tag{TRISO-MR-037}
 $$
@@ -16736,12 +16736,12 @@ Therefore
 $$
 K_{32}=G_{I,3}^-p_{I\rightarrow B},
 \quad
-K_{33}=G_{I,3}^-p_{I\rightarrow I}^{\(I_1\)},
+K_{33}=G_{I,3}^-p_{I\rightarrow I}^{(I_1)},
 \tag{TRISO-MR-038}
 $$
 
 $$
-K_{34}=G_{I,3}^+p_{I\rightarrow I}^{\(I_2\)},
+K_{34}=G_{I,3}^+p_{I\rightarrow I}^{(I_2)},
 \quad
 K_{35}=G_{I,3}^+p_{I\rightarrow S}.
 \tag{TRISO-MR-039}
@@ -16752,8 +16752,8 @@ From \(S_4\),
 $$
 \Phi_4=
 G_{I,4}^-p_{I\rightarrow B}\Phi_2+
-G_{I,4}^-p_{I\rightarrow I}^{\(I_1\)}\Phi_3+
-G_{I,4}^+p_{I\rightarrow I}^{\(I_2\)}\Phi_4+
+G_{I,4}^-p_{I\rightarrow I}^{(I_1)}\Phi_3+
+G_{I,4}^+p_{I\rightarrow I}^{(I_2)}\Phi_4+
 G_{I,4}^+p_{I\rightarrow S}\Phi_5.
 \tag{TRISO-MR-040}
 $$
@@ -16763,12 +16763,12 @@ Thus
 $$
 K_{42}=G_{I,4}^-p_{I\rightarrow B},
 \quad
-K_{43}=G_{I,4}^-p_{I\rightarrow I}^{\(I_1\)},
+K_{43}=G_{I,4}^-p_{I\rightarrow I}^{(I_1)},
 \tag{TRISO-MR-041}
 $$
 
 $$
-K_{44}=G_{I,4}^+p_{I\rightarrow I}^{\(I_2\)},
+K_{44}=G_{I,4}^+p_{I\rightarrow I}^{(I_2)},
 \quad
 K_{45}=G_{I,4}^+p_{I\rightarrow S}.
 \tag{TRISO-MR-042}
@@ -16781,8 +16781,8 @@ From \(S_5\),
 $$
 \Phi_5=
 G_{S,5}^-p_{S\rightarrow I}\Phi_4+
-G_{S,5}^-p_{S\rightarrow S}^{\(I_2\)}\Phi_5+
-G_{S,5}^+p_{S\rightarrow S}^{\(I_3\)}\Phi_6+
+G_{S,5}^-p_{S\rightarrow S}^{(I_2)}\Phi_5+
+G_{S,5}^+p_{S\rightarrow S}^{(I_3)}\Phi_6+
 G_{S,5}^+p_{S\rightarrow O}\Phi_7.
 \tag{TRISO-MR-043}
 $$
@@ -16792,12 +16792,12 @@ Hence
 $$
 K_{54}=G_{S,5}^-p_{S\rightarrow I},
 \quad
-K_{55}=G_{S,5}^-p_{S\rightarrow S}^{\(I_2\)},
+K_{55}=G_{S,5}^-p_{S\rightarrow S}^{(I_2)},
 \tag{TRISO-MR-044}
 $$
 
 $$
-K_{56}=G_{S,5}^+p_{S\rightarrow S}^{\(I_3\)},
+K_{56}=G_{S,5}^+p_{S\rightarrow S}^{(I_3)},
 \quad
 K_{57}=G_{S,5}^+p_{S\rightarrow O}.
 \tag{TRISO-MR-045}
@@ -16808,8 +16808,8 @@ From \(S_6\),
 $$
 \Phi_6=
 G_{S,6}^-p_{S\rightarrow I}\Phi_4+
-G_{S,6}^-p_{S\rightarrow S}^{\(I_2\)}\Phi_5+
-G_{S,6}^+p_{S\rightarrow S}^{\(I_3\)}\Phi_6+
+G_{S,6}^-p_{S\rightarrow S}^{(I_2)}\Phi_5+
+G_{S,6}^+p_{S\rightarrow S}^{(I_3)}\Phi_6+
 G_{S,6}^+p_{S\rightarrow O}\Phi_7.
 \tag{TRISO-MR-046}
 $$
@@ -16819,12 +16819,12 @@ Therefore
 $$
 K_{64}=G_{S,6}^-p_{S\rightarrow I},
 \quad
-K_{65}=G_{S,6}^-p_{S\rightarrow S}^{\(I_2\)},
+K_{65}=G_{S,6}^-p_{S\rightarrow S}^{(I_2)},
 \tag{TRISO-MR-047}
 $$
 
 $$
-K_{66}=G_{S,6}^+p_{S\rightarrow S}^{\(I_3\)},
+K_{66}=G_{S,6}^+p_{S\rightarrow S}^{(I_3)},
 \quad
 K_{67}=G_{S,6}^+p_{S\rightarrow O}.
 \tag{TRISO-MR-048}
@@ -16859,7 +16859,7 @@ The direct release transform is
 
 $$
 \boxed{
-B_7\(s\)=G_O^+\(s\).
+B_7(s)=G_O^+(s).
 }
 \tag{TRISO-MR-020}
 $$
@@ -16867,7 +16867,7 @@ $$
 For every other transient state,
 
 $$
-B_i\(s\)=0,
+B_i(s)=0,
 \qquad i\ne7.
 \tag{TRISO-MR-021}
 $$
@@ -16910,7 +16910,7 @@ $$
 Factor \(oldsymbol\Phi\):
 
 $$
-\(\mathbf I-\mathbf K\)\boldsymbol\Phi
+(\mathbf I-\mathbf K)\boldsymbol\Phi
 =
 \mathbf B.
 \tag{TRISO-MR-025}
@@ -16919,11 +16919,11 @@ $$
 When \(mathbf I-\mathbf K\) is nonsingular, left-multiply by its inverse:
 
 $$
-\(\mathbf I-\mathbf K\)^{-1}
-\(\mathbf I-\mathbf K\)
+(\mathbf I-\mathbf K)^{-1}
+(\mathbf I-\mathbf K)
 \boldsymbol\Phi
 =
-\(\mathbf I-\mathbf K\)^{-1}\mathbf B.
+(\mathbf I-\mathbf K)^{-1}\mathbf B.
 \tag{TRISO-MR-026}
 $$
 
@@ -16933,7 +16933,7 @@ $$
 \boxed{
 \boldsymbol\Phi
 =
-\(\mathbf I-\mathbf K\)^{-1}\mathbf B.
+(\mathbf I-\mathbf K)^{-1}\mathbf B.
 }
 \tag{TRISO-MR-027}
 $$
@@ -16943,14 +16943,14 @@ $$
 If
 
 $$
-\rho\(\mathbf K\)<1,
+\rho(\mathbf K)<1,
 \tag{TRISO-MR-028}
 $$
 
 then
 
 $$
-\(\mathbf I-\mathbf K\)^{-1}
+(\mathbf I-\mathbf K)^{-1}
 =
 \mathbf I
 +
@@ -16992,7 +16992,7 @@ Thus the inverse sums arbitrarily long repeated interface-renewal paths without 
 The kernel radial probability density is
 
 $$
-f_R\(r\)
+f_R(r)
 =
 \frac{3r^2}{R_1^3},
 \qquad
@@ -17007,11 +17007,11 @@ After reaching Kernel/Buffer, reflection gives \(S_0\) and transmission gives \(
 Define
 
 $$
-Q\(s\)
+Q(s)
 =
-p_{K\rightarrow K}\Phi_0\(s\)
+p_{K\rightarrow K}\Phi_0(s)
 +
-p_{K\rightarrow B}\Phi_1\(s\).
+p_{K\rightarrow B}\Phi_1(s).
 \tag{TRISO-MR-032}
 $$
 
@@ -17019,12 +17019,12 @@ Average over the birth distribution:
 
 $$
 \boxed{
-\Phi_{\rm init}\(s\)
+\Phi_{\rm init}(s)
 =
 \int_0^{R_1}
 \frac{3r^2}{R_1^3}
 H_K(r,s)
-Q\(s\)\,dr.
+Q(s)\,dr.
 }
 \tag{TRISO-MR-033}
 $$
@@ -17058,9 +17058,9 @@ $$
 At every predeclared positive transform point, define the standardized matrix discrepancy
 
 $$
-z\(s\)=
-\frac{\Phi_B\(s\)-\Phi_C\(s\)}
-{\mathrm{SE}[\Phi_B\(s\)]}.
+z(s)=
+\frac{\Phi_B(s)-\Phi_C(s)}
+{\mathrm{SE}[\Phi_B(s)]}.
 \tag{TRISO-VER-301}
 $$
 
@@ -17068,7 +17068,7 @@ The executed maximum magnitude was
 
 $$
 \boxed{
-\max_s|z\(s\)|=1.004.
+\max_s|z(s)|=1.004.
 }
 \tag{TRISO-VER-302}
 $$
@@ -17091,7 +17091,7 @@ Thus the deterministic matrix is compatible with the explicit exact-interface re
 The controlled radii were
 
 $$
-\(R_1,R_2,R_3\)
+(R_1,R_2,R_3)
 =
 (50,75,100)\,\mu\mathrm m.
 \tag{TRISO-VER-304}
@@ -17100,7 +17100,7 @@ $$
 The controlled diffusivities were
 
 $$
-\(D_1,D_2,D_3\)
+(D_1,D_2,D_3)
 =
 (1,2,5)\times10^{-9}\,\mathrm{m^2s^{-1}}.
 \tag{TRISO-VER-305}
@@ -17110,7 +17110,7 @@ The four-state Process-B/Process-C transform comparison gave
 
 $$
 \boxed{
-\max_s|z\(s\)|=0.729.
+\max_s|z(s)|=0.729.
 }
 \tag{TRISO-VER-306}
 $$
@@ -17119,7 +17119,7 @@ Against the independently refined FV reference,
 
 $$
 \boxed{
-\mathrm{RMS}\(F_B-F_{FV}\)
+\mathrm{RMS}(F_B-F_{FV})
 =
 1.0395\times10^{-3}.
 }
