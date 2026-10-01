@@ -1786,10 +1786,10 @@ This analytical solution does \textbf{not} represent the production WOS initial-
 
 It represents Problem A:
 
-\noindent\textbullet\ initially empty particle;\\
-\noindent\textbullet\ continuing uniform source;\\
-\noindent\textbullet\ homogeneous diffusivity;\\
-\noindent\textbullet\ Robin outer boundary.\\
+- initially empty particle;
+- continuing uniform source;
+- homogeneous diffusivity;
+- Robin outer boundary.
 
 The production WOS verification problem is Problem B and uses an initial kernel inventory with an absorbing outer boundary.
 
@@ -5380,8 +5380,8 @@ These quantities depend on \textbackslash\{\}(\textbackslash\{\}Lambda\textbacks
 
 There are two equations at each of the four internal interfaces:
 
-\noindent\textbullet\ one concentration-continuity equation;\\
-\noindent\textbullet\ one flux-continuity equation.\\
+- one concentration-continuity equation;
+- one flux-continuity equation.
 
 This gives
 
@@ -6261,9 +6261,9 @@ The two products are identical and have opposite signs:
 
 All terms on the left side of (TRISO-ML-500) now vanish:
 
-\noindent\textbullet\ centre term by (TRISO-ML-518);\\
-\noindent\textbullet\ four interface pairs by (TRISO-ML-513);\\
-\noindent\textbullet\ outer Robin term by (TRISO-ML-525).\\
+- centre term by (TRISO-ML-518);
+- four interface pairs by (TRISO-ML-513);
+- outer Robin term by (TRISO-ML-525).
 
 Therefore
 
@@ -6817,10 +6817,10 @@ However, this project has not yet supplied a theorem specifically covering the s
 
 Accordingly, the current statuses are:
 
-\noindent\textbullet\ orthogonality: \textbf{VERIFIED by direct derivation};\\
-\noindent\textbullet\ modal projection formula: \textbf{DERIVED CONDITIONALLY};\\
-\noindent\textbullet\ completeness: \textbf{THEOREM-DEPENDENT / NOT YET PROVED IN THIS PROJECT};\\
-\noindent\textbullet\ numerical convergence of truncated modal sums: \textbf{UNVERIFIED}.\\
+- orthogonality: \textbf{VERIFIED by direct derivation};
+- modal projection formula: \textbf{DERIVED CONDITIONALLY};
+- completeness: \textbf{THEOREM-DEPENDENT / NOT YET PROVED IN THIS PROJECT};
+- numerical convergence of truncated modal sums: \textbf{UNVERIFIED}.
 
 The standard Sturm–Liouville framework and regular-problem completeness results provide mathematical context, but they are not being silently promoted to a proof for this singular piecewise problem.
 
@@ -7818,9 +7818,9 @@ Equation (TRISO-DIS-145) assumes:
 
 It must \textbf{not} be applied unchanged:
 
-\noindent\textbullet\ at \textbackslash\{\}(r=0\textbackslash\{\});\\
-\noindent\textbullet\ across a discontinuous material interface;\\
-\noindent\textbullet\ at the outer boundary.\\
+- at \textbackslash\{\}(r=0\textbackslash\{\});
+- across a discontinuous material interface;
+- at the outer boundary.
 
 Those cases require separate derivations.
 
@@ -8314,10 +8314,10 @@ O(\Delta t)+O(\Delta r^2).
 
 The centre formula requires:
 
-\noindent\textbullet\ spherical symmetry;\\
-\noindent\textbullet\ sufficient smoothness at \textbackslash\{\}(r=0\textbackslash\{\});\\
-\noindent\textbullet\ the centre to lie inside one homogeneous kernel material;\\
-\noindent\textbullet\ constant \textbackslash\{\}(D\_1\textbackslash\{\}) over the centre stencil.\\
+- spherical symmetry;
+- sufficient smoothness at \textbackslash\{\}(r=0\textbackslash\{\});
+- the centre to lie inside one homogeneous kernel material;
+- constant \textbackslash\{\}(D\_1\textbackslash\{\}) over the centre stencil.
 
 It does not determine the treatment of material interfaces or the outer surface.
 
@@ -8995,10 +8995,10 @@ A higher-order interface treatment would require additional same-material nodes 
 
 [IMPORTANT] The present result establishes the correct \textbf{discrete transmission logic}:
 
-\noindent\textbullet\ one ideal-interface concentration;\\
-\noindent\textbullet\ no differentiation of \textbackslash\{\}(D\textbackslash\{\}) through its jump;\\
-\noindent\textbullet\ equal discrete flux on both sides;\\
-\noindent\textbullet\ resistance-weighted, rather than arithmetic, diffusivity coupling.\\
+- one ideal-interface concentration;
+- no differentiation of \textbackslash\{\}(D\textbackslash\{\}) through its jump;
+- equal discrete flux on both sides;
+- resistance-weighted, rather than arithmetic, diffusivity coupling.
 
 It does not yet establish the globally preferred five-layer spatial discretisation.
 
@@ -10934,9 +10934,9 @@ Therefore (TRISO-DIS-576) is a framework for a sharper spectral analysis, not a 
 
 The amplification matrix in Sections 17.6–17.10 corresponds to the homogeneous benchmark using:
 
-\noindent\textbullet\ the centre row from Section 14;\\
-\noindent\textbullet\ homogeneous interior rows from Section 13;\\
-\noindent\textbullet\ the Robin surface row from Section 16.\\
+- the centre row from Section 14;
+- homogeneous interior rows from Section 13;
+- the Robin surface row from Section 16.
 
 The full five-layer problem contains discontinuous diffusivities and the interface transmission treatment from Section 15.
 
@@ -11196,12 +11196,12 @@ r_e^3-r_w^3
 
 The canonical representation is therefore:
 
-\noindent\textbullet\ \textbackslash\{\}(C\_P\textbackslash\{\}): exact spherical volume average over cell \textbackslash\{\}(P\textbackslash\{\});\\
-\noindent\textbullet\ \textbackslash\{\}(r\_P\textbackslash\{\}): spherical volume-centroid coordinate used as the representative location of that average in two-point reconstruction;\\
-\noindent\textbullet\ \textbackslash\{\}(r\_\{P+1/2\}\textbackslash\{\}): physical face coordinate;\\
-\noindent\textbullet\ \textbackslash\{\}(r\_\{P+1\}-r\_P\textbackslash\{\}): distance between representative cell coordinates;\\
-\noindent\textbullet\ \textbackslash\{\}(\textbackslash\{\}delta r\_P=r\_\{P+1/2\}-r\_P\textbackslash\{\}): distance from cell \textbackslash\{\}(P\textbackslash\{\})'s representative coordinate to its east face;\\
-\noindent\textbullet\ \textbackslash\{\}(\textbackslash\{\}delta r\_\{P+1\}=r\_\{P+1\}-r\_\{P+1/2\}\textbackslash\{\}): distance from the shared face to the neighbouring representative coordinate.\\
+- \textbackslash\{\}(C\_P\textbackslash\{\}): exact spherical volume average over cell \textbackslash\{\}(P\textbackslash\{\});
+- \textbackslash\{\}(r\_P\textbackslash\{\}): spherical volume-centroid coordinate used as the representative location of that average in two-point reconstruction;
+- \textbackslash\{\}(r\_\{P+1/2\}\textbackslash\{\}): physical face coordinate;
+- \textbackslash\{\}(r\_\{P+1\}-r\_P\textbackslash\{\}): distance between representative cell coordinates;
+- \textbackslash\{\}(\textbackslash\{\}delta r\_P=r\_\{P+1/2\}-r\_P\textbackslash\{\}): distance from cell \textbackslash\{\}(P\textbackslash\{\})'s representative coordinate to its east face;
+- \textbackslash\{\}(\textbackslash\{\}delta r\_\{P+1\}=r\_\{P+1\}-r\_\{P+1/2\}\textbackslash\{\}): distance from the shared face to the neighbouring representative coordinate.
 
 At a material interface, the physical interface is aligned with a face \textbackslash\{\}(r\_\{P+1/2\}\textbackslash\{\}).
 
@@ -13955,13 +13955,13 @@ The complete five-layer finite-volume algebra is now assembled.
 
 The following statements are established:
 
-\noindent\textbullet\ exact control-volume conservation;\\
-\noindent\textbullet\ resistance-weighted interface fluxes;\\
-\noindent\textbullet\ a closed cell-centred Robin boundary;\\
-\noindent\textbullet\ a symmetric conductance matrix \textbackslash\{\}(\textbackslash\{\}mathbf K\textbackslash\{\});\\
-\noindent\textbullet\ volume-weighted self-adjointness;\\
-\noindent\textbullet\ non-positive semi-discrete spectrum;\\
-\noindent\textbullet\ a sufficient explicit-Euler monotonicity/\textbackslash\{\}(\textbackslash\{\}ell\_\textbackslash\{\}infty\textbackslash\{\})-stability bound.\\
+- exact control-volume conservation;
+- resistance-weighted interface fluxes;
+- a closed cell-centred Robin boundary;
+- a symmetric conductance matrix \textbackslash\{\}(\textbackslash\{\}mathbf K\textbackslash\{\});
+- volume-weighted self-adjointness;
+- non-positive semi-discrete spectrum;
+- a sufficient explicit-Euler monotonicity/\textbackslash\{\}(\textbackslash\{\}ell\_\textbackslash\{\}infty\textbackslash\{\})-stability bound.
 
 The remaining mathematical questions are narrower:
 
@@ -16017,9 +16017,9 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 The local consistency results are not uniform over the particle:
 
-\noindent\textbullet\ smooth same-material cells have conditional \textbackslash\{\}(O(\textbackslash\{\}mathfrak h\textasciicircum{}2)\textbackslash\{\}) divergence consistency;\\
-\noindent\textbullet\ a fixed number of cells adjacent to the four material interfaces can have \textbackslash\{\}(O(1)\textbackslash\{\}) pointwise residuals under the present two-point transmission flux;\\
-\noindent\textbullet\ the outer Robin cell can have an \textbackslash\{\}(O(\textbackslash\{\}mathfrak h)\textbackslash\{\}) pointwise residual for fixed finite physical \textbackslash\{\}(h\textbackslash\{\}).\\
+- smooth same-material cells have conditional \textbackslash\{\}(O(\textbackslash\{\}mathfrak h\textasciicircum{}2)\textbackslash\{\}) divergence consistency;
+- a fixed number of cells adjacent to the four material interfaces can have \textbackslash\{\}(O(1)\textbackslash\{\}) pointwise residuals under the present two-point transmission flux;
+- the outer Robin cell can have an \textbackslash\{\}(O(\textbackslash\{\}mathfrak h)\textbackslash\{\}) pointwise residual for fixed finite physical \textbackslash\{\}(h\textbackslash\{\}).
 
 A global convergence argument must therefore use a norm that respects cell volumes rather than taking the maximum pointwise residual as the only consistency measure.
 
@@ -16917,12 +16917,12 @@ The mathematical middle is now continuous from physical problem through conserva
 
 Remaining foundation gaps are explicitly retained:
 
-\noindent\textbullet\ physical source/decay/trapping closure;\\
-\noindent\textbullet\ physical partition/interfacial-resistance choice;\\
-\noindent\textbullet\ five-layer transient modal coefficient convergence;\\
-\noindent\textbullet\ complete FTCS spectral stability proof;\\
-\noindent\textbullet\ complete equation-to-code verification;\\
-\noindent\textbullet\ WOS-to-continuum transient verification.\\
+- physical source/decay/trapping closure;
+- physical partition/interfacial-resistance choice;
+- five-layer transient modal coefficient convergence;
+- complete FTCS spectral stability proof;
+- complete equation-to-code verification;
+- WOS-to-continuum transient verification.
 
 The independent continuous-mathematics audit has passed the project for discretisation, and the independent deterministic discrete-mathematics audit has passed the canonical finite-volume model for accuracy/convergence study. Review finding R2-D01 remains open specifically for the retained FTCS Robin benchmark until grid-refinement evidence is produced; it does not block the canonical FV accuracy/convergence track.
 
@@ -18473,6 +18473,97 @@ Q(s)\,dr.
 
 \section*{26. Verification linked to the matrix derivation}
 
-[VERIFIED] Controlled two-state and four-state matrix tests are documented in TRACEABILITY.md and the canonical verification evidence. Detailed numerical values are retained in those evidence files.
+\subsection*{26.1 Controlled two-layer B/C reconciliation}
+
+[VERIFIED] The explicit Process-B sample size was
+
+$
+N\_B=20000.
+\textbackslash\{\}tag\{TRISO-VER-300\}
+$
+
+At every predeclared positive transform point, define the standardized matrix discrepancy
+
+$
+z(s)=
+\textbackslash\{\}frac\{\textbackslash\{\}Phi\_B(s)-\textbackslash\{\}Phi\_C(s)\}
+\{\textbackslash\{\}mathrm\{SE\}[\textbackslash\{\}Phi\_B(s)]\}.
+\textbackslash\{\}tag\{TRISO-VER-301\}
+$
+
+The executed maximum magnitude was
+
+$
+\textbackslash\{\}boxed\{
+\textbackslash\{\}max\_s|z(s)|=1.004.
+\}
+\textbackslash\{\}tag\{TRISO-VER-302\}
+$
+
+At zero transform frequency,
+
+$
+\textbackslash\{\}boxed\{
+\textbackslash\{\}Phi\_\{\textbackslash\{\}rm init\}(0)=1
+\}
+\textbackslash\{\}tag\{TRISO-VER-303\}
+$
+
+to the predeclared numerical tolerance.
+
+Thus the deterministic matrix is compatible with the explicit exact-interface renewal at the controlled Monte-Carlo precision.
+
+\subsection*{26.2 Genuine three-layer multistate verification}
+
+The controlled radii were
+
+$
+(R\_1,R\_2,R\_3)
+=
+(50,75,100)\textbackslash\{\},\textbackslash\{\}mu\textbackslash\{\}mathrm m.
+\textbackslash\{\}tag\{TRISO-VER-304\}
+$
+
+The controlled diffusivities were
+
+$
+(D\_1,D\_2,D\_3)
+=
+(1,2,5)\textbackslash\{\}times10\textasciicircum{}\{-9\}\textbackslash\{\},\textbackslash\{\}mathrm\{m\textasciicircum{}2s\textasciicircum{}\{-1\}\}.
+\textbackslash\{\}tag\{TRISO-VER-305\}
+$
+
+The four-state Process-B/Process-C transform comparison gave
+
+$
+\textbackslash\{\}boxed\{
+\textbackslash\{\}max\_s|z(s)|=0.729.
+\}
+\textbackslash\{\}tag\{TRISO-VER-306\}
+$
+
+Against the independently refined FV reference,
+
+$
+\textbackslash\{\}boxed\{
+\textbackslash\{\}mathrm\{RMS\}(F\_B-F\_\{FV\})
+=
+1.0395\textbackslash\{\}times10\textasciicircum{}\{-3\}.
+\}
+\textbackslash\{\}tag\{TRISO-VER-307\}
+$
+
+The maximum absolute CDF discrepancy was
+
+$
+\textbackslash\{\}boxed\{
+\textbackslash\{\}max\_t|F\_B-F\_\{FV\}|
+=
+1.7794\textbackslash\{\}times10\textasciicircum{}\{-3\}.
+\}
+\textbackslash\{\}tag\{TRISO-VER-308\}
+$
+
+[VERIFIED] The FV spatial/time refinement changes were smaller than the stochastic uncertainty, so the continuum-reference discretization error did not dominate this comparison.
 
 \end{document}
