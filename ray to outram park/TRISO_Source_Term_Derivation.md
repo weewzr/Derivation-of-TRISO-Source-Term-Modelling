@@ -15486,7 +15486,7 @@ $$
 \tag{TRISO-ACC-327}
 $$
 
-This observed second-order behavior is substantially sharper than the conservative analytical O(h^(1/2)) bound in TRISO-ACC-303. It demonstrates that the local interface-adjacent residual estimate is not predictive of the observed global steady error for this benchmark. It does not prove second-order convergence for every discontinuous-D problem.
+This observed second-order behavior is substantially sharper than the conservative analytical \(O(h^{1/2})\) bound in TRISO-ACC-303. It demonstrates that the local interface-adjacent residual estimate is not predictive of the observed global steady error for this benchmark. It does not prove second-order convergence for every discontinuous-D problem.
 
 #### Temporal refinement result
 
@@ -15513,7 +15513,7 @@ $$
 \tag{TRISO-ACC-330}
 $$
 
-Across the steady spatial sequence, the computed release rate remained equal to this value to approximately 10^-12 or better.
+Across the steady spatial sequence, the computed release rate remained equal to this value to approximately \(10^{-12}\) or better.
 
 The steady conservation residual ranged from approximately
 
