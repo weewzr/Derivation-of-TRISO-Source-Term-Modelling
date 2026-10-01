@@ -14,7 +14,12 @@ for p in paths:
   if t.count("$$")%2: errors.append({"code":"MD002_UNMATCHED_DISPLAY_DELIMITER","file":str(p)})
   for env,code in [("cases","ENV001_UNMATCHED_CASES"),("aligned","ENV002_UNMATCHED_ALIGNED"),("matrix","ENV003_UNMATCHED_MATRIX"),("bmatrix","ENV003_UNMATCHED_MATRIX"),("pmatrix","ENV003_UNMATCHED_MATRIX")]:
    if t.count("\\begin{"+env+"}")!=t.count("\\end{"+env+"}"):errors.append({"code":code,"file":str(p)})
-  for token,code in [("\\textbackslash","SER001_TEXTBACKSLASH_ARTIFACT"),("\\textasciicircum","SER002_TEXTASCIICIRCUM_ARTIFACT"),("\\(","SER005_LITERAL_LATEX_DELIMITER"),("\\)","SER005_LITERAL_LATEX_DELIMITER")]:
+  for token,code in [("\\textbackslash","SER001_TEXTBACKSLASH_ARTIFACT"),("\\textasciicircum","SER002_TEXTASCIICIRCUM_ARTIFACT")]:
    if token in t:errors.append({"code":code,"file":str(p),"token":token})
+  # A LaTeX inline delimiter is a single, unescaped \\( or \\).
+  # Do not misclassify the second slash in a TeX line break followed by
+  # parentheses, e.g. \\\\(I-K), as a delimiter.
+  for pat,token in [(r"(?<!\\\\)\\\\\\\\\\(","\\\\("),(r"(?<!\\\\)\\\\\\\\\\)","\\\\)")]:
+   if re.search(pat,t): errors.append({"code":"SER005_LITERAL_LATEX_DELIMITER","file":str(p),"token":token})
 print(json.dumps({"files":[str(p) for p in paths],"errors":errors},indent=2))
 raise SystemExit(1 if errors else 0)
