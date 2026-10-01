@@ -71,3 +71,49 @@ This is a source-level result only. It does **not** classify the final manuscrip
 R2-WOS-02: **OPEN**.
 
 R2-B01: **OPEN**.
+
+
+## Root-cause correction — rendered-output failure
+
+The previous source-level PASS is superseded for Markdown by user-observed GitHub-rendered failures. Balanced delimiters and equation parity did not establish rendered correctness.
+
+### Old generation architecture
+
+Repository history shows that the detailed Markdown became the working manuscript and LaTeX was subsequently regenerated from that Markdown (notably commit `7c6032742d571a72a86b1a774bfb1e87524e5a1c`, followed by later LaTeX regeneration passes). Both targets were then edited repeatedly, including broad prose/inline-math normalization passes. This created an unsafe architecture in which Markdown-specific parsing rules, LaTeX syntax, and regex/string cleanup could interact and corrupt nested mathematical structures.
+
+### Root cause
+
+The root cause is **presentation serialization without a syntax-aware, target-specific mathematical boundary**. Arbitrary LaTeX mathematics was treated as text that could be normalized by delimiter/string substitutions. GitHub Markdown then parsed newlines, blank lines, backslashes, table syntax, and math delimiters differently from LaTeX. Consequently a source file could have balanced delimiter counts and matching equation IDs while the GitHub-rendered mathematical object was split into ordinary Markdown blocks.
+
+The user-observed failures — literal `$$`, literal `mol m$^{-3}$`, vertically stacked expressions, split source-term arrays, and `Missing \\end{cases}` — are now explicit regression tests.
+
+### Corrected architecture
+
+The project will use one canonical **scientific content model** and two target-specific serializers. Until a dedicated structured content file is introduced, the scientifically verified LaTeX/equation register and canonical derivation evidence define the mathematics; Markdown is a presentation target, not an intermediate parser for LaTeX generation.
+
+Displayed equations are atomic objects. Markdown serialization must emit one contiguous GitHub math block per equation with no Markdown paragraph breaks inside an environment. LaTeX serialization remains native LaTeX. No circular Markdown -> regex -> LaTeX -> regex -> Markdown conversion is permitted.
+
+### Compatibility gate
+
+Before full-manuscript reconstruction, the repository now contains:
+
+- `ray to outram park/MARKDOWN_MATH_COMPATIBILITY_TEST.md`
+- `verification/validate_manuscript_markdown.py`
+
+The fixture covers scalar, fraction, derivative, partial derivative, vector, integral, matrix, aligned derivation, cases, units, roman subscripts, Greek symbols, equation identifier strategy, long equation, and nested braces/parentheses.
+
+The validator is structural only and explicitly does not claim visual correctness.
+
+### Equation-ID strategy under test
+
+The compatibility fixture uses a stable ordinary-Markdown identifier immediately above each atomic display equation, e.g. **Equation TRISO-GOV-020**, rather than requiring `\\tag{TRISO-GOV-020}` inside GitHub math. The LaTeX target retains native labels/tags. This strategy will be adopted for the full Markdown only after rendered GitHub validation.
+
+### Current status
+
+Markdown rendered validation: **FAIL / BLOCKED by demonstrated rendered-output defects in the current full manuscript**.
+
+Compatibility fixture source: **CREATED; rendered GitHub validation required before full regeneration**.
+
+LaTeX: retained; no Markdown-specific rewrite has been applied in this root-cause pass.
+
+Full 1,481-equation Markdown regeneration: **NOT STARTED**, intentionally, pending fixture validation.
