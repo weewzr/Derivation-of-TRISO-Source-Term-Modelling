@@ -41,3 +41,18 @@ Run `36869649217` (commit `fdb62bd203bf2c618eb58efe026f0a3bf239a480`) used Pytho
 ## Final manuscript presentation baseline
 
 The equation-led manuscript retains 1481 stable TRISO equation IDs with one-to-one Markdown/LaTeX parity. Inline mathematics is generated as genuine TeX math rather than escaped control-sequence prose. The standalone LaTeX uses the verified bibliography file and breakable repository paths. Final render/visual QA is controlled by the Outram Park manuscript render audit workflow.
+
+
+## Equation-to-code function map
+
+| Physical/numerical element | Equation family | Repository implementation | Principal function(s) | Verification |
+|---|---|---|---|---|
+| Spherical FV mesh/flux/conservation | TRISO-FV / TRISO-ACC | `verification/fv_convergence.rs` | `mesh`, `steady`, `dtmax`, `integrate` | FV convergence and conservation study |
+| Two-layer transient FV reference | TRISO-FV | `verification/two_layer_fv_refinement.rs` | `mesh`, `dtmax`, `curve` | two-layer FV refinement |
+| Production release/censor semantics | TRISO-WOS | `verification/r2_b01_supervisor_integration.rs` | `five_layer_release_time`, `empirical_cdf` | R2-B01 contract tests |
+| Shell exit probability / conditional time | TRISO-FPT-020..065 | `verification/spherical_shell_kernel_verification.rs` | `exact_p_outer`, `exact_cond_mean`, `sample_conditional`, `direct_shell` | shell-kernel evidence |
+| Shell conditional CDF | TRISO-FPT | `verification/spherical_shell_cdf_verification.rs` | `analytic_cond_cdf`, `sample_cond`, `direct` | shell-CDF evidence |
+| Accelerated ball/shell renewal | TRISO-FPT / TRISO-WOS | `verification/two_layer_accelerated_coupling.rs` | `ball_radius`, `ball_exit_time`, `shell_exit` | accelerated two-layer evidence |
+| Two-state matrix reduction | TRISO-MR / TRISO-VER-300..303 | `verification/two_layer_matrix_reconciliation.rs` | `ball_lt`, `shell_lt`, `solve2`, `integrate_init`, `explicit` | B/C reconciliation |
+| Hard 8-state transform | TRISO-MR / TRISO-HARD | `verification/hard_five_layer_matrix.rs` | `ball`, `shell`, `mat`, `solve`, `rho`, `init` | hard-matrix diagnostic |
+| High-precision hard solve | TRISO-HARD | `verification/hard_five_layer_high_precision.py` | `matrix`, `init_phi`, `evaluate` | run 36869649217 + independent closure audit |
