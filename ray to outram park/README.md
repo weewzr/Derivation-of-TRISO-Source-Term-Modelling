@@ -17,7 +17,7 @@ The historical `notes/raw/TRISO Fuel Derivation Ray V1.tex` remains untouched.
 
 The continuous foundation, deterministic FV reference, controlled production-WOS verification, exact first-passage kernels, controlled accelerated renewal, controlled two-layer matrix and genuine three-layer multistate matrix have passed their applicable verification/review gates.
 
-The frozen hard five-layer 8x8 transform is extremely recurrent and ill-conditioned in ordinary f64. Run `36869649217` completed the predeclared 50/80/120-decimal-digit cross-check and satisfies the original normalization/residual gates under reliable arithmetic. That result is **PENDING INDEPENDENT REVIEW**.
+The frozen hard five-layer 8x8 transform is extremely recurrent and ill-conditioned in ordinary f64. The predeclared 50/80/120-decimal-digit cross-check passes the original numerical gates, and the independent hard-matrix closure audit verifies the transform with non-blocking findings. A controlled inverse-Laplace verification stage is authorized but has not yet been executed.
 
 No inverse-Laplace recovery has been verified. No final five-layer release CDF exists.
 
@@ -29,3 +29,6 @@ No inverse-Laplace recovery has been verified. No final five-layer release CDF e
 `theodoreOnzGit/outram-park-backend` was **not modified**. It remains read-only unless Ray explicitly authorizes a future transfer.
 
 Any eventual scientifically justified Outram Park integration should first be documented and maintained in this research repository with exact supervisor-base provenance and verification evidence. This folder currently contains research deliverables only, not an automatically applicable supervisor patch.
+
+
+The detailed manuscript is under an explicit render/compile quality gate. See EQUATION_DEPENDENCY_TREE.md and EQUATION_PARITY.md.
