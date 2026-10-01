@@ -1,0 +1,427 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,array}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+
+\title{TRISO Source-Term Modelling\\Mathematical Derivation Progress Update}
+\author{Ray}
+\date{1 October 2026}
+
+\begin{document}
+\maketitle
+
+\section{Purpose and current objective}
+
+This document summarises the current mathematical derivation progress for the TRISO source-term project. It reflects the research state through repository commit
+\texttt{dafa2d9e33577e0c32daee31d99e503218f00cd8}.
+It is a progress update rather than a claim that the final five-layer Cs-137 release problem is closed.
+
+The particle is represented by five concentric regions,
+\[
+\text{Kernel}\rightarrow\text{Buffer}\rightarrow\text{IPyC}
+\rightarrow\text{SiC}\rightarrow\text{OPyC}\rightarrow\text{Release}.
+\]
+For the current verification problem the tracked species is initially loaded in the kernel, there is no continuing source after $t=0$, the outer surface is absorbing, and the ideal-interface base case uses $K=1$.
+
+The principal observable is
+\[
+F(t)=P(T_{\rm release}\le t).
+\]
+
+\section{Governing diffusion equation}
+
+For a fixed control volume $V$,
+\[
+\frac{d}{dt}\int_V c\,dV
+=
+-\int_{\partial V}\mathbf J\cdot\mathbf n\,dA
++\int_V S\,dV.
+\]
+Using Fick's law
+\[
+\mathbf J=-D\nabla c,
+\]
+gives the conservative diffusion equation
+\[
+\boxed{
+\frac{\partial c}{\partial t}
+=
+\nabla\cdot(D\nabla c)+S
+}.
+\]
+
+Under spherical symmetry, $c=c(r,t)$,
+\[
+\boxed{
+\frac{\partial c}{\partial t}
+=
+\frac{1}{r^2}
+\frac{\partial}{\partial r}
+\left(
+r^2D(r,t)\frac{\partial c}{\partial r}
+\right)
++S(r,t)
+}.
+\]
+Inside homogeneous layer $i$,
+\[
+\boxed{
+\frac{\partial c_i}{\partial t}
+=
+D_i\left(
+\frac{\partial^2c_i}{\partial r^2}
++
+\frac{2}{r}\frac{\partial c_i}{\partial r}
+\right)+S_i
+}.
+\]
+The conservative form is retained at material discontinuities.
+
+\section{Boundary and interface conditions}
+
+Spherical symmetry gives
+\[
+\boxed{\left.\frac{\partial c}{\partial r}\right|_{r=0}=0}.
+\]
+For an ideal zero-storage interface,
+\[
+\boxed{
+-D_i\left.\frac{\partial c_i}{\partial r}\right|_{r_k^-}
+=
+-D_{i+1}\left.\frac{\partial c_{i+1}}{\partial r}\right|_{r_k^+}
+}.
+\]
+For the present $K=1$ base case,
+\[
+\boxed{c_i(r_k,t)=c_{i+1}(r_k,t)}.
+\]
+The current release benchmark uses
+\[
+\boxed{c(R,t)=0}.
+\]
+
+\section{Conservative finite-volume reference}
+
+For spherical cell $j$,
+\[
+V_j=\frac{4\pi}{3}
+\left(r_{j+1/2}^3-r_{j-1/2}^3\right),
+\qquad
+A_{j+1/2}=4\pi r_{j+1/2}^2.
+\]
+The semi-discrete balance is
+\[
+V_j\frac{dc_j}{dt}
+=
+A_{j-1/2}J_{j-1/2}
+-
+A_{j+1/2}J_{j+1/2}
++
+V_jS_j.
+\]
+At a discontinuous material interface the face conductance is
+\[
+\boxed{
+G_{j+1/2}
+=
+\frac{A_{j+1/2}}
+{\Delta r_j/(2D_j)+\Delta r_{j+1}/(2D_{j+1})}
+}.
+\]
+The FV reference has passed independent accuracy/convergence review. In the controlled two-layer transient benchmark, the finest spatial change in $F(t)$ was approximately $2.77\times10^{-4}$, the finest temporal change approximately $3.42\times10^{-6}$, and conservation residuals were near machine precision.
+
+\section{Direct WOS and the rare-interface bottleneck}
+
+For the finite-capture production WOS rule with $K=1$,
+\[
+\boxed{
+p_{i\rightarrow j}
+=
+\frac{D_j}{D_i+D_j}
+}.
+\]
+The controlled two-layer WOS/FV comparison passed independent review at the declared Monte-Carlo precision. The frozen five-layer Cs-137 case is nevertheless computationally pathological.
+
+The frozen diffusivities are
+\[
+[D_K,D_B,D_I,D_S,D_O]
+=
+[1.2502983\times10^{-13},10^{-8},4.0622991\times10^{-14},
+9.2277732\times10^{-17},4.0622991\times10^{-14}]
+\ \mathrm{m^2\,s^{-1}}.
+\]
+For example,
+\[
+p_{B\rightarrow I}\approx4.06\times10^{-6}.
+\]
+Direct five-layer diagnostics therefore spend essentially all computational effort resolving repeated Buffer/interface events before meaningful SiC penetration.
+
+\section{Exact spherical-shell first-passage kernel}
+
+For constant diffusivity $D$ in a shell $a<r<b$, let $T$ be the first time either boundary is reached. Define
+\[
+G_b(r,s)=
+E_r\!\left[e^{-sT}\mathbf 1_{\{R_T=b\}}\right].
+\]
+The backward equation is
+\[
+D\left(G_b''+\frac{2}{r}G_b'\right)=sG_b,
+\qquad
+G_b(a,s)=0,
+\qquad
+G_b(b,s)=1.
+\]
+With
+\[
+v=rG_b,
+\qquad
+\lambda=\sqrt{\frac{s}{D}},
+\]
+one obtains
+\[
+v''-\lambda^2v=0.
+\]
+Hence
+\[
+\boxed{
+G_b(r,s)
+=
+\frac{b}{r}
+\frac{\sinh[\lambda(r-a)]}
+{\sinh[\lambda(b-a)]}
+}
+\]
+and
+\[
+\boxed{
+G_a(r,s)
+=
+\frac{a}{r}
+\frac{\sinh[\lambda(b-r)]}
+{\sinh[\lambda(b-a)]}
+}.
+\]
+At $s\to0$,
+\[
+\boxed{
+P_r(R_T=b)
+=
+\frac{b}{r}\frac{r-a}{b-a}
+=
+\frac{1/a-1/r}{1/a-1/b}
+}.
+\]
+The conditional transforms are
+\[
+E_r[e^{-sT}\mid R_T=b]
+=
+\frac{G_b(r,s)}{G_b(r,0)},
+\qquad
+E_r[e^{-sT}\mid R_T=a]
+=
+\frac{G_a(r,s)}{G_a(r,0)}.
+\]
+The shell kernel has been verified against analytical exit probabilities, conditional moments, conditional CDFs and direct supervisor WOS.
+
+\section{Accelerated exact-interface renewal}
+
+The accelerated process marginalises within-material diffusion:
+\[
+\text{first passage}
+\rightarrow
+\text{interface}
+\rightarrow
+\text{transmit/reflect}
+\rightarrow
+\text{reinsertion}
+\rightarrow
+\text{next first passage}.
+\]
+Controlled two-layer verification reproduced the accepted FV/direct-WOS behaviour while reducing the event count by approximately $8.68\times$ relative to direct 100-nm WOS.
+
+Independent review established the important distinction:
+\begin{align*}
+A&=\text{finite-capture production WOS},\\
+B&=\text{accelerated exact-interface renewal},\\
+C&=\text{deterministic matrix reduction of }B.
+\end{align*}
+$B$ and $C$ are the exact-equivalence target. $A$ is empirically compatible with $B/C$ in the controlled benchmark but is not pathwise identical.
+
+For $a=50\,\mu\mathrm m$ and $\epsilon=0.1\,\mu\mathrm m$, the uniform-volume initial mass inside the capture shell is
+\[
+\boxed{
+1-\left(1-\frac{\epsilon}{a}\right)^3
+=
+0.005988008
+}
+\]
+or approximately $0.5988\%$.
+
+\section{Eight-state interface Markov-renewal reduction}
+
+Four internal interfaces, with two post-interface material sides each, give eight transient states $S_0,\ldots,S_7$ plus absorbing release $A$.
+
+Define
+\[
+\Phi_i(s)=E_i[e^{-sT_{\rm release}}].
+\]
+The first-step equations are
+\[
+\boxed{
+\Phi_i(s)
+=
+\sum_jK_{ij}(s)\Phi_j(s)+B_i(s)
+}.
+\]
+In vector form,
+\[
+\boxed{
+\bm\Phi(s)
+=
+K(s)\bm\Phi(s)+\mathbf B(s)
+}
+\]
+and therefore
+\[
+\boxed{
+\bm\Phi(s)
+=
+[I-K(s)]^{-1}\mathbf B(s)
+}.
+\]
+The matrix inverse sums the renewal series
+\[
+[I-K]^{-1}=I+K+K^2+\cdots,
+\]
+thereby marginalising arbitrarily many repeated reflection/return cycles.
+
+For uniform-in-volume kernel births,
+\[
+f_R(r)=\frac{3r^2}{R_0^3},
+\]
+and
+\[
+\boxed{
+\Phi_{\rm init}(s)
+=
+\int_0^{R_0}
+\frac{3r^2}{R_0^3}
+H_K(r,s)
+\left[
+p_{K\rightarrow K}\Phi_0(s)
++
+p_{K\rightarrow B}\Phi_1(s)
+\right]dr
+}.
+\]
+For the release CDF,
+\[
+\boxed{
+\mathcal L\{F\}(s)
+=
+\frac{\Phi_{\rm init}(s)}{s}
+}.
+\]
+
+\section{Controlled matrix reconciliation}
+
+The controlled two-layer matrix was compared with explicit exact-interface renewal at
+\[
+s=[0,0.25,0.5,1,2,4]\ \mathrm{s^{-1}}.
+\]
+With $N=20{,}000$ explicit renewal histories, all matrix-versus-renewal transform discrepancies were within approximately $1.004$ Monte-Carlo standard errors.
+
+Normalization gave
+\[
+\boxed{\Phi_{\rm init}(0)=1}
+\]
+to floating-point precision, while linear-system residuals were approximately $10^{-16}$--$10^{-18}$.
+
+The independent closure audit therefore cleared the method for controlled multistate implementation/verification while retaining the finite-capture/exact-interface distinction.
+
+\section{Controlled genuine-multistate verification}
+
+A three-layer benchmark was defined by
+\[
+R=[50,75,100]\ \mu\mathrm m,
+\qquad
+D=[10^{-9},2\times10^{-9},5\times10^{-9}]\ \mathrm{m^2\,s^{-1}}.
+\]
+It produces four transient interface-side states and one absorbing release state.
+
+The successful run used $N=20{,}000$ explicit Process-B histories and
+\[
+s=[0,1,2,5,10,20]\ \mathrm{s^{-1}}.
+\]
+The largest matrix-versus-explicit-renewal standardized discrepancy was
+\[
+\boxed{|z|_{\max}=0.729}.
+\]
+All transient states normalized to one at $s=0$, and matrix residuals were near machine precision.
+
+Against an independently refined FV reference,
+\[
+\boxed{\mathrm{RMS}(F_B-F_{\rm FV})\approx1.04\times10^{-3}}
+\]
+and
+\[
+\boxed{\max|F_B-F_{\rm FV}|\approx1.78\times10^{-3}}.
+\]
+No nonzero-time discrepancy exceeded approximately $1.03$ binomial standard errors.
+
+Thus the matrix construction has now been demonstrated in a genuine multistate setting, not only in a 2-state reconciliation problem.
+
+\section{Current status}
+
+The mathematical development now follows
+\[
+\text{conservation/Fick}
+\rightarrow
+\text{spherical multilayer PDE}
+\rightarrow
+\text{conservative FV}
+\rightarrow
+\text{direct WOS}
+\rightarrow
+\text{exact shell first passage}
+\rightarrow
+\text{accelerated renewal}
+\rightarrow
+\text{matrix Markov-renewal reduction}.
+\]
+
+Verified or independently reviewed milestones include:
+\begin{itemize}
+\item continuous spherical diffusion foundation;
+\item conservative FV formulation and convergence;
+\item controlled direct-WOS/FV interface compatibility;
+\item exact homogeneous shell exit/time kernel;
+\item controlled accelerated two-layer coupling;
+\item finite-capture versus exact-interface reconciliation;
+\item controlled two-layer matrix verification;
+\item controlled three-layer multistate matrix/FV verification.
+\end{itemize}
+
+The hard frozen five-layer Cs-137 release-time problem remains the unresolved target:
+\[
+\boxed{\text{R2-WOS-02 remains open}},
+\qquad
+\boxed{\text{R2-B01 remains open}}.
+\]
+
+The next step is to complete the remaining review/verification gate before treating the hard five-layer matrix result as a final Method-2 calculation.
+
+\section{Supervisor-facing summary}
+
+The principal development is that the project no longer attempts to brute-force millions of rare interface recurrences. The same first-passage/interface physics is reduced to
+\[
+\boxed{
+\bm\Phi(s)=[I-K(s)]^{-1}\mathbf B(s)
+},
+\]
+which algebraically sums repeated interface renewals while preserving physical first-passage-time transforms.
+
+The reduction has passed controlled two-layer and genuine multistate three-layer checks. The project explicitly distinguishes finite-capture production WOS, exact-interface renewal and continuum-PDE relevance. The remaining task is to complete the final verification gate before applying the reduced formulation to the frozen five-layer Cs-137 release problem.
+
+\end{document}
