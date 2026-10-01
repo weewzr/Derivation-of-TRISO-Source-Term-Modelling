@@ -16765,3 +16765,8 @@ $$
 [EMPIRICAL COMPATIBILITY] Process A and Process B/C have controlled finite-(epsilon) compatibility evidence.
 
 [IMPORTANT] Neither statement is a proof of the (epsilon\rightarrow0) continuum limit.
+
+
+# 26. Verification linked to the matrix derivation
+
+[VERIFIED] Controlled two-state and four-state matrix tests are documented in TRACEABILITY.md and the canonical verification evidence. Detailed numerical values are retained in those evidence files.
