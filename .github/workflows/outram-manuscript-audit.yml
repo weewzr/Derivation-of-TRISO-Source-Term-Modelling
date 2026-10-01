@@ -20,6 +20,10 @@ jobs:
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Validator self-test
         run: python verification/test_stage_a_gate.py
+      - name: Full 1498-block audit
+        run: |
+          python verification/full_markdown_audit.py
+          node verification/mathjax_full_audit.mjs
       - name: Serializer fixture
         run: |
           rm -rf verification/tmp_fixture
@@ -61,6 +65,7 @@ jobs:
             verification/tmp_candidate/
   full-manuscript-render:
     needs: fast-manuscript-validation
+    if: ${{ needs.fast-manuscript-validation.result == 'success' && !contains(github.event.head_commit.message, 'audit') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
