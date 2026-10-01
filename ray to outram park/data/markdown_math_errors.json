@@ -1,0 +1,151 @@
+{
+  "baseline": {
+    "run_id": 36885479913,
+    "head_sha": "c6da4b8a3f8aba39818d8c8d58d64d159ebd2ab6",
+    "parser": "KaTeX",
+    "parser_version": "0.16.22"
+  },
+  "counts": {
+    "math_expressions": 1498,
+    "stable_equation_ids": 1481,
+    "parser_pass": 1498,
+    "parser_fail": 0,
+    "markdown_structural_reported": 0,
+    "control_character_occurrences": 6,
+    "programming_escape_source_defects": 3,
+    "undefined_equation_reference_warnings": 6,
+    "undefined_citation_warnings": 1,
+    "rendered_regression_classes": 5
+  },
+  "control_characters": [
+    {
+      "code": "SER003_PROGRAMMING_ESCAPE_CORRUPTION",
+      "file": "ray to outram park/TRISO_Source_Term_Derivation.md",
+      "offset": 39170,
+      "line": 2439,
+      "equation_id": "TRISO-ANA-270",
+      "hex": "0x09",
+      "intended": "\\\\to"
+    },
+    {
+      "code": "SER003_PROGRAMMING_ESCAPE_CORRUPTION",
+      "file": "ray to outram park/TRISO_Source_Term_Derivation.md",
+      "offset": 236389,
+      "line": 16886,
+      "equation_id": "TRISO-MR-023",
+      "hex": "0x08",
+      "intended": "\\\\boldsymbol"
+    },
+    {
+      "code": "SER003_PROGRAMMING_ESCAPE_CORRUPTION",
+      "file": "ray to outram park/TRISO_Source_Term_Derivation.md",
+      "offset": 236531,
+      "line": 16897,
+      "equation_id": "TRISO-MR-024",
+      "hex": "0x08",
+      "intended": "\\\\boldsymbol"
+    },
+    {
+      "code": "SER003_PROGRAMMING_ESCAPE_CORRUPTION",
+      "file": "ray to outram park/TRISO_Source_Term_Derivation.tex",
+      "offset": 52415,
+      "line": 2681,
+      "equation_id": "TRISO-ANA-270",
+      "hex": "0x09",
+      "intended": "\\\\to"
+    },
+    {
+      "code": "SER003_PROGRAMMING_ESCAPE_CORRUPTION",
+      "file": "ray to outram park/TRISO_Source_Term_Derivation.tex",
+      "offset": 316562,
+      "line": 18363,
+      "equation_id": "TRISO-MR-023",
+      "hex": "0x08",
+      "intended": "\\\\boldsymbol"
+    },
+    {
+      "code": "SER003_PROGRAMMING_ESCAPE_CORRUPTION",
+      "file": "ray to outram park/TRISO_Source_Term_Derivation.tex",
+      "offset": 316754,
+      "line": 18375,
+      "equation_id": "TRISO-MR-024",
+      "hex": "0x08",
+      "intended": "\\\\boldsymbol"
+    }
+  ],
+  "undefined_equation_references": [
+    {
+      "code": "REF001_UNDEFINED_EQUATION_REFERENCE",
+      "reference": "eq:triso-fpt-002",
+      "classification": "label_exists_first_pass_unresolved"
+    },
+    {
+      "code": "REF001_UNDEFINED_EQUATION_REFERENCE",
+      "reference": "eq:triso-fpt-004",
+      "classification": "label_exists_first_pass_unresolved"
+    },
+    {
+      "code": "REF001_UNDEFINED_EQUATION_REFERENCE",
+      "reference": "eq:triso-fpt-005",
+      "classification": "label_exists_first_pass_unresolved"
+    },
+    {
+      "code": "REF001_UNDEFINED_EQUATION_REFERENCE",
+      "reference": "eq:triso-wos-005",
+      "classification": "label_exists_first_pass_unresolved"
+    },
+    {
+      "code": "REF001_UNDEFINED_EQUATION_REFERENCE",
+      "reference": "eq:triso-fpt-022",
+      "classification": "label_exists_first_pass_unresolved"
+    },
+    {
+      "code": "REF001_UNDEFINED_EQUATION_REFERENCE",
+      "reference": "eq:triso-fpt-040",
+      "classification": "label_exists_first_pass_unresolved"
+    }
+  ],
+  "undefined_citations": [
+    {
+      "code": "REF002_UNDEFINED_CITATION",
+      "key": "NIST_DLMF",
+      "classification": "bibliography_entry_exists_first_pass_unresolved"
+    }
+  ],
+  "rendered_regressions": [
+    "REG001_LITERAL_DOLLAR_VISIBLE",
+    "REG002_RAW_TEX_VISIBLE",
+    "REG003_CASES_RENDER_FAILURE",
+    "REG004_VERTICAL_FRAGMENTATION",
+    "REG005_UNIT_FRAGMENTATION"
+  ],
+  "clusters": [
+    {
+      "root_cause": "programming_language_escape_corruption",
+      "physical_occurrences": 6,
+      "source_defects": 3,
+      "affected_equation_ids": [
+        "TRISO-ANA-270",
+        "TRISO-MR-023",
+        "TRISO-MR-024"
+      ]
+    },
+    {
+      "root_cause": "markdown_rendered_block_serialization",
+      "failure_classes": 5,
+      "affected_equation_count": null,
+      "note": "not inferable from available screenshots"
+    },
+    {
+      "root_cause": "first_pass_reference_state_interrupted",
+      "reference_warnings": 6,
+      "citation_warnings": 1,
+      "missing_equations": 0
+    },
+    {
+      "root_cause": "validator_coverage_defect",
+      "detail": "run reported stable_tags=0; direct source audit finds 1481 unique tags"
+    }
+  ],
+  "scientific_equations_changed": false
+}
