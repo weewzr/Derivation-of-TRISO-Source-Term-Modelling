@@ -26,13 +26,13 @@ The notation is grouped here for reference; important symbols are also defined l
 |---|---|---|---|
 | Geometry | $r$ | radial coordinate from particle centre | m |
 | Geometry | $R_i$ | outer radius of TRISO layer $i$ | m |
-| Transport | $c_i$ | concentration of tracked species in layer $i$ | mol m$^{-3}$ |
-| Transport | $D_i$ | diffusion coefficient in layer $i$ | m$^2$ s$^{-1}$ |
-| Transport | $\mathbf J$ | diffusive molar flux | mol m$^{-2}$ s$^{-1}$ |
-| Sources | $S_i$ | net volumetric production term | mol m$^{-3}$ s$^{-1}$ |
-| FV | $V_P$ | spherical control-volume volume | m$^3$ |
-| FV | $A_f$ | spherical face area | m$^2$ |
-| FV | $G_f$ | diffusive face conductance | m$^3$ s$^{-1}$ |
+| Transport | $c_i$ | concentration of tracked species in layer $i$ | $\mathrm{mol\,m^{-3}}$ |
+| Transport | $D_i$ | diffusion coefficient in layer $i$ | $\mathrm{m^2\,s^{-1}}$ |
+| Transport | $\mathbf J$ | diffusive molar flux | $\mathrm{mol\,m^{-2}\,s^{-1}}$ |
+| Sources | $S_i$ | net volumetric production term | $\mathrm{mol\,m^{-3}\,s^{-1}}$ |
+| FV | $V_P$ | spherical control-volume volume | $\mathrm{m^3}$ |
+| FV | $A_f$ | spherical face area | $\mathrm{m^2}$ |
+| FV | $G_f$ | diffusive face conductance | $\mathrm{m^3\,s^{-1}}$ |
 | Stochastic | $T$ | first-passage or release time | s |
 | Stochastic | $\epsilon$ | interface capture distance | m |
 | Stochastic | $\delta=\alpha\epsilon$ | reinsertion displacement | m |
