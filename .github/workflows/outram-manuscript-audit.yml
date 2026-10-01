@@ -1,4 +1,4 @@
-name: Outram Park manuscript render audit
+name: Outram Park manuscript audit
 on:
   push:
     branches: [main]
@@ -6,48 +6,93 @@ on:
       - 'ray to outram park/TRISO_Source_Term_Derivation.md'
       - 'ray to outram park/TRISO_Source_Term_Derivation.tex'
       - 'ray to outram park/references.bib'
+      - 'verification/**'
       - '.github/workflows/outram-manuscript-audit.yml'
   workflow_dispatch:
 jobs:
-  audit:
+  fast-manuscript-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install web-math parser
+        working-directory: verification
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Serializer fixture
+        run: |
+          rm -rf verification/tmp_fixture
+          python verification/serialize_manuscript.py
+          python verification/stage_a_gate.py verification/tmp_fixture/fixture.md verification/tmp_fixture/fixture.tex
+          python verification/validate_markdown_math.py verification/tmp_fixture/fixture.md verification/tmp_fixture/fixture_math.json
+          node verification/katex_strict_lint.mjs verification/tmp_fixture/fixture_math.json verification/tmp_fixture/fixture_katex.json
+      - name: Build temporary structured candidates
+        run: |
+          rm -rf verification/tmp_candidate
+          python verification/build_structured_candidate.py
+      - name: Stage A candidate source gate
+        run: |
+          python verification/stage_a_gate.py verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.md verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.tex
+          python verification/check_candidate_parity.py verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.md verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.tex
+      - name: Stage A strict web-math gate
+        run: |
+          python verification/validate_markdown_math.py verification/tmp_candidate/TRISO_Source_Term_Derivation.candidate.md verification/tmp_candidate/candidate_math.json
+          node verification/katex_strict_lint.mjs verification/tmp_candidate/candidate_math.json verification/tmp_candidate/candidate_katex.json
+      - name: Candidate diff acceptance
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('verification/tmp_candidate/structured_diff.json'))
+          assert p['equations_removed']==[], p
+          assert p['equations_added']==[], p
+          assert p['before_unique_ids']==p['after_unique_ids']==1481, p
+          allowed={'TRISO-ANA-270','TRISO-MR-023','TRISO-MR-024'}
+          assert set(p['math_expressions_changed'])==allowed, p
+          print('Structured diff PASS',p)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stage-a-manuscript-candidate
+          path: |
+            verification/tmp_fixture/
+            verification/tmp_candidate/
+  full-manuscript-render:
+    needs: fast-manuscript-validation
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - name: Markdown math inventory
-        run: |
-          python verification/validate_markdown_math.py
-          cd verification
-          npm install --ignore-scripts --no-audit --no-fund
-          cd ..
-          node verification/katex_strict_lint.mjs
-      - name: Install LaTeX
+      - name: Install LaTeX only after Stage A passes
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq texlive-luatex texlive-latex-extra texlive-fonts-recommended
-      - name: Compile twice
-        working-directory: ray to outram park
+      - name: Rebuild accepted candidate
+        run: python verification/build_structured_candidate.py
+      - name: Compile accepted candidate
+        working-directory: verification/tmp_candidate
         run: |
+          cp "../../ray to outram park/references.bib" references.bib
+          cp TRISO_Source_Term_Derivation.candidate.tex TRISO_Source_Term_Derivation.tex
           set -o pipefail
           lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass1.log
           bibtex TRISO_Source_Term_Derivation | tee bibtex.log
           lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass2.log
           lualatex -interaction=nonstopmode -halt-on-error TRISO_Source_Term_Derivation.tex | tee latex_pass3.log
-      - name: Audit warnings
-        working-directory: ray to outram park
+      - name: Audit final references
+        working-directory: verification/tmp_candidate
         run: |
           if grep -E 'LaTeX Warning: (Reference|Citation).*undefined|multiply defined|ignoring duplicate destination' latex_pass3.log; then
-            echo 'Undefined reference/citation, duplicate label, or duplicate PDF destination detected'
+            echo 'Final reference/citation/label audit FAIL'
             exit 1
           fi
-          echo 'LaTeX compile/reference audit PASS'
+          echo 'Final LaTeX audit PASS'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: outram-manuscript-render-audit
           path: |
-            ray to outram park/TRISO_Source_Term_Derivation.pdf
-            ray to outram park/latex_pass1.log
-            ray to outram park/latex_pass2.log
-            ray to outram park/latex_pass3.log
-            ray to outram park/bibtex.log
+            verification/tmp_candidate/TRISO_Source_Term_Derivation.pdf
+            verification/tmp_candidate/latex_pass1.log
+            verification/tmp_candidate/latex_pass2.log
+            verification/tmp_candidate/latex_pass3.log
+            verification/tmp_candidate/bibtex.log
