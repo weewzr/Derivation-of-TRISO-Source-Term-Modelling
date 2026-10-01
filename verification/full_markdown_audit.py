@@ -71,7 +71,7 @@ check=[]
 for pct in range(0,101,10):
  idx=round((len(blocks)-1)*pct/100);b=blocks[idx];check.append({"percent":pct,"index":b["audit_index"],"id":b["equation_id"],"section":b["section"],"status":"PASS" if b["closed"] and not b["inner_dollars"] and not b["inner_tag"] and not b["nested_fence"] and not b["environment_errors"] else "FAIL"})
 # screenshot IDs
-regids=["TRISO-GOV-020","TRISO-GOV-021","TRISO-GOV-022","TRISO-GOV-023","TRISO-GOV-024","TRISO-GOV-101","TRISO-GOV-102","TRISO-ANA-103","TRISO-ANA-104","TRISO-ANA-105","TRISO-ML-460","TRISO-ML-464","TRISO-ML-465","TRISO-ML-493"]
+regids=["TRISO-GOV-020","TRISO-GOV-021","TRISO-GOV-022","TRISO-GOV-023","TRISO-GOV-024","TRISO-GOV-101","TRISO-GOV-102","TRISO-ANA-103","TRISO-ANA-104","TRISO-ANA-105","TRISO-ML-460","TRISO-ML-464","TRISO-ML-465","TRISO-ML-493","TRISO-ML-517","TRISO-ML-518"]
 reg=[]
 for q in regids:
  b=next((x for x in blocks if x["equation_id"]==q),None);reg.append({"id":q,"found":bool(b),"index":b and b["audit_index"],"lines":b and [b["start_line"],b["end_line"]],"inner_dollars":b and b["inner_dollars"],"inner_tag":b and b["inner_tag"],"environment_errors":b and b["environment_errors"],"source_status":"PASS" if b and not b["inner_dollars"] and not b["inner_tag"] and not b["environment_errors"] else "FAIL"})
