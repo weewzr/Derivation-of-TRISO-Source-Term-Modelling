@@ -15781,6 +15781,118 @@ $$
 
 [IMPORTANT] These finite-capture semantics define Process A and remain distinct from the exact-interface process below.
 
+## 21.4 Centred-ball first-passage transform
+
+[EXACT] Consider a homogeneous ball of radius \(b\) with absorbing boundary at \(r=b\).
+
+Define
+
+$
+H(r,s)=\mathbb E_r[e^{-sT_b}].
+\tag{TRISO-FPT-011}
+$
+
+The backward radial equation is
+
+$
+D\left(H''+\frac{2}{r}H'\right)=sH.
+\tag{TRISO-FPT-012}
+$
+
+Introduce
+
+$
+v(r)=rH(r,s).
+\tag{TRISO-FPT-013}
+$
+
+The same derivative cancellation used for the shell gives
+
+$
+v''-\lambda^2v=0,
+\qquad
+\lambda=\sqrt{\frac{s}{D}}.
+\tag{TRISO-FPT-014}
+$
+
+The general solution is
+
+$
+v(r)=A\sinh(\lambda r)+B\cosh(\lambda r).
+\tag{TRISO-FPT-015}
+$
+
+Regularity of \(H=v/r\) at \(r=0\) requires
+
+$
+v(0)=0.
+\tag{TRISO-FPT-016}
+$
+
+Substitute \(r=0\) into TRISO-FPT-015:
+
+$
+0=A\sinh0+B\cosh0.
+\tag{TRISO-FPT-017}
+$
+
+Therefore
+
+$
+B=0.
+\tag{TRISO-FPT-018}
+$
+
+At the absorbing sphere,
+
+$
+H(b,s)=1.
+\tag{TRISO-FPT-019}
+$
+
+Hence
+
+$
+v(b)=b.
+\tag{TRISO-FPT-019A}
+$
+
+Using \(v(b)=A\sinh(\lambda b)\),
+
+$
+A=\frac{b}{\sinh(\lambda b)}.
+\tag{TRISO-FPT-019B}
+$
+
+Therefore
+
+$
+v(r)=b\frac{\sinh(\lambda r)}{\sinh(\lambda b)}.
+\tag{TRISO-FPT-019C}
+$
+
+Divide by \(r\):
+
+$
+\boxed{
+H(r,s)=
+\frac{b}{r}
+\frac{\sinh(\lambda r)}{\sinh(\lambda b)}.
+}
+\tag{TRISO-FPT-019D}
+$
+
+At the centre, use \(\sinh(\lambda r)\sim\lambda r\):
+
+$
+H(0,s)
+=
+\frac{b\lambda}{\sinh(\lambda b)}.
+\tag{TRISO-FPT-019E}
+$
+
+Thus the centred-ball kernel used by the accelerated renewal is derived from the same backward diffusion equation, with regularity at the origin and absorption at the ball surface.
+
 # 22. Exact spherical-shell first-passage theory
 
 ## 22.1 Outer-exit joint transform
@@ -16552,25 +16664,146 @@ G_B^+p_{B\rightarrow I}.
 \tag{TRISO-MR-019}
 $$
 
-The (S_2) row has the same four possible destination states, but (G_B^pm) are evaluated at the reinsertion radius adjacent to the outer Buffer interface.
+For \(S_2\), the physical destinations are identical to \(S_1\), but the shell transforms are evaluated from the outer-side Buffer reinsertion radius. Denote them \(G_{B,2}^-\) and \(G_{B,2}^+\).
 
-## 25.4 IPyC and SiC state rows
+$
+\Phi_2=
+G_{B,2}^-p_{B\rightarrow K}\Phi_0+
+G_{B,2}^-p_{B\rightarrow B}^{(I_0)}\Phi_1+
+G_{B,2}^+p_{B\rightarrow B}^{(I_1)}\Phi_2+
+G_{B,2}^+p_{B\rightarrow I}\Phi_3.
+\tag{TRISO-MR-034}
+$
 
-For (S_3) and (S_4), use the IPyC shell transforms (G_I^-) and (G_I^+).
+Hence
 
-The inward interface is Buffer/IPyC.
+$
+K_{20}=G_{B,2}^-p_{B\rightarrow K},
+\quad
+K_{21}=G_{B,2}^-p_{B\rightarrow B}^{(I_0)}.
+\tag{TRISO-MR-035}
+$
 
-The outward interface is IPyC/SiC.
+and
 
-The same first-step construction gives four probability-weighted transform terms in each row.
+$
+K_{22}=G_{B,2}^+p_{B\rightarrow B}^{(I_1)},
+\quad
+K_{23}=G_{B,2}^+p_{B\rightarrow I}.
+\tag{TRISO-MR-036}
+$
 
-For (S_5) and (S_6), use the SiC shell transforms (G_S^-) and (G_S^+).
+## 25.4 IPyC state rows
 
-The inward interface is IPyC/SiC.
+From \(S_3\), inward IPyC exit reaches the Buffer/IPyC interface and outward exit reaches IPyC/SiC:
 
-The outward interface is SiC/OPyC.
+$
+\Phi_3=
+G_{I,3}^-p_{I\rightarrow B}\Phi_2+
+G_{I,3}^-p_{I\rightarrow I}^{(I_1)}\Phi_3+
+G_{I,3}^+p_{I\rightarrow I}^{(I_2)}\Phi_4+
+G_{I,3}^+p_{I\rightarrow S}\Phi_5.
+\tag{TRISO-MR-037}
+$
 
-Again, each row contains the two exit sides multiplied by the two interface outcomes.
+Therefore
+
+$
+K_{32}=G_{I,3}^-p_{I\rightarrow B},
+\quad
+K_{33}=G_{I,3}^-p_{I\rightarrow I}^{(I_1)},
+\tag{TRISO-MR-038}
+$
+
+$
+K_{34}=G_{I,3}^+p_{I\rightarrow I}^{(I_2)},
+\quad
+K_{35}=G_{I,3}^+p_{I\rightarrow S}.
+\tag{TRISO-MR-039}
+$
+
+From \(S_4\),
+
+$
+\Phi_4=
+G_{I,4}^-p_{I\rightarrow B}\Phi_2+
+G_{I,4}^-p_{I\rightarrow I}^{(I_1)}\Phi_3+
+G_{I,4}^+p_{I\rightarrow I}^{(I_2)}\Phi_4+
+G_{I,4}^+p_{I\rightarrow S}\Phi_5.
+\tag{TRISO-MR-040}
+$
+
+Thus
+
+$
+K_{42}=G_{I,4}^-p_{I\rightarrow B},
+\quad
+K_{43}=G_{I,4}^-p_{I\rightarrow I}^{(I_1)},
+\tag{TRISO-MR-041}
+$
+
+$
+K_{44}=G_{I,4}^+p_{I\rightarrow I}^{(I_2)},
+\quad
+K_{45}=G_{I,4}^+p_{I\rightarrow S}.
+\tag{TRISO-MR-042}
+$
+
+## 25.5 SiC state rows
+
+From \(S_5\),
+
+$
+\Phi_5=
+G_{S,5}^-p_{S\rightarrow I}\Phi_4+
+G_{S,5}^-p_{S\rightarrow S}^{(I_2)}\Phi_5+
+G_{S,5}^+p_{S\rightarrow S}^{(I_3)}\Phi_6+
+G_{S,5}^+p_{S\rightarrow O}\Phi_7.
+\tag{TRISO-MR-043}
+$
+
+Hence
+
+$
+K_{54}=G_{S,5}^-p_{S\rightarrow I},
+\quad
+K_{55}=G_{S,5}^-p_{S\rightarrow S}^{(I_2)},
+\tag{TRISO-MR-044}
+$
+
+$
+K_{56}=G_{S,5}^+p_{S\rightarrow S}^{(I_3)},
+\quad
+K_{57}=G_{S,5}^+p_{S\rightarrow O}.
+\tag{TRISO-MR-045}
+$
+
+From \(S_6\),
+
+$
+\Phi_6=
+G_{S,6}^-p_{S\rightarrow I}\Phi_4+
+G_{S,6}^-p_{S\rightarrow S}^{(I_2)}\Phi_5+
+G_{S,6}^+p_{S\rightarrow S}^{(I_3)}\Phi_6+
+G_{S,6}^+p_{S\rightarrow O}\Phi_7.
+\tag{TRISO-MR-046}
+$
+
+Therefore
+
+$
+K_{64}=G_{S,6}^-p_{S\rightarrow I},
+\quad
+K_{65}=G_{S,6}^-p_{S\rightarrow S}^{(I_2)},
+\tag{TRISO-MR-047}
+$
+
+$
+K_{66}=G_{S,6}^+p_{S\rightarrow S}^{(I_3)},
+\quad
+K_{67}=G_{S,6}^+p_{S\rightarrow O}.
+\tag{TRISO-MR-048}
+$
 
 ## 25.5 OPyC state and direct release
 
