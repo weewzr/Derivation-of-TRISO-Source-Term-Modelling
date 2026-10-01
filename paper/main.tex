@@ -1,0 +1,250 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,bm,booktabs,array}
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage[numbers]{natbib}
+\title{First-Principles Derivation and Verification of Diffusive Release from Multilayer TRISO Fuel}
+\author{Ray}
+\date{\today}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This work derives and verifies diffusion-based source-term models for a concentric five-layer TRISO particle. Method~1 develops the continuous spherical diffusion equations and analytical/modal structure. Method~2 develops an independently verified conservative finite-volume (FV) reference, the production walk-on-spheres (WOS) formulation, exact spherical first-passage kernels, an accelerated exact-interface renewal process, and a finite-state Markov-renewal transform reduction. Controlled two-layer and three-layer verification establishes the numerical building blocks. The frozen five-layer Cs-137 matrix has been constructed and diagnosed, but ordinary double precision is strongly affected by near-recurrent interface dynamics; a predeclared high-precision cross-check is ongoing. No final five-layer release CDF is claimed, and R2-WOS-02 and R2-B01 remain open.
+\end{abstract}
+
+\section{Geometry and scope}
+The concentric regions satisfy
+\begin{equation}
+0=R_0<R_1<R_2<R_3<R_4<R_5=R,
+\end{equation}
+corresponding to kernel, buffer, IPyC, SiC and OPyC. For the frozen five-layer Cs-137 benchmark,
+\begin{equation}
+(R_1,\ldots,R_5)=(212.5,312.5,352.5,387.5,427.5)\;\si{\micro\metre},
+\end{equation}
+and
+\begin{equation}
+\bm D=(1.2502983\times10^{-13},10^{-8},4.0622991\times10^{-14},
+9.2277732\times10^{-17},4.0622991\times10^{-14})\;\si{\metre\squared\per\second}.
+\end{equation}
+The project has three active methods: first-principles analytical diffusion; first-principles computational diffusion (FV and WOS/first-passage); and a later semi-empirical mechanistic/reduced-order method. Only Methods~1--2 are developed here.
+
+\section{Governing problem}
+For piecewise constant $D(r)$,
+\begin{equation}
+\frac{\partial c}{\partial t}
+=\frac{1}{r^2}\frac{\partial}{\partial r}
+\left(r^2D(r)\frac{\partial c}{\partial r}\right)+S-R(c).
+\label{eq:pde}
+\end{equation}
+Centre regularity is
+\begin{equation}
+c_r(0,t)=0.
+\end{equation}
+For the ideal $K=1$ verification interfaces,
+\begin{align}
+c_i(R_i,t)&=c_{i+1}(R_i,t),\\
+D_i c_{i,r}(R_i^-,t)&=D_{i+1}c_{i+1,r}(R_i^+,t).
+\end{align}
+The general continuum exterior may be Robin,
+\begin{equation}
+-D_5c_r(R,t)=h[c(R,t)-c_\infty],
+\end{equation}
+whereas the frozen production-WOS benchmark is absorbing:
+\begin{equation}
+c(R,t)=0.
+\end{equation}
+Its initial condition is
+\begin{equation}
+c(r,0)=
+\begin{cases}
+c_0,&0\le r<R_1,\\
+0,&R_1<r<R,
+\end{cases}
+\end{equation}
+with no continuing source after $t=0$.
+
+\section{Method 1: analytical diffusion}
+Within a homogeneous layer,
+\begin{equation}
+c_t=D\left(c_{rr}+\frac{2}{r}c_r\right).
+\end{equation}
+For the source-driven homogeneous benchmark write $c=w+v$. Separation $v=\phi(r)T(t)$ yields
+\begin{equation}
+\frac{1}{r^2}\frac{d}{dr}\left(r^2\phi'\right)+k^2\phi=0,
+\qquad T=e^{-Dk^2t}.
+\end{equation}
+With $u=r\phi$,
+\begin{equation}
+u''+k^2u=0.
+\end{equation}
+For the multilayer problem a common decay rate $\Lambda$ gives
+\begin{equation}
+k_i^2=\frac{\Lambda}{D_i},
+\end{equation}
+and the interface/boundary equations assemble
+\begin{equation}
+\bm M(\Lambda)\bm a=0,\qquad \det\bm M(\Lambda)=0.
+\end{equation}
+The repository directly establishes the piecewise self-adjoint boundary/interface cancellation and weighted orthogonality. Full singular piecewise-transmission completeness and numerical modal truncation remain qualified.
+
+\section{Method 2A: conservative deterministic FV reference}
+For spherical control volume $i$,
+\begin{equation}
+V_i\frac{dc_i}{dt}
+=G_{i-\frac12}(c_{i-1}-c_i)+G_{i+\frac12}(c_{i+1}-c_i),
+\end{equation}
+where
+\begin{equation}
+V_i=\frac{4\pi}{3}(r_{i+\frac12}^3-r_{i-\frac12}^3).
+\end{equation}
+The verified discontinuous-$D$ face conductance is
+\begin{equation}
+G_f=\frac{4\pi r_f^2}
+{\dfrac{r_f-r_L}{D_L}+\dfrac{r_R-r_f}{D_R}}.
+\end{equation}
+Forward Euler is
+\begin{equation}
+c_i^{n+1}=c_i^n+\frac{\Delta t}{V_i}
+\left[G_{i-\frac12}(c_{i-1}^n-c_i^n)+G_{i+\frac12}(c_{i+1}^n-c_i^n)\right].
+\end{equation}
+Independent audit established approximately second-order spatial convergence for the aligned benchmark, first-order temporal self-convergence for Forward Euler, and inventory closure to floating-point scale. These are benchmark-specific results.
+
+\section{Method 2B: production WOS}
+Uniform-volume kernel births obey
+\begin{equation}
+r=R_1U^{1/3}.
+\end{equation}
+For an interface-free WOS sphere of radius $\rho$,
+\begin{equation}
+\tau=\theta\frac{\rho^2}{D}.
+\end{equation}
+At capture distance $\epsilon$, the frozen $K=1$ interface law is
+\begin{equation}
+p_{i\to j}=\frac{D_j}{D_i+D_j},
+\end{equation}
+with zero interface-event time and reinsertion
+\begin{equation}
+\delta=\alpha\epsilon.
+\end{equation}
+Outer-surface arrival is release. Step-cap exhaustion is explicit censoring, never known non-release. Controlled WOS/FV verification supports a finite-$\epsilon$ statistical plateau; no accelerated-estimator epsilon convergence order is claimed.
+
+\section{Exact spherical first-passage kernels}
+For shell $a<r<b$, $T$ is first exit and $\lambda=\sqrt{s/D}$. The joint transforms are
+\begin{align}
+G^+(r,s)&=\mathbb E_r[e^{-sT}\mathbf1_{\{R_T=b\}}]
+=\frac{b}{r}\frac{\sinh[\lambda(r-a)]}{\sinh[\lambda(b-a)]},\\
+G^-(r,s)&=\frac{a}{r}\frac{\sinh[\lambda(b-r)]}{\sinh[\lambda(b-a)]}.
+\end{align}
+At $s\to0$,
+\begin{equation}
+P(R_T=b)=\frac{b(r-a)}{r(b-a)},\qquad
+P(R_T=a)=\frac{a(b-r)}{r(b-a)}.
+\end{equation}
+For a centred ball,
+\begin{equation}
+H(r,s)=\frac{b}{r}
+\frac{\sinh(r\sqrt{s/D})}{\sinh(b\sqrt{s/D})},
+\end{equation}
+with the regular $r\to0$ limit. Exit probabilities, conditional moments and conditional CDFs were verified against analytical references and direct supervisor-WOS sampling.
+
+\section{Accelerated exact-interface renewal}
+Process A is finite-capture production WOS. Process B replaces homogeneous-region wandering by the exact first-passage kernels while retaining the production interface law, zero event time and $\alpha\epsilon$ reinsertion.
+
+A and B are not identical. For the controlled two-layer case,
+\begin{equation}
+1-(1-\epsilon/a)^3=0.005988008
+\end{equation}
+of uniform-volume births lie in the capture shell for $a=\SI{50}{\micro\metre}$ and $\epsilon=\SI{0.1}{\micro\metre}$. Their executed release-CDF discrepancy is compatible at the declared controlled precision, but only empirically. The corrected accelerated two-layer process agrees with FV at Monte-Carlo scale and reduces event count by approximately $8.68\times$ relative to direct 100-nm WOS.
+
+\section{Five-layer computational pathology}
+Direct production WOS censored all tested five-layer histories at the step cap. A bounded exact-shell accelerated diagnostic also produced 0/16 releases and 16/16 censored histories; almost all 1.6 million renewals occurred in Buffer, only two histories reached IPyC, and none reached SiC/OPyC. Thus rare interface-state recurrence, not homogeneous-region wandering, is the dominant remaining computational obstacle.
+
+\section{Interface-state Markov-renewal reduction}
+The four internal interfaces define eight post-interface states $S_0,\ldots,S_7$ plus absorbing release. Define
+\begin{equation}
+\Phi_i(s)=\mathbb E_i[e^{-sT_{\rm release}}].
+\end{equation}
+The first-step equations are
+\begin{equation}
+\bm\Phi(s)=\bm K(s)\bm\Phi(s)+\bm B(s),
+\end{equation}
+hence
+\begin{equation}
+\boxed{\bm\Phi(s)=[\bm I-\bm K(s)]^{-1}\bm B(s)}.
+\label{eq:renewal}
+\end{equation}
+Process C is this deterministic matrix reduction of B:
+\begin{equation}
+B=C\quad\text{(mathematical reduction target)},
+\end{equation}
+while
+\begin{equation}
+A\approx B/C\quad\text{(controlled empirical compatibility only)}.
+\end{equation}
+For uniform kernel births,
+\begin{equation}
+\Phi_{\rm init}(s)=
+\int_0^{R_1}\frac{3r^2}{R_1^3}H(r,s)
+[p_{K\to K}\Phi_0+p_{K\to B}\Phi_1]\,dr.
+\end{equation}
+
+\section{Controlled matrix verification}
+The controlled $2\times2$ matrix reproduced explicit B within approximately 1.004 Monte-Carlo standard errors at all predeclared transform points.
+
+A genuine four-state benchmark,
+\begin{equation}
+R=(50,75,100)\;\si{\micro\metre},\qquad
+D=(1,2,5)\times10^{-9}\;\si{\metre\squared\per\second},
+\end{equation}
+was then compared with $N=20{,}000$ explicit B histories and a refined FV reference. The maximum B/C transform discrepancy was 0.729 MC standard errors. The B/FV CDF RMS difference was $1.0395\times10^{-3}$ and the maximum absolute difference was $1.7794\times10^{-3}$. FV refinement and conservation errors were much smaller than stochastic uncertainty. Independent audit cleared the bounded hard-matrix diagnostic.
+
+\section{Hard five-layer transform diagnostic: ongoing / not yet closed}
+The hard $8\times8$ matrix was evaluated at
+\begin{equation}
+s=(0,10^{-9},10^{-8},10^{-7},10^{-6},10^{-5},10^{-4})\;\si{\per\second}.
+\end{equation}
+At $s=0$,
+\begin{equation}
+\rho[\bm K(0)]\approx0.999999999949649,\qquad
+1-\rho\approx5.04\times10^{-11}.
+\end{equation}
+Ordinary f64 arithmetic gave
+\begin{equation}
+\Phi_{\rm init}(0)\approx0.999999887846684,
+\end{equation}
+missing the predeclared $10^{-9}$ normalization criterion. At $s=10^{-5}$ the residual was $1.138\times10^{-10}$, narrowly above the $10^{-10}$ criterion. The f64 Frobenius condition estimate is of order $10^{11}$ at $s=0$.
+
+These failures are not waived. A predeclared 50/80/120-decimal-digit high-precision cross-check using robust LU/eigen/SVD diagnostics is currently pending execution/reconciliation. No high-precision scientific conclusion is included until that evidence is executed and reviewed.
+
+\textbf{No inverse-Laplace recovery has been verified and no final five-layer release CDF is reported.}
+
+\section{Limitations and open findings}
+\begin{enumerate}
+\item R2-WOS-02 remains OPEN.
+\item R2-B01 remains OPEN.
+\item Process A is not pathwise identical to Process B/C.
+\item Hard-matrix high-precision remediation is ongoing.
+\item No verified inverse-Laplace recovery or final five-layer release CDF exists.
+\item Method 3 has not begun.
+\item Multilayer analytical modal completeness and numerical modal truncation remain separately qualified.
+\end{enumerate}
+
+\section{Verification hierarchy}
+\begin{equation}
+\text{continuous analytical model}
+\rightarrow\text{FV reference}
+\rightarrow\text{direct WOS}
+\rightarrow\text{exact FPT kernels}
+\rightarrow\text{accelerated renewal}
+\rightarrow\text{matrix reduction}.
+\end{equation}
+Each arrow is a separate evidence layer.
+
+\section{Traceability}
+Major claims are mapped in \texttt{paper/TRACEABILITY.md}. The historical raw LaTeX under \texttt{notes/raw/} is preserved and is not the canonical manuscript.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+\end{document}
