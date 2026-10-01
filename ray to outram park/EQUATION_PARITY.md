@@ -1,5 +1,7 @@
 # Equation-Level Markdown/LaTeX Parity Index
 
+Numbering strategy: stable visible `TRISO-*` equation identifiers are retained because they are the project's traceability keys. LaTeX uses matching internal labels for cross-reference resolution.
+
 | Equation ID | Markdown | LaTeX label | Status |
 |---|---|---|---|
 | TRISO-GOV-020 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-gov-020} | synchronized |
