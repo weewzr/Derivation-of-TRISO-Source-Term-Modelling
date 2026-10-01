@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import json,re
+import hashlib,json,re
 p=Path("ray to outram park/TRISO_Source_Term_Derivation.md");t=p.read_text(encoding="utf-8");lines=t.splitlines()
 events=[];in_math=False;open_line=None;inline_open=False
 for n,line in enumerate(lines,1):
@@ -28,6 +28,6 @@ target=next(i for i,x in enumerate(lines) if x=="**Equation TRISO-ML-517**")
 prefix="\n".join(lines[:target])
 inline_pairs=sum(len(re.findall(r"(?<!\\)\$",x))//2 for x in lines[:target] if not x.strip().startswith("```"))
 fences_before=sum(1 for x in lines[:target] if x.strip()=="```math")
-out={"file_bytes":len(t.encode()),"file_lines":len(lines),"context_errors":events,"context_error_count":len(events),"ML517":{"line":target+1,"math_fences_before":fences_before,"approx_inline_pairs_before":inline_pairs},"regressions":reg,"classification":"No local Markdown state-machine defect found around ML-517/518. Given repeated valid syntax earlier plus actual GitHub failures deep in one large math-heavy Markdown file, evidence supports a GitHub whole-document rendering resource/complexity limit rather than expression syntax."}
+out={"sha256":hashlib.sha256(p.read_bytes()).hexdigest(),"file_bytes":len(t.encode()),"file_lines":len(lines),"context_errors":events,"context_error_count":len(events),"ML517":{"line":target+1,"math_fences_before":fences_before,"approx_inline_pairs_before":inline_pairs},"regressions":reg,"classification":"Exact committed bytes place TRISO-ML-517/518 in valid top-level fenced-math context. The user-observed GitHub failure is therefore not explained by local expression syntax or a local fence/delimiter defect. Classify it as a GitHub render-stage / whole-document Markdown+MathJax interaction. A specific resource/complexity threshold remains a hypothesis, not an established root cause, until isolated with actual GitHub-rendered prefix/chunk experiments."}
 Path("ray to outram park/data/github_markdown_context_audit.json").write_text(json.dumps(out,indent=2),encoding="utf-8")
-print(json.dumps({k:out[k] for k in ["file_bytes","file_lines","context_error_count","ML517","classification"]},indent=2))
+print(json.dumps({k:out[k] for k in ["sha256","file_bytes","file_lines","context_error_count","ML517","classification"]},indent=2))
