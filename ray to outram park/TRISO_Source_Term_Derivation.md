@@ -38,9 +38,9 @@ The notation is grouped here for reference; important symbols are also defined l
 | Stochastic | $\delta=\alpha\epsilon$ | reinsertion displacement | m |
 | First passage | $G_a,G_b$ | inner/outer joint exit-time Laplace transforms | dimensionless |
 | First passage | $H$ | centred-ball first-exit Laplace transform | dimensionless |
-| Renewal | \(\Phi_i(s)\) | release-time transform from state $i$ | dimensionless |
-| Renewal | \(\mathbf K(s)\) | transient renewal-transform matrix | dimensionless |
-| Renewal | \(\mathbf B(s)\) | direct-absorption transform vector | dimensionless |
+| Renewal | $\Phi_i(s)$ | release-time transform from state $i$ | dimensionless |
+| Renewal | $\mathbf K(s)$ | transient renewal-transform matrix | dimensionless |
+| Renewal | $\mathbf B(s)$ | direct-absorption transform vector | dimensionless |
 | Numerical | $\kappa_2$ | spectral 2-norm condition number | dimensionless |
 
 ## 2. Conservation from a control volume
@@ -422,7 +422,7 @@ A microscopic fission-based expression such as a fission rate multiplied by a pr
 
 Suppose the tracked atoms disappear by radioactive decay independently with a constant decay probability per unit time.
 
-Let $lambda_d$ be the decay constant:
+Let $\lambda_d$ be the decay constant:
 
 $$
 [\lambda_d]=\mathrm{s^{-1}}.
@@ -495,7 +495,7 @@ $$
 \tag{TRISO-GOV-112}
 $$
 
-[CONSTITUTIVE] The first-order decay assumption is the mathematical statement that each tracked atom has the same constant decay hazard $lambda_d$, independent of concentration.
+[CONSTITUTIVE] The first-order decay assumption is the mathematical statement that each tracked atom has the same constant decay hazard $\lambda_d$, independent of concentration.
 
 [ASSUMPTION] The current base benchmark sets this decay contribution to zero:
 
@@ -677,7 +677,7 @@ $$
 
 At $r=0$, this expression is of the form $0/0$ for a smooth symmetric field, so it must not be evaluated by direct substitution.
 
-Because \(c_r(0,t)=0\), apply L'Hôpital's rule:
+Because $c_r(0,t)=0$, apply L'Hôpital's rule:
 
 $$
 \lim_{r\to0}\frac{c_r(r,t)}{r}
@@ -1005,7 +1005,7 @@ c_5(R,t)=0.
 \tag{TRISO-BC-112}
 $$
 
-More generally, a prescribed surface concentration \(c_b(t)\) is
+More generally, a prescribed surface concentration $c_b(t)$ is
 
 $$
 c_5(R,t)=c_b(t).
@@ -1047,7 +1047,7 @@ $$
 
 #### Robin: finite external mass transfer
 
-Let the external coolant concentration be \(c_\infty(t)\).
+Let the external coolant concentration be $c_\infty(t)$.
 
 [CONSTITUTIVE] A linear external mass-transfer law is
 
@@ -1326,7 +1326,7 @@ A.
 \tag{TRISO-ANA-113}
 $$
 
-At the centre, regularity requires \(w'(0)\) to remain finite.
+At the centre, regularity requires $w'(0)$ to remain finite.
 
 If $A\ne0$, then division by $r^2$ gives a term proportional to $1/r^2$, which diverges.
 
@@ -1656,7 +1656,7 @@ Keeping these benchmarks separate prevents source and boundary semantics from be
 
 The following transient benchmark belongs to Problem A: an initially empty homogeneous sphere with a continuing uniform source and a Robin outer boundary.
 
-The steady solution \(w(r)\) has already been obtained. We now remove the steady part so that the remaining transient problem has no source term.
+The steady solution $w(r)$ has already been obtained. We now remove the steady part so that the remaining transient problem has no source term.
 
 ### 8.1 Define the transient deviation
 
@@ -1985,7 +1985,7 @@ v(r,0)=c(r,0)-w(r).
 \tag{TRISO-ANA-227}
 $$
 
-Substitute \(c(r,0)=0\):
+Substitute $c(r,0)=0$:
 
 $$
 \boxed{
@@ -2533,7 +2533,7 @@ $$
 \tag{TRISO-ANA-281}
 $$
 
-Differentiate \(\sin(kr)/r\) using the quotient rule:
+Differentiate $\sin(kr)/r$ using the quotient rule:
 
 $$
 \frac{d}{dr}
@@ -2572,7 +2572,7 @@ $$
 \tag{TRISO-ANA-284}
 $$
 
-Substitute \(phi'(R)\):
+Substitute $phi'(R)$:
 
 $$
 -D
@@ -2587,7 +2587,7 @@ h\phi(R).
 \tag{TRISO-ANA-285}
 $$
 
-Substitute \(phi(R)=C\sin(kR\)/(kR)):
+Substitute $phi(R)=C\sin(kR$/(kR)):
 
 $$
 -D
@@ -2912,7 +2912,7 @@ The eigenvalue in this Sturm–Liouville problem is therefore $k_n^2$, with unit
 
 The interval is $0<r<R$.
 
-The centre condition is regularity of $\phi_n$, equivalent for these modes to a finite \(phi_n(0)\) and zero radial derivative at the centre.
+The centre condition is regularity of $\phi_n$, equivalent for these modes to a finite $phi_n(0)$ and zero radial derivative at the centre.
 
 The outer boundary is the homogeneous Robin condition
 
@@ -2923,7 +2923,7 @@ $$
 
 [THEOREM / STANDARD FORM] Sturm–Liouville theory provides the framework for eigenvalues and eigenfunctions of self-adjoint second-order problems. See the NIST Digital Library of Mathematical Functions, §1.13(viii), which identifies Sturm–Liouville eigenvalues/eigenfunctions and the Liouville form. [NIST_DLMF].
 
-Because the centre endpoint has \(p(0)=0\), it is more precise to call this a radial **singular** Sturm–Liouville endpoint rather than an ordinary regular endpoint. The orthogonality used below can nevertheless be derived directly for the present eigenfunctions, so no stronger theorem is needed.
+Because the centre endpoint has $p(0)=0$, it is more precise to call this a radial **singular** Sturm–Liouville endpoint rather than an ordinary regular endpoint. The orthogonality used below can nevertheless be derived directly for the present eigenfunctions, so no stronger theorem is needed.
 
 ### 10.8 Derive orthogonality directly
 
@@ -3135,7 +3135,7 @@ A_n\phi_n(r).
 \tag{TRISO-SL-227}
 $$
 
-Multiply both sides by \(r^2\phi_m(r)\):
+Multiply both sides by $r^2\phi_m(r)$:
 
 $$
 -r^2w(r)\phi_m(r)
@@ -4618,7 +4618,7 @@ $$
 \tag{TRISO-ML-434}
 $$
 
-The cosine contribution \(B_1\cos(k_1r)/r\) diverges as $r\to0$, exactly as proved in Section 10.
+The cosine contribution $B_1\cos(k_1r)/r$ diverges as $r\to0$, exactly as proved in Section 10.
 
 Therefore
 
@@ -5214,7 +5214,7 @@ Thus the weight $r^2$ follows from the physical conservative eigen-equation; it 
 
 ### 12.13 Layerwise Lagrange identity for two global modes
 
-Let global mode $m$ have eigenvalue $\Lambda_m$ and layer functions \(\phi_i^{(m)}\).
+Let global mode $m$ have eigenvalue $\Lambda_m$ and layer functions $\phi_i^{(m)}$.
 
 In layer $i$,
 
@@ -5240,7 +5240,7 @@ r^2D_i\frac{d\phi_i^{(n)}}{dr}
 \tag{TRISO-ML-489}
 $$
 
-Multiply the $m$-equation by \(\phi_i^{(n)}\):
+Multiply the $m$-equation by $\phi_i^{(n)}$:
 
 $$
 -\phi_i^{(n)}
@@ -5255,7 +5255,7 @@ r^2D_i\phi_i^{(m)\prime}
 \tag{TRISO-ML-490}
 $$
 
-Multiply the $n$-equation by \(\phi_i^{(m)}\):
+Multiply the $n$-equation by $\phi_i^{(m)}$:
 
 $$
 -\phi_i^{(m)}
@@ -6242,7 +6242,7 @@ The orthogonality result (TRISO-ML-528) was derived directly from the conservati
 
 It does not require a completeness theorem.
 
-[VERIFIED] Distinct global eigenmodes are orthogonal in the weighted inner product with \(w(r)=r^2\).
+[VERIFIED] Distinct global eigenmodes are orthogonal in the weighted inner product with $w(r)=r^2$.
 
 The projection algebra leading to (TRISO-ML-552) is also valid once an expansion in the eigenfunctions is admitted.
 
@@ -6252,8 +6252,8 @@ Completeness is a separate spectral statement.
 
 Standard regular Sturm–Liouville completeness theorems provide completeness in an appropriate weighted $L^2$ space for regular self-adjoint problems on finite intervals. The present TRISO problem is more delicate because:
 
-1. \(p(r)=r^2D(r)\) vanishes at $r=0$, so the centre is a singular endpoint;
-2. \(D(r)\) is piecewise constant and discontinuous at four internal interfaces;
+1. $p(r)=r^2D(r)$ vanishes at $r=0$, so the centre is a singular endpoint;
+2. $D(r)$ is piecewise constant and discontinuous at four internal interfaces;
 3. the operator domain includes transmission conditions enforcing continuity of concentration and flux.
 
 The current derivation has explicitly demonstrated the self-adjoint boundary/interface cancellation needed for symmetry of the operator.
@@ -6321,7 +6321,7 @@ r^2\phi_m\phi_n\,dr.
 \tag{TRISO-ML-569}
 $$
 
-Because the five intervals partition \((0,R)\),
+Because the five intervals partition $(0,R)$,
 
 $$
 \sum_{i=1}^{5}
@@ -6369,7 +6369,7 @@ $$
 
 Therefore unequal adjacent diffusivities remain fully compatible with the global orthogonality proof.
 
-The diffusivity discontinuity is carried by \(p(r)=r^2D(r)\), while the weight remains $r^2$.
+The diffusivity discontinuity is carried by $p(r)=r^2D(r)$, while the weight remains $r^2$.
 
 ### 12.25 Updated analytical status
 
@@ -6526,7 +6526,7 @@ O(\Delta t^2).
 \tag{TRISO-DIS-112}
 $$
 
-Subtract \(c(r_i,t_j)\) from both sides:
+Subtract $c(r_i,t_j)$ from both sides:
 
 $$
 c(r_i,t_j+\Delta t)-c(r_i,t_j)
@@ -6726,7 +6726,7 @@ $$
 
 ### 13.7 Substitute the discrete derivatives into the PDE
 
-Evaluate the continuous equation at \((r_i,t_j)\):
+Evaluate the continuous equation at $(r_i,t_j)$:
 
 $$
 c_{t,i}^j
@@ -7591,7 +7591,7 @@ O(\Delta r^6).
 \tag{TRISO-DIS-228}
 $$
 
-Subtract \(c(0,t)\):
+Subtract $c(0,t)$:
 
 $$
 c(\Delta r,t)-c(0,t)
@@ -8973,7 +8973,7 @@ $$
 
 at fixed $\Delta r$.
 
-The continuum Robin condition approaches the absorbing Dirichlet condition \(c(R,t)=0\), but the explicit ghost update becomes increasingly stiff rather than automatically turning into a numerically well-conditioned Dirichlet update.
+The continuum Robin condition approaches the absorbing Dirichlet condition $c(R,t)=0$, but the explicit ghost update becomes increasingly stiff rather than automatically turning into a numerically well-conditioned Dirichlet update.
 
 Therefore an absorbing Dirichlet boundary should be imposed directly when that is the intended numerical model, rather than obtained by taking $\kappa\to\infty$ in (TRISO-DIS-443).
 
@@ -9025,7 +9025,7 @@ O(\Delta r^4).
 \tag{TRISO-DIS-455}
 $$
 
-Substitute the Robin derivative \(c_r(R)=-\beta c(R)\):
+Substitute the Robin derivative $c_r(R)=-\beta c(R)$:
 
 $$
 c(R-\Delta r)
@@ -9076,7 +9076,7 @@ O(\Delta r^4).
 \tag{TRISO-DIS-458}
 $$
 
-Apply \(c_r(R)=-\beta c(R)\):
+Apply $c_r(R)=-\beta c(R)$:
 
 $$
 c(R+\Delta r)
@@ -9224,7 +9224,7 @@ $$
 
 unless additional cancellation or superconvergence is demonstrated.
 
-[CORRECTION] The previous claim of \(O(\Delta t)\)+\(O(\Delta r^2)\) for the complete Robin surface update was overstated. Only the centred first-derivative approximation was second-order.
+[CORRECTION] The previous claim of $O(\Delta t)$+$O(\Delta r^2)$ for the complete Robin surface update was overstated. Only the centred first-derivative approximation was second-order.
 
 [OPEN REVIEW FINDING R2-D01] The analytical overclaim is corrected, but the independent reviewer requires an actual grid-refinement study before this finding is closed. No global FTCS convergence order is claimed here.
 
@@ -11078,7 +11078,7 @@ G_e^{(A=1)}(C_0-C_1),
 \tag{TRISO-FV-168}
 $$
 
-where \(G_e^{(A=1)}\) denotes the conductance per unit area.
+where $G_e^{(A=1)}$ denotes the conductance per unit area.
 
 Equivalently, using total conductance $G_e$,
 
@@ -12887,7 +12887,7 @@ The following statements are established:
 
 The remaining mathematical questions are narrower:
 
-[UNVERIFIED] Global spatial order of accuracy when \(D(r)\) is discontinuous.
+[UNVERIFIED] Global spatial order of accuracy when $D(r)$ is discontinuous.
 
 [UNVERIFIED] Global temporal/spatial convergence rate of the fully discrete scheme.
 
@@ -13493,9 +13493,9 @@ O(h^3),
 \tag{TRISO-ACC-149}
 $$
 
-where \(E(r)\) is smooth within the material.
+where $E(r)$ is smooth within the material.
 
-This is stronger than the statement \(\varepsilon_f=\(O(h^2)\).
+This is stronger than the statement $\varepsilon_f=$O(h^2)$.
 
 At the west face,
 
@@ -13558,7 +13558,7 @@ F(r_w)-F(r_e).
 \tag{TRISO-ACC-155}
 $$
 
-Taylor-expand \(F(r_e)\) about $r_w$:
+Taylor-expand $F(r_e)$ about $r_w$:
 
 $$
 F(r_e)
@@ -13704,7 +13704,7 @@ A_w\varepsilon_w-A_e\varepsilon_e
 \tag{TRISO-ACC-167}
 $$
 
-need not be \(O(h^3)\).
+need not be $O(h^3)$.
 
 It may remain only
 
@@ -13713,7 +13713,7 @@ O(h^2).
 \tag{TRISO-ACC-168}
 $$
 
-Division by \(V_P=\(O(h)\) would then give only
+Division by $V_P=$O(h)$ would then give only
 
 $$
 O(h)
@@ -14062,7 +14062,7 @@ Thus the basic two-point harmonic/resistance interface flux is generically first
 
 ### 18A.7.4 Special cancellation condition
 
-The leading \(O(h)\) flux error vanishes if
+The leading $O(h)$ flux error vanishes if
 
 $$
 Q_I=O(h^3).
@@ -14159,7 +14159,7 @@ R_I
 \tag{TRISO-ACC-206}
 $$
 
-Across a material discontinuity, the leading \(O(h^2)\) average-representation coefficients on the two sides need not match smoothly.
+Across a material discontinuity, the leading $O(h^2)$ average-representation coefficients on the two sides need not match smoothly.
 
 Therefore, generically,
 
@@ -14292,9 +14292,9 @@ A global stability-plus-consistency argument in an appropriate integrated norm, 
 
 [VERIFIED] The harmonic/resistance interface flux exactly enforces one common discrete flux and therefore exact discrete conservation.
 
-[VERIFIED] For piecewise smooth solutions satisfying ideal concentration and flux continuity, the basic two-point point-value interface flux is generically \(O(h)\) accurate.
+[VERIFIED] For piecewise smooth solutions satisfying ideal concentration and flux continuity, the basic two-point point-value interface flux is generically $O(h)$ accurate.
 
-[VERIFIED] Using exact cell averages at volume centroids does not generically improve that interface order; the canonical interface flux remains \(O(h)\) unless additional cancellation occurs.
+[VERIFIED] Using exact cell averages at volume centroids does not generically improve that interface order; the canonical interface flux remains $O(h)$ unless additional cancellation occurs.
 
 [NOT ESTABLISHED] A second-order interface flux for unequal diffusivities.
 
@@ -14525,7 +14525,7 @@ for fixed finite $h>0$.
 
 #### 18A.8.2 Effect of the exact cell average
 
-The numerical closure uses the exact cell average $C_P$, not \(c(r_P)\).
+The numerical closure uses the exact cell average $C_P$, not $c(r_P)$.
 
 Write
 
@@ -14628,7 +14628,7 @@ A_R(J_R^h-J_R).
 \tag{TRISO-ACC-248}
 $$
 
-Because $A_R$ is fixed under mesh refinement and (TRISO-ACC-244) gives \(J_R^h-J_R=\(O(h^2)\),
+Because $A_R$ is fixed under mesh refinement and (TRISO-ACC-244) gives $J_R^h-J_R=$O(h^2)$,
 
 $$
 \boxed{
@@ -14668,7 +14668,7 @@ $$
 
 Therefore the outermost cell can have only first-order pointwise local truncation consistency even though the physical boundary release rate itself is second-order accurate.
 
-This is analogous to the distinction already identified at material interfaces: a lower pointwise residual in \(O(1)\) special cells does not by itself determine the global solution convergence order.
+This is analogous to the distinction already identified at material interfaces: a lower pointwise residual in $O(1)$ special cells does not by itself determine the global solution convergence order.
 
 ### 18A.8.5 Neumann and Dirichlet limiting regimes
 
@@ -14745,7 +14745,7 @@ R_B=O(\mathfrak h).
 \tag{TRISO-ACC-261}
 $$
 
-The \(O(\mathfrak h^2)\) cell-average representation error divided by \(R_B=\(O(\mathfrak h)\) can contribute
+The $O(\mathfrak h^2)$ cell-average representation error divided by $R_B=$O(\mathfrak h)$ can contribute
 
 $$
 O(\mathfrak h)
@@ -14760,11 +14760,11 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 ### 18A.8.6 Robin boundary consistency status
 
-[VERIFIED] For fixed finite physical transfer coefficient $0<h<\infty$, the cell-centred series-resistance Robin flux is \(O(\mathfrak h^2)\) consistent under smooth OPyC data and the centroid representation assumptions.
+[VERIFIED] For fixed finite physical transfer coefficient $0<h<\infty$, the cell-centred series-resistance Robin flux is $O(\mathfrak h^2)$ consistent under smooth OPyC data and the centroid representation assumptions.
 
-[VERIFIED] The total outer release amount rate is also \(O(\mathfrak h^2)\) consistent.
+[VERIFIED] The total outer release amount rate is also $O(\mathfrak h^2)$ consistent.
 
-[VERIFIED] The outer-cell pointwise time-derivative residual may be only \(O(\mathfrak h)\) because the boundary amount-rate error is divided by a cell volume \(O(\mathfrak h)\).
+[VERIFIED] The outer-cell pointwise time-derivative residual may be only $O(\mathfrak h)$ because the boundary amount-rate error is divided by a cell volume $O(\mathfrak h)$.
 
 [VERIFIED] The no-flux Neumann limit is recovered.
 
@@ -14776,9 +14776,9 @@ For a true absorbing boundary, a separate Dirichlet-boundary consistency analysi
 
 The local consistency results are not uniform over the particle:
 
-- smooth same-material cells have conditional \(O(\mathfrak h^2)\) divergence consistency;
-- a fixed number of cells adjacent to the four material interfaces can have \(O(1)\) pointwise residuals under the present two-point transmission flux;
-- the outer Robin cell can have an \(O(\mathfrak h)\) pointwise residual for fixed finite physical $h$.
+- smooth same-material cells have conditional $O(\mathfrak h^2)$ divergence consistency;
+- a fixed number of cells adjacent to the four material interfaces can have $O(1)$ pointwise residuals under the present two-point transmission flux;
+- the outer Robin cell can have an $O(\mathfrak h)$ pointwise residual for fixed finite physical $h$.
 
 A global convergence argument must therefore use a norm that respects cell volumes rather than taking the maximum pointwise residual as the only consistency measure.
 
@@ -14823,7 +14823,7 @@ V_0=O(\mathfrak h^3),
 \tag{TRISO-ACC-266}
 $$
 
-because its radius is itself \(O(\mathfrak h)\).
+because its radius is itself $O(\mathfrak h)$.
 
 ### 18A.9.2 Semi-discrete error equation
 
@@ -14836,7 +14836,7 @@ $$
 
 denote the vector of exact spherical cell averages of the continuum solution on the numerical mesh.
 
-Define the semi-discrete residual \(\boldsymbol\tau_h(t)\) by inserting these exact cell averages into the numerical operator:
+Define the semi-discrete residual $\boldsymbol\tau_h(t)$ by inserting these exact cell averages into the numerical operator:
 
 $$
 \boxed{
@@ -15054,7 +15054,7 @@ This proves semi-discrete energy stability and shows that convergence follows if
 
 Assume the number of material interfaces remains fixed at four as the mesh is refined.
 
-For \(O(\mathfrak h^{-1})\) ordinary smooth cells,
+For $O(\mathfrak h^{-1})$ ordinary smooth cells,
 
 $$
 \tau_P=O(\mathfrak h^2).
@@ -15073,7 +15073,7 @@ O(\mathfrak h^5).
 \tag{TRISO-ACC-286}
 $$
 
-Summing \(O(\mathfrak h^{-1})\) smooth cells gives
+Summing $O(\mathfrak h^{-1})$ smooth cells gives
 
 $$
 O(\mathfrak h^{-1})
@@ -15229,7 +15229,7 @@ tC_T\mathfrak h^{1/2},
 \tag{TRISO-ACC-303}
 $$
 
-Thus the present energy argument supports at least a **conditional \(O(\mathfrak h^{1/2})\) upper-bound convergence rate in the volume-weighted norm**, given the established local residual estimates and sufficient regularity.
+Thus the present energy argument supports at least a **conditional $O(\mathfrak h^{1/2})$ upper-bound convergence rate in the volume-weighted norm**, given the established local residual estimates and sufficient regularity.
 
 This is a conservative bound, not a prediction of the observed numerical order.
 
@@ -15306,7 +15306,7 @@ Under that refinement path, temporal error should not dominate a spatial rate lo
 
 The energy estimate proves stability of the semi-discrete error equation in the $V$-norm.
 
-It does not establish that the \(O(\mathfrak h^{1/2})\) bound is sharp.
+It does not establish that the $O(\mathfrak h^{1/2})$ bound is sharp.
 
 It does not establish an $L^\infty$ convergence rate.
 
@@ -15486,7 +15486,7 @@ $$
 \tag{TRISO-ACC-327}
 $$
 
-This observed second-order behavior is substantially sharper than the conservative analytical \(O(h^{1/2})\) bound in TRISO-ACC-303. It demonstrates that the local interface-adjacent residual estimate is not predictive of the observed global steady error for this benchmark. It does not prove second-order convergence for every discontinuous-D problem.
+This observed second-order behavior is substantially sharper than the conservative analytical $O(h^{1/2})$ bound in TRISO-ACC-303. It demonstrates that the local interface-adjacent residual estimate is not predictive of the observed global steady error for this benchmark. It does not prove second-order convergence for every discontinuous-D problem.
 
 #### Temporal refinement result
 
@@ -15555,19 +15555,19 @@ The increase in the reported absolute residual as the time step becomes very sma
 [NOT APPLICABLE] These deterministic FV results do not validate the production WOS algorithm.
 ### 18A.12 What has and has not been proved
 
-[VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by \(O(h^2)\) for a smooth field.
+[VERIFIED] The exact spherical cell average differs from the point value at the spherical volume centroid by $O(h^2)$ for a smooth field.
 
-[CONDITIONALLY VERIFIED] The two-point same-material face gradient is \(O(h^2)\) consistent when the refining mesh is shape regular, adjacent cell-average representation errors vary smoothly, and the face is locally centred between representative coordinates to \(O(h^2)\).
+[CONDITIONALLY VERIFIED] The two-point same-material face gradient is $O(h^2)$ consistent when the refining mesh is shape regular, adjacent cell-average representation errors vary smoothly, and the face is locally centred between representative coordinates to $O(h^2)$.
 
-[CONDITIONALLY VERIFIED] Under those same assumptions, the same-material diffusive face flux is \(O(h^2)\) consistent.
+[CONDITIONALLY VERIFIED] Under those same assumptions, the same-material diffusive face flux is $O(h^2)$ consistent.
 
-[CONDITIONALLY VERIFIED] The complete smooth same-material cell divergence is \(O(h^2)\) consistent when the leading \(O(h^2)\) face-flux error has a smooth coefficient across neighbouring faces.
+[CONDITIONALLY VERIFIED] The complete smooth same-material cell divergence is $O(h^2)$ consistent when the leading $O(h^2)$ face-flux error has a smooth coefficient across neighbouring faces.
 
-[VERIFIED] The canonical resistance-weighted interface flux is conservative and generically \(O(h)\) accurate for piecewise-smooth unequal-D transmission data; second-order interface accuracy is not established.
+[VERIFIED] The canonical resistance-weighted interface flux is conservative and generically $O(h)$ accurate for piecewise-smooth unequal-D transmission data; second-order interface accuracy is not established.
 
-[VERIFIED] For fixed finite physical h, the cell-centred Robin FV boundary flux and total release rate are \(O(mesh^2)\) consistent; the outer-cell pointwise residual may remain \(O(mesh)\).
+[VERIFIED] For fixed finite physical h, the cell-centred Robin FV boundary flux and total release rate are $O(mesh^2)$ consistent; the outer-cell pointwise residual may remain $O(mesh)$.
 
-[CONDITIONALLY ESTABLISHED] The energy argument gives a conservative \(O(mesh^1/2)\) bound from local residual estimates. [EXECUTED] The aligned five-layer steady benchmark instead exhibits asymptotic \(O(mesh^2)\) volume-weighted convergence over N=25–400; this observed rate is benchmark-specific rather than a universal theorem.
+[CONDITIONALLY ESTABLISHED] The energy argument gives a conservative $O(mesh^1/2)$ bound from local residual estimates. [EXECUTED] The aligned five-layer steady benchmark instead exhibits asymptotic $O(mesh^2)$ volume-weighted convergence over N=25–400; this observed rate is benchmark-specific rather than a universal theorem.
 
 The prescribed aligned five-layer spatial/temporal/conservation refinement study has now executed successfully. The next verification decision is whether to broaden the parameter/interface-alignment study or submit this deterministic accuracy/convergence milestone for independent audit; no WOS conclusion follows from these FV results.
 
@@ -15646,7 +15646,7 @@ D\nabla^2u=su.
 \tag{TRISO-FPT-005}
 $$
 
-[ASSUMPTION] Under spherical symmetry, \(u=u(r,s)\).
+[ASSUMPTION] Under spherical symmetry, $u=u(r,s)$.
 
 The radial Laplacian is
 
@@ -15695,7 +15695,7 @@ This is the backward equation associated with the same diffusion operator as the
 
 [ASSUMPTION] Production histories are initially uniform in kernel volume.
 
-Let \(U\sim\mathcal U(0,1)\).
+Let $U\sim\mathcal U(0,1)$.
 
 The enclosed-volume fraction at radius $r$ is
 
@@ -15869,7 +15869,7 @@ v(b)=b.
 \tag{TRISO-FPT-019A}
 $$
 
-Using \(v(b)=A\sinh(\lambda b)\),
+Using $v(b)=A\sinh(\lambda b)$,
 
 $$
 A=\frac{b}{\sinh(\lambda b)}.
@@ -15894,7 +15894,7 @@ H(r,s)=
 \tag{TRISO-FPT-019D}
 $$
 
-At the centre, use \(\sinh(\lambda r)\sim\lambda r\):
+At the centre, use $\sinh(\lambda r)\sim\lambda r$:
 
 $$
 H(0,s)
@@ -16574,7 +16574,7 @@ $$
 \tag{TRISO-MR-011}
 $$
 
-From $S_0$, the exact centred-ball transform to the Kernel/Buffer interface is \(H_K(s)\).
+From $S_0$, the exact centred-ball transform to the Kernel/Buffer interface is $H_K(s)$.
 
 At that interface, reflection returns to $S_0$.
 
@@ -16987,7 +16987,7 @@ f_R(r)
 \tag{TRISO-MR-031}
 $$
 
-The exact kernel first-exit transform from radius $r$ is \(H_K(r,s)\).
+The exact kernel first-exit transform from radius $r$ is $H_K(r,s)$.
 
 After reaching Kernel/Buffer, reflection gives $S_0$ and transmission gives $S_1$.
 
