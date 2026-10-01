@@ -16194,3 +16194,574 @@ $$
 $$
 
 [VERIFIED] The shell exit probabilities, conditional moments and conditional CDF were checked against analytical references and direct WOS before multilayer coupling.
+
+
+# 23. Accelerated exact-interface renewal
+
+[DEFINITION] Process B replaces repeated homogeneous-region WOS wandering by exact first-passage events while retaining the frozen stochastic interface law.
+
+[IMPORTANT] Process A stops when the distance to an interface is at most (epsilon). Process B stops at the physical interface. The two stopping times are not identical.
+
+## 23.1 Initial finite-capture mass
+
+For uniform births in an inner sphere of radius (a), the total sphere volume is
+
+$$
+V_a=\frac{4\pi}{3}a^3.
+\tag{TRISO-WOS-020}
+$$
+
+The volume inside radius (a-\epsilon) is
+
+$$
+V_{a-\epsilon}
+=
+\frac{4\pi}{3}(a-\epsilon)^3.
+\tag{TRISO-WOS-021}
+$$
+
+The capture-shell volume is
+
+$$
+V_{\rm cap}
+=
+V_a-V_{a-\epsilon}.
+\tag{TRISO-WOS-022}
+$$
+
+The capture-shell probability is
+
+$$
+P_{\rm cap}
+=
+\frac{V_{\rm cap}}{V_a}.
+\tag{TRISO-WOS-023}
+$$
+
+Substitute TRISO-WOS-020 through TRISO-WOS-022:
+
+$$
+P_{\rm cap}
+=
+\frac{a^3-(a-\epsilon)^3}{a^3}.
+\tag{TRISO-WOS-024}
+$$
+
+Divide by (a^3):
+
+$$
+\boxed{
+P_{\rm cap}
+=
+1-\left(1-\frac{\epsilon}{a}\right)^3.
+}
+\tag{TRISO-WOS-025}
+$$
+
+For (a=50\,\mu\mathrm m) and (epsilon=0.1\,\mu\mathrm m),
+
+$$
+\frac{\epsilon}{a}=0.002.
+\tag{TRISO-WOS-026}
+$$
+
+Therefore
+
+$$
+P_{\rm cap}=1-(0.998)^3.
+\tag{TRISO-WOS-027}
+$$
+
+Numerically,
+
+$$
+\boxed{P_{\rm cap}=0.005988008.}
+\tag{TRISO-WOS-028}
+$$
+
+[EMPIRICAL COMPATIBILITY] The executed Process-A/Process-B controlled discrepancy is small at the declared finite-(epsilon) statistical precision, but it is not an identity.
+
+## 23.2 Two-layer accelerated verification
+
+[VERIFIED] The corrected two-layer accelerator uses the exact centred-ball kernel in the inner region and the exact shell kernel in the outer region.
+
+The executed accelerated/FV RMS CDF difference is
+
+$$
+\boxed{
+\mathrm{RMS}(F_B-F_{FV})
+=
+0.002895.
+}
+\tag{TRISO-VER-200}
+$$
+
+The maximum absolute difference is
+
+$$
+\boxed{
+\max_t|F_B-F_{FV}|
+=
+0.005215.
+}
+\tag{TRISO-VER-201}
+$$
+
+The direct 100-nm WOS benchmark required approximately (1207.2) production steps per history.
+
+The accelerated benchmark required approximately (139.04) renewal events per history.
+
+The event-count ratio is
+
+$$
+\frac{1207.2}{139.04}
+=
+8.68.
+\tag{TRISO-VER-202}
+$$
+
+Thus the controlled event-count reduction is approximately
+
+$$
+\boxed{8.68\times.}
+\tag{TRISO-VER-203}
+$$
+
+# 24. Five-layer computational pathology
+
+[VERIFIED] Direct production WOS produced 8/8 censored histories at (10^6) steps per history in the targeted five-layer diagnostic.
+
+[VERIFIED] The exact-shell accelerated five-layer diagnostic produced 0/16 releases and 16/16 capped histories at 100000 renewals per history.
+
+The renewal counts by layer were
+
+$$
+(N_K,N_B,N_I,N_S,N_O)
+=
+(24,1599974,2,0,0).
+\tag{TRISO-WOS-030}
+$$
+
+The total number of renewals was
+
+$$
+N_{\rm tot}=1600000.
+\tag{TRISO-WOS-031}
+$$
+
+The Buffer renewal fraction is
+
+$$
+f_B
+=
+\frac{1599974}{1600000}.
+\tag{TRISO-WOS-032}
+$$
+
+Numerically,
+
+$$
+\boxed{
+f_B=0.99998375.
+}
+\tag{TRISO-WOS-033}
+$$
+
+[VERIFIED] Removing homogeneous-region wandering did not remove the computational pathology.
+
+[INFERRED] The dominant remaining cost is repeated rare interface-state recurrence.
+
+# 25. Interface-state Markov-renewal reduction
+
+## 25.1 Eight transient states
+
+There are four physical internal interfaces.
+
+Each interface has two post-interface material sides.
+
+Therefore
+
+$$
+N_{\rm states}
+=
+4\times2.
+\tag{TRISO-MR-001}
+$$
+
+Hence
+
+$$
+\boxed{N_{\rm states}=8.}
+\tag{TRISO-MR-002}
+$$
+
+Define
+
+$$
+S_0=\text{Kernel side of Kernel/Buffer}.
+\tag{TRISO-MR-003}
+$$
+
+$$
+S_1=\text{Buffer side of Kernel/Buffer}.
+\tag{TRISO-MR-004}
+$$
+
+$$
+S_2=\text{Buffer side of Buffer/IPyC}.
+\tag{TRISO-MR-005}
+$$
+
+$$
+S_3=\text{IPyC side of Buffer/IPyC}.
+\tag{TRISO-MR-006}
+$$
+
+$$
+S_4=\text{IPyC side of IPyC/SiC}.
+\tag{TRISO-MR-007}
+$$
+
+$$
+S_5=\text{SiC side of IPyC/SiC}.
+\tag{TRISO-MR-008}
+$$
+
+$$
+S_6=\text{SiC side of SiC/OPyC}.
+\tag{TRISO-MR-009}
+$$
+
+$$
+S_7=\text{OPyC side of SiC/OPyC}.
+\tag{TRISO-MR-010}
+$$
+
+The exterior release state is absorbing.
+
+## 25.2 First-step equation from the Kernel-side state
+
+Define
+
+$$
+\Phi_i(s)
+=
+\mathbb E_i[e^{-sT_{\rm rel}}].
+\tag{TRISO-MR-011}
+$$
+
+From (S_0), the exact centred-ball transform to the Kernel/Buffer interface is (H_K(s)).
+
+At that interface, reflection returns to (S_0).
+
+Transmission enters (S_1).
+
+Thus
+
+$$
+\Phi_0
+=
+H_Kp_{K\rightarrow K}\Phi_0
++
+H_Kp_{K\rightarrow B}\Phi_1.
+\tag{TRISO-MR-012}
+$$
+
+Identify
+
+$$
+K_{00}
+=
+H_Kp_{K\rightarrow K}.
+\tag{TRISO-MR-013}
+$$
+
+Identify
+
+$$
+K_{01}
+=
+H_Kp_{K\rightarrow B}.
+\tag{TRISO-MR-014}
+$$
+
+All other row-0 entries are zero.
+
+## 25.3 First-step equation from Buffer side of the inner interface
+
+From (S_1), the Buffer shell can first exit inward with transform (G_B^-).
+
+It can first exit outward with transform (G_B^+).
+
+If it exits inward, transmission enters Kernel state (S_0).
+
+If it exits inward and reflects, it returns to Buffer state (S_1).
+
+If it exits outward and reflects, it moves to Buffer state (S_2).
+
+If it exits outward and transmits, it enters IPyC state (S_3).
+
+Therefore
+
+$$
+\Phi_1
+=
+G_B^-p_{B\rightarrow K}\Phi_0
++
+G_B^-p_{B\rightarrow B}^{(I_0)}\Phi_1
++
+G_B^+p_{B\rightarrow B}^{(I_1)}\Phi_2
++
+G_B^+p_{B\rightarrow I}\Phi_3.
+\tag{TRISO-MR-015}
+$$
+
+The first coefficient is
+
+$$
+K_{10}
+=
+G_B^-p_{B\rightarrow K}.
+\tag{TRISO-MR-016}
+$$
+
+The second is
+
+$$
+K_{11}
+=
+G_B^-p_{B\rightarrow B}^{(I_0)}.
+\tag{TRISO-MR-017}
+$$
+
+The third is
+
+$$
+K_{12}
+=
+G_B^+p_{B\rightarrow B}^{(I_1)}.
+\tag{TRISO-MR-018}
+$$
+
+The fourth is
+
+$$
+K_{13}
+=
+G_B^+p_{B\rightarrow I}.
+\tag{TRISO-MR-019}
+$$
+
+The (S_2) row has the same four possible destination states, but (G_B^pm) are evaluated at the reinsertion radius adjacent to the outer Buffer interface.
+
+## 25.4 IPyC and SiC state rows
+
+For (S_3) and (S_4), use the IPyC shell transforms (G_I^-) and (G_I^+).
+
+The inward interface is Buffer/IPyC.
+
+The outward interface is IPyC/SiC.
+
+The same first-step construction gives four probability-weighted transform terms in each row.
+
+For (S_5) and (S_6), use the SiC shell transforms (G_S^-) and (G_S^+).
+
+The inward interface is IPyC/SiC.
+
+The outward interface is SiC/OPyC.
+
+Again, each row contains the two exit sides multiplied by the two interface outcomes.
+
+## 25.5 OPyC state and direct release
+
+From (S_7), inner shell exit reaches the SiC/OPyC interface.
+
+Outer shell exit reaches the absorbing particle exterior.
+
+The direct release transform is
+
+$$
+\boxed{
+B_7(s)=G_O^+(s).
+}
+\tag{TRISO-MR-020}
+$$
+
+For every other transient state,
+
+$$
+B_i(s)=0,
+\qquad i\ne7.
+\tag{TRISO-MR-021}
+$$
+
+## 25.6 Matrix rearrangement without skipped algebra
+
+Collect the eight first-step equations:
+
+$$
+\boldsymbol\Phi
+=
+\mathbf K\boldsymbol\Phi
++
+\mathbf B.
+\tag{TRISO-MR-022}
+$$
+
+Subtract (mathbf K\boldsymbol\Phi) from both sides:
+
+$$
+\boldsymbol\Phi
+-
+\mathbf K\boldsymbol\Phi
+=
+\mathbf B.
+\tag{TRISO-MR-023}
+$$
+
+Write (oldsymbol\Phi=\mathbf I\boldsymbol\Phi):
+
+$$
+\mathbf I\boldsymbol\Phi
+-
+\mathbf K\boldsymbol\Phi
+=
+\mathbf B.
+\tag{TRISO-MR-024}
+$$
+
+Factor (oldsymbol\Phi):
+
+$$
+(\mathbf I-\mathbf K)\boldsymbol\Phi
+=
+\mathbf B.
+\tag{TRISO-MR-025}
+$$
+
+When (mathbf I-\mathbf K) is nonsingular, left-multiply by its inverse:
+
+$$
+(\mathbf I-\mathbf K)^{-1}
+(\mathbf I-\mathbf K)
+\boldsymbol\Phi
+=
+(\mathbf I-\mathbf K)^{-1}\mathbf B.
+\tag{TRISO-MR-026}
+$$
+
+Use the inverse identity:
+
+$$
+\boxed{
+\boldsymbol\Phi
+=
+(\mathbf I-\mathbf K)^{-1}\mathbf B.
+}
+\tag{TRISO-MR-027}
+$$
+
+## 25.7 Neumann-series path interpretation
+
+If
+
+$$
+\rho(\mathbf K)<1,
+\tag{TRISO-MR-028}
+$$
+
+then
+
+$$
+(\mathbf I-\mathbf K)^{-1}
+=
+\mathbf I
++
+\mathbf K
++
+\mathbf K^2
++
+\mathbf K^3
++\cdots.
+\tag{TRISO-MR-029}
+$$
+
+Multiply by (mathbf B):
+
+$$
+\boldsymbol\Phi
+=
+\mathbf B
++
+\mathbf K\mathbf B
++
+\mathbf K^2\mathbf B
++
+\mathbf K^3\mathbf B
++\cdots.
+\tag{TRISO-MR-030}
+$$
+
+The term (mathbf B) is direct absorption without another transient renewal.
+
+The term (mathbf K\mathbf B) is absorption after one transient renewal.
+
+The term (mathbf K^2\mathbf B) is absorption after two transient renewals.
+
+Thus the inverse sums arbitrarily long repeated interface-renewal paths without sampling each path individually.
+
+## 25.8 Uniform-volume initial source
+
+The kernel radial probability density is
+
+$$
+f_R(r)
+=
+\frac{3r^2}{R_1^3},
+\qquad
+0\le r\le R_1.
+\tag{TRISO-MR-031}
+$$
+
+The exact kernel first-exit transform from radius (r) is (H_K(r,s)).
+
+After reaching Kernel/Buffer, reflection gives (S_0) and transmission gives (S_1).
+
+Define
+
+$$
+Q(s)
+=
+p_{K\rightarrow K}\Phi_0(s)
++
+p_{K\rightarrow B}\Phi_1(s).
+\tag{TRISO-MR-032}
+$$
+
+Average over the birth distribution:
+
+$$
+\boxed{
+\Phi_{\rm init}(s)
+=
+\int_0^{R_1}
+\frac{3r^2}{R_1^3}
+H_K(r,s)
+Q(s)\,dr.
+}
+\tag{TRISO-MR-033}
+$$
+
+## 25.9 Process A, B and C distinction
+
+[DEFINITION] Process A is finite-capture production WOS.
+
+[DEFINITION] Process B is explicit accelerated exact-interface renewal.
+
+[DEFINITION] Process C is the deterministic matrix reduction of Process B.
+
+[EXACT TARGET] The mathematical reduction target is (B=C).
+
+[EMPIRICAL COMPATIBILITY] Process A and Process B/C have controlled finite-(epsilon) compatibility evidence.
+
+[IMPORTANT] Neither statement is a proof of the (epsilon\rightarrow0) continuum limit.
