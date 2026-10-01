@@ -15,5 +15,5 @@ This table maps the canonical manuscript to repository derivation, executed evid
 | Interface-state Markov-renewal equation Phi=(I-K)^-1 B | verification/interface_state_markov_renewal_derivation.md | verification/two_layer_matrix_reconciliation_evidence.md | 36807696742 | independent closure audit substantially closed controlled remediation |
 | Genuine three-layer multistate matrix | verification/three_layer_multistate_matrix_gate.md | verification/three_layer_multistate_matrix_evidence.md | 36815849244 | independent three-layer audit passed; hard diagnostic authorized |
 | Hard five-layer 8x8 transform | verification/hard_five_layer_matrix_gate.md | verification/hard_five_layer_matrix_evidence.md | 36866849598 | f64 numerical gate NOT closed |
-| High-precision hard-matrix remediation | verification/hard_five_layer_high_precision_gate.md | **PENDING** | 36869649217 currently queued/pending at manuscript creation | ONGOING / NOT YET CLOSED |
+| High-precision hard-matrix remediation | verification/hard_five_layer_high_precision_gate.md | verification/hard_five_layer_high_precision_evidence.md | 36869649217 | numerical gates PASS; INDEPENDENT REVIEW WARRANTED |
 | Final five-layer release CDF | — | **DOES NOT EXIST** | — | not authorized; R2-B01 OPEN |
