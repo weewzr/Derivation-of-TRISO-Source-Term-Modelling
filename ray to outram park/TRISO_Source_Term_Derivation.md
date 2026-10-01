@@ -2921,7 +2921,7 @@ $$
 \tag{TRISO-SL-209}
 $$
 
-[THEOREM / STANDARD FORM] Sturm–Liouville theory provides the framework for eigenvalues and eigenfunctions of self-adjoint second-order problems. See the NIST Digital Library of Mathematical Functions, §1.13(viii), which identifies Sturm–Liouville eigenvalues/eigenfunctions and the Liouville form. \cite{DLMFSturmLiouville}.
+[THEOREM / STANDARD FORM] Sturm–Liouville theory provides the framework for eigenvalues and eigenfunctions of self-adjoint second-order problems. See the NIST Digital Library of Mathematical Functions, §1.13(viii), which identifies Sturm–Liouville eigenvalues/eigenfunctions and the Liouville form. [NIST_DLMF].
 
 Because the centre endpoint has (p(0)=0), it is more precise to call this a radial **singular** Sturm–Liouville endpoint rather than an ordinary regular endpoint. The orthogonality used below can nevertheless be derived directly for the present eigenfunctions, so no stronger theorem is needed.
 
@@ -15652,7 +15652,7 @@ $$
 \tag{TRISO-FPT-004}
 $$
 
-Substitute TRISO-FPT-002:
+Substituting Eq. (TRISO-FPT-002) into Eq. (TRISO-FPT-004) gives:
 
 $$
 D\nabla^2u=su.
@@ -15670,7 +15670,7 @@ $$
 \tag{TRISO-FPT-006}
 $$
 
-Substitute into TRISO-FPT-005:
+Substituting the radial Laplacian into Eq. (TRISO-FPT-005) gives:
 
 $$
 D\frac{1}{r^2}\frac{d}{dr}(r^2u')=su.
@@ -15762,7 +15762,7 @@ p_{i\rightarrow i}
 \tag{TRISO-WOS-006}
 $$
 
-Substitute TRISO-WOS-005:
+Substituting Eq. (TRISO-WOS-005) into the reflection identity gives:
 
 $$
 p_{i\rightarrow i}
@@ -16015,7 +16015,7 @@ G_b''+\frac{2}{r}G_b'
 \tag{TRISO-FPT-030}
 $$
 
-Substitute into TRISO-FPT-022:
+Substituting the transformed derivative into Eq. (TRISO-FPT-022) gives:
 
 $$
 D\frac{v''}{r}
@@ -16098,7 +16098,7 @@ v(b)=bG_b(b,s)=b.
 \tag{TRISO-FPT-041}
 $$
 
-Substitute TRISO-FPT-040:
+Substituting Eq. (TRISO-FPT-040) at \(r=b\) gives:
 
 $$
 b=A\sinh[\lambda(b-a)].
@@ -16375,7 +16375,7 @@ P_{\rm cap}
 \tag{TRISO-WOS-023}
 $$
 
-Substitute TRISO-WOS-020 through TRISO-WOS-022:
+Substituting Eqs. (TRISO-WOS-020)–(TRISO-WOS-022) gives:
 
 $$
 P_{\rm cap}
