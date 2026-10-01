@@ -1,6 +1,10 @@
 import fs from "node:fs";
 import {mathjax} from "mathjax-full/js/mathjax.js";
 import {TeX} from "mathjax-full/js/input/tex.js";
+import "mathjax-full/js/input/tex/ams/AmsConfiguration.js";
+import "mathjax-full/js/input/tex/newcommand/NewcommandConfiguration.js";
+import "mathjax-full/js/input/tex/boldsymbol/BoldsymbolConfiguration.js";
+import "mathjax-full/js/input/tex/textmacros/TextMacrosConfiguration.js";
 import {SVG} from "mathjax-full/js/output/svg.js";
 import {liteAdaptor} from "mathjax-full/js/adaptors/liteAdaptor.js";
 import {RegisterHTMLHandler} from "mathjax-full/js/handlers/html.js";
@@ -8,7 +12,7 @@ import {RegisterHTMLHandler} from "mathjax-full/js/handlers/html.js";
 const input=process.argv[2]??"ray to outram park/data/full_markdown_math_audit.json";
 const output=process.argv[3]??"ray to outram park/data/full_markdown_math_mathjax.json";
 const data=JSON.parse(fs.readFileSync(input,"utf8"));
-const packages=["base","ams","newcommand","boldsymbol","textmacros"];
+const packages=["base","ams","newcommand","boldsymbol","textmacros"]; // registered explicitly above; bussproofs intentionally absent
 let adaptor,tex,svg,html;
 function initialize(){
   adaptor=liteAdaptor();
