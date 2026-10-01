@@ -2572,7 +2572,7 @@ $$
 \tag{TRISO-ANA-284}
 $$
 
-Substitute $phi'(R)$:
+Substitute $\phi'(R)$:
 
 $$
 -D
@@ -2587,7 +2587,7 @@ h\phi(R).
 \tag{TRISO-ANA-285}
 $$
 
-Substitute $phi(R)=C\sin(kR$/(kR)):
+Substitute $\phi(R)=C\sin(kR)/(kR)$:
 
 $$
 -D
@@ -2702,7 +2702,7 @@ $$
 \tag{TRISO-ANA-296}
 $$
 
-### 10.5 Check whether division by (sinmu) loses roots
+### 10.5 Check whether division by $\sin\mu$ loses roots
 
 The undivided equation (TRISO-ANA-293) must be used for this check.
 
@@ -2713,7 +2713,7 @@ $$
 \tag{TRISO-ANA-297}
 $$
 
-Then $mu=n\pi$ for integer $n$.
+Then $\mu=n\pi$ for integer $n$.
 
 Substitute into (TRISO-ANA-293):
 
@@ -2738,13 +2738,13 @@ $$
 
 For positive $n$, this is not zero.
 
-Therefore no positive eigenvalue is lost when dividing by (sinmu).
+Therefore no positive eigenvalue is lost when dividing by $\sin\mu$.
 
-The only simultaneous zero is $mu=0$, which does not satisfy the positive transient-mode condition for the Robin problem with $h>0$.
+The only simultaneous zero is $\mu=0$, which does not satisfy the positive transient-mode condition for the Robin problem with $h>0$.
 
 ### 10.6 Eigenvalue definitions
 
-Let $mu_n$ denote the positive roots of (TRISO-ANA-293).
+Let $\mu_n$ denote the positive roots of (TRISO-ANA-293).
 
 Then
 
@@ -16403,7 +16403,7 @@ $$
 \tag{TRISO-WOS-028}
 $$
 
-[EMPIRICAL COMPATIBILITY] The executed Process-A/Process-B controlled discrepancy is small at the declared finite-(epsilon) statistical precision, but it is not an identity.
+[EMPIRICAL COMPATIBILITY] The executed Process-A/Process-B controlled discrepancy is small at the declared finite-$\epsilon$ statistical precision, but it is not an identity.
 
 ## 23.2 Two-layer accelerated verification
 
@@ -16950,7 +16950,7 @@ $$
 \tag{TRISO-MR-029}
 $$
 
-Multiply by (mathbf B):
+Multiply by $\mathbf B$:
 
 $$
 \boldsymbol\Phi
@@ -16966,7 +16966,7 @@ $$
 \tag{TRISO-MR-030}
 $$
 
-The term (mathbf B) is direct absorption without another transient renewal.
+The term $\mathbf B$ is direct absorption without another transient renewal.
 
 The term $\mathbf K\mathbf B$ is absorption after one transient renewal.
 
@@ -17026,7 +17026,7 @@ $$
 
 [EXACT TARGET] The mathematical reduction target is $B=C$.
 
-[EMPIRICAL COMPATIBILITY] Process A and Process B/C have controlled finite-(epsilon) compatibility evidence.
+[EMPIRICAL COMPATIBILITY] Process A and Process B/C have controlled finite-$\epsilon$ compatibility evidence.
 
 [IMPORTANT] Neither statement is a proof of the $\epsilon\rightarrow0$ continuum limit.
 
