@@ -176,3 +176,31 @@ The permanent build architecture remains Stage A fast validation followed by dep
 R2-WOS-02 remains **OPEN**.
 
 R2-B01 remains **OPEN**.
+
+
+## Final presentation closure pass — 2026-10-02
+
+Presentation-only remediation after validated-candidate promotion:
+
+- normalized **7** fragmented nomenclature unit cells in both canonical targets;
+- no displayed scientific equation changed;
+- stable IDs remain **1481 / 1481 unique** in Markdown;
+- forbidden control characters: **0**;
+- literal `\\(`, `\\)`, `\\[`, `\\]`: **0** in canonical Markdown;
+- `\\textbackslash` / `\\textasciicircum`: **0**;
+- listed HTML conversion remnants: **0**;
+- fragmented-unit regression scan: **0 remaining**.
+
+Closure status at source level:
+
+- RC1 programming-language escape corruption: **CLOSED**.
+- RC2 Markdown block serialization incompatibility: **SOURCE-LEVEL CLOSED; rendered sample confirmation required**.
+- RC3 interrupted first-pass references/citations: **CLOSED by successful run 36888699218**.
+- RC4 validator coverage defect: **CLOSED for current 1481-ID baseline**.
+- REG001 literal dollar visible: **source regression scan CLOSED; visual confirmation pending**.
+- REG002 raw TeX visible: **source regression scan CLOSED; visual confirmation pending**.
+- REG003 cases render failure: **structural/KaTeX gate CLOSED; visual confirmation pending**.
+- REG004 vertical fragmentation: **structural/KaTeX gate CLOSED; visual confirmation pending**.
+- REG005 unit fragmentation: **CLOSED at source level (7 repaired, 0 remaining); visual confirmation pending**.
+
+A representative visual sample is recorded separately in `PRESENTATION_VISUAL_SAMPLE.md`.
