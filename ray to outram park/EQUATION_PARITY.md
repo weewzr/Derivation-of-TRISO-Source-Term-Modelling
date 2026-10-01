@@ -2,6 +2,8 @@
 
 Numbering strategy: stable visible `TRISO-*` equation identifiers are retained because they are the project's traceability keys. LaTeX uses matching internal labels for cross-reference resolution.
 
+Source-rendering audit: post-cleanup whole-document check confirms 1,481 stable displayed equation IDs in Markdown and 1,481 in LaTeX, all unique, with no equation loss. See `SOURCE_RENDERING_AUDIT.md`. Scientific content was unchanged in the source-formatting remediation.
+
 | Equation ID | Markdown | LaTeX label | Status |
 |---|---|---|---|
 | TRISO-GOV-020 | TRISO_Source_Term_Derivation.md | \\label{eq:triso-gov-020} | synchronized |
