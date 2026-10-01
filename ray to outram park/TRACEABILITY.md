@@ -15,7 +15,7 @@ This table maps the canonical manuscript to repository derivation, executed evid
 | Interface-state Markov-renewal equation Phi=(I-K)^-1 B | verification/interface_state_markov_renewal_derivation.md | verification/two_layer_matrix_reconciliation_evidence.md | 36807696742 | independent closure audit substantially closed controlled remediation |
 | Genuine three-layer multistate matrix | verification/three_layer_multistate_matrix_gate.md | verification/three_layer_multistate_matrix_evidence.md | 36815849244 | independent three-layer audit passed; hard diagnostic authorized |
 | Hard five-layer 8x8 transform | verification/hard_five_layer_matrix_gate.md | verification/hard_five_layer_matrix_evidence.md | 36866849598 | f64 numerical gate NOT closed |
-| High-precision hard-matrix remediation | verification/hard_five_layer_high_precision_gate.md | verification/hard_five_layer_high_precision_evidence.md | 36869649217 | numerical gates PASS; INDEPENDENT REVIEW WARRANTED |
+| High-precision hard-matrix remediation | verification/hard_five_layer_high_precision_gate.md | verification/hard_five_layer_high_precision_evidence.md | 36869649217 | independently verified with non-blocking findings; controlled inverse-Laplace verification authorized |
 | Final five-layer release CDF | — | **DOES NOT EXIST** | — | not authorized; R2-B01 OPEN |
 
 
@@ -36,3 +36,8 @@ Run `36869649217` (commit `fdb62bd203bf2c618eb58efe026f0a3bf239a480`) used Pytho
 - Original intended derivation path: `notes/raw/TRISO Fuel Derivation Ray V1.tex` (historical/raw; not overwritten).
 - Stable equation IDs are preserved for canonical foundation equations; new stochastic/renewal equations use TRISO-FPT, TRISO-WOS, TRISO-MR, TRISO-VER and TRISO-HARD families.
 - Current independent hard-matrix gate: VERIFIED WITH NON-BLOCKING FINDINGS; only a separately predeclared controlled transform-to-time verification stage is authorized.
+
+
+## Final manuscript presentation baseline
+
+The equation-led manuscript retains 1481 stable TRISO equation IDs with one-to-one Markdown/LaTeX parity. Inline mathematics is generated as genuine TeX math rather than escaped control-sequence prose. The standalone LaTeX uses the verified bibliography file and breakable repository paths. Final render/visual QA is controlled by the Outram Park manuscript render audit workflow.
