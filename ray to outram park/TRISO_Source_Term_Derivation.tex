@@ -484,7 +484,7 @@ A microscopic fission-based expression such as a fission rate multiplied by a pr
 
 Suppose the tracked atoms disappear by radioactive decay independently with a constant decay probability per unit time.
 
-Let $lambda_d$ be the decay constant:
+Let $\lambda_d$ be the decay constant:
 
 \begin{equation}
 [\lambda_d]=\mathrm{s^{-1}}.
@@ -566,7 +566,7 @@ Dimensional check:
 \label{eq:triso-gov-112}
 \end{equation}
 
-\textbf{[CONSTITUTIVE]} The first-order decay assumption is the mathematical statement that each tracked atom has the same constant decay hazard $lambda_d$, independent of concentration.
+\textbf{[CONSTITUTIVE]} The first-order decay assumption is the mathematical statement that each tracked atom has the same constant decay hazard $\lambda_d$, independent of concentration.
 
 \textbf{[ASSUMPTION]} The current base benchmark sets this decay contribution to zero:
 
@@ -14651,7 +14651,7 @@ O(h^3),
 
 where $E(r)$ is smooth within the material.
 
-This is stronger than the statement $\varepsilon_f=\(O(h^2)$.
+This is stronger than the statement $\varepsilon_f=O(h^2)$.
 
 At the west face,
 
@@ -14888,7 +14888,7 @@ O(h^2).
 \label{eq:triso-acc-168}
 \end{equation}
 
-Division by $V_P=\(O(h)$ would then give only
+Division by $V_P=O(h)$ would then give only
 
 \begin{equation}
 O(h)
@@ -15883,7 +15883,7 @@ A_R(J_R^h-J_R).
 \label{eq:triso-acc-248}
 \end{equation}
 
-Because $A_R$ is fixed under mesh refinement and (TRISO-ACC-244) gives $J_R^h-J_R=\(O(h^2)$,
+Because $A_R$ is fixed under mesh refinement and (TRISO-ACC-244) gives $J_R^h-J_R=O(h^2)$,
 
 \begin{equation}
 \boxed{
@@ -16013,7 +16013,7 @@ R_B=O(\mathfrak h).
 \label{eq:triso-acc-261}
 \end{equation}
 
-The $O(\mathfrak h^2)$ cell-average representation error divided by $R_B=\(O(\mathfrak h)$ can contribute
+The $O(\mathfrak h^2)$ cell-average representation error divided by $R_B=O(\mathfrak h)$ can contribute
 
 \begin{equation}
 O(\mathfrak h)
@@ -17644,7 +17644,7 @@ G_b(r,0)
 \label{eq:triso-fpt-057}
 \end{equation}
 
-Cancel $lambda$:
+Cancel $\lambda$:
 
 \begin{equation}
 \boxed{
@@ -17668,7 +17668,7 @@ G_a(r,0)
 \label{eq:triso-fpt-059}
 \end{equation}
 
-Cancel $lambda$:
+Cancel $\lambda$:
 
 \begin{equation}
 \boxed{
@@ -17832,7 +17832,7 @@ Numerically,
 \label{eq:triso-wos-028}
 \end{equation}
 
-\textbf{[EMPIRICAL COMPATIBILITY]} The executed Process-A/Process-B controlled discrepancy is small at the declared finite-(epsilon) statistical precision, but it is not an identity.
+\textbf{[EMPIRICAL COMPATIBILITY]} The executed Process-A/Process-B controlled discrepancy is small at the declared finite-$\epsilon$ statistical precision, but it is not an identity.
 
 \subsection*{23.2 Two-layer accelerated verification}
 
@@ -18348,7 +18348,7 @@ Collect the eight first-step equations:
 \label{eq:triso-mr-022}
 \end{equation}
 
-Subtract $mathbf K\boldsymbol\Phi$ from both sides:
+Subtract $\mathbf K\boldsymbol\Phi$ from both sides:
 
 \begin{equation}
 \boldsymbol\Phi
@@ -18382,7 +18382,7 @@ Factor $oldsymbol\Phi$:
 \label{eq:triso-mr-025}
 \end{equation}
 
-When $mathbf I-\mathbf K$ is nonsingular, left-multiply by its inverse:
+When $\mathbf I-\mathbf K$ is nonsingular, left-multiply by its inverse:
 
 \begin{equation}
 (\mathbf I-\mathbf K)^{-1}
@@ -18433,7 +18433,7 @@ then
 \label{eq:triso-mr-029}
 \end{equation}
 
-Multiply by (mathbf B):
+Multiply by $\mathbf B$:
 
 \begin{equation}
 \boldsymbol\Phi
@@ -18450,11 +18450,11 @@ Multiply by (mathbf B):
 \label{eq:triso-mr-030}
 \end{equation}
 
-The term (mathbf B) is direct absorption without another transient renewal.
+The term $\mathbf B$ is direct absorption without another transient renewal.
 
-The term $mathbf K\mathbf B$ is absorption after one transient renewal.
+The term $\mathbf K\mathbf B$ is absorption after one transient renewal.
 
-The term $mathbf K^2\mathbf B$ is absorption after two transient renewals.
+The term $\mathbf K^2\mathbf B$ is absorption after two transient renewals.
 
 Thus the inverse sums arbitrarily long repeated interface-renewal paths without sampling each path individually.
 
@@ -18513,9 +18513,9 @@ Q(s)\,dr.
 
 [EXACT TARGET] The mathematical reduction target is $B=C$.
 
-\textbf{[EMPIRICAL COMPATIBILITY]} Process A and Process B/C have controlled finite-(epsilon) compatibility evidence.
+\textbf{[EMPIRICAL COMPATIBILITY]} Process A and Process B/C have controlled finite-$\epsilon$ compatibility evidence.
 
-\textbf{[IMPORTANT]} Neither statement is a proof of the $epsilon\rightarrow0$ continuum limit.
+\textbf{[IMPORTANT]} Neither statement is a proof of the $\epsilon\rightarrow0$ continuum limit.
 
 
 \section*{26. Verification linked to the matrix derivation}
