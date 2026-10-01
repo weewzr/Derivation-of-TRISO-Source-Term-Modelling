@@ -93,7 +93,7 @@ Normalization:
 Linear-system relative residual:
 <1e-10 at every s.
 
-Record cond_2(I-K(s)) at every s. No post-hoc condition-number pass threshold.
+Record kappa_F^est(I-K(s)) = ||I-K||_F ||(I-K)^-1||_F at every s. No post-hoc condition-number pass threshold.
 
 At s=0 audit:
 - each shell exit probability sums to one;
