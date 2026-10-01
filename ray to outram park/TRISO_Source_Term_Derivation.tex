@@ -1,4 +1,3 @@
-% Automated render-audit trigger; scientific content generated from synchronized Markdown.
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=24mm]{geometry}
 \usepackage{amsmath,amssymb,bm}
@@ -17139,6 +17138,118 @@ p_{i\rightarrow i}
 
 [IMPORTANT] These finite-capture semantics define Process A and remain distinct from the exact-interface process below.
 
+\subsection*{21.4 Centred-ball first-passage transform}
+
+[EXACT] Consider a homogeneous ball of radius \textbackslash\{\}(b\textbackslash\{\}) with absorbing boundary at \textbackslash\{\}(r=b\textbackslash\{\}).
+
+Define
+
+$
+H(r,s)=\textbackslash\{\}mathbb E\_r[e\textasciicircum{}\{-sT\_b\}].
+\textbackslash\{\}tag\{TRISO-FPT-011\}
+$
+
+The backward radial equation is
+
+$
+D\textbackslash\{\}left(H''+\textbackslash\{\}frac\{2\}\{r\}H'\textbackslash\{\}right)=sH.
+\textbackslash\{\}tag\{TRISO-FPT-012\}
+$
+
+Introduce
+
+$
+v(r)=rH(r,s).
+\textbackslash\{\}tag\{TRISO-FPT-013\}
+$
+
+The same derivative cancellation used for the shell gives
+
+$
+v''-\textbackslash\{\}lambda\textasciicircum{}2v=0,
+\textbackslash\{\}qquad
+\textbackslash\{\}lambda=\textbackslash\{\}sqrt\{\textbackslash\{\}frac\{s\}\{D\}\}.
+\textbackslash\{\}tag\{TRISO-FPT-014\}
+$
+
+The general solution is
+
+$
+v(r)=A\textbackslash\{\}sinh(\textbackslash\{\}lambda r)+B\textbackslash\{\}cosh(\textbackslash\{\}lambda r).
+\textbackslash\{\}tag\{TRISO-FPT-015\}
+$
+
+Regularity of \textbackslash\{\}(H=v/r\textbackslash\{\}) at \textbackslash\{\}(r=0\textbackslash\{\}) requires
+
+$
+v(0)=0.
+\textbackslash\{\}tag\{TRISO-FPT-016\}
+$
+
+Substitute \textbackslash\{\}(r=0\textbackslash\{\}) into TRISO-FPT-015:
+
+$
+0=A\textbackslash\{\}sinh0+B\textbackslash\{\}cosh0.
+\textbackslash\{\}tag\{TRISO-FPT-017\}
+$
+
+Therefore
+
+$
+B=0.
+\textbackslash\{\}tag\{TRISO-FPT-018\}
+$
+
+At the absorbing sphere,
+
+$
+H(b,s)=1.
+\textbackslash\{\}tag\{TRISO-FPT-019\}
+$
+
+Hence
+
+$
+v(b)=b.
+\textbackslash\{\}tag\{TRISO-FPT-019A\}
+$
+
+Using \textbackslash\{\}(v(b)=A\textbackslash\{\}sinh(\textbackslash\{\}lambda b)\textbackslash\{\}),
+
+$
+A=\textbackslash\{\}frac\{b\}\{\textbackslash\{\}sinh(\textbackslash\{\}lambda b)\}.
+\textbackslash\{\}tag\{TRISO-FPT-019B\}
+$
+
+Therefore
+
+$
+v(r)=b\textbackslash\{\}frac\{\textbackslash\{\}sinh(\textbackslash\{\}lambda r)\}\{\textbackslash\{\}sinh(\textbackslash\{\}lambda b)\}.
+\textbackslash\{\}tag\{TRISO-FPT-019C\}
+$
+
+Divide by \textbackslash\{\}(r\textbackslash\{\}):
+
+$
+\textbackslash\{\}boxed\{
+H(r,s)=
+\textbackslash\{\}frac\{b\}\{r\}
+\textbackslash\{\}frac\{\textbackslash\{\}sinh(\textbackslash\{\}lambda r)\}\{\textbackslash\{\}sinh(\textbackslash\{\}lambda b)\}.
+\}
+\textbackslash\{\}tag\{TRISO-FPT-019D\}
+$
+
+At the centre, use \textbackslash\{\}(\textbackslash\{\}sinh(\textbackslash\{\}lambda r)\textbackslash\{\}sim\textbackslash\{\}lambda r\textbackslash\{\}):
+
+$
+H(0,s)
+=
+\textbackslash\{\}frac\{b\textbackslash\{\}lambda\}\{\textbackslash\{\}sinh(\textbackslash\{\}lambda b)\}.
+\textbackslash\{\}tag\{TRISO-FPT-019E\}
+$
+
+Thus the centred-ball kernel used by the accelerated renewal is derived from the same backward diffusion equation, with regularity at the origin and absorption at the ball surface.
+
 \section*{22. Exact spherical-shell first-passage theory}
 
 \subsection*{22.1 Outer-exit joint transform}
@@ -17992,25 +18103,146 @@ G_B^+p_{B\rightarrow I}.
 \label{eq:triso-mr-019}
 \end{equation}
 
-The (S\_2) row has the same four possible destination states, but (G\_B\textasciicircum{}pm) are evaluated at the reinsertion radius adjacent to the outer Buffer interface.
+For \textbackslash\{\}(S\_2\textbackslash\{\}), the physical destinations are identical to \textbackslash\{\}(S\_1\textbackslash\{\}), but the shell transforms are evaluated from the outer-side Buffer reinsertion radius. Denote them \textbackslash\{\}(G\_\{B,2\}\textasciicircum{}-\textbackslash\{\}) and \textbackslash\{\}(G\_\{B,2\}\textasciicircum{}+\textbackslash\{\}).
 
-\subsection*{25.4 IPyC and SiC state rows}
+$
+\textbackslash\{\}Phi\_2=
+G\_\{B,2\}\textasciicircum{}-p\_\{B\textbackslash\{\}rightarrow K\}\textbackslash\{\}Phi\_0+
+G\_\{B,2\}\textasciicircum{}-p\_\{B\textbackslash\{\}rightarrow B\}\textasciicircum{}\{(I\_0)\}\textbackslash\{\}Phi\_1+
+G\_\{B,2\}\textasciicircum{}+p\_\{B\textbackslash\{\}rightarrow B\}\textasciicircum{}\{(I\_1)\}\textbackslash\{\}Phi\_2+
+G\_\{B,2\}\textasciicircum{}+p\_\{B\textbackslash\{\}rightarrow I\}\textbackslash\{\}Phi\_3.
+\textbackslash\{\}tag\{TRISO-MR-034\}
+$
 
-For (S\_3) and (S\_4), use the IPyC shell transforms (G\_I\textasciicircum{}-) and (G\_I\textasciicircum{}+).
+Hence
 
-The inward interface is Buffer/IPyC.
+$
+K\_\{20\}=G\_\{B,2\}\textasciicircum{}-p\_\{B\textbackslash\{\}rightarrow K\},
+\textbackslash\{\}quad
+K\_\{21\}=G\_\{B,2\}\textasciicircum{}-p\_\{B\textbackslash\{\}rightarrow B\}\textasciicircum{}\{(I\_0)\}.
+\textbackslash\{\}tag\{TRISO-MR-035\}
+$
 
-The outward interface is IPyC/SiC.
+and
 
-The same first-step construction gives four probability-weighted transform terms in each row.
+$
+K\_\{22\}=G\_\{B,2\}\textasciicircum{}+p\_\{B\textbackslash\{\}rightarrow B\}\textasciicircum{}\{(I\_1)\},
+\textbackslash\{\}quad
+K\_\{23\}=G\_\{B,2\}\textasciicircum{}+p\_\{B\textbackslash\{\}rightarrow I\}.
+\textbackslash\{\}tag\{TRISO-MR-036\}
+$
 
-For (S\_5) and (S\_6), use the SiC shell transforms (G\_S\textasciicircum{}-) and (G\_S\textasciicircum{}+).
+\subsection*{25.4 IPyC state rows}
 
-The inward interface is IPyC/SiC.
+From \textbackslash\{\}(S\_3\textbackslash\{\}), inward IPyC exit reaches the Buffer/IPyC interface and outward exit reaches IPyC/SiC:
 
-The outward interface is SiC/OPyC.
+$
+\textbackslash\{\}Phi\_3=
+G\_\{I,3\}\textasciicircum{}-p\_\{I\textbackslash\{\}rightarrow B\}\textbackslash\{\}Phi\_2+
+G\_\{I,3\}\textasciicircum{}-p\_\{I\textbackslash\{\}rightarrow I\}\textasciicircum{}\{(I\_1)\}\textbackslash\{\}Phi\_3+
+G\_\{I,3\}\textasciicircum{}+p\_\{I\textbackslash\{\}rightarrow I\}\textasciicircum{}\{(I\_2)\}\textbackslash\{\}Phi\_4+
+G\_\{I,3\}\textasciicircum{}+p\_\{I\textbackslash\{\}rightarrow S\}\textbackslash\{\}Phi\_5.
+\textbackslash\{\}tag\{TRISO-MR-037\}
+$
 
-Again, each row contains the two exit sides multiplied by the two interface outcomes.
+Therefore
+
+$
+K\_\{32\}=G\_\{I,3\}\textasciicircum{}-p\_\{I\textbackslash\{\}rightarrow B\},
+\textbackslash\{\}quad
+K\_\{33\}=G\_\{I,3\}\textasciicircum{}-p\_\{I\textbackslash\{\}rightarrow I\}\textasciicircum{}\{(I\_1)\},
+\textbackslash\{\}tag\{TRISO-MR-038\}
+$
+
+$
+K\_\{34\}=G\_\{I,3\}\textasciicircum{}+p\_\{I\textbackslash\{\}rightarrow I\}\textasciicircum{}\{(I\_2)\},
+\textbackslash\{\}quad
+K\_\{35\}=G\_\{I,3\}\textasciicircum{}+p\_\{I\textbackslash\{\}rightarrow S\}.
+\textbackslash\{\}tag\{TRISO-MR-039\}
+$
+
+From \textbackslash\{\}(S\_4\textbackslash\{\}),
+
+$
+\textbackslash\{\}Phi\_4=
+G\_\{I,4\}\textasciicircum{}-p\_\{I\textbackslash\{\}rightarrow B\}\textbackslash\{\}Phi\_2+
+G\_\{I,4\}\textasciicircum{}-p\_\{I\textbackslash\{\}rightarrow I\}\textasciicircum{}\{(I\_1)\}\textbackslash\{\}Phi\_3+
+G\_\{I,4\}\textasciicircum{}+p\_\{I\textbackslash\{\}rightarrow I\}\textasciicircum{}\{(I\_2)\}\textbackslash\{\}Phi\_4+
+G\_\{I,4\}\textasciicircum{}+p\_\{I\textbackslash\{\}rightarrow S\}\textbackslash\{\}Phi\_5.
+\textbackslash\{\}tag\{TRISO-MR-040\}
+$
+
+Thus
+
+$
+K\_\{42\}=G\_\{I,4\}\textasciicircum{}-p\_\{I\textbackslash\{\}rightarrow B\},
+\textbackslash\{\}quad
+K\_\{43\}=G\_\{I,4\}\textasciicircum{}-p\_\{I\textbackslash\{\}rightarrow I\}\textasciicircum{}\{(I\_1)\},
+\textbackslash\{\}tag\{TRISO-MR-041\}
+$
+
+$
+K\_\{44\}=G\_\{I,4\}\textasciicircum{}+p\_\{I\textbackslash\{\}rightarrow I\}\textasciicircum{}\{(I\_2)\},
+\textbackslash\{\}quad
+K\_\{45\}=G\_\{I,4\}\textasciicircum{}+p\_\{I\textbackslash\{\}rightarrow S\}.
+\textbackslash\{\}tag\{TRISO-MR-042\}
+$
+
+\subsection*{25.5 SiC state rows}
+
+From \textbackslash\{\}(S\_5\textbackslash\{\}),
+
+$
+\textbackslash\{\}Phi\_5=
+G\_\{S,5\}\textasciicircum{}-p\_\{S\textbackslash\{\}rightarrow I\}\textbackslash\{\}Phi\_4+
+G\_\{S,5\}\textasciicircum{}-p\_\{S\textbackslash\{\}rightarrow S\}\textasciicircum{}\{(I\_2)\}\textbackslash\{\}Phi\_5+
+G\_\{S,5\}\textasciicircum{}+p\_\{S\textbackslash\{\}rightarrow S\}\textasciicircum{}\{(I\_3)\}\textbackslash\{\}Phi\_6+
+G\_\{S,5\}\textasciicircum{}+p\_\{S\textbackslash\{\}rightarrow O\}\textbackslash\{\}Phi\_7.
+\textbackslash\{\}tag\{TRISO-MR-043\}
+$
+
+Hence
+
+$
+K\_\{54\}=G\_\{S,5\}\textasciicircum{}-p\_\{S\textbackslash\{\}rightarrow I\},
+\textbackslash\{\}quad
+K\_\{55\}=G\_\{S,5\}\textasciicircum{}-p\_\{S\textbackslash\{\}rightarrow S\}\textasciicircum{}\{(I\_2)\},
+\textbackslash\{\}tag\{TRISO-MR-044\}
+$
+
+$
+K\_\{56\}=G\_\{S,5\}\textasciicircum{}+p\_\{S\textbackslash\{\}rightarrow S\}\textasciicircum{}\{(I\_3)\},
+\textbackslash\{\}quad
+K\_\{57\}=G\_\{S,5\}\textasciicircum{}+p\_\{S\textbackslash\{\}rightarrow O\}.
+\textbackslash\{\}tag\{TRISO-MR-045\}
+$
+
+From \textbackslash\{\}(S\_6\textbackslash\{\}),
+
+$
+\textbackslash\{\}Phi\_6=
+G\_\{S,6\}\textasciicircum{}-p\_\{S\textbackslash\{\}rightarrow I\}\textbackslash\{\}Phi\_4+
+G\_\{S,6\}\textasciicircum{}-p\_\{S\textbackslash\{\}rightarrow S\}\textasciicircum{}\{(I\_2)\}\textbackslash\{\}Phi\_5+
+G\_\{S,6\}\textasciicircum{}+p\_\{S\textbackslash\{\}rightarrow S\}\textasciicircum{}\{(I\_3)\}\textbackslash\{\}Phi\_6+
+G\_\{S,6\}\textasciicircum{}+p\_\{S\textbackslash\{\}rightarrow O\}\textbackslash\{\}Phi\_7.
+\textbackslash\{\}tag\{TRISO-MR-046\}
+$
+
+Therefore
+
+$
+K\_\{64\}=G\_\{S,6\}\textasciicircum{}-p\_\{S\textbackslash\{\}rightarrow I\},
+\textbackslash\{\}quad
+K\_\{65\}=G\_\{S,6\}\textasciicircum{}-p\_\{S\textbackslash\{\}rightarrow S\}\textasciicircum{}\{(I\_2)\},
+\textbackslash\{\}tag\{TRISO-MR-047\}
+$
+
+$
+K\_\{66\}=G\_\{S,6\}\textasciicircum{}+p\_\{S\textbackslash\{\}rightarrow S\}\textasciicircum{}\{(I\_3)\},
+\textbackslash\{\}quad
+K\_\{67\}=G\_\{S,6\}\textasciicircum{}+p\_\{S\textbackslash\{\}rightarrow O\}.
+\textbackslash\{\}tag\{TRISO-MR-048\}
+$
 
 \subsection*{25.5 OPyC state and direct release}
 
@@ -18018,15 +18250,33 @@ From (S\_7), inner shell exit reaches the SiC/OPyC interface.
 
 Outer shell exit reaches the absorbing particle exterior.
 
+The inward OPyC exit reaches the SiC/OPyC interface. Transmission to SiC gives \textbackslash\{\}(S\_6\textbackslash\{\}); reflection in OPyC gives \textbackslash\{\}(S\_7\textbackslash\{\}). The outward exit releases directly. Therefore
+
+$
+\textbackslash\{\}Phi\_7=
+G\_O\textasciicircum{}-p\_\{O\textbackslash\{\}rightarrow S\}\textbackslash\{\}Phi\_6+
+G\_O\textasciicircum{}-p\_\{O\textbackslash\{\}rightarrow O\}\textbackslash\{\}Phi\_7+
+G\_O\textasciicircum{}+.
+\textbackslash\{\}tag\{TRISO-MR-049\}
+$
+
+The two transient entries are
+
+$
+K\_\{76\}=G\_O\textasciicircum{}-p\_\{O\textbackslash\{\}rightarrow S\},
+\textbackslash\{\}qquad
+K\_\{77\}=G\_O\textasciicircum{}-p\_\{O\textbackslash\{\}rightarrow O\}.
+\textbackslash\{\}tag\{TRISO-MR-050\}
+$
+
 The direct release transform is
 
-\begin{equation}
-\boxed{
-B_7(s)=G_O^+(s).
-}
-\tag{TRISO-MR-020}
-\label{eq:triso-mr-020}
-\end{equation}
+$
+\textbackslash\{\}boxed\{
+B\_7(s)=G\_O\textasciicircum{}+(s).
+\}
+\textbackslash\{\}tag\{TRISO-MR-020\}
+$
 
 For every other transient state,
 
