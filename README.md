@@ -136,7 +136,7 @@ The original notebook's FTCS scheme is retained as a transparent deterministic b
 
 ### Current Method-2 hard-matrix status
 
-The hard five-layer 8x8 topology and transform behaviour are coherent, but the ordinary-f64 diagnostic did not satisfy all predeclared numerical gates because the near-recurrent system is severely conditioned. A predeclared 50/80/120-decimal-digit high-precision cross-check is pending. No inverse-Laplace recovery or final five-layer release CDF is claimed.
+The hard five-layer 8x8 topology and transform behaviour are coherent, but the ordinary-f64 diagnostic did not satisfy all predeclared numerical gates because the near-recurrent system is severely conditioned. The predeclared 50/80/120-decimal-digit high-precision cross-check has executed successfully and passes the original numerical gates under reliable arithmetic; the f64 discrepancies are attributable to severe conditioning. This is candidate closure evidence pending independent review. No inverse-Laplace recovery or final five-layer release CDF is claimed.
 
 R2-WOS-02: **OPEN**.
 
