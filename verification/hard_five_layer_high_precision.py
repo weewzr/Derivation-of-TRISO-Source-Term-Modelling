@@ -15,7 +15,7 @@ def ratio(x,y):
     if y<40: return mp.sinh(x)/mp.sinh(y)
     return mp.exp(x-y)*(1-mp.exp(-2*x))/(1-mp.exp(-2*y))
 def ball(r,b,d,s):
-    if s==0:return mp.one
+    if s==0:return mp.mpf(1)
     l=mp.sqrt(s/d); z=l*b
     if r==0:return z/mp.sinh(z) if z<40 else 2*z*mp.exp(-z)/(1-mp.exp(-2*z))
     return (b/r)*ratio(l*r,z)
@@ -44,7 +44,7 @@ def evaluate(dps):
     mp.mp.dps=dps; out=[]
     for ss in SSTR:
         s=mp.mpf(ss);K,B=matrix(s);A=mp.eye(8)-K;x=mp.lu_solve(A,B)
-        res=mp.norm(A*x-B,2)/max(mp.norm(B,2),mp.one)
+        res=mp.norm(A*x-B,2)/max(mp.norm(B,2),mp.mpf(1))
         U,sv,V=mp.svd(A); vals=[sv[i] for i in range(len(sv))]; smax=max(vals);smin=min(vals);cond=smax/smin
         init=init_phi(s,x)
         rho=None
