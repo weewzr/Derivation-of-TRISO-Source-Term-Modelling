@@ -21,9 +21,9 @@ expr=[]; findings=[]; fence=False;i=0
 while i<len(lines):
  st=lines[i].strip()
  if st.startswith("~~~") or st.startswith("```"): fence=not fence;i+=1;continue
- if st=="$$":
+ if st=="```math":
   start=i+1; body=[];j=i+1
-  while j<len(lines) and lines[j].strip()!="$$": body.append(lines[j]);j+=1
+  while j<len(lines) and lines[j].strip()!="```": body.append(lines[j]);j+=1
   if j>=len(lines): findings.append({"class":"unmatched_display_delimiter","line":i+1});break
   raw="\n".join(body); e={"index":len(expr),"type":"display","start_line":start,"end_line":j+1,"section":heading(i),"raw":raw,"equation_id":eid(i+1,j+1,raw)};expr.append(e);i=j+1;continue
  if not fence:
@@ -43,7 +43,7 @@ for cls,pat in {"literal_parenthesis_math":r"\\\\\\\\\\(|\\\\\\\\\\)","literal_b
 cmd={}
 for e in expr:
  for c in re.findall(r"\\\\([A-Za-z]+)",e["raw"]):cmd[c]=cmd.get(c,0)+1
-ids=re.findall(r"\\\\tag\\{(TRISO-[^}]+)\\}",text)
+ids=re.findall(r"(?m)^\\*\\*Equation (TRISO-[A-Z0-9]+-\\d+[A-Z]?)\\*\\*$",text)
 payload={"source":str(SRC),"line_count":len(lines),"expressions":expr,"structural_findings":findings,"command_inventory":dict(sorted(cmd.items())),"stable_tag_count":len(ids),"stable_unique_tag_count":len(set(ids)),"duplicate_tags":sorted({x for x in ids if ids.count(x)>1})}
 OUT.parent.mkdir(parents=True,exist_ok=True);OUT.write_text(json.dumps(payload,indent=2),encoding="utf-8")
 print(json.dumps({"expressions":len(expr),"structural_findings":len(findings),"stable_tags":len(ids),"unique_tags":len(set(ids))}))
