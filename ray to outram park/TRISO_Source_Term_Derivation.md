@@ -677,7 +677,7 @@ $$
 
 At \(r=0\), this expression is of the form (0/0) for a smooth symmetric field, so it must not be evaluated by direct substitution.
 
-Because (c_r(0,t)=0), apply L'Hôpital's rule:
+Because \(c_r(0,t)=0\), apply L'Hôpital's rule:
 
 $$
 \lim_{r\to0}\frac{c_r(r,t)}{r}
@@ -1047,7 +1047,7 @@ $$
 
 #### Robin: finite external mass transfer
 
-Let the external coolant concentration be (c_\infty(t)).
+Let the external coolant concentration be \(c_\infty(t)\).
 
 [CONSTITUTIVE] A linear external mass-transfer law is
 
@@ -1985,7 +1985,7 @@ v(r,0)=c(r,0)-w(r).
 \tag{TRISO-ANA-227}
 $$
 
-Substitute (c(r,0)=0):
+Substitute \(c(r,0)=0\):
 
 $$
 \boxed{
@@ -2533,7 +2533,7 @@ $$
 \tag{TRISO-ANA-281}
 $$
 
-Differentiate (\sin(kr)/r) using the quotient rule:
+Differentiate \(\sin(kr)/r\) using the quotient rule:
 
 $$
 \frac{d}{dr}
@@ -2587,7 +2587,7 @@ h\phi(R).
 \tag{TRISO-ANA-285}
 $$
 
-Substitute (phi(R)=C\sin(kR)/(kR)):
+Substitute \(phi(R)=C\sin(kR\)/(kR)):
 
 $$
 -D
@@ -2923,7 +2923,7 @@ $$
 
 [THEOREM / STANDARD FORM] Sturm–Liouville theory provides the framework for eigenvalues and eigenfunctions of self-adjoint second-order problems. See the NIST Digital Library of Mathematical Functions, §1.13(viii), which identifies Sturm–Liouville eigenvalues/eigenfunctions and the Liouville form. [NIST_DLMF].
 
-Because the centre endpoint has (p(0)=0), it is more precise to call this a radial **singular** Sturm–Liouville endpoint rather than an ordinary regular endpoint. The orthogonality used below can nevertheless be derived directly for the present eigenfunctions, so no stronger theorem is needed.
+Because the centre endpoint has \(p(0)=0\), it is more precise to call this a radial **singular** Sturm–Liouville endpoint rather than an ordinary regular endpoint. The orthogonality used below can nevertheless be derived directly for the present eigenfunctions, so no stronger theorem is needed.
 
 ### 10.8 Derive orthogonality directly
 
@@ -3135,7 +3135,7 @@ A_n\phi_n(r).
 \tag{TRISO-SL-227}
 $$
 
-Multiply both sides by (r^2\phi_m(r)):
+Multiply both sides by \(r^2\phi_m(r)\):
 
 $$
 -r^2w(r)\phi_m(r)
@@ -15573,29 +15573,16 @@ The prescribed aligned five-layer spatial/temporal/conservation refinement study
 
 ## 19. Implementation provenance
 
-Repository: theodoreOnzGit/outram-park-backend.
+[IMPORTANT] The supervisor production repository remains read-only. The production WOS source provenance used by this research is recorded here for reproducibility; all research verification code and manuscript changes remain in Ray's repository.
 
-Default branch: main.
+- Production geometry: `constructive_solid_geometry/mod.rs` — `TrisoCell::new`, `TrisoCell::new_crp6_geometry`, `TrisoCell::get_triso_region`, `TrisoCell::try_get_diffusion_coefficient`.
+- Production WOS: `first_passage/walk_on_spheres.rs` — `WoSWalker`, `step_multilayer`, `walk_until_released`, `nearest_interface_distance`, `shell_bounds`, `sample_uniform_in_ball`.
+- Production interface decision: `first_passage/interface.rs` — `does_transmit`.
+- Production homogeneous sphere FPT: `first_passage/sphere_fpt.rs` — first-passage distribution and lookup/interpolation.
+- Historical production verification: `verification_and_validation/crp6_case1_kernel_release_vs_crank.md`.
+- Historical interface-overshoot analysis: `docs/buffer_clt_failure_analysis.md`.
 
-Ray derivation branch: ray-triso-derivation.
-
-Ray branch tip: fd9d5c287ce77ab04a89fa4764fcf0a6b9b3e90e.
-
-The WOS implementation is inherited from main. Path-specific history for interface.rs, walk_on_spheres.rs and sphere_fpt.rs traces the relevant modules to commit 159d1fc4bd56916f5d598da80fa45a2311d6e594.
-
-Relevant functions:
-
-constructive_solid_geometry/mod.rs → TrisoCell::new, TrisoCell::new_crp6_geometry, TrisoCell::get_triso_region, TrisoCell::try_get_diffusion_coefficient.
-
-first_passage/walk_on_spheres.rs → WoSWalker, step_multilayer, walk_until_released, nearest_interface_distance, shell_bounds, sample_uniform_in_ball.
-
-first_passage/interface.rs → does_transmit.
-
-first_passage/sphere_fpt.rs → homogeneous first-passage distribution and numerical lookup/interpolation.
-
-verification_and_validation/crp6_case1_kernel_release_vs_crank.md → existing single-layer verification record.
-
-docs/buffer_clt_failure_analysis.md → legacy Gaussian interface-overshoot analysis.
+The research-side equation-to-code function map is maintained in `ray to outram park/TRACEABILITY.md`.
 
 ## 20. Foundation gate
 
@@ -15659,7 +15646,7 @@ D\nabla^2u=su.
 \tag{TRISO-FPT-005}
 $$
 
-[ASSUMPTION] Under spherical symmetry, (u=u(r,s)).
+[ASSUMPTION] Under spherical symmetry, \(u=u(r,s)\).
 
 The radial Laplacian is
 
@@ -15708,7 +15695,7 @@ This is the backward equation associated with the same diffusion operator as the
 
 [ASSUMPTION] Production histories are initially uniform in kernel volume.
 
-Let (U\sim\mathcal U(0,1)).
+Let \(U\sim\mathcal U(0,1)\).
 
 The enclosed-volume fraction at radius \(r\) is
 
