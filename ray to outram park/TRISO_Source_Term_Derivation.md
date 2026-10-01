@@ -2912,7 +2912,7 @@ The eigenvalue in this Sturm–Liouville problem is therefore $k_n^2$, with unit
 
 The interval is $0<r<R$.
 
-The centre condition is regularity of $\phi_n$, equivalent for these modes to a finite $phi_n(0)$ and zero radial derivative at the centre.
+The centre condition is regularity of $\phi_n$, equivalent for these modes to a finite $\phi_n(0)$ and zero radial derivative at the centre.
 
 The outer boundary is the homogeneous Robin condition
 
