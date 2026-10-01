@@ -16811,14 +16811,33 @@ From (S_7), inner shell exit reaches the SiC/OPyC interface.
 
 Outer shell exit reaches the absorbing particle exterior.
 
+The inward OPyC exit reaches the SiC/OPyC interface. Transmission to SiC gives \(S_6\); reflection in OPyC gives \(S_7\). The outward exit releases directly. Therefore
+
+$
+\Phi_7=
+G_O^-p_{O\rightarrow S}\Phi_6+
+G_O^-p_{O\rightarrow O}\Phi_7+
+G_O^+.
+\tag{TRISO-MR-049}
+$
+
+The two transient entries are
+
+$
+K_{76}=G_O^-p_{O\rightarrow S},
+\qquad
+K_{77}=G_O^-p_{O\rightarrow O}.
+\tag{TRISO-MR-050}
+$
+
 The direct release transform is
 
-$$
+$
 \boxed{
 B_7(s)=G_O^+(s).
 }
 \tag{TRISO-MR-020}
-$$
+$
 
 For every other transient state,
 
