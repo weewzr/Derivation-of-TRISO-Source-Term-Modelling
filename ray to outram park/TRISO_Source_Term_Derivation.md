@@ -2436,7 +2436,7 @@ $$
 
 ### 10.3 Centre regularity
 
-Examine the cosine contribution as (r	o0).
+Examine the cosine contribution as (r\to0).
 
 Use the known limit
 
@@ -16883,7 +16883,7 @@ $$
 \tag{TRISO-MR-023}
 $$
 
-Write $oldsymbol\Phi=\mathbf I\boldsymbol\Phi$:
+Write $\boldsymbol\Phi=\mathbf I\boldsymbol\Phi$:
 
 $$
 \mathbf I\boldsymbol\Phi
@@ -16894,7 +16894,7 @@ $$
 \tag{TRISO-MR-024}
 $$
 
-Factor $oldsymbol\Phi$:
+Factor $\boldsymbol\Phi$:
 
 $$
 (\mathbf I-\mathbf K)\boldsymbol\Phi
