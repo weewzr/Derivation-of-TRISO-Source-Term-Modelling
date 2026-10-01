@@ -382,7 +382,7 @@ Ordinary f64 arithmetic produced
 
 missing the predeclared \(10^{-9}\) normalization criterion. The \(s=10^{-5}\) residual was \(1.138\times10^{-10}\), narrowly above the \(10^{-10}\) criterion, and the f64 Frobenius condition estimate is of order \(10^{11}\) at \(s=0\).
 
-These failures are not waived. A predeclared 50/80/120-decimal-digit high-precision cross-check with robust LU/eigen/SVD diagnostics is **currently pending execution/reconciliation**. No high-precision scientific conclusion is included here.
+These failures are not waived. The predeclared 50/80/120-decimal-digit high-precision cross-check has now executed successfully. At the 80-digit reference, \\(\\Phi_{\\rm init}(0)=1\\), the relative residuals are of order \\(10^{-85}\\), \\(\\rho[K(0)]=0.9999999999499492888\\), and robust SVD gives \\(\\kappa_2(I-K)\\approx5.20\\times10^{10}\\). The 50→80 and 80→120 results converge far beyond the original criteria. This establishes candidate evidence that the f64 failures were conditioning error. **Independent review is still required before any inverse-Laplace work.**
 
 No inverse-Laplace recovery has been verified. No final five-layer \(F(t)\) is reported.
 
@@ -391,7 +391,7 @@ No inverse-Laplace recovery has been verified. No final five-layer \(F(t)\) is r
 1. **R2-WOS-02 — OPEN.**
 2. **R2-B01 — OPEN.**
 3. Process A finite-capture WOS is not pathwise identical to Process B/C.
-4. Hard-matrix high-precision remediation is ongoing.
+4. Hard-matrix high-precision remediation passes its predeclared numerical gates but is pending independent review.
 5. No verified inverse-Laplace recovery or final five-layer release CDF exists.
 6. Method 3 has not begun.
 7. Multilayer analytical modal completeness and numerical modal truncation remain separately qualified.
