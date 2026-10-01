@@ -49,8 +49,7 @@ jobs:
           assert p['equations_removed']==[], p
           assert p['equations_added']==[], p
           assert p['before_unique_ids']==p['after_unique_ids']==1481, p
-          allowed={'TRISO-ANA-270','TRISO-MR-023','TRISO-MR-024'}
-          assert set(p['math_expressions_changed'])==allowed, p
+          assert p['math_expressions_changed']==[], p
           print('Structured diff PASS',p)
           PY
       - uses: actions/upload-artifact@v4
