@@ -25,4 +25,14 @@ This traceability file is a human-readable view of canonical evidence. Canonical
 
 ## Hard high-precision numerical gate
 
-Run `36869649217` (commit `fdb62bd203bf2c618eb58efe026f0a3bf239a480`) used Python 3.12.14, mpmath 1.3.0 and NumPy 2.3.3 at 50/80/120 decimal digits. The 80-digit reference gives `Phi_init(0)=1`, `rho(K(0))=0.99999999994994928880658084574605124`, and residuals far below the original criteria. Evidence: `verification/hard_five_layer_high_precision_evidence.md`. Status: **RESULT PENDING INDEPENDENT REVIEW**.
+Run `36869649217` (commit `fdb62bd203bf2c618eb58efe026f0a3bf239a480`) used Python 3.12.14, mpmath 1.3.0 and NumPy 2.3.3 at 50/80/120 decimal digits. The 80-digit reference gives `Phi_init(0)=1`, `rho(K(0))=0.99999999994994928880658084574605124`, and residuals far below the original criteria. Evidence: `verification/hard_five_layer_high_precision_evidence.md`. Status: **independently verified with non-blocking findings; controlled inverse-Laplace verification authorized but not yet executed**.
+
+
+## Detailed-manuscript reconstruction
+
+- Dependency tree: `ray to outram park/EQUATION_DEPENDENCY_TREE.md`.
+- Equation parity index: `ray to outram park/EQUATION_PARITY.md`.
+- Detailed manuscript backbone: `docs/triso/00_consolidated_mathematical_foundation.md`.
+- Original intended derivation path: `notes/raw/TRISO Fuel Derivation Ray V1.tex` (historical/raw; not overwritten).
+- Stable equation IDs are preserved for canonical foundation equations; new stochastic/renewal equations use TRISO-FPT, TRISO-WOS, TRISO-MR, TRISO-VER and TRISO-HARD families.
+- Current independent hard-matrix gate: VERIFIED WITH NON-BLOCKING FINDINGS; only a separately predeclared controlled transform-to-time verification stage is authorized.
