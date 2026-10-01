@@ -122,3 +122,22 @@ The original notebook's FTCS scheme is retained as a transparent deterministic b
 ## Repository safety
 
 `main` is the canonical active research branch for this repository. `ray/triso-foundation` is retained as a historical/frozen pointer and is not the active development branch. The separate supervisor repository remains authoritative for the production WOS implementation and must not be modified or pushed to unless explicitly requested.
+
+
+## Canonical integration and manuscript policy
+
+- Active research/integration branch: `main`.
+- The supervisor repository `theodoreOnzGit/outram-park-backend` remains read-only unless explicitly authorized.
+- Supervisor-facing transfer planning is maintained at `integration/outram_park/TRANSFER_MAP.md`.
+- Canonical research manuscript: `paper/main.md` and `paper/main.tex`.
+- Manuscript evidence mapping: `paper/TRACEABILITY.md`.
+- Bibliography infrastructure: `paper/references.bib`.
+- Historical raw LaTeX under `notes/raw/` is preserved and is not overwritten.
+
+### Current Method-2 hard-matrix status
+
+The hard five-layer 8x8 topology and transform behaviour are coherent, but the ordinary-f64 diagnostic did not satisfy all predeclared numerical gates because the near-recurrent system is severely conditioned. A predeclared 50/80/120-decimal-digit high-precision cross-check is pending. No inverse-Laplace recovery or final five-layer release CDF is claimed.
+
+R2-WOS-02: **OPEN**.
+
+R2-B01: **OPEN**.
