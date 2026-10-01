@@ -85,3 +85,26 @@ Canonical LaTeX changed: **NO**.
 R2-WOS-02: **OPEN**.
 
 R2-B01: **OPEN**.
+
+
+## Permanent post-migration CI architecture
+
+The historical Markdown display architecture `$$ ... \\tag{TRISO-*} ... $$` is no longer canonical. Canonical GitHub Markdown now uses an ordinary stable-ID marker followed by a fenced `math` block.
+
+Normal Stage A validates the canonical targets directly. It does **not** rerun the historical migration or reconstruct either target from the other.
+
+Permanent fast gates:
+
+- full 1498-block structural audit;
+- MathJax 3.2.2 all-block validation with explicit SVG output and only required TeX configurations;
+- serializer fixture and validator self-tests;
+- direct Markdown/LaTeX stable-ID parity;
+- 1481 unique stable IDs;
+- 17 intentional auxiliary unnumbered displays;
+- zero malformed/nested fences, inner `$$`, inner `\\tag{TRISO-*}`, obsolete delimiters, environment mismatches, forbidden controls, and known source-level regression patterns.
+
+Run **36898888830** established that the corrected MathJax harness passes all **1498 / 1498** blocks with **0 failures, 0 warnings, 0 harness errors**, and that the serializer fixture passes. Its remaining failure was solely the obsolete attempt to migrate the already-migrated canonical Markdown.
+
+The historical migration script is retained under `verification/` for provenance/reproducibility but is not part of normal post-migration CI.
+
+KaTeX, where retained for the isolated serializer fixture, is secondary. MathJax is the renderer-aware parser gate. Actual GitHub rendering remains the final visual acceptance authority.
