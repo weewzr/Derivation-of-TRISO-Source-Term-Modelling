@@ -1,0 +1,28 @@
+name: Hard five-layer 8x8 matrix diagnostic
+on:
+  push:
+    branches: [main]
+    paths:
+      - verification/hard_five_layer_matrix.rs
+      - .github/workflows/hard-five-layer-matrix.yml
+  workflow_dispatch:
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: |
+          echo "research_commit=$GITHUB_SHA" | tee verification/hard_five_layer_matrix_results.txt
+          rustc --version | tee -a verification/hard_five_layer_matrix_results.txt
+      - name: Run bounded transform diagnostic
+        run: |
+          set -o pipefail
+          rustc -O verification/hard_five_layer_matrix.rs -o /tmp/hard8
+          /tmp/hard8 2>&1 | tee -a verification/hard_five_layer_matrix_results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hard-five-layer-matrix-results
+          path: verification/hard_five_layer_matrix_results.txt
