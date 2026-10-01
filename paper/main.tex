@@ -11,7 +11,7 @@
 \maketitle
 
 \begin{abstract}
-This work derives and verifies diffusion-based source-term models for a concentric five-layer TRISO particle. Method~1 develops the continuous spherical diffusion equations and analytical/modal structure. Method~2 develops an independently verified conservative finite-volume (FV) reference, the production walk-on-spheres (WOS) formulation, exact spherical first-passage kernels, an accelerated exact-interface renewal process, and a finite-state Markov-renewal transform reduction. Controlled two-layer and three-layer verification establishes the numerical building blocks. The frozen five-layer Cs-137 matrix has been constructed and diagnosed, but ordinary double precision is strongly affected by near-recurrent interface dynamics; a predeclared high-precision cross-check is ongoing. No final five-layer release CDF is claimed, and R2-WOS-02 and R2-B01 remain open.
+This work derives and verifies diffusion-based source-term models for a concentric five-layer TRISO particle. Method~1 develops the continuous spherical diffusion equations and analytical/modal structure. Method~2 develops an independently verified conservative finite-volume (FV) reference, the production walk-on-spheres (WOS) formulation, exact spherical first-passage kernels, an accelerated exact-interface renewal process, and a finite-state Markov-renewal transform reduction. Controlled two-layer and three-layer verification establishes the numerical building blocks. The frozen five-layer Cs-137 matrix has been constructed and diagnosed, but ordinary double precision is strongly affected by near-recurrent interface dynamics; a predeclared 50/80/120-decimal-digit high-precision cross-check passes the original numerical gates; this hard-matrix result is pending independent review. No final five-layer release CDF is claimed, and R2-WOS-02 and R2-B01 remain open.
 \end{abstract}
 
 \section{Geometry and scope}
@@ -200,7 +200,7 @@ D=(1,2,5)\times10^{-9}\;\si{\metre\squared\per\second},
 \end{equation}
 was then compared with $N=20{,}000$ explicit B histories and a refined FV reference. The maximum B/C transform discrepancy was 0.729 MC standard errors. The B/FV CDF RMS difference was $1.0395\times10^{-3}$ and the maximum absolute difference was $1.7794\times10^{-3}$. FV refinement and conservation errors were much smaller than stochastic uncertainty. Independent audit cleared the bounded hard-matrix diagnostic.
 
-\section{Hard five-layer transform diagnostic: ongoing / not yet closed}
+\section{Hard five-layer transform diagnostic: result pending independent review}
 The hard $8\times8$ matrix was evaluated at
 \begin{equation}
 s=(0,10^{-9},10^{-8},10^{-7},10^{-6},10^{-5},10^{-4})\;\si{\per\second}.
@@ -225,7 +225,7 @@ These failures were not waived. The predeclared 50/80/120-decimal-digit high-pre
 \item R2-WOS-02 remains OPEN.
 \item R2-B01 remains OPEN.
 \item Process A is not pathwise identical to Process B/C.
-\item Hard-matrix high-precision remediation is ongoing.
+\item Hard-matrix high-precision remediation passes its numerical gate but is pending independent review.
 \item No verified inverse-Laplace recovery or final five-layer release CDF exists.
 \item Method 3 has not begun.
 \item Multilayer analytical modal completeness and numerical modal truncation remain separately qualified.
