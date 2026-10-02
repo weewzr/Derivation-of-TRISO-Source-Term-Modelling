@@ -1,0 +1,54 @@
+{
+  "run_id": 37008548408,
+  "commit": "9668f76c6339871e6fc60d915242fcaa44ae3fef",
+  "artifact": {
+    "id": 11226802949,
+    "name": "inverse-laplace-il3-production-results",
+    "digest": "sha256:c359c6a66a398693914ce87a81ad19ba0b8e32d0e226d9830da417d03ff8b9a9"
+  },
+  "classification": "IL-3_CONTROLLED_PRODUCTION_EVIDENCE_CANDIDATE_REVIEW_REQUIRED",
+  "grid": {
+    "points": 81,
+    "start_s": "1e2",
+    "end_s": "1e10",
+    "log10_step": "0.1"
+  },
+  "primary_dps": 80,
+  "method_max_abs_difference": "2.2e-60",
+  "method_max_difference_time_s": "125892.54117941661389",
+  "metrics": {
+    "stehfest": {
+      "runtime_s": 135.14663529396057,
+      "transform_calls": 37908,
+      "unique": 18834,
+      "cache_hits": 19074,
+      "raw_bounds": false,
+      "raw_monotone": false,
+      "max_abs_F_plus_S_minus_1": "1.5813296914845784837e-80"
+    },
+    "dehoog": {
+      "runtime_s": 227.26971745491028,
+      "transform_calls": 35154,
+      "unique": 17577,
+      "cache_hits": 17577,
+      "raw_bounds": true,
+      "raw_monotone": true,
+      "max_abs_F_plus_S_minus_1": "1.5955319297097397799e-74"
+    }
+  },
+  "stehfest_early_negative": {
+    "count": 10,
+    "max_negative_magnitude": "5.28827493241866842548105041003920970285075332e-87",
+    "classification": "NUMERICAL_CANCELLATION_IN_UNRESOLVED_ZERO_TAIL"
+  },
+  "reconstruction_relative_error": {
+    "1e-9": "9.10520407495239641e-5",
+    "1e-8": "2.77246466676920594e-4",
+    "1e-7": "1.55636812683962925e-3",
+    "1e-6": "9.98699761523560707e-3",
+    "1e-5": "9.4120453501744851e-2"
+  },
+  "accepted_release_claim": false,
+  "R2_WOS_02": "OPEN",
+  "R2_B01": "OPEN"
+}
