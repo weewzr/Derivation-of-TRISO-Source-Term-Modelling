@@ -1,0 +1,44 @@
+{
+  "run_id": 37007436157,
+  "commit": "c97ec853b35a635b1698ffdf884bea2a594d2d4d",
+  "artifact": {
+    "id": 11225954066,
+    "name": "inverse-laplace-il2-pilot-results",
+    "digest": "sha256:f1081de82e177dc8263767712a0d00bdaa065da923227dd36391594dc7379fcb"
+  },
+  "classification": "IL-2_METHOD_PRECISION_PILOT_ONLY",
+  "primary_dps": 80,
+  "times_s": [
+    "1e2",
+    "1e4",
+    "1e6",
+    "1e8",
+    "1e10"
+  ],
+  "primary": {
+    "stehfest": [
+      "7.687782439621089657426933714881661711734e-340",
+      "4.491204034397311486738388874319450268985e-99",
+      "0.000584912869207092530638761959671479190122",
+      "0.8872792421069170706171971734365266692718",
+      "1.0"
+    ],
+    "dehoog": [
+      "2.182641838423755958574993077352149948569e-1352",
+      "9.082736026802770504946190408987820747458e-147",
+      "0.000584912869207092530638761959671479190122",
+      "0.8872792421069170706171971734365266692718",
+      "1.0"
+    ]
+  },
+  "raw_bounds": {
+    "stehfest": true,
+    "dehoog": true
+  },
+  "raw_monotone": {
+    "stehfest": true,
+    "dehoog": true
+  },
+  "early_time_classification": "NUMERICAL_CANCELLATION_AROUND_EFFECTIVELY_ZERO",
+  "final_release_claim": false
+}
