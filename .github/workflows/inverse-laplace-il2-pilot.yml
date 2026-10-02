@@ -1,0 +1,26 @@
+name: IL-2 Process-C pilot
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'verification/inverse_laplace_il2_pilot.py'
+      - 'verification/inverse_laplace_il2_plan.md'
+      - '.github/workflows/inverse-laplace-il2-pilot.yml'
+  workflow_dispatch:
+jobs:
+  il2-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install mpmath==1.3.0
+      - name: Bounded Stehfest versus de Hoog precision pilot
+        run: python verification/inverse_laplace_il2_pilot.py | tee verification/inverse_laplace_il2_results.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: inverse-laplace-il2-pilot-results
+          path: verification/inverse_laplace_il2_results.json
