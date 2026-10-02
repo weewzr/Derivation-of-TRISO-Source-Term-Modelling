@@ -1,0 +1,29 @@
+name: Controlled inverse Laplace
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'verification/hard_five_layer_inverse_laplace.py'
+      - 'verification/inverse_laplace_synthetic_benchmarks.py'
+      - 'verification/inverse_laplace_method_selection.md'
+      - '.github/workflows/inverse-laplace.yml'
+  workflow_dispatch:
+jobs:
+  inverse-laplace:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install mpmath==1.3.0
+      - name: Synthetic inversion benchmarks
+        run: python verification/inverse_laplace_synthetic_benchmarks.py | tee verification/inverse_laplace_synthetic_results.json
+      - name: Physical Process-C inversion
+        run: python verification/hard_five_layer_inverse_laplace.py | tee verification/hard_five_layer_inverse_laplace_results.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: controlled-inverse-laplace-results
+          path: |
+            verification/inverse_laplace_synthetic_results.json
+            verification/hard_five_layer_inverse_laplace_results.json
