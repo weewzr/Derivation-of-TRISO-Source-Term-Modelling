@@ -25,7 +25,7 @@ This traceability file is a human-readable view of canonical evidence. Canonical
 
 ## Hard high-precision numerical gate
 
-Run `36869649217` (commit `fdb62bd203bf2c618eb58efe026f0a3bf239a480`) used Python 3.12.14, mpmath 1.3.0 and NumPy 2.3.3 at 50/80/120 decimal digits. The 80-digit reference gives `Phi_init(0)=1`, `rho(K(0))=0.99999999994994928880658084574605124`, and residuals far below the original criteria. Evidence: `verification/hard_five_layer_high_precision_evidence.md`. Status: **independently verified with non-blocking findings; controlled inverse-Laplace verification authorized but not yet executed**.
+Run `36869649217` (commit `fdb62bd203bf2c618eb58efe026f0a3bf239a480`) used Python 3.12.14, mpmath 1.3.0 and NumPy 2.3.3 at 50/80/120 decimal digits. The 80-digit reference gives `Phi_init(0)=1`, `rho(K(0))=0.99999999994994928880658084574605124`, and residuals far below the original criteria. Evidence: `verification/hard_five_layer_high_precision_evidence.md`. Status: **independently verified with non-blocking findings; controlled inverse-Laplace verification authorized; run 36991554900 completed synthetic benchmarks, while the physical inversion ended at the workflow time limit before producing a result; staged IL-1 execution is now the next gate**.
 
 
 ## Detailed-manuscript reconstruction
