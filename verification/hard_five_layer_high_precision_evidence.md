@@ -57,9 +57,17 @@ NumPy float64 SVD independently agrees with the high-precision spectral conditio
 
 The underlying frozen hard 8x8 mathematical system satisfies the original predeclared normalization and residual gates under reliable arithmetic. The ordinary-f64 failures are explained by the near-recurrent, highly conditioned system rather than by the reviewed topology.
 
-This is candidate closure evidence only. The hard matrix remains **RESULT PENDING INDEPENDENT REVIEW**.
+Independent closure audit `reviews/independent_hard_five_layer_matrix_closure_audit.md` subsequently classified this hard matrix **VERIFIED WITH NON-BLOCKING FINDINGS — CLEARED FOR CONTROLLED RELEASE-TIME RECOVERY / INVERSE-LAPLACE VERIFICATION**.
 
-No inverse Laplace or five-layer release CDF has been computed.
+Controlled inverse-Laplace work has since begun. Run `36991554900` completed its synthetic benchmarks but the physical Process-C inversion was cancelled by the workflow timeout before producing a physical result; no final five-layer release CDF is established.
 
 R2-WOS-02 remains OPEN.
 R2-B01 remains OPEN.
+
+
+## Independent-review finding reconciliation
+
+- R3-HM01 remains a non-blocking record limitation: formal 50/80/120 convergence is centered on `Phi_init`, not every state component.
+- R3-HM02: subsequent inversion analysis uses the directly measured hard 8x8 conditioning above; no lower-order extrapolation is used.
+- R3-HM03: positive-s spectral radius is **NOT_EVALUATED**. Historical f64 `NaN` output represented a deliberate non-evaluation branch, not a numerical failure.
+- R3-HM04: independent review is complete; the stale pending-review wording above has been superseded.
