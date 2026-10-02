@@ -1,0 +1,25 @@
+name: IL-1 Process-C smoke
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'verification/inverse_laplace_il1_smoke.py'
+      - '.github/workflows/inverse-laplace-il1-smoke.yml'
+  workflow_dispatch:
+jobs:
+  il1-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install mpmath==1.3.0
+      - name: Bounded Stehfest physical smoke and complex-s gate
+        run: python verification/inverse_laplace_il1_smoke.py | tee verification/inverse_laplace_il1_smoke_results.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: inverse-laplace-il1-smoke-results
+          path: verification/inverse_laplace_il1_smoke_results.json
