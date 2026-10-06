@@ -2,6 +2,16 @@
 
 This repository develops the TRISO fuel-particle source-term model from first principles and connects the continuous mathematics to the supervisor's numerical implementation.
 
+## Clarified primary implementation workflow
+
+The primary implementation objective is now explicitly documented in [`WORKFLOW_HIGH_RESOLUTION.md`](WORKFLOW_HIGH_RESOLUTION.md):
+
+**first principles -> five physical TRISO layers -> arbitrary-N conservative finite-volume discretisation -> independent Rust solver -> spatial/time convergence -> high-resolution release observables.**
+
+The five material regions remain physical. Hundreds or thousands of radial subdivisions are **numerical control volumes**, not additional physical material layers. Sufficient resolution is determined by convergence rather than by preselecting 1000 cells.
+
+Production WOS remains a distinct independent verification stream. Rare-event WOS acceleration is useful but **non-blocking** for the primary arbitrary-N FV/Rust implementation track.
+
 ## Current project state
 
 Canonical active research branch: `main`
