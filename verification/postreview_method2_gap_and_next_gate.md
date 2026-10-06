@@ -81,3 +81,19 @@ Required derivation before code:
 9. only then attempt a bounded five-layer comparison to the accepted Process-C benchmark.
 
 No claim is made yet that this bridge closes R2-WOS-02 or R2-B01.
+
+
+## Weighted-ensemble bridge execution outcome
+
+The first bounded bridge-development cycle has now been executed through its controlled gate.
+
+- Level 1 homogeneous validation: PASS after predeclared stratified-initialization remediation.
+- Level 2 frozen two-layer validation: FAIL at 0.25, 0.5, 1 and 4 s.
+- weight conservation: PASS;
+- weighted censoring: zero;
+- interface event coverage: PASS;
+- five-layer WE: NOT AUTHORIZED.
+
+The current weighted-ensemble bridge therefore does not yet satisfy the required validation chain. Decision C remains in force: additional method development is required before a useful Process-A rare-event estimator exists.
+
+The next question is narrower than generic WE tuning: derive a rigorous common-physical-time resampling bridge for WOS first-passage hops, or prove an alternative asynchronous/event-index resampling theorem sufficient for the physical release-time CDF. Do not tune bins against Process C before that issue is resolved.
