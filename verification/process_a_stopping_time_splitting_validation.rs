@@ -45,7 +45,7 @@ fn rare(m:Model,times:&[f64],rep:usize)->Out{
  let mut rel=Vec::new();let mut d=Diag::default();d.peak=stack.len();let tmax=*times.last().unwrap();let mut root_desc=vec![0u64;n0];
  while let Some(mut tr)=stack.pop(){let mut done=false;while !done{if tr.steps>=CAP{d.cens+=tr.w;break}let prev=radius(tr.p);let was_inner=matches!(m,Model::Two)&&prev<50e-6;let inout0=d.c.inout;if hop(&mut tr,m,&mut d.c){rel.push((tr.time,tr.w));root_desc[tr.root as usize]+=1;break}d.steps+=1;if tr.time>tmax{root_desc[tr.root as usize]+=1;break}let transmitted_out=d.c.inout>inout0;let ms=milestones(&tr,m,prev,was_inner,transmitted_out);if let Some((idx,b))=ms.first().copied(){tr.flags|=1<<idx;let kids=split(tr.clone(),b,&mut master,&mut d,idx);for z in kids{stack.push(z)}d.peak=d.peak.max(stack.len());done=true}}
  }
- d.max_desc=*root_desc.iter().max().unwrap_or(&0);let f=times.iter().map(|&t|rel.iter().filter(|x|x0.0<=t).map(|x|x0.1).sum()).collect();let rw=rel.iter().map(|x|x0.1).collect();Out{f,diag:d,rep_weights:rw}
+ d.max_desc=*root_desc.iter().max().unwrap_or(&0);let f=times.iter().map(|&t|rel.iter().filter(|x|x.0<=t).map(|x|x.1).sum()).collect();let rw=rel.iter().map(|x|x.1).collect();Out{f,diag:d,rep_weights:rw}
 }
 fn direct(m:Model,times:&[f64])->(Vec<f64>,u64,Counters){
  let r0=match m{Model::Sphere=>100e-6,Model::Two=>50e-6};let mut cnt=vec![0usize;times.len()];let mut steps=0;let mut c=Counters::default();let tmax=*times.last().unwrap();
