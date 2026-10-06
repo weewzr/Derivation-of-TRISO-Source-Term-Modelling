@@ -133,3 +133,14 @@ For controlled validation we report the replicate mean and Student-t 95% interva
 Level 1 and Level 2 compare direct Process A and weighted Process A under identical physical models. Agreement is assessed using predeclared combined uncertainty plus deterministic reference tolerance. Weight conservation and exact resampling-invariance tests are hard gates.
 
 No five-layer WE execution is authorized until independent review of this bridge.
+
+
+## Validation correction after controlled execution
+
+The initial derivation's fixed-WOS-step resampling proposal is **not accepted as a validated continuous-time WE bridge**.
+
+Although treating accumulated physical time as part of an augmented event-index state gives a plausible discrete path-space expectation argument, the primary WE references used here formulate splitting/merging among trajectories at the same physical time (fixed lag). Process-A WOS advances by random first-passage-time increments and does not expose the conditional particle state at an arbitrary common physical time inside a hop.
+
+Executed Level 2 run 37439263013 failed the frozen two-layer benchmark despite excellent weight conservation and zero censoring. Therefore the event-index controller is not authorized for five-layer use. No claim of bias is made solely from one finite validation run; rather, the combination of empirical failure and incomplete correspondence to the standard fixed-physical-time WE theorem means the bridge is **not yet justified**.
+
+Any next WE derivation must establish a common-physical-time synchronization or an alternative theorem directly covering the asynchronous WOS event-index resampling and the physical release-time observable before further tuning or execution.
