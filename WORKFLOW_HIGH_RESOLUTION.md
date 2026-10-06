@@ -20,6 +20,19 @@ The primary engineering objective is therefore:
 
 WOS remains an independent stochastic verification stream. Rare-event acceleration is an optional WOS verification tool and must not block development of the deterministic high-resolution solver.
 
+## Repository evidence already achieved
+
+Do not restart this workflow from zero. The repository already has executed FV evidence in `verification/fv_convergence.rs` / `verification/fv_convergence_results.txt`:
+
+- interface-aligned five-region FV meshes at N=25,50,100,200,400;
+- approximately second-order spatial convergence on the frozen synthetic steady benchmark;
+- approximately first-order Forward-Euler temporal self-convergence;
+- steady generation/release balance and transient inventory conservation at floating-point residual scale.
+
+This establishes the reviewed FV core on that benchmark. The next gap is **generalisation into the production high-resolution solver**, not re-proving the same synthetic case.
+
+The controlling next gate is `verification/primary_arbitrary_n_fv_gate.md`.
+
 ## Track 0 — First-principles physics [substantially complete]
 
 Derive and preserve:
