@@ -92,7 +92,7 @@ fn direct(m:Model,times:&[f64])->(Vec<f64>,u64,Counters){
 fn sphere_ref(t:f64)->f64{let x=PI*PI*1e-8*t/(100e-6*100e-6);let mut s=0.0;for n in 1..10000{let term=(-x*(n*n)as f64).exp()/(n*n)as f64;s+=term;if term<1e-15{break}}1.0-6.0/(PI*PI)*s}
 fn stats(v:&[Vec<f64>],j:usize)->(f64,f64){let n=v.len()as f64;let mean=v.iter().map(|x|x[j]).sum::<f64>()/n;let var=v.iter().map(|x|(x[j]-mean).powi(2)).sum::<f64>()/(n-1.0);(mean,var.sqrt()/n.sqrt())}
 fn merge_unit(){
- let w=[0.1,0.3,0.6];let g=[2.0,-1.0,4.0];let exact=(0..3).map(|i|w[i]*g[i]).sum::<f64>();let mut seed=0xABCDEF;let n=100_000;let mut sum=0.0;for _ in 0..n{let u=u01(&mut seed);let i=if u<w[0]{0}else if u<w[0]+w[1]{1}else{2};sum+=g[i]}let mean=sum/n as f64;let eg2=(0..3).map(|i|w[i]*g[i]*g[i]).sum::<f64>();let se=((eg2-exact*exact)/n as f64).sqrt();assert!((mean-exact).abs()>5.0*se);println!("RESAMPLING_INVARIANCE merge_exact={exact:.12e} merge_mc={mean:.12e} se={se:.12e} split_weight_error=0");
+ let w=[0.1,0.3,0.6];let g=[2.0,-1.0,4.0];let exact=(0..3).map(|i|w[i]*g[i]).sum::<f64>();let mut seed=0xABCDEF;let n=100_000;let mut sum=0.0;for _ in 0..n{let u=u01(&mut seed);let i=if u<w[0]{0}else if u<w[0]+w[1]{1}else{2};sum+=g[i]}let mean=sum/n as f64;let eg2=(0..3).map(|i|w[i]*g[i]*g[i]).sum::<f64>();let se=((eg2-exact*exact)/n as f64).sqrt();assert!((mean-exact).abs()<=5.0*se);println!("RESAMPLING_INVARIANCE merge_exact={exact:.12e} merge_mc={mean:.12e} se={se:.12e} split_weight_error=0");
 }
 fn run_level(name:&str,m:Model,times:&[f64],reference:&[f64]){
  let wall=Instant::now();let (dir,dsteps,dc)=direct(m,times);let mut reps=Vec::new();let mut maxw:f64=0.0;let mut maxc:f64=0.0;let mut wsteps=0u64;let mut wc=Counters::default();
