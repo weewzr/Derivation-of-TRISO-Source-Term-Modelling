@@ -19,7 +19,8 @@ struct WeOut{f:Vec<f64>,cens:f64,horizon:f64,max_werr:f64,steps:u64,c:Counters}
 fn radius(p:[f64;3])->f64{(p[0]*p[0]+p[1]*p[1]+p[2]*p[2]).sqrt()}
 fn set_radius(p:&mut[f64;3],target:f64){let r=radius(*p);if r==0.0{*p=[target,0.0,0.0]}else{let s=target/r;for x in p.iter_mut(){*x*=s}}}
 fn u01(seed:&mut u64)->f64{outram_mc_libs::rng::lcg::prn(seed)}
-fn start_ball(seed:&mut u64,r:f64)->[f64;3]{let rr=r*u01(seed).cbrt();let q=sample_uniform_direction(seed);[rr*q[0],rr*q[1],rr*q[2]]}
+fn start_ball(seed:&mut u64,r:f64)->[f64;3]{start_shell(seed,0.0,r)}
+fn start_shell(seed:&mut u64,lo:f64,hi:f64)->[f64;3]{let rr=(lo.powi(3)+u01(seed)*(hi.powi(3)-lo.powi(3))).cbrt();let q=sample_uniform_direction(seed);[rr*q[0],rr*q[1],rr*q[2]]}
 fn hop(tr:&mut Tr,m:Model,c:&mut Counters)->bool{
  let (a,rout,d1,d2)=match m{Model::Sphere=>(0.0,100e-6,1e-8,1e-8),Model::Two=>(50e-6,100e-6,1e-10,1e-9)};
  let rho=radius(tr.p);
@@ -63,7 +64,10 @@ fn resample(mut live:Vec<Tr>,m:Model,seed:&mut u64,maxerr:&mut f64)->Vec<Tr>{
 fn we(m:Model,times:&[f64],rep:usize)->WeOut{
  let r0=match m{Model::Sphere=>100e-6,Model::Two=>50e-6};let n0=match m{Model::Sphere=>40,Model::Two=>64};
  let mut master=0x5EED_0000_u64+rep as u64*0x10000+(match m{Model::Sphere=>1,Model::Two=>2});
- let mut live=Vec::new();for _ in 0..n0{let p=start_ball(&mut master,r0);live.push(Tr{p,time:0.0,w:1.0/n0 as f64,steps:0,rng:OoRng64::from_u64((u01(&mut master)*u64::MAX as f64)as u64)})}
+ let mut live=Vec::new();
+ let (nb,perbin)=match m{Model::Sphere=>(5usize,8usize),Model::Two=>(4usize,16usize)};
+ for b in 0..nb{let lo=r0*b as f64/nb as f64;let hi=r0*(b+1)as f64/nb as f64;let mass=(hi.powi(3)-lo.powi(3))/r0.powi(3);for _ in 0..perbin{let p=start_shell(&mut master,lo,hi);live.push(Tr{p,time:0.0,w:mass/perbin as f64,steps:0,rng:OoRng64::from_u64((u01(&mut master)*u64::MAX as f64)as u64)})}}
+ assert_eq!(live.len(),n0);
  let mut rel:Vec<(f64,f64)>=Vec::new();let mut cens=0.0;let mut horizon=0.0;let mut maxerr=0.0;let mut steps=0;let mut c=Counters::default();let tmax=*times.last().unwrap();
  while !live.is_empty(){
   let mut next=Vec::new();
