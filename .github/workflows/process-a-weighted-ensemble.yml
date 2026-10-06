@@ -1,0 +1,45 @@
+name: Process-A weighted-ensemble bridge validation
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'verification/process_a_weighted_ensemble_validation.rs'
+      - 'verification/process_a_weighted_ensemble_gate.md'
+      - '.github/workflows/process-a-weighted-ensemble.yml'
+  workflow_dispatch:
+jobs:
+  controlled-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SUPERVISOR_REPO: https://github.com/theodoreOnzGit/outram-park-backend.git
+      SUPERVISOR_REF: 8d31482d127e211614ebb3f66b1076e1ed6dea98
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Record provenance
+        run: |
+          echo "research_commit=$GITHUB_SHA" | tee verification/process_a_weighted_ensemble_results.txt
+          echo "supervisor_commit=$SUPERVISOR_REF" | tee -a verification/process_a_weighted_ensemble_results.txt
+          echo "five_layer_execution=NOT_AUTHORIZED" | tee -a verification/process_a_weighted_ensemble_results.txt
+          rustc --version | tee -a verification/process_a_weighted_ensemble_results.txt
+      - name: Checkout pinned supervisor
+        run: |
+          git clone --no-tags --filter=blob:none --depth 1 "$SUPERVISOR_REPO" supervisor
+          cd supervisor
+          git fetch --no-tags origin "$SUPERVISOR_REF"
+          git checkout --detach "$SUPERVISOR_REF"
+      - name: Install research-only validation adapter
+        run: |
+          mkdir -p supervisor/crates/boon-lay/examples
+          cp verification/process_a_weighted_ensemble_validation.rs supervisor/crates/boon-lay/examples/process_a_weighted_ensemble_validation.rs
+      - name: Execute Level 1 and Level 2 only
+        working-directory: supervisor
+        run: |
+          set -o pipefail
+          cargo run -p boon-lay --example process_a_weighted_ensemble_validation --release 2>&1 | tee -a ../verification/process_a_weighted_ensemble_results.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: process-a-weighted-ensemble-controlled-results
+          path: verification/process_a_weighted_ensemble_results.txt
