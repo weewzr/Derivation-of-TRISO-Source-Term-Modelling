@@ -224,3 +224,28 @@ Create or update:
 This is now the PRIMARY implementation track.
 
 Rare-event WOS research may continue in parallel but must not consume the next-action slot unless specifically needed for a cross-method verification gate.
+
+
+## Refinement addendum — 2026-10-08
+
+The core FV verification driver already exists; do not restart derivation. The first implementation pass must produce a reusable library-style Rust solver rather than another single-purpose convergence executable.
+
+Hard scientific distinctions:
+- Preserve five physical materials; numerical cells are subdivisions, not new material layers.
+- Do not conflate the existing continuously generated Robin steady benchmark with the zero-source, initial-inventory absorbing transient release problem.
+- Treat interface partition conditions carefully: concentration continuity is only valid for the frozen interface model; do not silently impose it when a partition coefficient is specified.
+- For interface-aligned cells, use the reviewed spherical FV conductance and separately test any proposed exact spherical-resistance improvement before substituting it.
+- Distinguish conservation error, spatial discretisation error, temporal error and parameter/model uncertainty.
+- Avoid reporting release-rate convergence from inventory/CDF convergence alone.
+- At the absorbing outer boundary, implement the reviewed face resistance rather than applying a boundary value at the final cell centroid.
+- For implicit Euler, verify positivity, diagonal structure and time-step refinement; tridiagonal solve failure must be explicit.
+- Include a mesh feasibility rule requiring at least one cell in every physical region, and preserve exact interface-face alignment under refinement.
+- Run the homogeneous and two-layer reference gates before expensive five-layer production.
+
+Acceptance is based on executable numerical evidence, not code existence or manuscript appearance. Archive raw inputs, outputs, toolchain versions and reproducible commands. A workflow success is only infrastructure success until scientific metrics are checked.
+
+### Parallel-track decision
+The Process-A stopping-time splitting workflow run 37504699223 completed successfully at the CI level. Its scientific gate must be reconciled from its executed output and independently reviewed before any five-layer WOS claim. It does not block the primary arbitrary-N FV development.
+
+### Next action
+Main Research should freeze a concise FV math-to-Rust contract, implement generic mesh/operator/implicit transient release solver, and execute bounded homogeneous/two-layer tests. Stop for diagnosis on any failed numerical gate; otherwise proceed to a predeclared five-layer spatial/time convergence study. Do not begin Method 3 or new rare-event algorithm research during this FV pass.
