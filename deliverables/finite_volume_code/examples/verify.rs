@@ -5,7 +5,7 @@
 use anyhow::Result;
 use std::f64::consts::PI;
 use std::time::Instant;
-use triso_rust::{
+use triso_finite_volume::{
     analytical_sturm_liouville::{Layer, ModalRelease},
     compare::{self, ConvergenceStudy},
     config::Config,

@@ -8,7 +8,9 @@
 
 use anyhow::Result;
 use std::{env, fs, path::Path};
-use triso_rust::{compare, config::Config, discrete_finite_volume_tridiagonal as fv, plots};
+use triso_finite_volume::{
+    compare, config::Config, discrete_finite_volume_tridiagonal as fv, plots,
+};
 
 /// Skip the refinement study when it would need more than this many cell-steps.
 const STUDY_COST_LIMIT: f64 = 4.0e9;

@@ -1,19 +1,20 @@
-name: Final supervisor delivery verification
+name: Delivery verification
 
 on:
   push:
-    branches: [main]
+    branches: [main, rename-and-trim]
     paths:
-      - 'triso-rust/**'
+      - 'deliverables/finite_volume_code/**'
       - 'deliverables/TRISO_Finite_Volume_Derivation.tex'
-      - '.github/workflows/final-supervisor-delivery.yml'
+      - '.github/workflows/delivery-verification.yml'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 env:
-  EVIDENCE: verification/supervisor_delivery_checks
+  CODE: deliverables/finite_volume_code
+  EVIDENCE: verification/delivery_checks
 
 jobs:
   verify-package:
@@ -25,28 +26,28 @@ jobs:
         with:
           components: rustfmt, clippy
       - name: Rust format
-        working-directory: triso-rust
+        working-directory: ${{ env.CODE }}
         run: cargo fmt --check
       - name: Rust clippy
-        working-directory: triso-rust
+        working-directory: ${{ env.CODE }}
         run: cargo clippy --all-targets -- -D warnings
       - name: Rust tests
-        working-directory: triso-rust
+        working-directory: ${{ env.CODE }}
         run: cargo test
       - name: Rust release build
-        working-directory: triso-rust
+        working-directory: ${{ env.CODE }}
         run: cargo build --release
       - name: Numerical verification
-        working-directory: triso-rust
+        working-directory: ${{ env.CODE }}
         run: |
           set -o pipefail
-          mkdir -p ../$EVIDENCE
-          cargo run --release --example verify | tee ../$EVIDENCE/TRISO_FV_Numerical_Verification.txt
+          mkdir -p $GITHUB_WORKSPACE/$EVIDENCE
+          cargo run --release --example verify | tee $GITHUB_WORKSPACE/$EVIDENCE/TRISO_FV_Numerical_Verification.txt
       - name: Five-layer executable
-        working-directory: triso-rust
+        working-directory: ${{ env.CODE }}
         run: |
           set -o pipefail
-          cargo run --release -- config/synthetic_five_layer.toml | tee ../$EVIDENCE/TRISO_Five_Layer_Run.txt
+          cargo run --release -- config/synthetic_five_layer.toml | tee $GITHUB_WORKSPACE/$EVIDENCE/TRISO_Five_Layer_Run.txt
       - name: Record Rust provenance
         run: |
           rustc --version | tee $EVIDENCE/TRISO_Rust_Toolchain.txt
@@ -55,7 +56,7 @@ jobs:
           echo "source_commit=$GITHUB_SHA" | tee -a $EVIDENCE/TRISO_Rust_Toolchain.txt
       - name: Install minimal LaTeX/render tools
         run: sudo apt-get update -qq && sudo apt-get install -y -qq texlive-latex-extra poppler-utils
-      - name: Compile final derivation PDF
+      - name: Compile derivation PDF
         working-directory: deliverables
         run: |
           pdflatex -interaction=nonstopmode -halt-on-error TRISO_Finite_Volume_Derivation.tex
@@ -66,25 +67,26 @@ jobs:
           pdftoppm -png -r 110 TRISO_Finite_Volume_Derivation.pdf ../$EVIDENCE/pdf_render_check/page
           ls ../$EVIDENCE/pdf_render_check | tee -a ../$EVIDENCE/TRISO_Final_PDF_Render_Evidence.txt
           grep -E "Warning|undefined|Overfull|Underfull" TRISO_Finite_Volume_Derivation.log || true
+          rm -f TRISO_Finite_Volume_Derivation.aux TRISO_Finite_Volume_Derivation.log TRISO_Finite_Volume_Derivation.out
       - name: Copy reproducible numerical evidence
         run: |
           mkdir -p $EVIDENCE/numerical_results
-          cp triso-rust/results/synthetic-five-layer/*.csv triso-rust/results/synthetic-five-layer/*.svg $EVIDENCE/numerical_results/
+          cp $CODE/results/synthetic-five-layer/*.csv $CODE/results/synthetic-five-layer/*.svg $EVIDENCE/numerical_results/
       - uses: actions/upload-artifact@v4
         with:
-          name: final-supervisor-delivery-evidence
+          name: delivery-verification-evidence
           path: |
             deliverables/TRISO_Finite_Volume_Derivation.pdf
-            verification/supervisor_delivery_checks/TRISO_Final_PDF_Render_Evidence.txt
-            verification/supervisor_delivery_checks/pdf_render_check/
-            verification/supervisor_delivery_checks/TRISO_FV_Numerical_Verification.txt
-            verification/supervisor_delivery_checks/TRISO_Five_Layer_Run.txt
-            verification/supervisor_delivery_checks/TRISO_Rust_Toolchain.txt
-            verification/supervisor_delivery_checks/numerical_results/
+            verification/delivery_checks/TRISO_Final_PDF_Render_Evidence.txt
+            verification/delivery_checks/pdf_render_check/
+            verification/delivery_checks/TRISO_FV_Numerical_Verification.txt
+            verification/delivery_checks/TRISO_Five_Layer_Run.txt
+            verification/delivery_checks/TRISO_Rust_Toolchain.txt
+            verification/delivery_checks/numerical_results/
       - name: Persist executed evidence to the triggering branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add triso-rust/Cargo.lock deliverables/TRISO_Finite_Volume_Derivation.pdf $EVIDENCE/TRISO_Final_PDF_Render_Evidence.txt $EVIDENCE/pdf_render_check $EVIDENCE/TRISO_FV_Numerical_Verification.txt $EVIDENCE/TRISO_Five_Layer_Run.txt $EVIDENCE/TRISO_Rust_Toolchain.txt $EVIDENCE/numerical_results
-          git commit -m "evidence(delivery): persist verified supervisor package outputs" || exit 0
+          git add $CODE/Cargo.lock deliverables/TRISO_Finite_Volume_Derivation.pdf $EVIDENCE/TRISO_Final_PDF_Render_Evidence.txt $EVIDENCE/pdf_render_check $EVIDENCE/TRISO_FV_Numerical_Verification.txt $EVIDENCE/TRISO_Five_Layer_Run.txt $EVIDENCE/TRISO_Rust_Toolchain.txt $EVIDENCE/numerical_results
+          git commit -m "evidence(delivery): persist verified package outputs" || exit 0
           git push origin HEAD:"refs/heads/$GITHUB_REF_NAME"

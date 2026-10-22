@@ -1,6 +1,6 @@
 //! Cross-module checks that run under plain `cargo test`.
 
-use triso_rust::{compare, config::Config};
+use triso_finite_volume::{compare, config::Config};
 
 const SYNTHETIC: &str = concat!(
     env!("CARGO_MANIFEST_DIR"),
