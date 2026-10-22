@@ -1,0 +1,19 @@
+# Build file for the three code files in this folder:
+#   main.rs                                  code A, main file
+#   discrete_finite_volume_tridiagonal.rs    code B, discrete approach
+#   analytical_sturm_liouville.rs            code C, analytical approach
+[package]
+name = "triso-finite-volume"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "triso-finite-volume"
+path = "main.rs"
+
+[dependencies]
+anyhow = "1"
+csv = "1"
+plotters = { version = "0.3", default-features = false, features = ["svg_backend", "line_series"] }
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"

@@ -1,7 +1,7 @@
 //! Code B: discrete approach. Conservative spherical finite volumes, Backward Euler in
 //! time, solved with a (subtraction-free) tridiagonal elimination.
 
-use crate::config::Config;
+use super::config::Config;
 use anyhow::{bail, Result};
 use std::f64::consts::PI;
 
@@ -253,8 +253,8 @@ pub fn explicit_dt_bound(mesh: &Mesh) -> f64 {
 
 #[cfg(test)]
 mod tests {
+    use super::super::config::{Config, InitialConfig, OutputConfig, RegionConfig, TimeConfig};
     use super::*;
-    use crate::config::{Config, InitialConfig, OutputConfig, RegionConfig, TimeConfig};
 
     fn cfg(cells: usize) -> Config {
         Config {

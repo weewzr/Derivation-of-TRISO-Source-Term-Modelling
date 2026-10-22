@@ -17,41 +17,32 @@ This package calculates how much has escaped after a given time. It does this in
 |---|---|
 | `TRISO_Finite_Volume_Derivation.pdf` (also `.md` and `.tex`) | The maths, step by step, from "atoms are not created or destroyed" to the equations the program solves |
 | `TRISO_Finite_Volume_Pseudocode.md` | The method as a short list of steps |
-| `finite_volume_code/` | The program you can run |
-| `finite_volume_code/src/main.rs` | **Code A, main file** |
-| `finite_volume_code/src/discrete_finite_volume_tridiagonal.rs` | **Code B, discrete approach** (finite volume, tridiagonal solve) |
-| `finite_volume_code/src/analytical_sturm_liouville.rs` | **Code C, analytical approach** (Sturm-Liouville eigenfunction series) |
-| `finite_volume_code/config/literature_inputs.template.toml` | Empty input file for your literature values |
-| `finite_volume_code/config/synthetic_five_layer.toml` | Ready-to-run example input (made-up numbers for testing) |
-
-The other files in `finite_volume_code/src/` handle reading the input (`config.rs`), comparing B with C (`compare.rs`) and drawing the figures (`plots.rs`).
+| `main.rs` | **Code A, main file.** Reads the input file, runs B and C, compares them, writes the tables and figures. It also contains the input reader, the comparison and the figure drawing |
+| `discrete_finite_volume_tridiagonal.rs` | **Code B, discrete approach** (finite volume, tridiagonal solve) |
+| `analytical_sturm_liouville.rs` | **Code C, analytical approach** (Sturm-Liouville eigenfunction series) |
+| `literature_inputs.template.toml` | Empty input file for your literature values |
+| `synthetic_five_layer.toml` | Ready-to-run example input (made-up numbers for testing) |
+| `Cargo.toml`, `Cargo.lock` | Build files that let Rust compile the three code files |
 
 ## Try it
 
 1. Install Rust once from https://rustup.rs.
-2. Open a terminal in the folder `deliverables/finite_volume_code`.
+2. Open a terminal in this folder (`deliverables`).
 3. Run:
 
 ```bash
-cargo run --release -- config/synthetic_five_layer.toml
+cargo run --release -- synthetic_five_layer.toml
 ```
 
-4. Open the folder `results/synthetic-five-layer/`. It contains the tables (`.csv`) and three figures (`.svg`, open them in a web browser).
+4. Open the new folder `results/synthetic-five-layer/`. It contains the tables (`.csv`) and three figures (`.svg`, open them in a web browser).
 
 The terminal prints the fraction of the substance released, the exact answer from code C, and how quickly the finite-volume error shrinks when the mesh or the time step is refined.
 
-To run all the built-in checks:
-
-```bash
-cargo fmt --check
-cargo clippy --all-targets -- -D warnings
-cargo test
-cargo run --release --example verify
-```
+The unit tests inside the code files run with `cargo test`. Larger checks that compare B with C in more detail are kept outside this folder, in `verification/code_checks`.
 
 ## Using your own numbers
 
-1. Copy `config/literature_inputs.template.toml` to a new file.
+1. Copy `literature_inputs.template.toml` to a new file.
 2. Replace every `INSERT_VALUE_HERE` with a value from the literature, in SI units, and keep the reference in the `source` comment next to it.
 3. Run `cargo run --release -- your_file.toml`.
 

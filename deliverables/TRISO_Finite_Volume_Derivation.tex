@@ -258,11 +258,10 @@ The term $\dot M_{\mathrm{rel}}$ is the amount leaving the particle per second.
 \end{aligned}
 \]
 \begin{equation}
-\boxed{
 \begin{aligned}
 &-G_WC_{j-1}^{n+1}+\left(\frac{V_j}{\Delta t}+G_W+G_E\right)C_j^{n+1}-G_EC_{j+1}^{n+1}\\
 &\qquad=\frac{V_j}{\Delta t}C_j^n+S_j^{n+1}V_j
-\end{aligned}}
+\end{aligned}
 \tag{TRISO-DEL-040}
 \end{equation}
 Each equation links one cell to its two neighbours only, so the whole system is a tridiagonal one that a computer solves very quickly. Every number on the diagonal is positive and larger than the sum of the other entries in its row, which are zero or negative. This guarantees that the new concentrations are never negative when the old ones are not, for any time step.

@@ -5,7 +5,7 @@
 use anyhow::Result;
 use std::f64::consts::PI;
 use std::time::Instant;
-use triso_finite_volume::{
+use triso_code_checks::{
     analytical_sturm_liouville::{Layer, ModalRelease},
     compare::{self, ConvergenceStudy},
     config::Config,
@@ -14,7 +14,7 @@ use triso_finite_volume::{
 
 const SYNTHETIC: &str = concat!(
     env!("CARGO_MANIFEST_DIR"),
-    "/config/synthetic_five_layer.toml"
+    "/../../deliverables/synthetic_five_layer.toml"
 );
 
 fn uniform_d(cfg: &mut Config, d: f64) {

@@ -1,7 +1,7 @@
 # Final Delivery Math and Code Audit
 
 **Date:** 22 October 2026
-**Scope:** `deliverables/`, `deliverables/finite_volume_code/`, literature template, CI workflow for the final delivery package.
+**Scope:** `deliverables/`, `verification/code_checks/`, literature template, CI workflow for the final delivery package.
 **Method:** every equation re-derived by hand, every claim re-executed, FV results compared with an independent exact solution written in two languages (Rust and Python).
 **Preceding audit:** the earlier final-delivery audit in `reviews/` (not modified).
 
@@ -22,7 +22,7 @@ The finite-volume scheme is correct: against the exact five-layer solution it co
 | FDA-07 | MINOR | The headline release fraction $0.43243$ carries a first-order Backward-Euler error of $1.3\times10^{-4}$. The exact value is $0.43256$. | Both numbers are reported, with the time and space errors separated. |
 | FDA-08 | MINOR | Unfilled template failed with a TOML type error. `species = "INSERT_VALUE_HERE"` passed validation. NaN and infinity were not rejected. | Readable list of every unfilled value, stricter validation. |
 | FDA-09 | MINOR | CI ran `cargo fmt` (auto-fix) before `cargo fmt --check`, so the check could not fail. It wrote evidence into `deliverables/`, undoing the cleanup to five submission files, and pushed to `main` from any ref. | Check-only formatting, evidence in `verification/delivery_checks/`, push to the triggering branch. |
-| FDA-10 | NOTE | `deliverables/finite_volume_code/README.md` showed literal backslash-backtick sequences. | Fixed. |
+| FDA-10 | NOTE | the code README showed literal backslash-backtick sequences. | Fixed. |
 
 ## Residual limitations (stated in the derivation and handoff)
 
@@ -34,8 +34,10 @@ The finite-volume scheme is correct: against the exact five-layer solution it co
 ## Reproduce
 
 ```bash
-cd triso-rust
+cd deliverables
 cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test
+cargo run --release -- synthetic_five_layer.toml
+cd ../verification/code_checks
+cargo test
 cargo run --release --example verify
-cargo run --release -- config/synthetic_five_layer.toml
 ```

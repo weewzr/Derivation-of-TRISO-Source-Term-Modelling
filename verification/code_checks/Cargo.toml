@@ -1,5 +1,7 @@
+# Extra checks for the three deliverable code files (../../deliverables).
+# They are compiled into this crate through #[path], so the checks always test the delivered files.
 [package]
-name = "triso-finite-volume"
+name = "triso-code-checks"
 version = "0.1.0"
 edition = "2021"
 
@@ -9,6 +11,3 @@ csv = "1"
 plotters = { version = "0.3", default-features = false, features = ["svg_backend", "line_series"] }
 serde = { version = "1", features = ["derive"] }
 toml = "0.8"
-
-[dev-dependencies]
-approx = "0.5"

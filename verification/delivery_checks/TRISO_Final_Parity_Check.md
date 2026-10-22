@@ -10,9 +10,9 @@ The analytical Robin/source benchmark (Case B) remains distinct from the initial
 
 ## Derivation vs Rust
 
-- `deliverables/finite_volume_code/src/discrete_finite_volume_tridiagonal.rs`: five regions, per-region cell counts, interface-aligned faces, exact shell volumes and volume centroids, series-resistance conductances (TRISO-FV-140), zero-area centre, absorbing outer conductance (TRISO-DEL-030), Backward Euler solved by subtraction-free elimination (TRISO-DEL-040), boundary-flux release accumulation, explicit bound (TRISO-FV-300).
-- `deliverables/finite_volume_code/src/analytical_sturm_liouville.rs`: transfer step (TRISO-DEL-010), interface jump (TRISO-DEL-011), characteristic function and Sturm-count root isolation (TRISO-DEL-012), modal weights and release series (TRISO-DEL-020, TRISO-DEL-021), homogeneous Robin roots.
-- `deliverables/finite_volume_code/src/compare.rs`: FV against exact series and refinement studies against the exact answer.
+- `deliverables/discrete_finite_volume_tridiagonal.rs`: five regions, per-region cell counts, interface-aligned faces, exact shell volumes and volume centroids, series-resistance conductances (TRISO-FV-140), zero-area centre, absorbing outer conductance (TRISO-DEL-030), Backward Euler solved by subtraction-free elimination (TRISO-DEL-040), boundary-flux release accumulation, explicit bound (TRISO-FV-300).
+- `deliverables/analytical_sturm_liouville.rs`: transfer step (TRISO-DEL-010), interface jump (TRISO-DEL-011), characteristic function and Sturm-count root isolation (TRISO-DEL-012), modal weights and release series (TRISO-DEL-020, TRISO-DEL-021), homogeneous Robin roots.
+- `deliverables/main.rs (module `compare`)`: FV against exact series and refinement studies against the exact answer.
 
 ## Executed verification (delivery workflow, Linux, rustc 1.99.1)
 
