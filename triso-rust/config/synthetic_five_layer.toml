@@ -37,8 +37,8 @@ cells = 40
 kernel_concentration_mol_m3 = 1.0
 
 [time]
-dt_s = 2.0e4
-end_time_s = 2.0e7
+dt_s = 2.0e2
+end_time_s = 2.0e5
 output_every_steps = 10
 
 [output]
