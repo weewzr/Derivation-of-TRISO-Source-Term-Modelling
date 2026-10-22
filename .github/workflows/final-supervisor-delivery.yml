@@ -88,6 +88,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add deliverables/TRISO_Final_Mathematical_Derivation.pdf                   deliverables/TRISO_Final_PDF_Render_Evidence.txt                   deliverables/TRISO_FV_Numerical_Verification.txt                   deliverables/TRISO_Five_Layer_Run.txt                   deliverables/TRISO_Rust_Toolchain.txt                   deliverables/numerical_results/
+          git add triso-rust/src triso-rust/examples triso-rust/Cargo.lock deliverables/TRISO_Final_Mathematical_Derivation.pdf deliverables/TRISO_Final_PDF_Render_Evidence.txt deliverables/TRISO_FV_Numerical_Verification.txt deliverables/TRISO_Five_Layer_Run.txt deliverables/TRISO_Rust_Toolchain.txt deliverables/numerical_results/
           git commit -m "evidence(delivery): persist verified supervisor package outputs" || exit 0
           git push origin HEAD:main
