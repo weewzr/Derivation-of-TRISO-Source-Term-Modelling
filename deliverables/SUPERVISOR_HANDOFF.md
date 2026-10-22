@@ -6,14 +6,14 @@ This package provides the concise derivation and a standalone Rust implementatio
 
 ## Deliverables
 
-- \`TRISO_Final_Mathematical_Derivation.md\`
-- \`TRISO_Final_Mathematical_Derivation.tex\`
-- \`TRISO_Final_Mathematical_Derivation.pdf\` (generated/persisted by final verification)
-- \`TRISO_FV_Pseudocode.md\`
-- \`../triso-rust/src/analytical.rs\`
-- \`../triso-rust/src/fv.rs\`
-- \`../triso-rust/config/literature_inputs.template.toml\`
-- \`../triso-rust/config/synthetic_five_layer.toml\`
+- `TRISO_Final_Mathematical_Derivation.md`
+- `TRISO_Final_Mathematical_Derivation.tex`
+- `TRISO_Final_Mathematical_Derivation.pdf` (generated/persisted by final verification)
+- `TRISO_FV_Pseudocode.md`
+- `../triso-rust/src/analytical.rs`
+- `../triso-rust/src/fv.rs`
+- `../triso-rust/config/literature_inputs.template.toml`
+- `../triso-rust/config/synthetic_five_layer.toml`
 
 ## Build and run
 
@@ -29,11 +29,11 @@ cargo run --release --example verify
 
 ## Literature values
 
-Do not edit solver logic to enter physical data. Copy \`config/literature_inputs.template.toml\`, replace every \`INSERT_VALUE_HERE\` using literature-verified SI values, and retain citation provenance. The supplied synthetic case is numerical test data only.
+Do not edit solver logic to enter physical data. Copy `config/literature_inputs.template.toml`, replace every `INSERT_VALUE_HERE` using literature-verified SI values, and retain citation provenance. The supplied synthetic case is numerical test data only.
 
 ## CSV interpretation
 
-\`timeseries.csv\` reports remaining inventory, cumulative boundary release, release fraction, boundary release rate, balance residual, and minimum concentration. \`final_profile.csv\` reports cell index, material index, volume-centroid radius and final concentration.
+`timeseries.csv` reports remaining inventory, cumulative boundary release, release fraction, boundary release rate, balance residual, and minimum concentration. `final_profile.csv` reports cell index, material index, volume-centroid radius and final concentration.
 
 ## Scientific assumptions
 
@@ -45,7 +45,7 @@ The analytical module is intentionally separate. It implements a homogeneous Rob
 
 ## Verification and provenance
 
-Final executed evidence is produced by \`.github/workflows/final-supervisor-delivery.yml\` and persisted under \`deliverables/\`. The handoff is supervisor-ready only after that workflow passes Rust formatting, clippy, tests, release build, numerical benchmarks, five-layer execution and PDF compilation/render checks.
+Final executed evidence is produced by `.github/workflows/final-supervisor-delivery.yml` and writes its outputs under `deliverables/`. The committed copies of the accepted run are kept in `../verification/supervisor_delivery_checks/`. The handoff is supervisor-ready only after that workflow passes Rust formatting, clippy, tests, release build, numerical benchmarks, five-layer execution and PDF compilation/render checks.
 
 Existing reviewed FV evidence independently showed approximately second-order spatial convergence on the aligned steady synthetic benchmark and first-order Forward-Euler temporal self-convergence. The final package adds arbitrary per-region meshes and Backward Euler.
 
@@ -88,4 +88,4 @@ Mandatory gates:
 - LaTeX PDF compilation PASS;
 - PDF: 3 A4 pages; rendered pages 1, 2 and 3 visually inspected with no clipping, overlap or broken mathematical glyphs.
 
-See TRISO_Final_Parity_Check.md and the persisted numerical result files for the detailed handoff evidence.
+See `../verification/supervisor_delivery_checks/TRISO_Final_Parity_Check.md` and the numerical result files in `../verification/supervisor_delivery_checks/numerical_results/` for the detailed handoff evidence.
