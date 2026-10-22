@@ -1,0 +1,9 @@
+case=synthetic-five-layer-release
+cells=200
+explicit_dt_bound_s=7.812107958751e-3
+final_release_fraction=9.999999999783e-1
+final_inventory_mol=1.056206751262e-38
+max_final_balance_residual_mol=7.265295341115e-22
+min_final_concentration=1.211937515168e-32
+timeseries=results/synthetic-five-layer/timeseries.csv
+profile=results/synthetic-five-layer/final_profile.csv

@@ -1,0 +1,6 @@
+HOMOGENEOUS fv=1.0000000000 exact=1.0000000000 abs=1.799e-14
+TWO_LAYER final_t=32 fv=0.9999870002 reference=0.99998700 abs=1.846e-10
+SPATIAL cells=100 F=1.000000000048e0 balance_rel=4.813e-11 min_c=2.415e-32
+SPATIAL cells=200 F=9.999999999783e-1 balance_rel=2.168e-11 min_c=1.212e-32
+SPATIAL cells=400 F=9.999999998028e-1 balance_rel=1.972e-10 min_c=6.067e-33
+SPATIAL cells=800 F=1.000000001874e0 balance_rel=1.874e-9 min_c=3.035e-33
