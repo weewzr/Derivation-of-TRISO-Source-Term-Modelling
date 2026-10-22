@@ -1,6 +1,6 @@
-# TRISO FV Supervisor Pseudocode
+# TRISO Finite-Volume Pseudocode
 
-Equations match `TRISO_Final_Mathematical_Derivation.md` (same equation IDs).
+Equations match `TRISO_Finite_Volume_Derivation.md` (same equation IDs).
 
 ## Governing equation (TRISO-FV-100)
 

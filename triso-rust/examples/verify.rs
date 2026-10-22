@@ -6,10 +6,10 @@ use anyhow::Result;
 use std::f64::consts::PI;
 use std::time::Instant;
 use triso_rust::{
-    analytical::{Layer, ModalRelease},
+    analytical_sturm_liouville::{Layer, ModalRelease},
     compare::{self, ConvergenceStudy},
     config::Config,
-    fv,
+    discrete_finite_volume_tridiagonal as fv,
 };
 
 const SYNTHETIC: &str = concat!(

@@ -1,4 +1,5 @@
-//! Analytical reference track. Nothing in this module calls the FV solver.
+//! Code C: analytical approach. Sturm-Liouville eigenfunction series for the layered
+//! sphere. Nothing in this module calls the finite-volume solver.
 //!
 //! Two independent pieces live here:
 //!

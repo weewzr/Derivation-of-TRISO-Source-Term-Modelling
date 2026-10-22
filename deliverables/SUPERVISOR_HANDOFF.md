@@ -8,20 +8,21 @@ A mathematical derivation of the five-layer TRISO diffusion and release model, t
 
 | Item | File |
 |---|---|
-| Derivation (PDF, Markdown, LaTeX source) | `deliverables/TRISO_Final_Mathematical_Derivation.pdf`, `.md`, `.tex` |
-| Pseudocode | `deliverables/TRISO_FV_Pseudocode.md` |
-| Finite-volume solver | `triso-rust/src/fv.rs` |
-| Exact analytical solution | `triso-rust/src/analytical.rs` |
-| Comparison, refinement study, figures | `triso-rust/src/compare.rs`, `triso-rust/src/plots.rs` |
-| Input handling | `triso-rust/src/config.rs`, `triso-rust/src/main.rs` |
+| Derivation (PDF, Markdown, LaTeX source) | `deliverables/TRISO_Finite_Volume_Derivation.pdf`, `.md`, `.tex` |
+| Pseudocode | `deliverables/TRISO_Finite_Volume_Pseudocode.md` |
+| **Code A, main file** | `triso-rust/src/main.rs` |
+| **Code B, discrete approach (finite volume, tridiagonal solve)** | `triso-rust/src/discrete_finite_volume_tridiagonal.rs` |
+| **Code C, analytical approach (Sturm-Liouville eigenfunction series)** | `triso-rust/src/analytical_sturm_liouville.rs` |
+| Comparison of B against C, refinement study, figures | `triso-rust/src/compare.rs`, `triso-rust/src/plots.rs` |
+| Input file handling | `triso-rust/src/config.rs` |
 | Literature-value input template | `triso-rust/config/literature_inputs.template.toml` |
 | Executable synthetic input | `triso-rust/config/synthetic_five_layer.toml` |
-| Verification suite | `triso-rust/examples/verify.rs`, `triso-rust/tests/analytical_vs_fv.rs` |
+| Verification suite | `triso-rust/examples/verify.rs`, `triso-rust/tests/finite_volume_vs_analytical.rs` |
 | Stored execution evidence | `verification/supervisor_delivery_checks/` |
 
 ## How the parts connect
 
-One TOML file feeds both solvers. The program runs the FV solver and writes the CSV results, solves the same case with the exact eigenfunction series, compares the two, repeats the FV run on refined meshes and time steps to measure the error against the exact answer, and writes the figures.
+One TOML file feeds the main file (code A). Code A runs the finite-volume solver (code B) and writes the CSV results, solves the same case with the Sturm-Liouville eigenfunction series (code C), compares the two, repeats the finite-volume run on refined meshes and time steps to measure the error against the exact answer, and writes the figures.
 
 ## Build and run
 

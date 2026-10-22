@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'triso-rust/**'
-      - 'deliverables/TRISO_Final_Mathematical_Derivation.tex'
+      - 'deliverables/TRISO_Finite_Volume_Derivation.tex'
       - '.github/workflows/final-supervisor-delivery.yml'
   workflow_dispatch:
 
@@ -58,14 +58,14 @@ jobs:
       - name: Compile final derivation PDF
         working-directory: deliverables
         run: |
-          pdflatex -interaction=nonstopmode -halt-on-error TRISO_Final_Mathematical_Derivation.tex
-          pdflatex -interaction=nonstopmode -halt-on-error TRISO_Final_Mathematical_Derivation.tex
-          pdfinfo TRISO_Final_Mathematical_Derivation.pdf | tee ../$EVIDENCE/TRISO_Final_PDF_Render_Evidence.txt
+          pdflatex -interaction=nonstopmode -halt-on-error TRISO_Finite_Volume_Derivation.tex
+          pdflatex -interaction=nonstopmode -halt-on-error TRISO_Finite_Volume_Derivation.tex
+          pdfinfo TRISO_Finite_Volume_Derivation.pdf | tee ../$EVIDENCE/TRISO_Final_PDF_Render_Evidence.txt
           rm -rf ../$EVIDENCE/pdf_render_check
           mkdir -p ../$EVIDENCE/pdf_render_check
-          pdftoppm -png -r 110 TRISO_Final_Mathematical_Derivation.pdf ../$EVIDENCE/pdf_render_check/page
+          pdftoppm -png -r 110 TRISO_Finite_Volume_Derivation.pdf ../$EVIDENCE/pdf_render_check/page
           ls ../$EVIDENCE/pdf_render_check | tee -a ../$EVIDENCE/TRISO_Final_PDF_Render_Evidence.txt
-          grep -E "Warning|undefined|Overfull|Underfull" TRISO_Final_Mathematical_Derivation.log || true
+          grep -E "Warning|undefined|Overfull|Underfull" TRISO_Finite_Volume_Derivation.log || true
       - name: Copy reproducible numerical evidence
         run: |
           mkdir -p $EVIDENCE/numerical_results
@@ -74,7 +74,7 @@ jobs:
         with:
           name: final-supervisor-delivery-evidence
           path: |
-            deliverables/TRISO_Final_Mathematical_Derivation.pdf
+            deliverables/TRISO_Finite_Volume_Derivation.pdf
             verification/supervisor_delivery_checks/TRISO_Final_PDF_Render_Evidence.txt
             verification/supervisor_delivery_checks/pdf_render_check/
             verification/supervisor_delivery_checks/TRISO_FV_Numerical_Verification.txt
@@ -85,6 +85,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add triso-rust/Cargo.lock deliverables/TRISO_Final_Mathematical_Derivation.pdf $EVIDENCE/TRISO_Final_PDF_Render_Evidence.txt $EVIDENCE/pdf_render_check $EVIDENCE/TRISO_FV_Numerical_Verification.txt $EVIDENCE/TRISO_Five_Layer_Run.txt $EVIDENCE/TRISO_Rust_Toolchain.txt $EVIDENCE/numerical_results
+          git add triso-rust/Cargo.lock deliverables/TRISO_Finite_Volume_Derivation.pdf $EVIDENCE/TRISO_Final_PDF_Render_Evidence.txt $EVIDENCE/pdf_render_check $EVIDENCE/TRISO_FV_Numerical_Verification.txt $EVIDENCE/TRISO_Five_Layer_Run.txt $EVIDENCE/TRISO_Rust_Toolchain.txt $EVIDENCE/numerical_results
           git commit -m "evidence(delivery): persist verified supervisor package outputs" || exit 0
           git push origin HEAD:"refs/heads/$GITHUB_REF_NAME"

@@ -1,11 +1,10 @@
 # TRISO Rust Solver
 
-Five-physical-layer spherical diffusion and release model with two independent solvers for the same problem:
+Five-physical-layer spherical diffusion and release model, finite-volume approach, with two independent solutions of the same problem:
 
-- a conservative finite-volume (FV) solver, Backward Euler in time (`src/fv.rs`);
-- the exact eigenfunction-series solution (`src/analytical.rs`).
-
-Both read the same input file. The program runs the FV solver, solves the same case analytically, compares the two and writes CSV files and SVG figures.
+- **Code A, main file** (`src/main.rs`): reads the input file, runs B and C on it, compares them and writes the CSV files and SVG figures.
+- **Code B, discrete approach** (`src/discrete_finite_volume_tridiagonal.rs`): conservative finite volumes, Backward Euler in time, tridiagonal solve.
+- **Code C, analytical approach** (`src/analytical_sturm_liouville.rs`): Sturm-Liouville eigenfunction series.
 
 ## Run
 
@@ -47,13 +46,14 @@ The console summary also reports the exact release fraction, observed convergenc
 
 ## Structure
 
-- `src/fv.rs`: mesh, conservative conductances, Backward Euler with a subtraction-free tridiagonal solve, inventory and release.
-- `src/analytical.rs`: exact five-layer release series (propagation with the correct interface rule, Sturm-count root isolation, modal weights) and the homogeneous Robin root finder.
-- `src/compare.rs`: FV against exact comparison and refinement studies.
+- `src/main.rs` (code A): main file.
+- `src/discrete_finite_volume_tridiagonal.rs` (code B): mesh, conservative conductances, Backward Euler with a subtraction-free tridiagonal solve, inventory and release.
+- `src/analytical_sturm_liouville.rs` (code C): exact five-layer release series (propagation with the correct interface rule, Sturm-count root isolation, modal weights) and the homogeneous Robin root finder.
+- `src/compare.rs`: code B against code C, and refinement studies.
 - `src/plots.rs`: SVG figures.
 - `src/config.rs`: TOML input and validation.
 - `examples/verify.rs`: verification suite whose printed claims are all assertions.
-- `tests/analytical_vs_fv.rs`: cross-module tests run by `cargo test`.
+- `tests/finite_volume_vs_analytical.rs`: cross-module tests run by `cargo test`.
 
 ## Scope
 

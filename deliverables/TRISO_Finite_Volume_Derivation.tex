@@ -6,7 +6,7 @@
 \setlength{\parskip}{0.55em}
 \renewcommand{\arraystretch}{1.15}
 
-\title{Final TRISO Diffusion and Release Derivation}
+\title{Finite-Volume Derivation of TRISO Diffusion and Release}
 \author{Supervisor Delivery Package}
 \date{22 October 2026}
 
@@ -172,7 +172,7 @@ The integrals are evaluated region by region from the propagated states, using $
 
 \subsection{Status and numerical limits}
 \begin{itemize}
-\item \textbf{Completeness and truncation.} Orthogonality and the interface and boundary cancellations are derived in the foundation document. Completeness of the eigenfunctions for this singular piecewise problem is not proved there, so the series is verified numerically (Section~\ref{sec:verification}), including the weight sum $\sum_nw_n\to1$. Modes are kept up to $\Lambda_{\max}$ and the series is used only for $t\ge40/\Lambda_{\max}$, where omitted modes are suppressed by $e^{-40}$.
+\item \textbf{Completeness and truncation.} Orthogonality and the interface and boundary cancellations are derived in the foundation document. Completeness of the eigenfunctions for this singular piecewise problem is not proved there, so the series is checked numerically against an independent implementation and through the weight sum $\sum_nw_n\to1$. Modes are kept up to $\Lambda_{\max}$ and the series is used only for $t\ge40/\Lambda_{\max}$, where omitted modes are suppressed by $e^{-40}$.
 \item \textbf{Conditioning.} When the flux $D(u'-u/r)$ at an interface is much smaller than $D\,u'$ and $D\,u/r$ (strongly contrasting adjacent diffusivities), the propagation loses digits by cancellation. The code reports the smallest value of $|D(u'-u/r)|/(|Du'|+|Du/r|)$ over modes and interfaces, and an accuracy floor of about $2.2\times10^{-16}$ divided by that ratio. Differences between FV and the series below that floor are not resolved.
 \end{itemize}
 
@@ -217,7 +217,7 @@ Eliminating $C_I$ (TRISO-FV-133 to TRISO-FV-138) gives $C_P-C_E=J_f\left(\delta_
 \boxed{A_fJ_f=G_f\,(C_P-C_E),\qquad G_f=\frac{A_f}{\delta_P/D_P+\delta_E/D_E}}
 \tag{TRISO-FV-140}
 \end{equation}
-For $D_P=D_E$ this is the ordinary two-point form, and for equal half distances it contains the harmonic mean $2D_PD_E/(D_P+D_E)$. The linear half-cell assumption with the face area $A_f$ in both halves is the approximation made by the scheme. The numerical results of Section~\ref{sec:verification} show second-order convergence to the exact solution, including across material interfaces.
+For $D_P=D_E$ this is the ordinary two-point form, and for equal half distances it contains the harmonic mean $2D_PD_E/(D_P+D_E)$. The linear half-cell assumption with the face area $A_f$ in both halves is the approximation made by the scheme. Comparison with the exact solution of Section~\ref{sec:exact} shows second-order convergence, including across material interfaces.
 
 \subsection{Semi-discrete equation and conservation}
 Substituting Equation TRISO-FV-140 into Equation TRISO-FV-123, with west and east conductances $G_W$ and $G_E$,
@@ -279,33 +279,11 @@ M^{n+1}+M_{\mathrm{rel}}^{n+1}=M^0
 \]
 up to linear-solver and rounding error. The release uses the same boundary flux as the balance, so the residual $M^n+M_{\mathrm{rel}}^n-M^0$ is an independent diagnostic.
 
-\section{Verification against the exact solution}\label{sec:verification}
-All numbers come from the verification suite (\texttt{examples/verify.rs}) and from the five-layer run on \texttt{config/synthetic\_five\_layer.toml}; the exact commands are in the supervisor handoff. These inputs are numerical test data, not literature properties.
-\begin{center}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.56\textwidth}>{\raggedright\arraybackslash}p{0.38\textwidth}@{}}
-\toprule
-Check & Result\\
-\midrule
-Exact series vs independent closed form (equal $D$, kernel-only data) & agreement to $10^{-9}$ (unit test)\\
-Exact series vs separate Python eigenfunction script, five layers, $t=2\times10^5\,\mathrm{s}$ & $F=0.4325556390928$ (Rust) and $0.4325556390930$ (Python)\\
-Homogeneous sphere, uniform data, FV vs Crank series & absolute error $2.8\times10^{-5}$\\
-Two layers, spatial refinement at $t=1\,\mathrm{s}$ and $4\,\mathrm{s}$ & observed order $2.0$ at every refinement\\
-Five layers, spatial refinement ($100$ to $1600$ cells, time error extrapolated out) & observed order $2.000$ on every pair, finest error $8.6\times10^{-8}$\\
-Five layers, time-step refinement ($800\,\mathrm{s}$ to $50\,\mathrm{s}$) & observed order $0.98$ to $0.89$ (Backward Euler, first order)\\
-Five layers, $\Delta t=200\,\mathrm{s}$, $200$ cells & $F_{\mathrm{FV}}=0.43243$ vs exact $0.43256$ (time error $1.3\times10^{-4}$)\\
-Conservation residual, $100$ to $1600$ cells & $\le3\times10^{-13}$ relative\\
-Positivity & minimum concentration $>0$ on every mesh\\
-\bottomrule
-\end{tabular}
-\end{center}
-The headline FV value at the configured $\Delta t$ carries the first-order time error shown above. The refinement study in the program output reports both errors separately.
-
 \section{Limitations}
 \begin{itemize}
-\item Synthetic inputs are not experimental or physical validation.
+\item Results obtained with the synthetic test inputs supplied with the code are numerical checks, not physical validation.
 \item Temperature and fluence dependence of $D$, source schedules and a production Robin release mode are not implemented.
-\item The exact series is trustworthy only above its reported accuracy floor. The floor grows roughly in proportion to the diffusivity contrast between adjacent layers. In the stress tests it stayed below $10^{-7}$ up to a contrast of $10^{5}$ and reached $10^{-6}$ at $10^{6}$.
+\item The exact series is trustworthy only above the accuracy floor that the code reports for each run. The floor grows roughly in proportion to the diffusivity contrast between adjacent layers.
 \item Completeness of the eigenfunction set for the singular piecewise problem is checked numerically, not proved.
-\item WOS and Process-C results are separate verification tracks and are not evidence of FV or WOS equivalence.
 \end{itemize}
 \end{document}

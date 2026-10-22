@@ -1,3 +1,6 @@
+//! Code B: discrete approach. Conservative spherical finite volumes, Backward Euler in
+//! time, solved with a (subtraction-free) tridiagonal elimination.
+
 use crate::config::Config;
 use anyhow::{bail, Result};
 use std::f64::consts::PI;

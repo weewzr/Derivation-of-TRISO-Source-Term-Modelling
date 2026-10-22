@@ -3,9 +3,9 @@
 //! surface), plus a mesh/time refinement study measured against the exact answer.
 
 use crate::{
-    analytical::{self, Layer, ModalRelease},
+    analytical_sturm_liouville::{self as analytical, Layer, ModalRelease},
     config::Config,
-    fv,
+    discrete_finite_volume_tridiagonal as fv,
 };
 use anyhow::{bail, Result};
 

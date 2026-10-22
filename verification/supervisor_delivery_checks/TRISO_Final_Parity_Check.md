@@ -4,14 +4,14 @@ Executed after the audit corrections, delivery workflow 39729930098 on `main`.
 
 ## Markdown vs LaTeX
 
-`TRISO_Final_Mathematical_Derivation.md` and `.tex` carry the same 22 equation IDs, the same section structure (the PDF leaves the symbol table unnumbered, so section numbers agree) and the same verification numbers. Checked by script: no ID appears in only one file. The chain is: control-volume conservation, local conservation law, Fick's law, spherical multilayer PDE, centre/interface/outer conditions, exact eigenfunction solution (with the interface rule `D(u' - u/r)` continuous), exact spherical FV geometry, exact cell balance, series-resistance interface conductance, centre and absorbing outer treatment, Backward-Euler tridiagonal equation with subtraction-free elimination, Forward-Euler verification-only bound, inventory and release conservation.
+`TRISO_Finite_Volume_Derivation.md` and `.tex` carry the same 22 equation IDs, the same section structure (the PDF leaves the symbol table unnumbered, so section numbers agree) and the same equations. Checked by script: no ID appears in only one file. The chain is: control-volume conservation, local conservation law, Fick's law, spherical multilayer PDE, centre/interface/outer conditions, exact eigenfunction solution (with the interface rule `D(u' - u/r)` continuous), exact spherical FV geometry, exact cell balance, series-resistance interface conductance, centre and absorbing outer treatment, Backward-Euler tridiagonal equation with subtraction-free elimination, Forward-Euler verification-only bound, inventory and release conservation.
 
 The analytical Robin/source benchmark (Case B) remains distinct from the initial-inventory absorbing release case (Case A). Only Case A is compared between FV and the exact series.
 
 ## Derivation vs Rust
 
-- `triso-rust/src/fv.rs`: five regions, per-region cell counts, interface-aligned faces, exact shell volumes and volume centroids, series-resistance conductances (TRISO-FV-140), zero-area centre, absorbing outer conductance (TRISO-DEL-030), Backward Euler solved by subtraction-free elimination (TRISO-DEL-040), boundary-flux release accumulation, explicit bound (TRISO-FV-300).
-- `triso-rust/src/analytical.rs`: transfer step (TRISO-DEL-010), interface jump (TRISO-DEL-011), characteristic function and Sturm-count root isolation (TRISO-DEL-012), modal weights and release series (TRISO-DEL-020, TRISO-DEL-021), homogeneous Robin roots.
+- `triso-rust/src/discrete_finite_volume_tridiagonal.rs`: five regions, per-region cell counts, interface-aligned faces, exact shell volumes and volume centroids, series-resistance conductances (TRISO-FV-140), zero-area centre, absorbing outer conductance (TRISO-DEL-030), Backward Euler solved by subtraction-free elimination (TRISO-DEL-040), boundary-flux release accumulation, explicit bound (TRISO-FV-300).
+- `triso-rust/src/analytical_sturm_liouville.rs`: transfer step (TRISO-DEL-010), interface jump (TRISO-DEL-011), characteristic function and Sturm-count root isolation (TRISO-DEL-012), modal weights and release series (TRISO-DEL-020, TRISO-DEL-021), homogeneous Robin roots.
 - `triso-rust/src/compare.rs`: FV against exact series and refinement studies against the exact answer.
 
 ## Executed verification (workflow 39729930098, Linux, rustc 1.99.1)
