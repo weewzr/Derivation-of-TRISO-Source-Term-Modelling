@@ -127,7 +127,7 @@ u_i(r)=A_i\sin(k_ir)+B_i\cos(k_ir),\qquad \phi_i=\frac{u_i}{r}
 
 Regularity at the centre removes $B_1\cos(k_1r)/r$, so $B_1=0$ (TRISO-ML-435).
 
-### 4.2 Conditions in the variable $u$
+### 4.2 Conditions in the transformed variable
 
 Concentration continuity $\phi_i(R_i)=\phi_{i+1}(R_i)$ gives, after multiplying by $R_i$,
 

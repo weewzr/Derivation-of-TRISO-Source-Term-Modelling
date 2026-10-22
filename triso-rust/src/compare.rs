@@ -73,6 +73,11 @@ pub fn compare_release(cfg: &Config, fv_rows: &fv::TimeSeries) -> Result<Release
             exact,
         });
     }
+    if rows.iter().all(|r| r.exact.is_none()) {
+        bail!(
+            "exact series (capped at {MAX_MODES} modes) resolves only t >= {valid:.3e} s, later than every output time"
+        );
+    }
     Ok(ReleaseComparison {
         rows,
         modes: series.eigenvalues.len(),
