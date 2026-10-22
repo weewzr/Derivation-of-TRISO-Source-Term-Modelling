@@ -1,0 +1,80 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,longtable,microtype,hyperref}
+\title{Final TRISO Diffusion and Release Derivation}
+\author{Supervisor Delivery Package}
+\date{22 October 2026}
+\begin{document}\maketitle
+\section{Scope and assumptions}
+Five concentric regions are retained: Kernel, Buffer, IPyC, SiC and OPyC, with outer radii $R_1<\cdots<R_5=R$. Within each material $D_i$ is constant for the specified nuclide and temperature. Spherical symmetry and ideal concentration/flux continuity are assumed. The primary FV benchmark uses frozen initial kernel inventory, no continuing source after $t=0$, and an absorbing outer surface. A separate analytical benchmark may use continuous generation and a Robin boundary.
+\section{Species conservation}
+\begin{equation}\frac{d}{dt}\int_Vc\,dV=-\int_{\partial V}\mathbf J\cdot\mathbf n\,dA+\int_VS\,dV.\tag{TRISO-GOV-020}\end{equation}
+The divergence theorem and arbitrariness of $V$ give
+\begin{equation}\frac{\partial c}{\partial t}+\nabla\cdot\mathbf J=S.\tag{TRISO-GOV-030}\end{equation}
+With Fick's law $\mathbf J=-D\nabla c$ (TRISO-GOV-034),
+\begin{equation}\frac{\partial c}{\partial t}=\nabla\cdot(D\nabla c)+S.\tag{TRISO-GOV-040}\end{equation}
+Spherical symmetry gives
+\begin{equation}\boxed{\frac{\partial c_i}{\partial t}=\frac1{r^2}\frac{\partial}{\partial r}\left(r^2D_i\frac{\partial c_i}{\partial r}\right)+S_i.}\tag{TRISO-FV-100}\end{equation}
+\section{Five-layer conditions}
+At $r=0$, $\partial c_1/\partial r=0$. At $r=R_i$,
+\[
+c_i=c_{i+1},\qquad D_i\partial_rc_i=D_{i+1}\partial_rc_{i+1}.
+\]
+The primary release calculation uses $c_5(R,t)=0$. A separate Robin benchmark uses $-D_5c_5'(R)=h[c_5(R)-c_\infty]$. For initial-inventory release,
+\[
+c(r,0)=\begin{cases}c_0,&0\le r<R_1,\\0,&R_1<r<R,\end{cases}\qquad S_i=0\ (t>0).
+\]
+\section{Analytical/modal reference}
+For $c=\phi e^{-\Lambda t}$,
+\[
+\frac1{r^2}\frac{d}{dr}\left(r^2D\phi'\right)+\Lambda\phi=0.
+\]
+With $u=r\phi$, $u''+k^2u=0$, $k^2=\Lambda/D$, so
+\[
+u_i=A_i\sin(k_ir)+B_i\cos(k_ir),\qquad \phi_i=u_i/r.
+\]
+Centre regularity, interface conditions and the outer condition form $\mathbf M(\Lambda)\mathbf a=0$; roots satisfy $\det\mathbf M(\Lambda)=0$. The formal modal solution is
+\[
+c_i=c_{i,\mathrm{ss}}+\sum_{n\ge1}A_n\phi_{i,n}e^{-\Lambda_nt}.
+\]
+This analytical track is independent; unresolved global five-layer modal completeness/truncation is not used to validate the FV solver.
+\section{Conservative spherical finite volumes}
+For cell $j$,
+\begin{equation}V_j=\frac{4\pi}{3}(r_{j+1/2}^3-r_{j-1/2}^3),\quad A_{j\pm1/2}=4\pi r_{j\pm1/2}^2.\tag{TRISO-FV-101}\end{equation}
+The spherical volume centroid is
+\begin{equation}r_j=\frac34\frac{r_{j+1/2}^4-r_{j-1/2}^4}{r_{j+1/2}^3-r_{j-1/2}^3}.\tag{TRISO-FV-109A}\end{equation}
+Integrating the PDE and introducing conservative face conductances gives
+\begin{equation}\boxed{V_j\frac{dc_j}{dt}=G_W(c_{j-1}-c_j)+G_E(c_{j+1}-c_j)+S_jV_j.}\tag{TRISO-FV-155}\end{equation}
+For a face $f$ with half distances $\delta_P,\delta_E$,
+\begin{equation}\boxed{G_f=\frac{A_f}{\delta_P/D_P+\delta_E/D_E}.}\tag{TRISO-FV-140}\end{equation}
+This series-resistance form handles discontinuous diffusivity and guarantees equal-and-opposite internal face fluxes. At the centre $A=0$. For the absorbing outer boundary,
+\[
+G_R=\frac{4\pi R^2D_5}{R-r_N},\qquad \dot M_{\rm rel}=G_Rc_N.
+\]
+\section{Backward Euler}
+\[
+\frac{V_j}{\Delta t}(c_j^{n+1}-c_j^n)=G_W(c_{j-1}^{n+1}-c_j^{n+1})+G_E(c_{j+1}^{n+1}-c_j^{n+1})+S_j^{n+1}V_j.
+\]
+Thus
+\begin{equation}
+\boxed{-G_Wc_{j-1}^{n+1}+\left(\frac{V_j}{\Delta t}+G_W+G_E\right)c_j^{n+1}-G_Ec_{j+1}^{n+1}=\frac{V_j}{\Delta t}c_j^n+S_j^{n+1}V_j.}
+\end{equation}
+The production solve is tridiagonal. For Forward Euler verification only,
+\begin{equation}\boxed{\Delta t\le\min_j\frac{V_j}{G_W+G_E}.}\tag{TRISO-FV-300}\end{equation}
+\section{Inventory, release and conservation}
+\[
+M^n=\sum_jV_jc_j^n,\qquad M_{\rm rel}^{n+1}=M_{\rm rel}^{n}+\Delta t\,G_Rc_N^{n+1}.
+\]
+For the no-source absorbing case,
+\[
+M^{n+1}+M_{\rm rel}^{n+1}=M^0
+\]
+up to solver/floating-point error, and
+\[
+F^n=M_{\rm rel}^n/M^0,\qquad \dot F^n=G_Rc_N^n/M^0.
+\]
+\section{Verification contract and limitations}
+Interfaces coincide with FV faces. Adequacy is established by mesh/time refinement, positivity and conservation. Existing reviewed evidence shows approximately second-order spatial convergence on the aligned steady benchmark and first-order Forward-Euler temporal convergence; the production package adds arbitrary per-region meshes and Backward Euler.
+
+Synthetic configurations are verification cases, not literature properties. The original full analytical Rust upload is not committed; the package analytical module is therefore a baseline implementation rather than a verbatim reconstruction. Temperature/fluence dependence, arbitrary source schedules and production Robin release are deferred unless explicitly enabled.
+\end{document}
