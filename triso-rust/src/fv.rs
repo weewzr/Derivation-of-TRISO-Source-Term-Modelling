@@ -170,10 +170,7 @@ pub fn backward_euler_step(mesh: &Mesh, old: &[f64], dt: f64) -> Result<Vec<f64>
     solve_tridiagonal(&a, &b, &c, &rhs)
 }
 
-pub fn run(
-    cfg: &Config,
-    mesh: &Mesh,
-) -> Result<(Vec<(f64, StepDiagnostics)>, Vec<f64>)> {
+pub fn run(cfg: &Config, mesh: &Mesh) -> Result<(TimeSeries, Vec<f64>)> {
     let mut c = initial_concentration(cfg, mesh);
     let initial = inventory(mesh, &c);
     if initial <= 0.0 {
