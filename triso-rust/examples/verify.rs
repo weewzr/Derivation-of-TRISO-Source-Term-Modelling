@@ -37,7 +37,7 @@ fn sphere_release(t: f64, r: f64, d: f64) -> f64 {
 }
 
 fn homogeneous() -> Result<()> {
-    let cfg = make_cfg(40, 50.0, 2.0e5, [1e-10; 5]);
+    let cfg = make_cfg(40, 0.5, 1.0e3, [1e-10; 5]);
     let mesh = fv::build_mesh(&cfg)?;
     let mut c = vec![1.0; mesh.cells.len()];
     let m0 = fv::inventory(&mesh, &c);
