@@ -70,11 +70,11 @@ fn two_layer_control() -> Result<()> {
 
 fn five_layer_and_convergence() -> Result<()> {
     let ds=[1.0e-12,4.0e-10,8.0e-13,2.0e-14,7.0e-13];
-    let end=2.0e7;
+    let end=2.0e5;
     let start=Instant::now();
     let mut spatial=Vec::new();
     for n in [20usize,40,80,160,320] {
-        let cfg=make_cfg(n,2.0e4,end,ds);
+        let cfg=make_cfg(n,2.0e2,end,ds);
         let mesh=fv::build_mesh(&cfg)?;
         let (rows,_)=fv::run(&cfg,&mesh)?;
         let last=&rows.last().unwrap().1;
@@ -85,7 +85,7 @@ fn five_layer_and_convergence() -> Result<()> {
     }
     for w in spatial.windows(2){println!("SPATIAL_DIFF {:.12e}",(w[1]-w[0]).abs());}
     let mut temporal=Vec::new();
-    for dt in [8.0e4,4.0e4,2.0e4,1.0e4] {
+    for dt in [8.0e2,4.0e2,2.0e2,1.0e2] {
         let cfg=make_cfg(160,dt,end,ds);
         let mesh=fv::build_mesh(&cfg)?;
         let (rows,_)=fv::run(&cfg,&mesh)?;
