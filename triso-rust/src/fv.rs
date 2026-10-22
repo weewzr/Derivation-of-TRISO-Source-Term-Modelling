@@ -116,57 +116,66 @@ pub fn inventory(mesh: &Mesh, c: &[f64]) -> f64 {
         .sum()
 }
 
-fn solve_tridiagonal(a: &[f64], b: &[f64], c: &[f64], rhs: &[f64]) -> Result<Vec<f64>> {
-    let n = b.len();
-    if a.len() != n || c.len() != n || rhs.len() != n || n == 0 {
-        bail!("invalid tridiagonal dimensions");
+/// Solve the Backward-Euler system
+///   -gw_i x_{i-1} + (v_i + gw_i + ge_i) x_i - ge_i x_{i+1} = rhs_i,   v_i = V_i / dt,
+/// where gw_{i+1} = ge_i and the last cell has a Dirichlet (absorbing) face.
+///
+/// This is Thomas elimination written without any subtraction. The textbook pivot
+/// b_i - a_i cp_{i-1} subtracts two nearly equal numbers when the Fourier number
+/// D dt / dr^2 is large, which loses digits and breaks the inventory balance. Writing
+/// the pivot as den_i = e_i + ge_i with e_i = v_i + gw_i e_{i-1} / (e_{i-1} + gw_i)
+/// uses only sums, products and quotients of nonnegative numbers, so every operation
+/// is componentwise accurate.
+fn solve_diffusion_system(v: &[f64], gw: &[f64], ge: &[f64], rhs: &[f64]) -> Result<Vec<f64>> {
+    let n = v.len();
+    if gw.len() != n || ge.len() != n || rhs.len() != n || n == 0 {
+        bail!("invalid system dimensions");
     }
-    let mut cp = vec![0.0; n];
+    let mut den = vec![0.0; n];
     let mut dp = vec![0.0; n];
-    if b[0].abs() < 1e-300 {
-        bail!("singular tridiagonal pivot");
-    }
-    cp[0] = c[0] / b[0];
-    dp[0] = rhs[0] / b[0];
-    for i in 1..n {
-        let den = b[i] - a[i] * cp[i - 1];
-        if den.abs() < 1e-300 {
-            bail!("singular tridiagonal pivot");
+    let mut e_prev = 0.0;
+    for i in 0..n {
+        let e = if i == 0 {
+            v[0]
+        } else {
+            v[i] + gw[i] * e_prev / (e_prev + gw[i])
+        };
+        den[i] = e + ge[i];
+        if den[i] <= 0.0 || !den[i].is_finite() {
+            bail!("singular or non-finite pivot at cell {i}");
         }
-        cp[i] = if i + 1 == n { 0.0 } else { c[i] / den };
-        dp[i] = (rhs[i] - a[i] * dp[i - 1]) / den;
+        let carry = if i == 0 { 0.0 } else { gw[i] * dp[i - 1] };
+        dp[i] = (rhs[i] + carry) / den[i];
+        e_prev = e;
     }
     let mut x = vec![0.0; n];
     x[n - 1] = dp[n - 1];
     for i in (0..n - 1).rev() {
-        x[i] = dp[i] - cp[i] * x[i + 1];
+        x[i] = dp[i] + ge[i] / den[i] * x[i + 1];
     }
     Ok(x)
 }
 
 pub fn backward_euler_step(mesh: &Mesh, old: &[f64], dt: f64) -> Result<Vec<f64>> {
     let n = mesh.cells.len();
-    if old.len() != n || dt <= 0.0 {
+    if old.len() != n || dt <= 0.0 || !dt.is_finite() {
         bail!("invalid state or timestep");
     }
-    let mut a = vec![0.0; n];
-    let mut b = vec![0.0; n];
-    let mut c = vec![0.0; n];
+    let mut v = vec![0.0; n];
+    let mut gw = vec![0.0; n];
+    let mut ge = vec![0.0; n];
     let mut rhs = vec![0.0; n];
-
     for i in 0..n {
-        let gw = if i == 0 { 0.0 } else { mesh.conductance[i - 1] };
-        let ge = if i + 1 == n {
+        gw[i] = if i == 0 { 0.0 } else { mesh.conductance[i - 1] };
+        ge[i] = if i + 1 == n {
             mesh.outer_conductance
         } else {
             mesh.conductance[i]
         };
-        a[i] = if i == 0 { 0.0 } else { -gw };
-        b[i] = mesh.cells[i].volume / dt + gw + ge;
-        c[i] = if i + 1 == n { 0.0 } else { -ge };
-        rhs[i] = mesh.cells[i].volume * old[i] / dt;
+        v[i] = mesh.cells[i].volume / dt;
+        rhs[i] = v[i] * old[i];
     }
-    solve_tridiagonal(&a, &b, &c, &rhs)
+    solve_diffusion_system(&v, &gw, &ge, &rhs)
 }
 
 pub fn run(cfg: &Config, mesh: &Mesh) -> Result<(TimeSeries, Vec<f64>)> {
@@ -302,6 +311,78 @@ mod tests {
             .map(|(_, d)| d.balance_residual.abs() / initial)
             .fold(0.0, f64::max);
         assert!(max_res < 1e-10);
+    }
+
+    /// Dense Gaussian elimination with partial pivoting, test-only reference.
+    fn dense_solve(mut a: Vec<Vec<f64>>, mut b: Vec<f64>) -> Vec<f64> {
+        let n = b.len();
+        for col in 0..n {
+            let piv = (col..n)
+                .max_by(|&i, &j| a[i][col].abs().total_cmp(&a[j][col].abs()))
+                .unwrap();
+            a.swap(col, piv);
+            b.swap(col, piv);
+            let pivot_row = a[col].clone();
+            for row in col + 1..n {
+                let f = a[row][col] / pivot_row[col];
+                for (x, p) in a[row][col..].iter_mut().zip(&pivot_row[col..]) {
+                    *x -= f * p;
+                }
+                b[row] -= f * b[col];
+            }
+        }
+        let mut x = vec![0.0; n];
+        for i in (0..n).rev() {
+            let s: f64 = (i + 1..n).map(|k| a[i][k] * x[k]).sum();
+            x[i] = (b[i] - s) / a[i][i];
+        }
+        x
+    }
+
+    #[test]
+    fn backward_euler_step_matches_dense_solve() {
+        let m = build_mesh(&cfg(3)).unwrap();
+        let n = m.cells.len();
+        let dt = 7.0;
+        let old: Vec<f64> = (0..n).map(|i| 1.0 + 0.1 * i as f64).collect();
+        let mut a = vec![vec![0.0; n]; n];
+        for i in 0..n {
+            let gw = if i == 0 { 0.0 } else { m.conductance[i - 1] };
+            let ge = if i + 1 == n {
+                m.outer_conductance
+            } else {
+                m.conductance[i]
+            };
+            a[i][i] = m.cells[i].volume / dt + gw + ge;
+            if i > 0 {
+                a[i][i - 1] = -gw;
+            }
+            if i + 1 < n {
+                a[i][i + 1] = -ge;
+            }
+        }
+        let rhs: Vec<f64> = (0..n).map(|i| m.cells[i].volume * old[i] / dt).collect();
+        let want = dense_solve(a, rhs);
+        let got = backward_euler_step(&m, &old, dt).unwrap();
+        for (g, w) in got.iter().zip(&want) {
+            assert!((g - w).abs() <= 1e-12 * w.abs(), "{g} vs {w}");
+        }
+    }
+
+    #[test]
+    fn conservation_holds_at_very_large_fourier_number() {
+        // dr = 2e-6 m, D dt / dr^2 = 2.5e5: the textbook Thomas pivot loses ~6 digits here.
+        let mut c = cfg(50);
+        c.time.dt_s = 1.0e4;
+        c.time.end_time_s = 1.0e6;
+        let m = build_mesh(&c).unwrap();
+        let (rows, _) = run(&c, &m).unwrap();
+        let initial = rows[0].1.inventory;
+        let worst = rows
+            .iter()
+            .map(|(_, d)| d.balance_residual.abs() / initial)
+            .fold(0.0, f64::max);
+        assert!(worst < 1e-12, "relative balance residual {worst:e}");
     }
 
     #[test]

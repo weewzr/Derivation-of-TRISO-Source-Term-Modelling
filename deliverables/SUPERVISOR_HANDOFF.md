@@ -1,23 +1,31 @@
 # Supervisor Handoff - TRISO Diffusion/Release Package
 
-## Package purpose
+## Purpose
 
-This package provides the concise derivation and a standalone Rust implementation of the reviewed conservative spherical finite-volume model for five physical TRISO regions. The primary production case is initial kernel inventory, no continuing source after t=0, ideal interface continuity and an absorbing OPyC outer boundary.
+A mathematical derivation of the five-layer TRISO diffusion and release model, two independent solutions of the same problem, and a program that runs both from one input file. The primary case is: initial kernel inventory, no source after $t=0$, ideal interface continuity, absorbing OPyC outer surface.
 
-## Deliverables
+## Contents
 
-- `TRISO_Final_Mathematical_Derivation.md`
-- `TRISO_Final_Mathematical_Derivation.tex`
-- `TRISO_Final_Mathematical_Derivation.pdf` (generated/persisted by final verification)
-- `TRISO_FV_Pseudocode.md`
-- `../triso-rust/src/analytical.rs`
-- `../triso-rust/src/fv.rs`
-- `../triso-rust/config/literature_inputs.template.toml`
-- `../triso-rust/config/synthetic_five_layer.toml`
+| Item | File |
+|---|---|
+| Derivation (PDF, Markdown, LaTeX source) | `deliverables/TRISO_Final_Mathematical_Derivation.pdf`, `.md`, `.tex` |
+| Pseudocode | `deliverables/TRISO_FV_Pseudocode.md` |
+| Finite-volume solver | `triso-rust/src/fv.rs` |
+| Exact analytical solution | `triso-rust/src/analytical.rs` |
+| Comparison, refinement study, figures | `triso-rust/src/compare.rs`, `triso-rust/src/plots.rs` |
+| Input handling | `triso-rust/src/config.rs`, `triso-rust/src/main.rs` |
+| Literature-value input template | `triso-rust/config/literature_inputs.template.toml` |
+| Executable synthetic input | `triso-rust/config/synthetic_five_layer.toml` |
+| Verification suite | `triso-rust/examples/verify.rs`, `triso-rust/tests/analytical_vs_fv.rs` |
+| Stored execution evidence | `verification/supervisor_delivery_checks/` |
+
+## How the parts connect
+
+One TOML file feeds both solvers. The program runs the FV solver and writes the CSV results, solves the same case with the exact eigenfunction series, compares the two, repeats the FV run on refined meshes and time steps to measure the error against the exact answer, and writes the figures.
 
 ## Build and run
 
-~~~bash
+```bash
 cd triso-rust
 cargo fmt --check
 cargo clippy --all-targets -- -D warnings
@@ -25,67 +33,53 @@ cargo test
 cargo build --release
 cargo run --release -- config/synthetic_five_layer.toml
 cargo run --release --example verify
-~~~
+```
 
 ## Literature values
 
-Do not edit solver logic to enter physical data. Copy `config/literature_inputs.template.toml`, replace every `INSERT_VALUE_HERE` using literature-verified SI values, and retain citation provenance. The supplied synthetic case is numerical test data only.
+Do not edit solver logic to enter physical data. Copy `config/literature_inputs.template.toml`, replace every `INSERT_VALUE_HERE` with a literature-verified SI value, and keep the citation in the adjacent `source` comment. A file with an unfilled placeholder is rejected with a list of every missing value. The synthetic file is numerical test data only. Diffusivities are entered directly, so `species` and `temperature_k` are recorded for provenance and do not change the calculation.
 
-## CSV interpretation
+## Outputs
 
-`timeseries.csv` reports remaining inventory, cumulative boundary release, release fraction, boundary release rate, balance residual, and minimum concentration. `final_profile.csv` reports cell index, material index, volume-centroid radius and final concentration.
+Written to `output.directory`: `timeseries.csv` (remaining inventory, cumulative release, release fraction and rate, balance residual, minimum concentration), `final_profile.csv` (cell, material, centroid radius, concentration), `comparison_fv_vs_analytical.csv`, `convergence_study.csv`, and the figures `release_fv_vs_analytical.svg`, `convergence.svg` and `final_profile.svg`.
 
 ## Scientific assumptions
 
-Five concentric physical regions; spherical symmetry; piecewise-constant diffusivity; ideal concentration/flux interface continuity; interface-aligned FV faces; exact spherical shell volumes; conservative series-resistance face conductance; Backward Euler; absorbing outer boundary.
+Five concentric regions, spherical symmetry, piecewise-constant diffusivity, ideal concentration and flux continuity at interfaces, interface-aligned FV faces, exact spherical shell volumes, series-resistance face conductance (linear half-cell assumption), Backward Euler, absorbing outer surface.
 
-## Analytical module
+## Verification summary
 
-The analytical module is intentionally separate. It implements a homogeneous Robin eigenvalue residual/root finder and a homogeneous-layer transfer building block. The repository contains a structural summary of the user's supplied analytical Rust example, but not its original full function bodies; this package therefore does **not** claim verbatim reconstruction or complete validation of the original five-layer modal code.
+Values for the synthetic case; regenerated by the commands above.
 
-## Verification and provenance
+| Check | Result |
+|---|---|
+| Exact series vs independent closed form (equal diffusivity) | agreement to $10^{-9}$ |
+| Exact series vs a separate Python implementation (five layers, $t=2\times10^5$ s) | $0.4325556390928$ vs $0.4325556390930$ |
+| FV spatial convergence against the exact solution (100 to 1600 cells) | observed order $2.000$ on every pair |
+| FV temporal convergence against the exact solution (Backward Euler) | observed order $0.98$ to $0.89$ |
+| FV release at the configured $\Delta t=200$ s | $0.43243$ vs exact $0.43256$ (first-order time error) |
+| Conservation residual | at most $3\times10^{-13}$ relative |
+| Positivity | minimum concentration positive on every mesh |
 
-Final executed evidence is produced by `.github/workflows/final-supervisor-delivery.yml` and writes its outputs under `deliverables/`. The committed copies of the accepted run are kept in `../verification/supervisor_delivery_checks/`. The handoff is supervisor-ready only after that workflow passes Rust formatting, clippy, tests, release build, numerical benchmarks, five-layer execution and PDF compilation/render checks.
+## Changes made in the final audit
 
-Existing reviewed FV evidence independently showed approximately second-order spatial convergence on the aligned steady synthetic benchmark and first-order Forward-Euler temporal self-convergence. The final package adds arbitrary per-region meshes and Backward Euler.
+- Corrected the interface rule in the analytical module. The state $(u, Du')$ is not continuous across a material interface when diffusivities differ. The matching quantity is $D(u'-u/r)$ (TRISO-ML-446), which gives a jump $(D_{i+1}-D_i)u/R_i$ in $Du'$.
+- Added the exact five-layer release series, so the analytical code now solves the same problem as the FV code and the two are compared directly. The earlier "two-layer reference" was an older FV number, not an analytical result.
+- Replaced the textbook Thomas pivot with a subtraction-free elimination. The old form lost digits at large Fourier number and gave a balance residual near $10^{-9}$; the new one gives $10^{-13}$ or better.
+- Corrected the sign of the face terms in the cell balance (Markdown only) and restored the full derivation chain in the PDF.
+- Rewrote the Markdown to use GitHub `math` fences as required by the repository standard, and repaired the corrupted pseudocode equations.
+- Tightened verification tolerances to the achieved accuracy. Every printed claim in `verify` is an assertion.
+- The unfilled literature template now fails with a readable list instead of a TOML type error.
 
 ## Known limitations
 
-- Synthetic inputs are not experimental/physical validation.
-- Temperature/fluence-dependent diffusivity is not implemented.
-- Continuing source schedules are deferred.
-- Production Robin boundary mode is deferred; absorbing release is implemented.
-- Analytical five-layer modal completeness/truncation remains outside primary FV acceptance.
-- WOS/Process-C remain separate verification tracks and are not proof of FV/WOS equivalence.
+- Synthetic inputs are not experimental or physical validation.
+- Temperature and fluence dependent diffusivity, source schedules and a Robin outer boundary in the FV solver are not implemented.
+- The exact series loses accuracy to cancellation when adjacent diffusivities differ by more than about $10^{6}$. The program reports an accuracy floor and warns when FV and exact results differ by less than it.
+- Completeness of the eigenfunction set for this singular piecewise problem is verified numerically, not proved.
+- WOS and Process-C remain separate verification tracks and are not evidence of FV or WOS equivalence.
 - No GUI, CFD or Method-3 functionality is included.
 
 ## Repository policy
 
 All work is in the research repository. Nothing is pushed to Theodore's backend.
-
-
-## Final executed acceptance
-
-Final acceptance workflow: **39711910260**.
-
-Artifact: **12396634301**, digest **sha256:19062d34e795cc053ebccec863d2249c0826ace6853352009a1d68babe85c8a2**.
-
-Source commit exercised: **803bfd4a8c44b981406290253cbbaa2c3314433f**.
-
-Persisted evidence commit: **cd935cd4b75725aaf170c69d8837d580a058817b**.
-
-Mandatory gates:
-- rustfmt PASS;
-- clippy -D warnings PASS;
-- cargo test PASS;
-- release build PASS;
-- homogeneous analytical benchmark PASS, absolute error 2.780e-5;
-- controlled two-layer benchmark PASS, 32 s absolute error 1.847e-10;
-- five-layer synthetic spatial refinement shows approximately second-order reduction;
-- Backward-Euler temporal refinement shows approximately first-order reduction;
-- positive concentrations and conservative inventory/release accounting PASS at the declared numerical scale;
-- executable five-layer synthetic case PASS with final release fraction 0.4324286068846;
-- LaTeX PDF compilation PASS;
-- PDF: 3 A4 pages; rendered pages 1, 2 and 3 visually inspected with no clipping, overlap or broken mathematical glyphs.
-
-See `../verification/supervisor_delivery_checks/TRISO_Final_Parity_Check.md` and the numerical result files in `../verification/supervisor_delivery_checks/numerical_results/` for the detailed handoff evidence.
