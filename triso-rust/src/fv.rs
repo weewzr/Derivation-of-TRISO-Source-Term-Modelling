@@ -179,6 +179,7 @@ pub fn run(cfg: &Config, mesh: &Mesh) -> Result<(TimeSeries, Vec<f64>)> {
     let steps = (cfg.time.end_time_s / cfg.time.dt_s).ceil() as usize;
     let dt = cfg.time.end_time_s / steps as f64;
     let mut released = 0.0;
+    let mut release_compensation = 0.0;
     let mut rows = Vec::new();
 
     rows.push((
@@ -196,7 +197,13 @@ pub fn run(cfg: &Config, mesh: &Mesh) -> Result<(TimeSeries, Vec<f64>)> {
     for step in 1..=steps {
         let next = backward_euler_step(mesh, &c, dt)?;
         let release_rate = mesh.outer_conductance * next[next.len() - 1];
-        released += dt * release_rate;
+        // Kahan compensated accumulation prevents long-run roundoff in the
+        // independently accumulated boundary-release conservation check.
+        let increment = dt * release_rate;
+        let y = increment - release_compensation;
+        let t = released + y;
+        release_compensation = (t - released) - y;
+        released = t;
         c = next;
         let inv = inventory(mesh, &c);
         let residual = inv + released - initial;
