@@ -20,9 +20,9 @@ pub struct Mesh {
     pub outer_radius: f64,
 }
 
-#[derive(Clone, Debug)]
 pub type TimeSeries = Vec<(f64, StepDiagnostics)>;
 
+#[derive(Clone, Debug)]
 pub struct StepDiagnostics {
     pub inventory: f64,
     pub cumulative_release: f64,
