@@ -1,6 +1,6 @@
 # Final Markdown / LaTeX / Rust Parity Check
 
-Executed after the audit corrections, delivery workflow 39729509152.
+Executed after the audit corrections, delivery workflow 39729930098 on `main`.
 
 ## Markdown vs LaTeX
 
@@ -14,7 +14,7 @@ The analytical Robin/source benchmark (Case B) remains distinct from the initial
 - `triso-rust/src/analytical.rs`: transfer step (TRISO-DEL-010), interface jump (TRISO-DEL-011), characteristic function and Sturm-count root isolation (TRISO-DEL-012), modal weights and release series (TRISO-DEL-020, TRISO-DEL-021), homogeneous Robin roots.
 - `triso-rust/src/compare.rs`: FV against exact series and refinement studies against the exact answer.
 
-## Executed verification (workflow 39729509152, Linux, rustc 1.99.1)
+## Executed verification (workflow 39729930098, Linux, rustc 1.99.1)
 
 Values are in `TRISO_FV_Numerical_Verification.txt` and `TRISO_Five_Layer_Run.txt`.
 

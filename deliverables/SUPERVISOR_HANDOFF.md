@@ -86,9 +86,9 @@ All work is in the research repository. Nothing is pushed to Theodore's backend.
 
 ## Final executed acceptance
 
-Workflow run **39729509152** (GitHub Actions, Ubuntu, rustc 1.99.1), artifact **12405065790**, digest `sha256:72cb8fbf4a87c89bfcd4c42ca0a2f43ee311a955d1ea0e47cfbc1a63931b7737`.
+Workflow run **39729930098** on `main` (GitHub Actions, Ubuntu, rustc 1.99.1), artifact **12404926820**, digest `sha256:c8284bba13522a5fe8cc75b539f1cf5e4665517d83f0e109cb6bb5d0220c2520`.
 
-Source commit exercised: `2e8fdd1c804de284991411121af976ff8389094f`. Persisted evidence commit: `42f7d862bad60eac46db81dbc1f3558e036bbec6`.
+Source commit exercised: `c93161d2e210c300505bc4e639d45eff65ade89a`. Persisted evidence commit: `fc1da814e2b24fa5829840abd4c0313f06605ca3`. An identical earlier run on the review branch (39729509152, source `2e8fdd1`) gave the same numbers.
 
 Gates passed in that run: rustfmt check, clippy with `-D warnings`, `cargo test` (14 unit and 3 integration tests), release build, verification suite, five-layer run, two-pass `pdflatex` with no overfull boxes. The PDF has 7 A4 pages and every page was inspected from the rendered images in `verification/supervisor_delivery_checks/pdf_render_check/`. The same numbers were also obtained locally on Windows (rustc 1.96.0), identical to the digits printed.
 
