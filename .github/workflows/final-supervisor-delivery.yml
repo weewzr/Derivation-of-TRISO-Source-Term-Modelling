@@ -37,10 +37,14 @@ jobs:
         run: cargo build --release
       - name: Numerical verification
         working-directory: triso-rust
-        run: cargo run --release --example verify | tee ../deliverables/TRISO_FV_Numerical_Verification.txt
+        run: |
+          set -o pipefail
+          cargo run --release --example verify | tee ../deliverables/TRISO_FV_Numerical_Verification.txt
       - name: Five-layer executable
         working-directory: triso-rust
-        run: cargo run --release -- config/synthetic_five_layer.toml | tee ../deliverables/TRISO_Five_Layer_Run.txt
+        run: |
+          set -o pipefail
+          cargo run --release -- config/synthetic_five_layer.toml | tee ../deliverables/TRISO_Five_Layer_Run.txt
       - name: Record Rust provenance
         run: |
           rustc --version | tee deliverables/TRISO_Rust_Toolchain.txt
