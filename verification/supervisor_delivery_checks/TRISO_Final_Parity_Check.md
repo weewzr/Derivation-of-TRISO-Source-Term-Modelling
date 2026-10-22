@@ -1,35 +1,30 @@
 # Final Markdown / LaTeX / Rust Parity Check
 
-Executed after delivery workflow 39711910260.
+Executed after the audit corrections, delivery workflow 39729509152.
 
 ## Markdown vs LaTeX
 
-The concise Markdown and LaTeX deliverables carry the same scientific chain and assumptions: control-volume conservation; local conservation law; Fick's law; spherical multilayer PDE; centre/interface/outer conditions; separate analytical/modal reference; exact spherical FV geometry; series-resistance interface conductance; centre and absorbing outer treatment; Backward-Euler tridiagonal equation; Forward-Euler verification-only bound; inventory/release conservation; and the numerical verification contract.
+`TRISO_Final_Mathematical_Derivation.md` and `.tex` carry the same 22 equation IDs, the same section structure (the PDF leaves the symbol table unnumbered, so section numbers agree) and the same verification numbers. Checked by script: no ID appears in only one file. The chain is: control-volume conservation, local conservation law, Fick's law, spherical multilayer PDE, centre/interface/outer conditions, exact eigenfunction solution (with the interface rule `D(u' - u/r)` continuous), exact spherical FV geometry, exact cell balance, series-resistance interface conductance, centre and absorbing outer treatment, Backward-Euler tridiagonal equation with subtraction-free elimination, Forward-Euler verification-only bound, inventory and release conservation.
 
-No scientific case is silently merged: the analytical Robin/source reference remains distinct from the FV initial-inventory/absorbing release case.
+The analytical Robin/source benchmark (Case B) remains distinct from the initial-inventory absorbing release case (Case A). Only Case A is compared between FV and the exact series.
 
 ## Derivation vs Rust
 
-triso-rust/src/fv.rs implements five physical regions with arbitrary per-region cell counts, interface-aligned faces, exact shell volumes and volume centroids, conservative series-resistance conductances, zero-area centre treatment, absorbing outer conductance, Backward-Euler tridiagonal solve, boundary-flux release accumulation, inventory/release conservation diagnostics, and the explicit verification-only timestep bound.
+- `triso-rust/src/fv.rs`: five regions, per-region cell counts, interface-aligned faces, exact shell volumes and volume centroids, series-resistance conductances (TRISO-FV-140), zero-area centre, absorbing outer conductance (TRISO-DEL-030), Backward Euler solved by subtraction-free elimination (TRISO-DEL-040), boundary-flux release accumulation, explicit bound (TRISO-FV-300).
+- `triso-rust/src/analytical.rs`: transfer step (TRISO-DEL-010), interface jump (TRISO-DEL-011), characteristic function and Sturm-count root isolation (TRISO-DEL-012), modal weights and release series (TRISO-DEL-020, TRISO-DEL-021), homogeneous Robin roots.
+- `triso-rust/src/compare.rs`: FV against exact series and refinement studies against the exact answer.
 
-triso-rust/src/analytical.rs remains separate and implements the homogeneous Robin eigenvalue residual/root search and homogeneous-layer transfer building block. It is not claimed to be a complete reconstruction of the unavailable original analytical upload.
+## Executed verification (workflow 39729509152, Linux, rustc 1.99.1)
 
-## Executed verification
+Values are in `TRISO_FV_Numerical_Verification.txt` and `TRISO_Five_Layer_Run.txt`.
 
-Workflow: 39711910260.
-
-- rustfmt: PASS
-- clippy with -D warnings: PASS
-- cargo test: PASS
-- release build: PASS
-- homogeneous FV/analytical error: 2.780e-5
-- controlled two-layer 32 s error: 1.847e-10
-- five-layer spatial refinement differences: 1.6441e-5, 4.1107e-6, 1.0276e-6, 2.5729e-7 (approximately 4x reduction)
-- Backward-Euler temporal differences: 2.4270e-4, 1.2147e-4, 6.0766e-5 (approximately 2x reduction)
-- five-layer synthetic final release fraction: 0.4324286068846
-- final concentration minimum: positive
-- PDF compile/render: PASS, 3 pages, representative pages 1/2/3 visually inspected.
+- rustfmt check, clippy with `-D warnings`, `cargo test`, release build, verification suite, five-layer run, PDF compile: all passed.
+- Exact five-layer release fraction at $t=2\times10^5$ s: 0.4325556390928 (Rust). A separate Python implementation gives 0.4325556390930.
+- FV spatial convergence against the exact solution: observed order 2.000 on every mesh pair, 100 to 1600 cells.
+- FV temporal convergence against the exact solution: observed order 0.98, 0.97, 0.94, 0.89.
+- Conservation residual at most $3\times10^{-13}$ relative, minimum concentration positive on every mesh.
+- PDF: 7 A4 pages, every page rendered and inspected (`pdf_render_check/`).
 
 ## Classification
 
-Parity check: **PASS within the stated MVP scope and analytical-code limitation**.
+Parity check: **PASS**, within the limitations listed in `deliverables/SUPERVISOR_HANDOFF.md`.
