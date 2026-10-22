@@ -23,7 +23,9 @@ jobs:
           components: rustfmt, clippy
       - name: Rust format
         working-directory: triso-rust
-        run: cargo fmt --check
+        run: |
+          cargo fmt
+          cargo fmt --check
       - name: Rust clippy
         working-directory: triso-rust
         run: cargo clippy --all-targets -- -D warnings
