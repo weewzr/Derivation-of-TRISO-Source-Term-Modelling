@@ -25,7 +25,7 @@
 2. Spherical symmetry. In each region $D_i$ is constant.
 3. Interfaces are ideal: concentration and normal diffusive flux are continuous (no partition coefficient).
 4. **Case A (release).** Frozen initial kernel inventory, no source for $t>0$, absorbing outer surface. The finite-volume (FV) solver and the exact series of Section 4 both solve Case A with identical inputs, so they are compared directly.
-5. **Case B (analytical benchmark).** Continuous generation with a Robin outer boundary. Only its homogeneous eigenvalue condition is implemented (Section 4.7). Case A and Case B must not be compared with each other.
+5. **Case B (analytical benchmark).** Continuous generation with a Robin outer boundary. Only its homogeneous eigenvalue condition is implemented (Section 4.6). Case A and Case B must not be compared with each other.
 
 ## 2. From conservation to the spherical equation
 

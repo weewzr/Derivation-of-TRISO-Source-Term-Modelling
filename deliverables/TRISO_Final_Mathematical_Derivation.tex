@@ -13,7 +13,7 @@
 \begin{document}
 \maketitle
 
-\section{Symbols and units}
+\section*{Symbols and units}
 \begin{center}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}>{\raggedright\arraybackslash}p{0.50\textwidth}>{\raggedright\arraybackslash}p{0.17\textwidth}@{}}
 \toprule
@@ -280,7 +280,7 @@ M^{n+1}+M_{\mathrm{rel}}^{n+1}=M^0
 up to linear-solver and rounding error. The release uses the same boundary flux as the balance, so the residual $M^n+M_{\mathrm{rel}}^n-M^0$ is an independent diagnostic.
 
 \section{Verification against the exact solution}\label{sec:verification}
-All numbers are produced by \texttt{cargo run --release --example verify} and \texttt{cargo run --release -- config/synthetic\_five\_layer.toml} for the synthetic inputs in \texttt{triso-rust/config/synthetic\_five\_layer.toml}. These are numerical test data, not literature properties.
+All numbers come from the verification suite (\texttt{examples/verify.rs}) and from the five-layer run on \texttt{config/synthetic\_five\_layer.toml}; the exact commands are in the supervisor handoff. These inputs are numerical test data, not literature properties.
 \begin{center}
 \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.56\textwidth}>{\raggedright\arraybackslash}p{0.38\textwidth}@{}}
 \toprule
