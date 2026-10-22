@@ -1,0 +1,87 @@
+name: Final supervisor delivery verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'triso-rust/**'
+      - 'deliverables/TRISO_Final_Mathematical_Derivation.*'
+      - '.github/workflows/final-supervisor-delivery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  verify-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Rust format
+        working-directory: triso-rust
+        run: cargo fmt --check
+      - name: Rust clippy
+        working-directory: triso-rust
+        run: cargo clippy --all-targets -- -D warnings
+      - name: Rust tests
+        working-directory: triso-rust
+        run: cargo test
+      - name: Rust release build
+        working-directory: triso-rust
+        run: cargo build --release
+      - name: Numerical verification
+        working-directory: triso-rust
+        run: cargo run --release --example verify | tee ../deliverables/TRISO_FV_Numerical_Verification.txt
+      - name: Five-layer executable
+        working-directory: triso-rust
+        run: cargo run --release -- config/synthetic_five_layer.toml | tee ../deliverables/TRISO_Five_Layer_Run.txt
+      - name: Record Rust provenance
+        run: |
+          rustc --version | tee deliverables/TRISO_Rust_Toolchain.txt
+          cargo --version | tee -a deliverables/TRISO_Rust_Toolchain.txt
+          echo "workflow_run=$GITHUB_RUN_ID" | tee -a deliverables/TRISO_Rust_Toolchain.txt
+          echo "source_commit=$GITHUB_SHA" | tee -a deliverables/TRISO_Rust_Toolchain.txt
+      - name: Install minimal LaTeX/render tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq texlive-latex-extra poppler-utils
+      - name: Compile final derivation PDF
+        working-directory: deliverables
+        run: |
+          pdflatex -interaction=nonstopmode -halt-on-error TRISO_Final_Mathematical_Derivation.tex
+          pdflatex -interaction=nonstopmode -halt-on-error TRISO_Final_Mathematical_Derivation.tex
+          pdfinfo TRISO_Final_Mathematical_Derivation.pdf | tee TRISO_Final_PDF_Render_Evidence.txt
+          mkdir -p pdf_render_check
+          PAGES=$(pdfinfo TRISO_Final_Mathematical_Derivation.pdf | awk '/^Pages:/ {print $2}')
+          MID=$(( (PAGES + 1) / 2 ))
+          pdftoppm -f 1 -singlefile -png -r 120 TRISO_Final_Mathematical_Derivation.pdf pdf_render_check/page_first
+          pdftoppm -f "$MID" -singlefile -png -r 120 TRISO_Final_Mathematical_Derivation.pdf pdf_render_check/page_middle
+          pdftoppm -f "$PAGES" -singlefile -png -r 120 TRISO_Final_Mathematical_Derivation.pdf pdf_render_check/page_last
+          echo "representative_render_pages=1,$MID,$PAGES" | tee -a TRISO_Final_PDF_Render_Evidence.txt
+          grep -E "Warning|undefined|Overfull|Underfull" TRISO_Final_Mathematical_Derivation.log || true
+      - name: Copy reproducible numerical CSV evidence
+        run: |
+          mkdir -p deliverables/numerical_results
+          cp triso-rust/results/synthetic-five-layer/timeseries.csv deliverables/numerical_results/
+          cp triso-rust/results/synthetic-five-layer/final_profile.csv deliverables/numerical_results/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-supervisor-delivery-evidence
+          path: |
+            deliverables/TRISO_Final_Mathematical_Derivation.pdf
+            deliverables/TRISO_Final_PDF_Render_Evidence.txt
+            deliverables/pdf_render_check/
+            deliverables/TRISO_FV_Numerical_Verification.txt
+            deliverables/TRISO_Five_Layer_Run.txt
+            deliverables/TRISO_Rust_Toolchain.txt
+            deliverables/numerical_results/
+      - name: Persist executed evidence to main
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add deliverables/TRISO_Final_Mathematical_Derivation.pdf                   deliverables/TRISO_Final_PDF_Render_Evidence.txt                   deliverables/TRISO_FV_Numerical_Verification.txt                   deliverables/TRISO_Five_Layer_Run.txt                   deliverables/TRISO_Rust_Toolchain.txt                   deliverables/numerical_results/
+          git commit -m "evidence(delivery): persist verified supervisor package outputs" || exit 0
+          git push origin HEAD:main
