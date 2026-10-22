@@ -1,4 +1,4 @@
 rustc 1.99.1 (58cf8f9c3 2026-10-13)
 cargo 1.99.1 (5f94df478 2026-08-27)
-workflow_run=39725781190
-source_commit=9ec2f3a45ccb4ecd287df33eb3e3e1a2ea67763c
+workflow_run=39729509152
+source_commit=2e8fdd1c804de284991411121af976ff8389094f
