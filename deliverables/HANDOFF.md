@@ -87,4 +87,4 @@ Two options for code A: `--fv-only` skips code C and the figures that need it, a
 
 ## Last full check
 
-GitHub Actions run 39729930098 on `main` (Ubuntu, Rust 1.99.1) passed the format check, `clippy`, all tests, the release build, the verification example, the example run and the PDF build. Stored outputs are in `verification/delivery_checks/`.
+The GitHub Actions workflow `delivery-verification.yml` repeats every check on a clean Ubuntu machine whenever the code or the derivation changes: the format check, `clippy`, all tests, the release build, the verification example, the example run and the PDF build. Its outputs are stored in `verification/delivery_checks/`, and `TRISO_Rust_Toolchain.txt` there records the run number and commit of the last run.

@@ -2,7 +2,7 @@ name: Delivery verification
 
 on:
   push:
-    branches: [main, rename-and-trim]
+    branches: [main]
     paths:
       - 'deliverables/finite_volume_code/**'
       - 'deliverables/TRISO_Finite_Volume_Derivation.tex'
