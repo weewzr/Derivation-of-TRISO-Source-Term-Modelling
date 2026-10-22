@@ -85,8 +85,7 @@ pub fn build_mesh(cfg: &Config) -> Result<Mesh> {
     let last = cells.last().expect("nonempty mesh");
     let outer_radius = cfg.regions.last().expect("five regions").outer_radius_m;
     let outer_area = 4.0 * PI * outer_radius * outer_radius;
-    let outer_conductance =
-        outer_area * last.diffusivity / (outer_radius - last.centroid);
+    let outer_conductance = outer_area * last.diffusivity / (outer_radius - last.centroid);
 
     Ok(Mesh {
         cells,
@@ -277,7 +276,10 @@ mod tests {
         let c = cfg(4);
         let m = build_mesh(&c).unwrap();
         for r in c.regions.iter().take(4) {
-            assert!(m.cells.iter().any(|x| (x.right - r.outer_radius_m).abs() < 1e-15));
+            assert!(m
+                .cells
+                .iter()
+                .any(|x| (x.right - r.outer_radius_m).abs() < 1e-15));
         }
     }
 

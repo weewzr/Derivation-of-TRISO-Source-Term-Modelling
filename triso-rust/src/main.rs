@@ -49,7 +49,10 @@ fn main() -> Result<()> {
     println!("explicit_dt_bound_s={:.12e}", fv::explicit_dt_bound(&mesh));
     println!("final_release_fraction={:.12e}", last.release_fraction);
     println!("final_inventory_mol={:.12e}", last.inventory);
-    println!("max_final_balance_residual_mol={:.12e}", last.balance_residual.abs());
+    println!(
+        "max_final_balance_residual_mol={:.12e}",
+        last.balance_residual.abs()
+    );
     println!("min_final_concentration={:.12e}", last.min_concentration);
     println!("timeseries={}", ts_path.display());
     println!("profile={}", profile_path.display());

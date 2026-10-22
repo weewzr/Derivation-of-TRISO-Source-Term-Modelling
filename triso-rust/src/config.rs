@@ -58,7 +58,8 @@ impl Config {
             }
             last = r.outer_radius_m;
         }
-        if self.time.dt_s <= 0.0 || self.time.end_time_s <= 0.0 || self.time.output_every_steps == 0 {
+        if self.time.dt_s <= 0.0 || self.time.end_time_s <= 0.0 || self.time.output_every_steps == 0
+        {
             bail!("invalid time controls");
         }
         if self.initial.kernel_concentration_mol_m3 < 0.0 {
